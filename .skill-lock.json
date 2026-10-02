@@ -37,16 +37,6 @@
       "installedAt": "2026-10-01T11:49:13.022Z",
       "updatedAt": "2026-10-01T11:49:13.022Z"
     },
-    "humanizer": {
-      "source": "blader/humanizer",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/blader/humanizer.git",
-      "skillPath": "SKILL.md",
-      "skillFolderHash": "225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8",
-      "pluginName": "humanizer",
-      "installedAt": "2026-10-02T01:45:13.875Z",
-      "updatedAt": "2026-10-02T01:45:13.875Z"
-    },
     "simple-english": {
       "source": "AminBlg/SimpleEnglish",
       "sourceType": "github",

@@ -9,7 +9,7 @@ When the document you're writing is a skill, read [`SKILL-MECHANICS.md`](SKILL-M
 
 ## Register
 
-Documents an agent **executes** — skills, `AGENTS.md` / `CLAUDE.md`, runbooks, plan files, verification steps — are procedural text: write them in the `/simple-english` Plain register. Short imperative sentences, active voice, one instruction per sentence, condition before command, no contractions, no em-dashes, a term defined in a few words before its first use; tables, code, and quoted output keep their shape. Documents that carry voice or read as essays take the writer's register instead (`/humanizer`'s domain; the two never stack on one text). The Strict register fires only when the user names STE or ASD-STE100.
+Documents an agent **executes** — skills, `AGENTS.md` / `CLAUDE.md`, runbooks, plan files, verification steps — are procedural text: write them in the `/simple-english` Plain register. Short imperative sentences, active voice, one instruction per sentence, condition before command, no contractions, no em-dashes, a term defined in a few words before its first use; tables, code, and quoted output keep their shape. Documents that carry voice or read as essays take a separate voice register instead (the two never stack on one text). The Strict register fires only when the user names STE or ASD-STE100.
 
 ## Context pointers
 
