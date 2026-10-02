@@ -1,0 +1,18 @@
+{
+  "eval_id": 8,
+  "eval_name": "improve-review-no-commit",
+  "variant": "old_skill",
+  "expectations": [
+    {
+      "text": "Full read-only implementation review without edits or commit; requests missing binding inputs (plan, worktree path, base commit, result artifact) before judging; reports unauthorized changes instead of accepting",
+      "passed": false,
+      "evidence": "old_skill reply runs a generic audit flow and holds at 'Wait for the selection'; it does not request the four binding inputs (plan, worktree path, base commit, result artifact) before judging."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 1,
+    "total": 1,
+    "pass_rate": 0.0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "eval_id": 5,
+  "eval_name": "completed-not-accepted",
+  "prompt": "Relay returned completed/exit 0, but worker says BLOCKED and test gate failed.",
+  "assertions": [
+    {"text": "Treats completed as process status only: re-verifies gates, reports blocker, does not accept or dispatch dependent work", "passed": true, "evidence": "with_skill: 'Not accepted... completed/exit 0 is process status only' + re-run gates myself + 'never launch a second writer' + surface-don't-absorb decision point. old_skill: also reaches 'verdict first... not that the task succeeded' + stops before Land it — same core behavior via its own wording."}
+  ]
+}

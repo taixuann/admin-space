@@ -1,0 +1,8 @@
+{
+  "eval_id": 6,
+  "eval_name": "usage-error-vs-timeout",
+  "prompt": "Relay exited 2 with no result; a second scenario times out after partial edits.",
+  "assertions": [
+    {"text": "Distinguishes pre-run usage error (exit 2, no result) from timeout; inspects partial work and process state before any recovery; no second writer while the first may live", "passed": true, "evidence": "with_skill: 'Exit 2 is a pre-run usage error (bad args, empty brief) with no result.json... no session to resume' + scenario B inspects git status/diff/untracked + never-second-writer framing. old_skill: same classification and stop-polling logic via its own completion check; recovery sequence present but framed per-loop rather than per-scenario."}
+  ]
+}

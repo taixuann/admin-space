@@ -1,0 +1,28 @@
+Plan 002 post-state — recorded 2026-10-02 19:15 (+07)
+
+VERSION: opencode v2.0.22 at /opt/homebrew/bin/opencode (was V1 1.18.34)
+INSTALL PATH CHOSEN: `brew uninstall opencode` + `brew install anomalyco/tap/opencode-v2`
+  (the operator's existing tap ships a dedicated v2 formula; curl alternative
+  `curl -fsSL https://opencode.ai/v2/install | bash` recorded but unused).
+CONFIG: quota plugin dropped before uninstall (live hash e015071cfb66c82a…;
+  backup with pre-state hash e23193d… kept in this workspace). websearch
+  block accepted by V2 without warnings.
+
+STEP RESULTS (per plan 002):
+Step 4  `opencode run --model opencode-go/mimo-v2.6-flash 'Say hi'` → "Hi!", exit 0
+Step 5  `opencode auth list` → OpenAI credential SURVIVES, no login required.
+        (V2 additionally surfaces: Google via GEMINI_API_KEY env, OpenCode
+        Console credential "stored". No secrets printed.)
+Step 6  ponytail plugin: log shows `loading plugin id=github:Silur/ponytail`
+        entrypoint=…ponytail.mjs with no error → LOADS under V2.
+        deepseek-v4.1-flash run also "Hi!" exit 0 (two allowlist routes verified).
+Step 7  relay.mjs --help → exit 0 under V2.
+websearch: setting accepted; real verification needs a connected key
+        (Tavily via /connect — deferred operator action, not a plan gate).
+
+CONCURRENT-ACTIVITY NOTE: session run=30fc4f50 (pytest on study +
+research-program tests in research-projects MAIN tree) was active during and
+after the upgrade. Unrelated to this plan; no action taken per scope.
+
+ROLLBACK PATH: brew install opencode (tap) restores V1; restore
+opencode.jsonc.pre-v2 if the config edit is also rolled back.

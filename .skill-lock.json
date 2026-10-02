@@ -1,0 +1,117 @@
+{
+  "version": 3,
+  "skills": {
+    "exa-search": {
+      "source": "K-Dense-AI/scientific-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/K-Dense-AI/scientific-agent-skills.git",
+      "skillPath": "skills/exa-search/SKILL.md",
+      "skillFolderHash": "c056872cc5e2ed58633d1968356282da645c3323",
+      "installedAt": "2026-09-30T02:31:02Z",
+      "updatedAt": "2026-09-30T02:31:17Z"
+    },
+    "pi-agent": {
+      "source": "K-Dense-AI/scientific-agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/K-Dense-AI/scientific-agent-skills.git",
+      "skillPath": "skills/pi-agent/SKILL.md",
+      "skillFolderHash": "7e282970b65e1498a58a4b18349fe68bf8c10389",
+      "installedAt": "2026-09-30T02:20:30Z",
+      "updatedAt": "2026-09-30T02:21:47Z"
+    },
+    "improve": {
+      "source": "shadcn/improve",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/shadcn/improve.git",
+      "skillPath": "skills/improve/SKILL.md",
+      "skillFolderHash": "7d77d76815e6deb704427f17f6e393f55e3cb6da",
+      "installedAt": "2026-10-01T11:21:34.407Z",
+      "updatedAt": "2026-10-01T11:21:34.407Z"
+    },
+    "opencode-delegate": {
+      "source": "amElnagdy/delegate-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/amElnagdy/delegate-skills.git",
+      "skillPath": "skills/opencode-delegate/SKILL.md",
+      "skillFolderHash": "028f10fa26f1e973d3e4396946cc42f852bc1e94",
+      "installedAt": "2026-10-01T11:49:13.022Z",
+      "updatedAt": "2026-10-01T11:49:13.022Z"
+    },
+    "humanizer": {
+      "source": "blader/humanizer",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/blader/humanizer.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8",
+      "pluginName": "humanizer",
+      "installedAt": "2026-10-02T01:45:13.875Z",
+      "updatedAt": "2026-10-02T01:45:13.875Z"
+    },
+    "simple-english": {
+      "source": "AminBlg/SimpleEnglish",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/AminBlg/SimpleEnglish.git",
+      "skillPath": "skills/simple-english/SKILL.md",
+      "skillFolderHash": "dc4493623b0648588e02a0062bed8bcaa535b1de",
+      "installedAt": "2026-10-02T08:03:23.375Z",
+      "updatedAt": "2026-10-02T08:03:23.375Z"
+    },
+    "writing-for-agents": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/writing-for-agents/SKILL.md",
+      "skillFolderHash": "ad2925850efb8973a72d2e666f7a975f9a2d4a9b",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-10-02T11:49:02.032Z",
+      "updatedAt": "2026-10-02T11:49:02.032Z"
+    },
+    "handoff": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/handoff/SKILL.md",
+      "skillFolderHash": "2242e8f05424b8c2ae94194a90d97b88d16108ec",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-10-02T11:58:45.002Z",
+      "updatedAt": "2026-10-02T11:58:45.002Z"
+    },
+    "github-repo-care": {
+      "source": "ellmos-ai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/ellmos-ai/skills.git",
+      "skillPath": "skills/dev/github-repo-care/SKILL.md",
+      "skillFolderHash": "519fcbb91937b222375d2c38bb9ac6c4b8f5a1af",
+      "installedAt": "2026-10-02T13:07:54.837Z",
+      "updatedAt": "2026-10-02T13:07:54.837Z"
+    },
+    "technical-documentation": {
+      "source": "magnus919/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/magnus919/agent-skills.git",
+      "skillPath": "technical-documentation/SKILL.md",
+      "skillFolderHash": "2badfd600eb59d535cd43ceefd48c09196fad261",
+      "pluginName": "technical-documentation",
+      "installedAt": "2026-10-02T13:45:50.593Z",
+      "updatedAt": "2026-10-02T13:45:50.593Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "droid",
+    "gemini-cli",
+    "github-copilot",
+    "kilo",
+    "kimi-code-cli",
+    "opencode",
+    "warp",
+    "zed",
+    "claude-code"
+  ]
+}

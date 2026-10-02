@@ -1,0 +1,8 @@
+# Host capability matrix (Plan 001, Stage B)
+
+Evidence is limited to the current host and the referenced artifacts. `NOT_ASSESSED` means no direct runtime qualification was performed.
+
+| Host | Observed mechanism | Job lifetime | Timeout / cancellation | Completion notification | Resume route | Evidence | Status |
+|---|---|---|---|---|---|---|---|
+| Codex desktop | Relay ran in a foreground `exec_command`; the tool yielded a session ID and was resumed with `write_stdin`. | One OpenCode process ran until its result was returned; relay wrote `result.json` after process exit. | This run used relay `--timeout 1h`; a focused correction used `--timeout 30m`. Cancellation was not exercised. | No automatic completion event was observed; the parent resumed the terminal session manually. This does not establish all Codex host notification behavior. | Resume the exact tool/relay session and inspect its result; OpenCode rework uses the recorded `sessionId`. No automatic next-batch dispatch. | `opencode-stage-001/result.json`, `opencode-stage-001/events.jsonl`, `opencode-stage-001-delta/result.json`; source contract in candidate `skills/opencode-delegate/references/dispatch-and-poll.md`. | NOT_ASSESSED for native completion notification and cancellation semantics; foreground/manual-resume route observed. |
+| Claude Code | Not run in this host. Existing skill text documents Bash `run_in_background: true`. | Not observed. | Not observed. | Documentation claim only; no live terminal event or resume was tested. | Not observed. | Baseline `skills/opencode-delegate/SKILL.md` and `references/dispatch-and-poll.md` only. | NOT_ASSESSED. |

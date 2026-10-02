@@ -1,0 +1,45 @@
+Plan 001 stages A–C are implemented as a candidate-only batch. Checkpoint ready for inspection.
+
+## 1. Intended behavior changes
+
+**improve (advisor stays read-only, gains batch + review flows)**
+- `SKILL.md`: Hard Rule 1 now allows an explicitly selected external transport (e.g. `opencode-delegate`) as executor while improve keeps plan, review, verdict, and all commit/merge/push authority (skills/improve/SKILL.md:18). Phase 4 gains an optional batch bullet; `execute` now describes one approved batch = one bounded job with one cumulative review at the boundary; new `review <plan>` invocation (post-execution, read-only, four required inputs); `reconcile` explicitly can't stand in for fresh-implementation acceptance; Hard Rule 2 exception extended to `review`.
+- `plan-template.md`: new optional **Batch** section (batch ID, ordered steps, exact mutable scope, input/base identity, per-step gates, batch gate, stop/checkpoint conditions, compact report) plus a quality-bar check. Boundary = compatibility of authorization/scope/review, not a task count.
+- `closing-the-loop.md`: four flows now (execute, review, reconcile, --issues). Preconditions require verified worktree identity/base/pre-existing changes, one writer per tree, deliberate transport choice. Executor preamble's commit rule is now limited to the native isolated-worktree contract with separate authorization. Report format gains DEVIATIONS / UNAPPROVED OBSERVATIONS / BLOCKERS, with "report ≠ accepted work". New **Batches** subsection and full **`review <plan>`** section bound to plan + worktree + base + head + result artifact, APPROVE/REVISE/BLOCK with no dispatch/edit. Review step 3 reads the diff against the verified base; step 2 covers index + untracked.
+
+**opencode-delegate (batch briefs, waiting/recovery, conditional landing)**
+- `SKILL.md`: one bounded job *or approved batch* per brief; step 3 rewritten to separate tool-call yielding / job lifetime / relay watchdog / worker outcome / reviewer verdict, terminal = process exit + readable `result.json`, per-host wait selection (Claude-only `run_in_background`, Codex **NOT_ASSESSED**), explicit manual-resume fallback, no second watchdog, no model polling loop; step 4 states `completed` = process only; step 5 + Authorization model: commit/push/PR authority comes from the governing workflow, delegation opts in to the *run*, not publication; rework prefers exact `sessionId`, `--resume-last` only when unambiguous.
+- `writing-the-brief.md`: report contract now 6 fields (steps, files, verification results, deviations, unapproved observations, blockers); "One bounded job per brief" + approved-batch exception with cumulative report; `action_safety` no longer presumes orchestrator commits.
+- `multi-task-queues.md`: unrelated tasks land between dispatches; approved batches run serially with per-step gates and one cumulative review at the boundary; push/PR conditional on the governing workflow; batch checkpoint added to "when to stop and ask".
+- `dispatch-and-poll.md`: five-layer waiting table, per-host wait selection, exit-code/invalid-result contract, statuses stay lower-case, inspect-before-recover + never a second writer, `completed`+BLOCKED handled, `--timeout` named as the only watchdog, commit boundary made conditional.
+- `review-and-land.md`: commit boundary now conditional on the governing workflow (explicit read-only/improve path hands the tree back); sweep/rework/surface wording no longer presumes commit; rework uses `--session ses_…`.
+
+**codex global**
+- `AGENTS.md`: one new `## Delegated execution batches` section (verbatim plan Stage C text) after the operating kernel; no other byte changed. No OpenCode commands, model IDs, status schema, thresholds, or lifecycle duplication; scientific/research guidance left to Plan 002.
+
+## 2. Candidate paths changed (exactly 9)
+`codex/AGENTS.md`, `skills/improve/SKILL.md`, `skills/improve/references/plan-template.md`, `skills/improve/references/closing-the-loop.md`, `skills/opencode-delegate/SKILL.md`, `skills/opencode-delegate/references/writing-the-brief.md`, `skills/opencode-delegate/references/multi-task-queues.md`, `skills/opencode-delegate/references/dispatch-and-poll.md`, `skills/opencode-delegate/references/review-and-land.md`
+
+## 3. Validation commands / results
+```
+PYTHONDONTWRITEBYTECODE=1 python3 .../skill-creator/scripts/quick_validate.py candidate/skills/improve
+  → "Skill is valid!"   exit=0
+PYTHONDONTWRITEBYTECODE=1 python3 .../skill-creator/scripts/quick_validate.py candidate/skills/opencode-delegate
+  → "Skill is valid!"   exit=0
+```
+- Relative markdown links in the 9 changed docs: `links_checked 22 missing []` (all resolve in the candidate tree).
+- Consistency read of every changed file for batch boundaries, isolation, completion-vs-acceptance, reviewer responsibility, commit/publication authority; greps: no residual unconditional commit/push claim, no uppercase relay status, wake-up text only as negation, `run_in_background` only in Claude-labeled delegate text (absent from `codex/AGENTS.md`).
+
+## 4. Diff scope and relay hash
+- Recursive baseline↔candidate: `changed 9 == allowlist 9: True`, no added/removed files.
+- Relay: `64b1b5a12ebf9acdba04af47555a73fbd8026613e002006cba58f0803b54044e` — byte-identical in baseline and candidate (and to the plan's expected value).
+- Live originals re-hashed after the run: all 10 source hashes still match the plan's drift baseline — nothing under `~/.codex`, `~/.claude`, `~/.config/opencode`, or `~/.agents/skills` was touched.
+
+## 5. Unresolved conflicts / decision points
+1. **Workspace artifacts not created.** Plan Stage A/B/C "Verify" lines call for `changed-files.json` (A), `capability-matrix.md` (B), and `review-receipt.md` (C), all in the plan's evaluation-artifact bucket; the task allowlist names only the nine Markdown files and forbids creating artifacts, and its verification loop restates those checks as commands to run and report. I ran the checks and reported them instead of writing files. **Parent decision:** create them now, or defer to Stage D/E.
+2. **`review-receipt.md` gap:** Stage C also wants the selected global file + conflicts recorded there; not written for the same reason.
+3. **Plan line-citation drift (cosmetic):** Plan 001 cites `AGENTS.md:100` for "Ordinary tasks stay in the parent context"; in the (hash-matching) baseline it is line 103. No content drift; citation offset only.
+4. **AQG:** `aqg-code-construction` was not invoked — this batch edits Markdown instruction contracts only, and Plan 001 scopes that gate to relay/code changes, which are out of scope here.
+
+## 6. Not started
+Plan 002 untouched (no `global-guidance-workspace/`, no edits to `~/.claude/CLAUDE.md` or either plan/README). No Stage D/E work: no `evals.json`, no `iteration-1/`, no `capability-matrix.md`, no review viewer, no behavior comparisons, no host-notification or runtime-loading claims, no installs, no commits/branches/PRs/issues.

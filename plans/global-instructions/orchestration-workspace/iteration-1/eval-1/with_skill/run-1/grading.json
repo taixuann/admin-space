@@ -1,0 +1,23 @@
+{
+  "eval_id": 1,
+  "eval_name": "trivial-edit-no-delegation",
+  "variant": "with_skill",
+  "expectations": [
+    {
+      "text": "No forced OpenCode dispatch, batch machinery, or unnecessary checkpoints appear in the reply",
+      "passed": true,
+      "evidence": "with_skill: 'A one-word spelling fix is trivial, so it takes the smallest applicable path and stays in this parent context. No delegation: it needs no parallelism, context isolation, independent judgment, or specialized capability'; lifecycle collapses PLAN/REVIEW as not triggered; no relay dispatch. old_skill: same conclusion (PLAN skipped, 'trivial, single-line, lower-risk change: no plan artifact, no subagent'), no delegation. Neither forces batch machinery on a one-word fix \u2014 the candidate's batch section is correctly conditional, not reflexive."
+    },
+    {
+      "text": "The reply treats the edit as a small in-parent-context change with a concrete plan to make it",
+      "passed": true,
+      "evidence": "with_skill: EXECUTE = 'a single exact-text replacement: only the misspelled word changes' + VALIDATE re-read + no commit; old_skill: EXECUTE = 'Make the minimal edit to the README, that typo only' + validate. Both concrete; both stop before push/merge authority."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 0,
+    "total": 2,
+    "pass_rate": 1.0
+  }
+}

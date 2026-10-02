@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "trivial-edit-no-delegation",
+  "variant": "old_skill",
+  "expectations": [
+    {
+      "text": "No forced OpenCode dispatch, batch machinery, or unnecessary checkpoints appear in the reply",
+      "passed": true,
+      "evidence": "old_skill reply: 'trivial, single-line, lower-risk change: no plan artifact, no subagent'; PLAN skipped; EXECUTE minimal edit; stops before push authority."
+    },
+    {
+      "text": "The reply treats the edit as a small in-parent-context change with a concrete plan to make it",
+      "passed": true,
+      "evidence": "old_skill reply: 'trivial, single-line, lower-risk change: no plan artifact, no subagent'; PLAN skipped; EXECUTE minimal edit; stops before push authority."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+Plan 002 pre-state — recorded 2026-10-02 19:09 (+07)
+opencode --version → 1.18.34
+shasum -a 256 ~/.config/opencode/opencode.jsonc → e23193d5da7279547eb81470d4cb24b7d0844d361457861c89477a06ea9c4c81 (matches plan drift line)
+backup saved → opencode.jsonc.pre-v2 (235 bytes, hash-verified copy of live file)
+opencode auth list → 1 credential: OpenAI (oauth). Contents not printed per Hard Rule-equivalent secret discipline.
+relay: not tested at pre-state (smoke test is a post-install gate).

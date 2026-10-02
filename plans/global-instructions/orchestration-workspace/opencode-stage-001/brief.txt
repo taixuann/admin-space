@@ -1,0 +1,49 @@
+<task>
+Implement Plan 001 stages A-C as a candidate-only batch under `/Users/tai/.agents/plan/orchestration-workspace/candidate/`. Read the complete Plan 001, Plan 002 dependency notes, and current baseline copies before editing. Align the improve planning/review contract with the OpenCode delegate contract, add the bounded waiting/recovery policy, and prepare the minimal conditional Codex global policy candidate. Stop after a reviewable Plan 001 candidate checkpoint so the parent can inspect it before Plan 002 edits the overlapping Codex AGENTS candidate.
+</task>
+
+<authority_and_scope>
+Follow `/Users/tai/.agents/plan/001-bounded-delegation-policy.md`, the current global AGENTS instructions provided in this task, `/Users/tai/.agents/skills/skill-creator/SKILL.md`, and all existing source-owner skill instructions. The approved user-selected model is `opencode-go/mimo-v2.6-flash`. Candidate inputs were copied from live files; the plan baseline hashes matched immediately before this run.
+
+Only these candidate Markdown files may change:
+- `codex/AGENTS.md`
+- `skills/improve/SKILL.md`
+- `skills/improve/references/plan-template.md`
+- `skills/improve/references/closing-the-loop.md`
+- `skills/opencode-delegate/SKILL.md`
+- `skills/opencode-delegate/references/writing-the-brief.md`
+- `skills/opencode-delegate/references/multi-task-queues.md`
+- `skills/opencode-delegate/references/dispatch-and-poll.md`
+- `skills/opencode-delegate/references/review-and-land.md`
+
+Candidate root: `/Users/tai/.agents/plan/orchestration-workspace/candidate`. Baseline root: `/Users/tai/.agents/plan/orchestration-workspace/baseline` (read-only). Do not alter `scripts/relay.mjs` or any other script/schema. Do not edit active files under `~/.codex`, `~/.config/opencode`, `~/.claude`, or `~/.agents/skills`. Do not edit either plan or its README. Do not create commits, branches, PRs, issues, installs, or model-evaluation artifacts. Do not start Plan 002.
+</authority_and_scope>
+
+<required_behavior>
+- Keep improve read-only as the advisor and preserve its existing execution/review semantics unless the plan explicitly reconciles them.
+- Permit one coherent user-authorized batch containing ordered, dependent steps when authorization, mutable scope, and review requirements are compatible. Human decisions, protected transitions, or independent-review checkpoints end the batch.
+- Keep improve's Git execution isolated, verify the exact worktree/base and pre-existing changes, and prevent concurrent writers. External OpenCode transport may be selected without becoming plan owner, acceptance authority, commit authority, or publication authority.
+- Preserve no-commit/no-push authority under improve. The OpenCode task result is not accepted work; the orchestrator/reviewer independently inspects diffs and re-runs required gates.
+- Add a read-only `review <plan>` flow for full implementation review bound to exact plan, changed paths, base/HEAD, and receipts.
+- Keep single-task delegation for unrelated work; update queue rules only as needed to enable serial, coherent steps within one approved batch.
+- Make the manual-resume fallback explicit when a host cannot prove native completion notification. Do not invent a Codex/Claude wake-up guarantee, a relay status, a second watchdog, or quota savings.
+- Add only the minimal conditional Codex policy for tasks governed by the Codex control-plane repo; do not make its roles, Issues, PRs, or Git lifecycle universal research rules.
+- Retain the scientific guidance for Plan 002 for the later stage. No research protocols or universal OpenCode-only execution policy in this slice.
+</required_behavior>
+
+<verification_loop>
+Before editing, inspect source and candidate counterparts and record the candidate file allowlist. After editing:
+1. Run the installed `skill-creator/scripts/quick_validate.py` against both candidate skills; report exact output.
+2. Check every relative Markdown resource link in changed skill documents resolves in the candidate tree.
+3. Compare baseline and candidate recursively; prove only the nine allowlisted Markdown paths differ, and prove the relay script is byte-identical to baseline hash `64b1b5a12ebf9acdba04af47555a73fbd8026613e002006cba58f0803b54044e`.
+4. Read every changed file and check consistency for batch boundaries, isolation, job completion vs acceptance, reviewer responsibility, and commit/publication authority.
+5. Do not claim behavior comparisons, host notification, runtime instruction loading, installation, or qualification; those occur in later gated steps.
+</verification_loop>
+
+<action_safety>
+Only edit the exact candidate files listed above. Baseline files are immutable. The `.codex` checkout is dirty and must stay untouched. Do not fix unrelated wording or expand scope. If the plan conflicts with the provided current instructions, stop and report the conflict instead of choosing a convenient rule. Do not commit or publish.
+</action_safety>
+
+<structured_output_contract>
+Report: (1) the intended behavior changes, (2) exact candidate paths changed, (3) validation commands/results, (4) baseline/candidate diff scope and unchanged relay hash, (5) unresolved conflicts or decision points, (6) confirm Plan 002 and behavior evaluations were not started.
+</structured_output_contract>

@@ -1,0 +1,18 @@
+{
+  "eval_id": 8,
+  "eval_name": "improve-review-no-commit",
+  "variant": "with_skill",
+  "expectations": [
+    {
+      "text": "Full read-only implementation review without edits or commit; requests missing binding inputs (plan, worktree path, base commit, result artifact) before judging; reports unauthorized changes instead of accepting",
+      "passed": true,
+      "evidence": "with_skill: 'Given do not commit, this is the review variant, not execute' + 'request any missing input before judging an ambiguous diff' + binding = plan/worktree/base/head + re-run criteria, scope check, full diff, test audit, APPROVE/REVISE/BLOCK, 'Out-of-scope changes get reported, not absorbed'. old_skill: performs an audit-style review flow but frames it as findings/selection hold ('Wait for the selection') rather than the review-variant binding; commit rules held via Hard Rules; weaker on the required-inputs gate (does not request the four binding inputs up front)."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 0,
+    "total": 1,
+    "pass_rate": 1.0
+  }
+}
