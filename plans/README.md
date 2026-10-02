@@ -87,6 +87,11 @@ artifact names inside `global-instructions/`.
   Deferred: improve's pre-existing text issues logged in 003. New to the
   notes: the writing-for-agents skill is the named reference for the AGENTS.md
   candidate refresh pass.
+- 2026-10-02, worktree closeout: the `scientific-skills-plans` WIP audited
+  as fully landed — repo relocated `workspace/research-projects` →
+  `~/research-projects`, tree clean, skill upgrades committed
+  (`ac1446b7`, plans 001-006) plus follow-up test growth. Stale marker dir
+  removed; `~/.codex/worktrees/` empty. No action left.
 - 2026-10-02, Stage E prep (plan 005): operator replaced the folder-baseline
   workflow with a git repo at `~/.agents` (baseline commit `ac5af95` taken
   before any live change; recovery = `git checkout`; baseline/ folders stay
