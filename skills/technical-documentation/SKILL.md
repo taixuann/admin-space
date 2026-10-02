@@ -31,7 +31,6 @@ Technical documentation is the interface between a tool and its user. This metho
 | `references/readme-patterns.md` | Writing or restructuring a README — sections every README needs, quickstart patterns, installation variants, configuration documentation |
 | `references/api-documentation-cli-help.md` | Documenting APIs (endpoint structure, parameter conventions, example design, auth patterns, OpenAPI annotations) and designing CLI help text (usage line, flags, exit codes, subcommand hierarchy, man pages) |
 | `references/agent-facing-docs.md` | Writing AGENTS.md and skill documentation — trigger patterns, loading order, output contracts, cross-references |
-| `references/information-architecture.md` | Structuring a documentation site — progressive disclosure, cross-referencing, search optimization, maintenance strategy |
 
 ## Related Skills
 
