@@ -108,9 +108,14 @@ artifact names inside `global-instructions/`.
   (a4519fd8, 151 lines), re-copied from the rewritten one (5e9ca977, 72
   lines). Post-install validators pass on both live skills; install
   receipt written; ~/.agents git committed `ac5af95` → `f98b9d7`; tree
-  clean. ~/.codex left uncommitted (operator's own act there). Remaining:
-  GI-002 Stage D + its OpenCode global AGENTS.md install (separate
-  authorization) + Tavily key via /connect.
+  clean. ~/.codex committed by operator (`51d5820` cleanup).
+- 2026-10-02, codex-chatpgt repo end-of-life (operator: push then delete):
+  pushed `2f4ca10..51d5820` (3 commits incl. pre-existing `422bfab`;
+  secret scan clean), operator deleted the GitHub repo (verified
+  `ls-remote` → "Repository not found"), local `.git` removed.
+  `~/.codex` is now a plain working folder (AGENTS.md + README +
+  agents/*.toml + runtime). Install history preserved in receipts +
+  `~/.agents` git.
 - 2026-10-02, GI-002 Stage D + INSTALL (end-to-end chain close): 16 runs
   via relay (`deepseek-v4.1-flash#max`, behavioral isolation) all completed;
   candidate 8/8, baseline 0/8 (empty governance — the true pre-install
