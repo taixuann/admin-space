@@ -23,7 +23,9 @@ orchestrator**, pick one of them to fit the task in front of you.
   an ambiguous spec — wants a strong one, because the sweep's failure modes (plausible-but-wrong logic,
   swallowed errors) are exactly what a weaker model produces more of.
 - **A resumed run keeps the first run's model.** `--resume-last` / `--session` don't take `--model`; the
-  session already has one. Send only the delta brief.
+  session already has one. Send only the delta brief. For related rework prefer the exact `sessionId`
+  recorded in the result; use `--resume-last` only when no concurrent session makes the identity
+  ambiguous. Unrelated work gets a fresh session, not a resume.
 
 ## The shape that works
 
@@ -48,16 +50,20 @@ Confirm the working tree shows only the intended changes afterward.
 
 <action_safety>
 Keep changes scoped to the task. No unrelated refactors, renames, or cleanup unless required for
-correctness. Do NOT run git add or git commit — the orchestrator commits after reviewing. Leave the
-work uncommitted in the working tree.
+correctness. Prefer the smallest diff that satisfies each step: no speculative abstractions, config
+knobs, or unused helpers. If a step looks unnecessary, still run it and flag the objection in your
+report; the reviewer decides. Do NOT run git add or git commit — leave the work uncommitted in the
+working tree for review; who lands it is the governing workflow's decision, never yours.
 </action_safety>
 
 <structured_output_contract>
 End with a report in this exact shape:
-  1. What changed and why
+  1. Completed steps, and what changed and why
   2. Files touched
-  3. Gate outcomes (paste the test/lint counts)
-  4. Anything you deviated on, left open, or want a decision on
+  3. Verification commands run and their results (paste the test/lint counts)
+  4. Deviations from this brief, and why
+  5. Unapproved observations — things you noticed outside scope and deliberately did not touch
+  6. Blockers, plus anything left open or wanting a decision
 </structured_output_contract>
 ```
 
@@ -94,11 +100,24 @@ in comments, process language like "MVP"/"for now"/"phase N", or specific test c
 repo's own conventions ban — restate the load-bearing ones in the brief too, because OpenCode's
 compliance is only as reliable as what's in front of it.
 
-## One task per brief
+## One bounded job per brief
 
 Keep each brief to a single, bounded job. "Review this, fix what you find, update the docs, and suggest
-a roadmap" produces a muddled run; split it into separate dispatches. One brief → one OpenCode run →
-one commit keeps review and rollback clean, and lets a later task assume the earlier one landed.
+a roadmap" produces a muddled run; split it into separate dispatches. Unrelated goals never share a
+brief, whatever their size.
+
+**The one exception is an approved batch:** when the plan or the user authorized a set of ordered,
+dependent steps as one coherent job, that whole batch goes in one brief — with its ordered steps,
+exact mutable scope, per-step gates, batch gate, and the recorded stop/checkpoint that ends it
+(human decision, protected transition, or required independent review). Inside the batch the worker
+runs the steps in order, runs each step's gate before the next step, and returns **one cumulative
+report at the batch boundary** — completed steps, changed files, verification commands/results,
+deviations, unapproved observations, blockers — not a report per step. Steps whose authorization,
+mutable scope, or review requirements differ belong in a different brief.
+
+For a batch, one brief → one OpenCode run → one review of the cumulative diff keeps review and
+rollback clean; whether that lands as one commit or stays uncommitted is the governing workflow's
+call, not the brief's.
 
 ## Premises freeze at dispatch
 
@@ -134,9 +153,12 @@ changes in the working tree for review.
 
 <structured_output_contract>
 Report: (1) the root cause and your fix, (2) files touched, (3) pytest + ruff outcomes with counts,
-(4) anything you left open or want decided.
+(4) anything you deviated on and why, (5) anything you noticed outside scope and deliberately did
+not touch, (6) blockers or open decisions.
 </structured_output_contract>
 ```
 
-Send this with `relay.mjs` (see [dispatch-and-poll.md](dispatch-and-poll.md)); review the result and
-commit it yourself (see [review-and-land.md](review-and-land.md)).
+Send this with `relay.mjs` (see [dispatch-and-poll.md](dispatch-and-poll.md)); review the result
+yourself (see [review-and-land.md](review-and-land.md)); whether anything lands is the governing
+workflow's decision — that is the target repo's AGENTS/CLAUDE instructions, the plan, or an explicit
+user instruction, never the relay, the implementer, or delegation opt-in alone.

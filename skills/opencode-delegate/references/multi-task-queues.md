@@ -4,19 +4,37 @@ The single-task loop scales to a queue, and that's where delegation pays off mos
 across layers, a migration touching many files, a refactor sweep. The discipline that makes a queue
 trustworthy is sequencing and bookkeeping, not parallelism.
 
-## Run sequentially, one commit per task
+## Run sequentially, land at the agreed boundary
 
-Resist the urge to fan out the whole queue at once. Run tasks **one at a time, in dependency order**,
-landing each (review + gates + commit) before dispatching the next. Three reasons:
+Tasks stay **one at a time, in dependency order** — that part doesn't change. What changes is where
+you land them:
 
-- **Later tasks assume earlier ones landed.** Task 3's brief can say "the X added in the previous step
-  exists" only if the previous step actually committed.
-- **One commit per task** keeps the history reviewable and any single step revertible.
-- **Each review is honest.** A clean working tree before each dispatch means the next task's
-  `touchedFiles` shows only *its* changes, not a pile-up from earlier tasks.
+- **Unrelated tasks** (separate goals, separate briefs): land each one — review + gates, plus
+  whatever commit step the governing workflow authorizes — before dispatching the next.
+- **One approved batch** (ordered, dependent steps inside a single authorized, coherent job): keep
+  them in one brief and run them serially, each step's gate locally before the next step. You review
+  the cumulative diff **once, at the batch boundary** — not after every microstep. The batch ends at
+  its recorded checkpoint (human decision, protected transition, or required independent review),
+  which closes this batch and requires a new dispatch. Proceed on to that next batch only if the
+  current user request or governing task contract already records the authorization for it;
+  otherwise wait for authorization. Don't ask again for authorization already on record.
+
+Steps whose authorization, mutable scope, or review requirements differ are not one batch — they
+stay separate briefs. There is no fixed task-count limit either way; compatibility is the test.
+
+Why serial either way:
+
+- **Later tasks assume earlier ones are in the tree.** Task 3's brief can say "the X added in the
+  previous step exists" only because the previous step's changes are still there — verified and
+  uncommitted, or committed if the governing workflow commits between units.
+- **Landing per unit keeps history reviewable** and any single unit revertible — when commits are
+  authorized at all. Under a read-only governing workflow (e.g. `improve`), nothing lands; the batch
+  stays uncommitted and the review is the boundary.
+- **Each review is honest.** A tree holding only the current unit's changes means the next task's
+  `touchedFiles` shows *its* changes, not a pile-up from earlier work.
 
 Parallelism is occasionally worth it for genuinely independent tasks on separate files, but it
-sacrifices the clean-tree-per-task property and makes review harder. Default to sequential. (Each fresh
+sacrifices the clean-tree-per-unit property and makes review harder. Default to sequential. (Each fresh
 `relay.mjs` dispatch starts a new OpenCode session, so independent tasks don't share context — fold any
 shared constraint into each brief, see below.)
 
@@ -34,7 +52,7 @@ For anything longer than two or three tasks — especially a run the human steps
 single progress file alongside the work. It's the durable record that survives your own context limits
 and lets the human catch up at a glance. A shape that works:
 
-- **Status table** — each task: queued / at-implementer / reviewed+committed (with the commit hash).
+- **Status table** — each task: queued / at-implementer / reviewed (+ committed, with the commit hash, when the governing workflow authorizes commits).
 - **Per-task review notes** — what landed, what you verified, the gate outcome. One short paragraph.
 - **"Needs your eyes"** — design decisions OpenCode made, non-blocking nitpicks, anything you want the
   human to overrule or confirm. This is the section they read first.
@@ -53,7 +71,9 @@ verify the whole:
 - Do a repo-wide check for the thing the queue was about (e.g. after a removal, grep the entire tree
   for any surviving reference; after a rename, confirm no stragglers).
 - For schema work, replay all the new migrations from a clean state and check for drift.
-- Then push and open or update the PR, with a description that reflects what actually shipped.
+- Then, if the governing workflow authorizes publication, push and open or update the PR, with a
+  description that reflects what actually shipped. If it doesn't, stop at the review boundary and
+  report: the diff, the gate results, and what remains uncommitted.
 
 ## When to stop and ask
 
@@ -63,6 +83,12 @@ opting into the queue. Stop and surface when:
 - A task can't be completed correctly within its brief's scope (a scope change is the human's call).
 - A review finds something that calls the *plan* into question, not just the implementation.
 - The gates reveal a problem that affects tasks already "done."
+- A batch reaches a recorded checkpoint — a human decision or a required independent review. Stop
+  there and report; the checkpoint ends this batch and requires a new dispatch, not a continuation of
+  this one. Dispatch the next batch only if the current user request or governing task contract
+  already covers it; if not, wait for authorization — and don't re-ask for authorization that is
+  already on record.
 
-Then report where you are, what's committed, and what the open question is — and wait. A queue that
-quietly works around a broken assumption produces a lot of commits in the wrong direction.
+Then report where you are, what has landed (or what is still uncommitted), and what the open
+question is — and wait. A queue that quietly works around a broken assumption produces a lot of
+commits in the wrong direction.

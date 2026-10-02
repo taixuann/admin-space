@@ -16,8 +16,11 @@ metadata:
 # OpenCode Delegate
 
 You are the **orchestrator**. This skill lets you hand a bounded coding task to a separate
-**implementer** — the OpenCode CLI — then review what it produced and land it yourself. You write
-the brief and own the judgment; OpenCode does the typing in its own session; you verify and commit.
+**implementer** — the OpenCode CLI — then review what it produced and decide what lands. You write
+the brief and own the judgment and the review; OpenCode does the typing in its own session. Who
+commits, pushes, or opens a PR is the **governing workflow's** call — the repo's AGENTS/CLAUDE
+instructions, the plan, or an explicit user instruction — never the implementer's and never a side
+effect of having delegated.
 
 Nothing here is specific to one orchestrating agent. The loop needs only the ability to run a shell
 command and read a file, so any agent with those two capabilities — Claude Code, OpenCode driving a
@@ -69,7 +72,9 @@ OpenCode sees **only** the text you send plus what it can read from the working 
 no shared context. Everything the task needs goes in the brief: the goal, the current state, what to
 change, what to leave untouched, the project's **actual** gate commands (discover them from the repo's
 AGENTS.md/CLAUDE.md/Makefile — do not assume), and a report contract. Tell OpenCode it will **not**
-commit (you will). Keep one task per brief. Full guidance and a template:
+commit — the relay never commits either, and the governing workflow decides who does. Keep to one
+bounded job per brief: a single task, or one *approved batch* of ordered steps when the plan or the
+user authorized them together; unrelated goals never share a brief. Full guidance and a template:
 [references/writing-the-brief.md](references/writing-the-brief.md).
 
 ### 2. Dispatch
@@ -86,7 +91,7 @@ node "<skill-dir>/scripts/relay.mjs" --brief brief.txt --model <provider/model> 
 # --model (or a --lane that sets model) is required on a fresh run
 # fleet lane from delegate-setup:           add --lane <name>  (dials apply; flags still win)
 # read-only (review/diagnosis, no edits):   add --read-only   (uses the plan agent)
-# continue the previous OpenCode session:   add --resume-last  (delta brief only; keeps the model)
+# continue the previous OpenCode session:   add --resume-last  (delta brief only; keeps the model; only when no concurrent session makes the identity ambiguous)
 # hard time limit (watchdog):               add --timeout 2h  (default: off; implementation runs routinely need 1-2h)
 # see all options:                          node .../relay.mjs --help
 ```
@@ -97,24 +102,49 @@ repo under review stays clean. It **never commits** — see step 5. Mechanics, f
 
 ### 3. Wait for completion
 
-The helper blocks until OpenCode finishes, so back it with whatever your orchestrator offers and resume
-when it returns:
+Four different things get conflated here. Keep them apart:
 
-- **Claude Code:** run the Bash call with `run_in_background: true`; you are notified on completion.
-- **Plain shell / other agents:** run it in the foreground for short tasks, or background it and poll
-  the result file — `… &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job`
-  in PowerShell, `start /b` in cmd). The run is done when `result.json` exists with a `status`. (A
-  pre-run usage error — bad args or an empty brief — instead exits with code 2 and writes no result
-  file, so check the exit code too. A missing `opencode` binary exits 127 but *does* write a
-  `result.json` with status `opencode_unavailable`.)
+- **Tool-call yielding** — your shell call returning early (backgrounding, a host notification) is
+  *not* the job's outcome, not a failure, and not proof the host will wake you again later.
+- **Job lifetime** — the relay process runs until OpenCode exits, hits `--timeout`, or is aborted.
+  The relay owns that optional hard timeout; do not re-issue a tool call in a loop to stand in for
+  process monitoring, and do not add a second watchdog.
+- **Worker-reported outcome** — `result.json`'s lower-case `status` (`completed` | `failed` |
+  `timeout` | `aborted` | `opencode_unavailable`) plus `finalMessage`. `completed` means the process
+  exited cleanly: not that the task succeeded, and not that anyone accepted it. OpenCode can report
+  **BLOCKED** in `finalMessage` under status `completed` — that is a blocker to act on, never an
+  APPROVE.
+- **Your verdict** — step 4, after you re-verify.
 
-Do not trust progress trackers over reality: a run is finished when `result.json` is written and the
-process has exited. Read the working tree, not a status line. The implementer's full report is
-the `finalMessage` field in `result.json` (also printed in full on stdout between the report markers).
+A run is terminal only on **process exit plus a readable `result.json`**. Then choose the wait that
+the host actually supports:
+
+- **Short tasks:** a supported foreground facility is fine.
+- **Long tasks:** background only through a host facility whose job survival, terminal notification,
+  result access, and cancellation you have verified *for that host*. **Claude Code** offers
+  `run_in_background: true` with completion notification; other shells (`… &` in bash/zsh including
+  Git Bash/WSL, `Start-Job` in PowerShell, `start /b` in cmd) give you a process to come back to.
+  Codex completion notification is **NOT_ASSESSED** — no evidence, so don't assume it.
+- **No proven notification:** say so before dispatch and agree an explicit **manual-resume** step
+  with the user (e.g. "when the relay exits, re-run with this command / paste `result.json` back").
+  No model-generated progress checks just to wait, no promised automatic next-batch dispatch, no
+  invented wake-up guarantee. A host or runtime that polls without model turns is fine — this skill
+  adds no polling script or scheduler.
+
+Whatever the path, a pre-run usage error (bad args, empty brief) exits `2` with no result file, a
+missing `opencode` binary exits `127` with status `opencode_unavailable`, and a `timeout` kills the
+child — so the tree may hold partial edits. Surface that before recovering: inspect `git status`,
+`git diff`, `git diff --cached`, and untracked files, and **never launch a second writer while the
+prior job may still be alive.** The implementer's full report is the `finalMessage` field in
+`result.json` (also printed in full on stdout between the report markers); an empty `finalMessage`
+means OpenCode stopped without a closing summary — judge the work from `touchedFiles` and the diff,
+and fix the brief's report contract next time.
 
 ### 4. Review — do not trust the self-report
 
-OpenCode's `result.json` includes its own final message and any gate claims. **Re-verify, don't accept:**
+OpenCode's `result.json` includes its own final message and any gate claims — and its `status` only
+describes the *process*. A task result is not accepted work until your review says so. **Re-verify,
+don't accept:**
 
 - **Re-run the project's gates yourself** (the test/lint/build commands from step 1). Never take
   "gates passed" on faith.
@@ -128,12 +158,20 @@ Full checklist: [references/review-and-land.md](references/review-and-land.md).
 
 ### 5. Land it
 
-The implementer edits the working tree; **the orchestrator commits.** Committing should be the act of
-the party that verified the work. Only after the gates pass and the diff holds:
+The implementer edits the working tree and never commits; the relay never commits either. **Who
+commits is the governing workflow's decision** — the repo's instructions, the plan, or an explicit
+user instruction. Where that workflow gives you commit authority, commit as the party that verified
+the work, and only after the gates pass and the diff holds:
 
 - Commit the verified work yourself, with a clear message.
-- If it needs changes, send a delta brief with `--resume-last` (don't restate the whole task) and
-  review again.
+- If it needs changes, send a delta brief on the **same session** — prefer the exact `sessionId`
+  from the result; use `--resume-last` only when no concurrent session makes the identity ambiguous —
+  then review again.
+
+Where the governing workflow does not grant that authority (a read-only advisor such as `improve`,
+or a brief that says "leave it uncommitted"), hand the tree back instead: report the diff, the gate
+results, and where the work sits. Pushes, PRs, and merges are separate authority; opting into
+delegation is not opting into publication.
 
 ## Autonomy model
 
@@ -154,12 +192,13 @@ edit/bash permissions through and defeat "read-only," so a review can't be trick
 
 ## Authorization model
 
-Delegation is something the human opts into. Once they have ("run this queue", "proceed"), committing
-verified, gate-passing work is the agreed contract — that is the whole point. Two limits on that
-mandate: **surface, don't absorb** (report OpenCode's design decisions, defensible-but-unasked turns,
-and non-blocking nitpicks rather than silently keeping them) and **stop for scope changes** (if correct
-completion needs going beyond the brief, ask — don't expand the mandate yourself). The full treatment
-is in [references/review-and-land.md](references/review-and-land.md).
+Delegation is something the human opts into, and opting in authorizes **the run** — not publication.
+Commit, push, PR, and merge authority come from the governing workflow, not from the act of
+delegating; when it is silent on who lands the work, ask rather than assume. Two standing limits on
+the mandate: **surface, don't absorb** (report OpenCode's design decisions, defensible-but-unasked
+turns, and non-blocking nitpicks rather than silently keeping them) and **stop for scope changes**
+(if correct completion needs going beyond the brief, ask — don't expand the mandate yourself). The
+full treatment is in [references/review-and-land.md](references/review-and-land.md).
 
 ## References
 
@@ -167,7 +206,7 @@ is in [references/review-and-land.md](references/review-and-land.md).
   execute blind: structure, XML blocks, the report contract, embedding the real gate commands.
 - [references/dispatch-and-poll.md](references/dispatch-and-poll.md) — `relay.mjs` flags, the
   `result.json` contract, backgrounding per orchestrator, and recovery when a run misbehaves.
-- [references/review-and-land.md](references/review-and-land.md) — the review checklist, the commit
-  boundary, and the rework cycle via `--resume-last`.
+- [references/review-and-land.md](references/review-and-land.md) — the review checklist, the landing
+  boundary the governing workflow sets, and the rework cycle on a resumed session.
 - [references/multi-task-queues.md](references/multi-task-queues.md) — running a sequential queue:
   carrying constraints forward, progress tracking, and the end-of-run coherence check.

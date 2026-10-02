@@ -117,6 +117,34 @@ line).
 is never broken between steps when possible — e.g. add new path, switch
 callers, then remove old path.)
 
+## Batch (optional — one approved, coherent job)
+
+Include this section only when the steps above form a single user-authorized
+batch. Unrelated goals do not go in a batch; they get their own plan.
+
+- **Batch ID**: <NNN-batch-K>
+- **Ordered steps**: Step 1 → Step 2 → Step 3 (serial; each depends on the last)
+- **Exact mutable scope**: <the only paths this batch may modify — usually
+  narrower than Scope, and the scope the cumulative review is checked against>
+- **Input / base identity**: <base commit each step starts from, plus any input
+  snapshot / plan hash the steps must agree on>
+- **Per-step gates**: Step N: `<command>` → <expected result>, run locally in
+  sequence before the next step starts
+- **Batch gate**: `<command>` → <expected result>, run once on the cumulative tree
+- **Stop / checkpoint conditions**: <the human decision, protected transition,
+  or required independent review that ends this batch — the executor stops
+  there and reports instead of absorbing the next batch>
+- **Compact report**: completed steps, changed files, verification
+  commands/results, deviations, unapproved observations, blockers — one
+  cumulative report at the batch boundary, not per step
+
+Group steps only while authorization, mutable scope, and review requirements
+stay compatible. Dependencies inside a serial batch are expected; a human
+decision, a protected transition, or a required independent-review checkpoint
+ends the batch. There is no fixed task-count limit in either direction — the
+boundary is the compatibility of those three things, not a number. The batch
+leaves changes uncommitted unless the governing workflow says otherwise.
+
 ## Test plan
 
 - New tests to write, in which file, covering which cases (list them:
@@ -195,3 +223,4 @@ Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJE
 - Would a reviewer reading only "Why this matters" + "Done criteria" understand what they're approving?
 - No secret values anywhere in the file — locations and credential types only.
 - "Planned at" SHA is filled in and the in-scope paths in the drift check match the Scope section.
+- If a Batch section exists: do its ordered steps share one authorization and one mutable scope, does its base/input identity match "Planned at", and does its stop list name the real human decisions and independent-review checkpoints — not an arbitrary task count?

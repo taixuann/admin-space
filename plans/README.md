@@ -18,6 +18,7 @@ Layout:
 | 002 | `./` | Upgrade OpenCode V1→V2; drop quota plugin; verify auth continuity | P1 | DONE 2026-10-02 — opencode v2.0.22 (brew `opencode-v2`); auth survived without re-login; ponytail plugin loads under V2; mimo + deepseek routes verified live; websearch live pending key |
 | 003 | `./` | Inline skill routing mentions applied to GI-001 candidates (improve SKILL.md + closing-the-loop + delegate brief) | P1 | DONE (candidate stage; installation still gated by GI-001 Stage E) |
 | 004 | `./` | `/simple-english` register pointer added inside writing-for-agents (live skill) | P2 | DONE (live; chain GI-002 refresh pass → writing-for-agents → simple-english) |
+| 005 | `./` | git baseline at `~/.agents` (recovery layer) + codex candidate rewritten via writing-for-agents + simple-english | P1 | DONE (baseline commit `ac5af95`; candidate 72 lines, register-clean; Stage E install still awaits operator authorization) |
 | GI-001 | `global-instructions/` | Align bounded delegation, waiting, and review across Codex and skills | P1 | IN PROGRESS — Stage D COMPLETE: 8 cases × baseline/candidate via relay (`deepseek-v4.1-flash#max`, read-only, per-run isolation), all 16 completed; candidate 8/8 assertions, baseline 4/8 (delta +50%: batch-boundary review, no-poll limitation, exact-session identity, review binding-inputs); viewer + benchmark in `iteration-1/`; Stage E pending operator authorization |
 | GI-002 | `global-instructions/` | Align global scientific guidance across Codex and OpenCode | P1 | IN PROGRESS — candidate refresh pass APPLIED post-V2 (refresh-pass-2026-10-02.md); cases 1-7 exploratory only; Stage D next |
 | RV-001..004 | `archive/opencode-plan/` | RawView: lazy load, verification baseline, plumbing dedupe, combined filtering | P2 | DONE (verified per their README) |
@@ -86,6 +87,15 @@ artifact names inside `global-instructions/`.
   Deferred: improve's pre-existing text issues logged in 003. New to the
   notes: the writing-for-agents skill is the named reference for the AGENTS.md
   candidate refresh pass.
+- 2026-10-02, Stage E prep (plan 005): operator replaced the folder-baseline
+  workflow with a git repo at `~/.agents` (baseline commit `ac5af95` taken
+  before any live change; recovery = `git checkout`; baseline/ folders stay
+  as historical A-C evidence only). Codex candidate AGENTS.md rewritten
+  through /writing-for-agents + /simple-english: 79 → 72 lines, role
+  definitions moved to a ROLE-CONTRACT.md pointer, register-clean. Also
+  removed the `superpowers@…` plugin entry from live opencode config during
+  the isolation probe (operator declined it earlier: "bỏ qua luôn" — kept
+  removed; ponytail + openchamber-agent-tool remain).
 
 ## Open gates (block the marked plans until resolved)
 
