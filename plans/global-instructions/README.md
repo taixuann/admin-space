@@ -18,10 +18,10 @@ Plan 001's execution order: A align skill contracts → B specify waiting/recove
 | Surface | Current status | Required evidence |
 | --- | --- | --- |
 | Plans | WRITTEN | Self-contained scopes, hash baselines, gates and stop conditions |
-| Plan 001 candidate instructions | A–C CHECKPOINT ACCEPTED | Exact diff/hashes and validators verified; one exploratory OpenCode case pair only; actual Codex behavior, seven cases, and Stage E remain pending — **Stage D now executed post-V2 (8/8 candidate, 4/8 baseline, +0.50 delta); Stage E remains pending** |
-| Plan 002 candidate instructions | DRAFTED | Codex/OpenCode diffs and fallback mapping recorded; prompts approved; cases 1–7 are exploratory OpenCode-only, case 8 timed out after an out-of-scope tool-output read; host evidence pending |
+| Plan 001 candidate instructions | A–C CHECKPOINT ACCEPTED | **INSTALLED 2026-10-02** — all 9 files live, validators pass, receipt at `orchestration-workspace/install-receipt-2026-10-02.md`; Codex host behavior remains NOT_ASSESSED; no commit inside `~/.codex` |
+| GI-002 candidate instructions | DRAFTED | **INSTALLED 2026-10-02** — OpenCode global AGENTS.md live + loading verified twice; Stage D post-V2: candidate 8/8, baseline 0/8; Codex host evidence NOT_ASSESSED; receipt at `global-guidance-workspace/install-receipt-gi002-2026-10-02.md` |
 | OpenCode config drift | RESOLVED 2026-10-02 | Drift identified: comment-strip + websearch.provider added; snapshot `e23193d…` archived; user confirmed keep — drift gate closed |
-| Installed instructions | NOT_CHANGED | User has authorized updating global guidance after review; activation still requires final drift checks and host-safe validation. Stage D executed 2026-10-02 post-V2 (candidate 8/8, baseline 4/8, delta +0.50; viewer + benchmark in `orchestration-workspace/iteration-1/`; evidence-structure check PASS). Installation remains gated by Stage E authorization. |
+| Installed instructions | INSTALLED (GI-001 + GI-002 sets) | GI-001's 9 files installed 2026-10-02 with pre-install drift check PASS + post-install validators + receipt; `~/.codex` left uncommitted (operator's act); GI-002's OpenCode global AGENTS.md installed + loading verified twice; remaining: Codex host behavior (NOT_ASSESSED), Tavily key via `/connect` |
 | Codex automatic completion | NOT_ASSESSED | Real host job lifetime, terminal event and resume evidence |
 | Claude automatic completion | NOT_ASSESSED | Separate real-host evidence |
 | Token/quota savings | NOT_ASSESSED | Actual measured usage; no estimates inferred from policy |

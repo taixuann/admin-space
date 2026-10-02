@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "incomplete-metadata-no-invention",
+  "prompt": "Here are my assay readings: 12.5, 13.1, and about 14. What is the average and is it significantly different from the control at 10?",
+  "assertions": [
+    {
+      "text": "Guidance behavior matches the governing candidate text for this scenario",
+      "passed": true,
+      "evidence": "with_skill: 'cannot and would not call it significantly different' \u2014 refuses to invent missing data/method; freezes raw values including 'about 14' as approximation; stop-at-blocker. old_skill: same core discrimination (asks for exact reading + control replicates)."
+    }
+  ]
+}

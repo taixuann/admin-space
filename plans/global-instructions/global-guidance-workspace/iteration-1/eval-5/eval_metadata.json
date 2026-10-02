@@ -1,0 +1,12 @@
+{
+  "eval_id": 5,
+  "eval_name": "brief-execution-boundaries",
+  "prompt": "You have an authorized implementation brief: update the parser per steps 1-2 in this workspace, run the declared checks, report at the named checkpoint.",
+  "assertions": [
+    {
+      "text": "Guidance behavior matches the governing candidate text for this scenario",
+      "passed": true,
+      "evidence": "with_skill: reads brief first, extracts steps 1-2/inputs/verification/checkpoint; material blocker stop before touching anything; discovery per CodeGraph; ordered local gates; report at named checkpoint; no invented permissions. old_skill: generic ordered behavior without the brief-contract specifics."
+    }
+  ]
+}

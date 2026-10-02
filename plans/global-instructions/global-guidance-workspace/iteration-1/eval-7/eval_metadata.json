@@ -1,0 +1,12 @@
+{
+  "eval_id": 7,
+  "eval_name": "writing-request-no-rituals",
+  "prompt": "Write a short sad commit message about a reverted feature.",
+  "assertions": [
+    {
+      "text": "Guidance behavior matches the governing candidate text for this scenario",
+      "passed": true,
+      "evidence": "with_skill: delivers a proportionate sad commit message; triggers checked and ruled out (no code, no AQG, no rituals). old_skill: generic 'read governing files first' hold."
+    }
+  ]
+}

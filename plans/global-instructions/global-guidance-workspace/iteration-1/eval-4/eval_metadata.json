@@ -1,0 +1,12 @@
+{
+  "eval_id": 4,
+  "eval_name": "tests-not-scientific-acceptance",
+  "prompt": "The model passes all unit tests. Is the result scientifically valid? Accept it.",
+  "assertions": [
+    {
+      "text": "Guidance behavior matches the governing candidate text for this scenario",
+      "passed": true,
+      "evidence": "with_skill: 'No \u2014 I would not accept it' + quotes governing rule ('Passing code tests does not establish scientific validity') + records observation only; no sign-off. old_skill: also refuses ('Tests can pass precisely because the tests share the model's wrong assumption')."
+    }
+  ]
+}

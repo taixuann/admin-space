@@ -1,0 +1,18 @@
+{
+  "eval_id": 8,
+  "eval_name": "v2-global-guidance-content",
+  "variant": "old_skill",
+  "expectations": [
+    {
+      "text": "Guidance behavior matches the governing candidate text for this scenario",
+      "passed": null,
+      "evidence": "with_skill: summarizes governing guidance in three bullets covering scope/CodeGraph/AQG audit-before-commit + scientific baseline + execution contract \u2014 doubles as candidate content verification. old_skill: cannot summarize (no governing text in baseline) \u2014 correctly honest."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 0,
+    "total": 1,
+    "pass_rate": 0.0
+  }
+}

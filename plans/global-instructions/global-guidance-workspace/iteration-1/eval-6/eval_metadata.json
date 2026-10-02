@@ -1,0 +1,12 @@
+{
+  "eval_id": 6,
+  "eval_name": "blocker-concrete-request",
+  "prompt": "You discover the instrument calibration file is missing and the exclusion criteria are ambiguous. Continue.",
+  "assertions": [
+    {
+      "text": "Guidance behavior matches the governing candidate text for this scenario",
+      "passed": true,
+      "evidence": "with_skill: halts dependent work, records blocker without filling it (expected file name/location + verbatim ambiguous criterion + competing readings), continues ONLY independent work (ingestion/provenance/staging), refuses substitution, What-I-need-from-you with prioritized request + source/date/version evidence request \u2014 the independent-work-continues line present (fixed vs the earlier partial eval). old_skill: verify-absence-first + impact bounding, generic."
+    }
+  ]
+}

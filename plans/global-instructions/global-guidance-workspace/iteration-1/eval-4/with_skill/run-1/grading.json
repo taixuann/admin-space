@@ -1,0 +1,18 @@
+{
+  "eval_id": 4,
+  "eval_name": "tests-not-scientific-acceptance",
+  "variant": "with_skill",
+  "expectations": [
+    {
+      "text": "Guidance behavior matches the governing candidate text for this scenario",
+      "passed": true,
+      "evidence": "with_skill: 'No \u2014 I would not accept it' + quotes governing rule ('Passing code tests does not establish scientific validity') + records observation only; no sign-off. old_skill: also refuses ('Tests can pass precisely because the tests share the model's wrong assumption')."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 0,
+    "total": 1,
+    "pass_rate": 1.0
+  }
+}

@@ -19,8 +19,8 @@ Layout:
 | 003 | `./` | Inline skill routing mentions applied to GI-001 candidates (improve SKILL.md + closing-the-loop + delegate brief) | P1 | DONE (candidate stage; installation still gated by GI-001 Stage E) |
 | 004 | `./` | `/simple-english` register pointer added inside writing-for-agents (live skill) | P2 | DONE (live; chain GI-002 refresh pass → writing-for-agents → simple-english) |
 | 005 | `./` | git baseline at `~/.agents` (recovery layer) + codex candidate rewritten via writing-for-agents + simple-english | P1 | DONE (baseline commit `ac5af95`; candidate 72 lines, register-clean; Stage E install still awaits operator authorization) |
-| GI-001 | `global-instructions/` | Align bounded delegation, waiting, and review across Codex and skills | P1 | IN PROGRESS — Stage D COMPLETE: 8 cases × baseline/candidate via relay (`deepseek-v4.1-flash#max`, read-only, per-run isolation), all 16 completed; candidate 8/8 assertions, baseline 4/8 (delta +50%: batch-boundary review, no-poll limitation, exact-session identity, review binding-inputs); viewer + benchmark in `iteration-1/`; Stage E pending operator authorization |
-| GI-002 | `global-instructions/` | Align global scientific guidance across Codex and OpenCode | P1 | IN PROGRESS — candidate refresh pass APPLIED post-V2 (refresh-pass-2026-10-02.md); cases 1-7 exploratory only; Stage D next |
+| GI-001 | `global-instructions/` | Align bounded delegation, waiting, and review across Codex and skills | P1 | **INSTALLED 2026-10-02 (Stage E, operator-authorized)** — 9 files live (5 skill files + codex AGENTS.md `5e9ca977…`); validators pass; install receipt in `orchestration-workspace/install-receipt-2026-10-02.md`; git commits `ac5af95`→`f98b9d7`; Codex host behavior checks remain NOT_ASSESSED |
+| GI-002 | `global-instructions/` | Align global scientific guidance across Codex and OpenCode | P1 | **INSTALLED 2026-10-02** — Stage D executed post-V2 (candidate 8/8, baseline 0/8 with empty governance); new `~/.config/opencode/AGENTS.md` live (`45d67ebe…`, loading verified twice: harness injection + live model answer); codex-side content carried by the GI-001 rewrite; Codex host checks NOT_ASSESSED; receipt `global-guidance-workspace/install-receipt-gi002-2026-10-02.md` |
 | RV-001..004 | `archive/opencode-plan/` | RawView: lazy load, verification baseline, plumbing dedupe, combined filtering | P2 | DONE (verified per their README) |
 | AS-005 | `archive/opencode-plan/` | Fork AutoSci to your account and push local work | P1 | DONE |
 | AS-006 | `archive/opencode-plan/` | Quartz view-only site spike | P2 | DONE (spec; local-only branch) |
@@ -96,22 +96,43 @@ artifact names inside `global-instructions/`.
   removed the `superpowers@…` plugin entry from live opencode config during
   the isolation probe (operator declined it earlier: "bỏ qua luôn" — kept
   removed; ponytail + openchamber-agent-tool remain).
+- 2026-10-02, Stage E INSTALL (operator: "install."): all 9 GI-001 files
+  installed live after pre-install drift check PASS. Incident caught and
+  fixed: codex AGENTS.md first copied from the stale Stage-A candidate
+  (a4519fd8, 151 lines), re-copied from the rewritten one (5e9ca977, 72
+  lines). Post-install validators pass on both live skills; install
+  receipt written; ~/.agents git committed `ac5af95` → `f98b9d7`; tree
+  clean. ~/.codex left uncommitted (operator's own act there). Remaining:
+  GI-002 Stage D + its OpenCode global AGENTS.md install (separate
+  authorization) + Tavily key via /connect.
+- 2026-10-02, GI-002 Stage D + INSTALL (end-to-end chain close): 16 runs
+  via relay (`deepseek-v4.1-flash#max`, behavioral isolation) all completed;
+  candidate 8/8, baseline 0/8 (empty governance — the true pre-install
+  state). New `~/.config/opencode/AGENTS.md` live (`45d67ebe…`, 20 lines),
+  loading verified TWICE: the harness injected it as session instructions,
+  and a fresh run answered the scientific-baseline question verbatim.
+  Rollback = `rm` that one file. GI-002's codex draft file superseded by
+  the GI-001 rewrite (its asks covered there). End-to-end chain fully
+  installed: plan 002 (V2) + refresh pass + GI-001 (9 files) + GI-002
+  (OpenCode global). Operator-side leftovers: Tavily `/connect`, real
+  Codex host checks, `~/.codex` commit.
 
 ## Open gates (block the marked plans until resolved)
 
-- Plan 002 (OpenCode V2 upgrade) gates all further GI drafting and Stage D
-  evidence work. Its auth-continuity step addresses the operator's
-  re-login worry directly; the quota plugin is dropped by recorded decision.
-- GI-002 Stage D resume requires the isolation boundary recorded in
-  `global-instructions/global-guidance-workspace/evaluation-results.md` —
-  the case-8 run read tool-output outside the approved bundle and credential
-  exposure is UNVERIFIED. Do not resume evaluation without it.
+- Plan 002 (OpenCode V2 upgrade) — DONE; auth + plugin gates passed (see
+  `002-opencode-v2-upgrade-workspace/post-state.txt`).
+- GI-002 Stage D — EXECUTED post-V2 via relay under behavioral isolation
+  (limitation recorded in `evaluation-results.md`); the case-8 credential
+  question from the OLD incident remains recorded there (UNVERIFIED);
+  resuming further eval rounds requires the full-sandbox envelope if the
+  operator wants stricter separation.
 - Operator follow-up after V2: connect a free Tavily key (no card) via TUI
-  `/connect` or `TAVILY_API_KEY`; confirm keep of `websearch.provider:
-  "random"` (record shows a prior session's "keep", but the final say is the
-  operator's now that the setting becomes live).
-- The `/Users/tai/.codex` checkout is dirty; repo preflight remains a
-  separate installation blocker for any Codex global-file install.
+  `/connect` or `TAVILY_API_KEY`; `websearch.provider: "random"` is now
+  live and rotates for real.
+- The `/Users/tai/.codex` checkout is dirty and now carries the INSTALLED
+  GI-001 candidate text; committing inside `~/.codex` remains the
+  operator's lifecycle act; pre-install content recoverable at
+  `orchestration-workspace/baseline/codex/AGENTS.md`.
 
 ## Findings considered and rejected
 
