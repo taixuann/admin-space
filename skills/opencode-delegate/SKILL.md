@@ -1,16 +1,15 @@
 ---
 name: opencode-delegate
 description: >-
-  Delegate a coding task to the OpenCode CLI as a background implementer, then review its diff and
-  land it yourself. Use this whenever the user wants to hand implementation work to OpenCode — phrasings
-  like "have OpenCode do X", "delegate this to OpenCode", "run it through OpenCode", or "use OpenCode to
-  implement/fix/refactor" — or wants to run a queue of coding tasks through OpenCode while staying the
-  reviewer. Prefer it when the user will review the diff and commit it themselves. DO NOT USE for tasks
-  small enough to do inline, or when the user wants the code written directly without delegating.
+  Delegate a coding task to the OpenCode CLI as implementer, run a separate read-only review pass, then
+  verify the diff and follow the governing workflow's landing rules. Use this whenever the user wants
+  OpenCode to implement, fix, or refactor code, or wants to queue coding tasks while staying the reviewer.
+  Prefer it when the user will review the diff and commit it themselves. Do not use for tasks small enough
+  to do inline, or when the user wants the code written directly without delegating.
 license: MIT
 compatibility: Requires the `opencode` CLI installed and authenticated, Node 18+, and git. The orchestrating agent must be able to run shell commands and read files. Shell examples assume bash/zsh (macOS/Linux, or Git Bash/WSL on Windows).
 metadata:
-  version: 0.5.0
+  version: 0.5.1
 ---
 
 # OpenCode Delegate
@@ -43,24 +42,32 @@ other orchestrators as designed-for, not yet proven.)
 3. A model provider is authenticated — `opencode auth list` shows at least one credential.
 4. You are in (or will point `--cd` at) the target git repository.
 
-## Choose the implementer model
+## Choose the model for implementation and review
 
-OpenCode has **no safe default** — a bare `opencode run` errors — so a fresh run needs a model via
-`--model` or a fleet `--lane` that sets one (a resumed run inherits its session's model). Naming the
-model is the one decision a single-model backend like codex-delegate never had, and it has two owners:
+Use the user's selected flat-rate route for both the write-capable implementation run and a separate,
+read-only review run:
 
-- **The human owns which models are allowed.** `opencode models` lists hundreds of entries, most billed
-  per token (OpenRouter and the like); only the human knows which are their flat-rate subscriptions, and
-  the CLI can't tell them apart. So the usable set is theirs — ideally stated once in the repo's
-  `AGENTS.md` or their `CLAUDE.md` (e.g. "delegate mechanical work to `opencode-go/…`, hard logic to
-  `…`").
-- **You, the orchestrator, pick per task — from that set.** Match the model to the brief: a cheap, fast
-  model for a mechanical sweep (rename, migration, removal); a strong one for a subtle bug or a
-  money/security path.
-- **If no usable set is stated, ask — don't guess.** Guessing from the catalog risks a metered model and
-  a surprise bill. Name the constraint to the human and let them choose.
+- Model: `opencode-go/muse-spark-1.3-contributor`
+- Variant: `xhigh`
+- OpenCode 2.x model selector: `opencode-go/muse-spark-1.3-contributor#xhigh`
 
-More depth: [references/writing-the-brief.md](references/writing-the-brief.md).
+Pass `--model opencode-go/muse-spark-1.3-contributor --variant xhigh` to the relay for both runs. The
+relay converts the variant to the correct CLI form for the installed OpenCode version. Do not choose
+another model based on task type, and do not silently fall back if the route is unavailable. Stop and
+report the failure. Change this standing choice only when the user explicitly changes it.
+
+When first setting up this route, or after changing the OpenCode version or provider configuration,
+verify it with:
+
+```bash
+opencode run --model opencode-go/muse-spark-1.3-contributor#xhigh 'Say hi'
+```
+
+The user chose this route for both roles. A read-only review by the same model provides a fresh pass
+over the diff, but it does not provide model diversity or independent-model consensus. The orchestrator
+still owns the final review, reruns the repository's gates, and decides whether work is acceptable.
+
+More depth on writing self-contained briefs: [references/writing-the-brief.md](references/writing-the-brief.md).
 
 ## The loop
 
@@ -87,10 +94,10 @@ directory — if unsure where it landed, run `find ~ -name relay.mjs -path '*ope
 substitute the directory above it.)
 
 ```bash
-node "<skill-dir>/scripts/relay.mjs" --brief brief.txt --model <provider/model> --cd /path/to/repo
+node "<skill-dir>/scripts/relay.mjs" --brief brief.txt --model opencode-go/muse-spark-1.3-contributor --variant xhigh --cd /path/to/repo
 # --model (or a --lane that sets model) is required on a fresh run
 # fleet lane from delegate-setup:           add --lane <name>  (dials apply; flags still win)
-# read-only (review/diagnosis, no edits):   add --read-only   (uses the plan agent)
+# read-only review (fresh run, no edits):   add --read-only and use the same model and variant
 # continue the previous OpenCode session:   add --resume-last  (delta brief only; keeps the model; only when no concurrent session makes the identity ambiguous)
 # hard time limit (watchdog):               add --timeout 2h  (default: off; implementation runs routinely need 1-2h)
 # see all options:                          node .../relay.mjs --help
@@ -153,6 +160,19 @@ don't accept:**
 - **Run the relevant guard skills** on the diff if you have them installed (clean-code-guard,
   test-guard, etc. from `guard-skills`) — this skill produces the work; those skills judge it.
 - For schema/migration changes, round-trip them; for removals, grep for dangling references.
+
+After these checks, run a new, read-only review pass with the same Muse Spark model and `xhigh` variant.
+Give it the original task brief, intended scope, diff, and gate results. Use `--read-only` so it runs as
+the `plan` agent, and start a fresh session rather than resuming the implementation session. Ask it to
+identify concrete defects, missed requirements, and unverified claims. Treat its response as review
+input, not approval; the orchestrator still owns the final judgment. If any finding leads to a change,
+repeat the relevant checks and review the updated diff.
+
+```bash
+node "<skill-dir>/scripts/relay.mjs" --brief review-brief.txt \
+  --model opencode-go/muse-spark-1.3-contributor --variant xhigh \
+  --read-only --cd /path/to/repo
+```
 
 Full checklist: [references/review-and-land.md](references/review-and-land.md).
 
