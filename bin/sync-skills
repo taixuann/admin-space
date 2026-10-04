@@ -1,57 +1,76 @@
 #!/bin/bash
-# Mirror ~/.agents/skills into ~/.claude/skills with relative symlinks.
+# Mirror ~/.agents/skills into the hosts that need a symlink.
 #
-# Claude Code reads .claude/skills only. Anthropic issue #53950 documents that
-# skills installed under ~/.agents/skills are reported as "Unknown skill".
-# Codex, opencode, goose, and pi each read ~/.agents/skills on their own, so
-# this script covers Claude and nothing else.
+# Claude Code reads .claude/skills only; Anthropic issue #53950 records that
+# skills under ~/.agents/skills come back as "Unknown skill", so Claude needs
+# a link. Gemini reads ~/.gemini/config/skills and needs one too.
+#
+# Codex, opencode, goose, and pi read ~/.agents/skills on their own and are
+# deliberately not in this list:
+#   codex    binary carries ".agents/skills" next to ".codex/config.toml"
+#   opencode EXTERNAL_DIRS = [".claude", ".agents"] in src/skill/skill.ts
+#   goose    docs name ~/.agents/skills the canonical global location
+#   pi       loads them with no link in between
+#
+# Links are relative, so a moved or cloned home still resolves.
 #
 # Usage:
-#   sync-skills          repair the mirror
+#   sync-skills          repair the mirrors
 #   sync-skills --check  report what would change, touch nothing
 
 set -uo pipefail
 
 SRC="$HOME/.agents/skills"
-DST="$HOME/.claude/skills"
+TARGETS=("$HOME/.claude/skills" "$HOME/.gemini/config/skills")
 CHECK=0
 [ "${1:-}" = "--check" ] && CHECK=1
 
 [ -d "$SRC" ] || { echo "no source: $SRC" >&2; exit 1; }
-mkdir -p "$DST"
 
-# Relative form, so a moved or cloned home still resolves.
-WANT="../../.agents/skills"
+# Relative prefix that walks from a target directory back up to $HOME.
+up_to_home() {
+  local d="$1" n=0 p=""
+  while [ "$d" != "$HOME" ]; do
+    d=$(dirname "$d")
+    n=$((n + 1))
+  done
+  while [ "$n" -gt 0 ]; do p="../$p"; n=$((n - 1)); done
+  printf '%s' "$p"
+}
 
 echo "source: $SRC"
-echo "target: $DST"
+for DST in "${TARGETS[@]}"; do
+  mkdir -p "$DST"
+  REL="$(up_to_home "$DST")${SRC#"$HOME"/}"
+  echo "target: $DST   (links as ${REL}/<name>)"
 
-for skill in "$SRC"/*/; do
-  name=$(basename "${skill%/}")
-  link="$DST/$name"
-  want="$WANT/$name"
+  for skill in "$SRC"/*/; do
+    name=$(basename "${skill%/}")
+    link="$DST/$name"
+    want="$REL/$name"
 
-  if [ -L "$link" ]; then
-    cur=$(readlink "$link")
-    [ "$cur" = "$want" ] && continue
-    echo "  retarget $name: $cur -> $want"
-    [ "$CHECK" = 0 ] && ln -sfn "$want" "$link"
-  elif [ -e "$link" ]; then
-    echo "  skip   $name (real directory in target, not a symlink)" >&2
-  else
-    echo "  add    $name -> $want"
-    [ "$CHECK" = 0 ] && ln -s "$want" "$link"
-  fi
-done
+    if [ -L "$link" ]; then
+      cur=$(readlink "$link")
+      [ "$cur" = "$want" ] && continue
+      echo "  retarget $name: $cur -> $want"
+      [ "$CHECK" = 0 ] && ln -sfn "$want" "$link"
+    elif [ -e "$link" ]; then
+      echo "  skip    $name (real directory in target, not a symlink)" >&2
+    else
+      echo "  add     $name -> $want"
+      [ "$CHECK" = 0 ] && ln -s "$want" "$link"
+    fi
+  done
 
-# Drop links whose source skill is gone.
-for link in "$DST"/*; do
-  [ -L "$link" ] || continue
-  case "$(readlink "$link")" in
-    "$WANT"/*)
-      [ -e "$link" ] || { echo "  remove $(basename "$link") (source gone)"; [ "$CHECK" = 0 ] && rm "$link"; }
-      ;;
-  esac
+  # Drop links whose source skill is gone.
+  for link in "$DST"/*; do
+    [ -L "$link" ] || continue
+    case "$(readlink "$link")" in
+      "$REL"/*)
+        [ -e "$link" ] || { echo "  remove  $(basename "$link") (source gone)"; [ "$CHECK" = 0 ] && rm "$link"; }
+        ;;
+    esac
+  done
 done
 
 [ "$CHECK" = 1 ] && echo "check only, nothing changed" || echo "done"
