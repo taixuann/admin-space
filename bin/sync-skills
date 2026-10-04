@@ -1,0 +1,58 @@
+#!/bin/bash
+# Mirror ~/.agents/skills into ~/.claude/skills with relative symlinks.
+#
+# Claude Code reads .claude/skills only. Anthropic issue #53950 documents that
+# skills installed under ~/.agents/skills are reported as "Unknown skill".
+# Codex, opencode, goose, and pi each read ~/.agents/skills on their own, so
+# this script covers Claude and nothing else.
+#
+# Usage:
+#   sync-skills          repair the mirror
+#   sync-skills --check  report what would change, touch nothing
+
+set -uo pipefail
+
+SRC="$HOME/.agents/skills"
+DST="$HOME/.claude/skills"
+CHECK=0
+[ "${1:-}" = "--check" ] && CHECK=1
+
+[ -d "$SRC" ] || { echo "no source: $SRC" >&2; exit 1; }
+mkdir -p "$DST"
+
+# Relative form, so a moved or cloned home still resolves.
+WANT="../../.agents/skills"
+
+echo "source: $SRC"
+echo "target: $DST"
+
+for skill in "$SRC"/*/; do
+  name=$(basename "${skill%/}")
+  link="$DST/$name"
+  want="$WANT/$name"
+
+  if [ -L "$link" ]; then
+    cur=$(readlink "$link")
+    [ "$cur" = "$want" ] && continue
+    echo "  retarget $name: $cur -> $want"
+    [ "$CHECK" = 0 ] && ln -sfn "$want" "$link"
+  elif [ -e "$link" ]; then
+    echo "  skip   $name (real directory in target, not a symlink)" >&2
+  else
+    echo "  add    $name -> $want"
+    [ "$CHECK" = 0 ] && ln -s "$want" "$link"
+  fi
+done
+
+# Drop links whose source skill is gone.
+for link in "$DST"/*; do
+  [ -L "$link" ] || continue
+  case "$(readlink "$link")" in
+    "$WANT"/*)
+      [ -e "$link" ] || { echo "  remove $(basename "$link") (source gone)"; [ "$CHECK" = 0 ] && rm "$link"; }
+      ;;
+  esac
+done
+
+[ "$CHECK" = 1 ] && echo "check only, nothing changed" || echo "done"
+exit 0
