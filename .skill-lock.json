@@ -1,24 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "exa-search": {
-      "source": "K-Dense-AI/scientific-agent-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/K-Dense-AI/scientific-agent-skills.git",
-      "skillPath": "skills/exa-search/SKILL.md",
-      "skillFolderHash": "c056872cc5e2ed58633d1968356282da645c3323",
-      "installedAt": "2026-09-30T02:31:02Z",
-      "updatedAt": "2026-09-30T02:31:17Z"
-    },
-    "pi-agent": {
-      "source": "K-Dense-AI/scientific-agent-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/K-Dense-AI/scientific-agent-skills.git",
-      "skillPath": "skills/pi-agent/SKILL.md",
-      "skillFolderHash": "7e282970b65e1498a58a4b18349fe68bf8c10389",
-      "installedAt": "2026-09-30T02:20:30Z",
-      "updatedAt": "2026-09-30T02:21:47Z"
-    },
     "improve": {
       "source": "shadcn/improve",
       "sourceType": "github",
@@ -93,6 +75,24 @@
       "skillFolderHash": "a7e343e1028a902d19e48365a7e11e1da740d40a",
       "installedAt": "2026-10-04T07:53:15.067Z",
       "updatedAt": "2026-10-04T07:53:15.067Z"
+    },
+    "terminal-title": {
+      "source": "bluzername/claude-code-terminal-title",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bluzername/claude-code-terminal-title.git",
+      "skillPath": "skills/terminal-title/SKILL.md",
+      "skillFolderHash": "3e2e8f2224332d7dee53291e5d63738f57fc4841",
+      "installedAt": "2026-10-02T13:45:55Z",
+      "updatedAt": "2026-10-02T13:45:55Z"
+    },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "skillFolderHash": "98a510d1cfef9f82c3b1eec200229ca68725e613",
+      "installedAt": "2026-10-02T13:45:55Z",
+      "updatedAt": "2026-10-02T13:45:55Z"
     }
   },
   "dismissed": {
