@@ -84,6 +84,15 @@
       "pluginName": "technical-documentation",
       "installedAt": "2026-10-02T13:45:50.593Z",
       "updatedAt": "2026-10-02T13:45:50.593Z"
+    },
+    "answer-me-with-html": {
+      "source": "QingYunA/answer-me-with-html",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/QingYunA/answer-me-with-html.git",
+      "skillPath": "skills/answer-me-with-html/SKILL.md",
+      "skillFolderHash": "a7e343e1028a902d19e48365a7e11e1da740d40a",
+      "installedAt": "2026-10-04T07:53:15.067Z",
+      "updatedAt": "2026-10-04T07:53:15.067Z"
     }
   },
   "dismissed": {
