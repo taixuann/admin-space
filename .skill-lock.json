@@ -93,6 +93,15 @@
       "skillFolderHash": "98a510d1cfef9f82c3b1eec200229ca68725e613",
       "installedAt": "2026-10-02T13:45:55Z",
       "updatedAt": "2026-10-02T13:45:55Z"
+    },
+    "prompt-refine": {
+      "source": "Apeironics/prompt-refine-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/Apeironics/prompt-refine-skill.git",
+      "skillPath": "skills/prompt-refine/SKILL.md",
+      "skillFolderHash": "2ce892ad79600149d75816da45f81b1ecfec935a",
+      "installedAt": "2026-10-04T10:53:28Z",
+      "updatedAt": "2026-10-04T10:53:28Z"
     }
   },
   "dismissed": {
