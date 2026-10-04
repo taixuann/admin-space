@@ -16,8 +16,9 @@ description: |
 license: MIT
 compatibility: claude-code cursor codex gemini-cli opencode
 metadata:
-  version: "2.1.1"
+  version: "2.2.0"
   standard: ASD-STE100 Issue 9 (2025-01-15)
+  upstream: AminBlg/SimpleEnglish (MIT)
 ---
 
 # Simple English
@@ -32,7 +33,7 @@ When asked to write or rewrite documentation, apply these rules to the prose:
 2. Never touch code, identifiers, commands, flags, file paths, quoted errors, product names, or facts. When the source gives no number or cause, keep the general statement.
 3. Condition before command, with a comma: "If the build fails, read the log."
 4. Use simple tenses and active voice. No present perfect ("has completed" → "completed"). No "-ing" verb after a comma (", making it easy" → new sentence). Name the actor: "You run the migration."
-5. Modals: can, will, must. Never should, would, may, might, could. A required "should" becomes "must". An optional one is deleted.
+5. Modals. Use can, will, must. If the action is required, change "should" to "must". If the action is optional, delete "should". Never use "would". In a procedure, delete "may", "might", and "could", because the reader must act on the text. In an error message, a status report, or any text that tells what a person or an agent does not know, keep the hedge. Keep "may have" and "might have" for an uncertain past event. Never turn a hedge into a fact.
 6. Use complete grammar. No contractions, keep articles, keep "that". Write short sentences, not telegraph style.
 7. No semicolons and no em-dashes. Write two sentences, or name the relation.
 8. One word, one meaning, for the whole document. Use `make sure that` for check, verify, confirm, validate, ensure. Use `configuration` for config, settings, options. Break noun chains over three words with a preposition ("the timeout value for the connection pool").
@@ -70,16 +71,36 @@ Every chat reply, in every mode, follows these rules:
 Before: The failure stems from control-plane leader election during pod churn — nothing to worry about!
 After: The pods restarted and the queue lost its leader for a short time. It recovered without help. You do not have to do anything.
 
+## Output
+
+Give the rewritten document. Do not add a preface, a count of the changes, or a closing offer.
+
+If you kept a longer sentence on purpose, add one line under the text. Start the line with `Kept as-is:` and name the phrase and the meaning it protects. If there is nothing to report, leave the line out.
+
+When the user asks which rules the text broke, give a table instead. Use these columns: rule, original text, rewritten text. End with the mode and the number of findings.
+
 ## Self-Check Before You Deliver
 
-1. Reply: search for `—`, `**`, `#`, and a line that starts with `-`. Remove each one.
-2. Document: count the words in your three longest sentences. Over 20 or 25, split. Search for `'`, `has been`, `should`, `may`, `;`, `—`, `, making`, `**`, `check`, `verify`, `config`, and any heading that covers fewer than three sentences. Fix each hit. Read each step: does it name a host, a flag, or a prior step the reader must already have? If not, add it or point to it.
+1. Machine pass. Run `scripts/ste-lint.py`. Use `--type reply` for a reply, `--type procedural` for a procedure, and `--type descriptive` for explanation. Add `--gate` to fail on any finding. Fix each finding. The linter reads a word table as prose, so ignore a finding in a file that lists banned words. The linter counts "may", "might", and "could" as banned in every text. If rule 5 tells you to keep such a hedge, keep it and ignore the finding on that word.
+2. Reply: search for `—`, `**`, `#`, and a line that starts with `-`. Remove each one.
+3. Document: count the words in your three longest sentences. Over 20 or 25, split. Search for `'`, `has been`, `should`, `;`, `—`, `, making`, `**`, `check`, `verify`, `config`, and any heading that covers fewer than three sentences. Fix each hit.
+4. Modality: read each sentence that tells what nobody knows. Keep its hedge. Restore any hedge that the rewrite turned into a fact.
+5. Content: compare every number, unit, flag, path, and product name in the rewrite with the source. Each one must survive.
+6. Read each step: does it name a host, a flag, or a prior step the reader must already have? If not, add it or point to it.
 
 ## Modes
 
 Plain is the default and is all of the above. Strict applies when the user names STE, ASD-STE100, or compliance: read `references/strict-vocabulary.md` before you draft the document, and say once that no tool guarantees compliance. The reply stays Plain in every mode.
 
 When asked to CHECK text instead of writing it, first open `references/rule-catalog.md`. Then report each violation as: rule number quoted from that file, the offending text, a compliant rewrite. Never cite a rule number from memory. When the user asked for compliance, end with one sentence: no tool can guarantee ASD-STE100 compliance, and the standard is a free download at asd-ste100.org.
+
+## What This Skill Can Check
+
+The structural rules describe sentence shape. They stand on their own. The linter checks them: sentence length, active voice, one instruction per sentence, no semicolon, no em dash, no contraction, condition before command, simple tenses, and repeated synonyms.
+
+The lexical rules come from the ASD dictionary of about 900 approved words. This skill does not ship that dictionary. Without it, apply the lexical rules as a direction of travel. Do not claim that a word is approved.
+
+If you need the dictionary, build it on your own machine. Request the free standard at asd-ste100.org. Convert the PDF to text with `pdftotext -layout`. Run `python3 scripts/dictionary/parse_dict.py ste9.txt` in that folder. Then run `python3 scripts/dictionary/emit.py scripts/dictionary` to write `approved.txt` and `not-approved.tsv` where `ste_dict_lint.py` reads them. Run `python3 scripts/dictionary/ste_dict_lint.py FILE` to check the word choice in one file. The generated files are ignored by git. Do not commit them. Read `scripts/dictionary/README.md` for the full steps.
 
 ## Limits
 
@@ -90,4 +111,8 @@ These rules are for facts and instructions, not marketing copy or brand writing,
 - `references/rule-catalog.md`: the 53 rules of Issue 9 with software examples, for CHECK mode
 - `references/strict-vocabulary.md`: the dictionary discipline for Strict mode
 - `references/word-swaps.md`: a map from overused words to plain ones
+- `references/slop.tsv`: 69 words that read as machine writing, each with a plain swap
 - `references/use-cases.md`: the mode and the pattern for error messages, runbooks, incident reports, release notes, commits, agent prompts, UI copy, and translation prep
+- `scripts/ste-lint.py`: the machine pass. Run it before you deliver
+- `scripts/dictionary/`: build the ASD word lists from your own copy of the standard
+- `scripts/VENDOR-NOTES.md`: where each file came from and what this install changed
