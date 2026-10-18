@@ -1,0 +1,20 @@
+{
+  "name": "tai-personal",
+  "interface": {
+    "displayName": "Tai Personal"
+  },
+  "plugins": [
+    {
+      "name": "companion",
+      "source": {
+        "source": "local",
+        "path": "./.agents/plugins/companion"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

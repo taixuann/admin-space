@@ -1,0 +1,23 @@
+{
+  "skill_name": "init-companion",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Orient Companion in projects/ only. Leave assets alone and do not change files.",
+      "expected_output": "Read applicable path instructions and entrances, identify missing guidance, preserve assets exclusion, and report the document workflow without edits.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Initialize Companion for a fixture folder with root AGENTS.md and nested AGENTS.md. The nested README is missing.",
+      "expected_output": "Read the ancestor and nested instruction chain, inspect immediate names, report the missing entrance, and create nothing.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Use init-companion before the already authorized rename of a document in a local-only collection. Notion is disconnected.",
+      "expected_output": "Carry authorization and scope to Document Companion, check applicable guidance and rename effects, and continue without requiring Notion or asking for the same authorization again.",
+      "files": []
+    }
+  ]
+}

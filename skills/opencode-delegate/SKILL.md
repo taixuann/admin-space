@@ -47,14 +47,28 @@ other orchestrators as designed-for, not yet proven.)
 Use the user's selected flat-rate route for both the write-capable implementation run and a separate,
 read-only review run:
 
+**Quota fallback — the only sanctioned model substitution.** When a dispatch is refused because the
+primary route is out of usage for the period, re-dispatch the *same brief* once on a free route:
+`opencode-go/longcat-2.5-preview-free`, then `opencode-go/space-bunny-free` if that one is exhausted
+too. Both are free and take **no variant** — `--variant`/`#xhigh` fails with "Variant unavailable", so
+pass `--model opencode-go/longcat-2.5-preview-free` alone. A quota refusal reaches you as a failed
+`result.json` whose `stderrTail` (or `finalMessage`) names a usage/rate limit — read it, don't guess.
+Use the same fallback for the review pass, and state in your report which model ran which pass. This is
+the *only* reason to switch models: a failed task, a weak brief, an auth/config error, or a scope
+problem is not a quota problem — fix that instead of changing models. Never retry-loop: one fallback
+per role per task, and if both free routes are down, stop and report. If the primary died **mid-run**
+on quota, inspect `git status`, `git diff`, and untracked files before the fallback dispatch — the tree
+may hold a half-finished edit and no two writers may overlap.
+
 - Model: `opencode-go/muse-spark-1.3-contributor`
 - Variant: `xhigh`
 - OpenCode 2.x model selector: `opencode-go/muse-spark-1.3-contributor#xhigh`
 
 Pass `--model opencode-go/muse-spark-1.3-contributor --variant xhigh` to the relay for both runs. The
 relay converts the variant to the correct CLI form for the installed OpenCode version. Do not choose
-another model based on task type, and do not silently fall back if the route is unavailable. Stop and
-report the failure. Change this standing choice only when the user explicitly changes it.
+another model based on task type, and do not substitute one silently — the quota fallback above is the
+only exception. For any other unavailability, stop and report the failure. Change this standing choice
+only when the user explicitly changes it.
 
 When first setting up this route, or after changing the OpenCode version or provider configuration,
 verify it with:
@@ -161,7 +175,8 @@ don't accept:**
   test-guard, etc. from `guard-skills`) — this skill produces the work; those skills judge it.
 - For schema/migration changes, round-trip them; for removals, grep for dangling references.
 
-After these checks, run a new, read-only review pass with the same Muse Spark model and `xhigh` variant.
+After these checks, run a new, read-only review pass with the same model and `xhigh` variant — or, if
+the primary route is still exhausted, the same quota fallback the implementation run used.
 Give it the original task brief, intended scope, diff, and gate results. Use `--read-only` so it runs as
 the `plan` agent, and start a fresh session rather than resuming the implementation session. Ask it to
 identify concrete defects, missed requirements, and unverified claims. Treat its response as review

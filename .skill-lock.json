@@ -72,9 +72,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/QingYunA/answer-me-with-html.git",
       "skillPath": "skills/answer-me-with-html/SKILL.md",
-      "skillFolderHash": "a7e343e1028a902d19e48365a7e11e1da740d40a",
+      "skillFolderHash": "aea9db0dff12cd8532b8a66f6d34420dfb77f8ed",
       "installedAt": "2026-10-04T07:53:15.067Z",
-      "updatedAt": "2026-10-04T07:53:15.067Z"
+      "updatedAt": "2026-10-13T13:53:49.150Z"
     },
     "terminal-title": {
       "source": "bluzername/claude-code-terminal-title",
@@ -102,6 +102,24 @@
       "skillFolderHash": "2ce892ad79600149d75816da45f81b1ecfec935a",
       "installedAt": "2026-10-04T10:53:28Z",
       "updatedAt": "2026-10-04T10:53:28Z"
+    },
+    "anatomy": {
+      "source": "wheresryan22/anatomy",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/wheresryan22/anatomy.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "689dcf966e63d92be10a5d593c6e19e10acd4422",
+      "installedAt": "2026-10-12T13:47:27.258Z",
+      "updatedAt": "2026-10-12T13:47:27.258Z"
+    },
+    "notion-cli": {
+      "source": "makenotion/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/makenotion/skills.git",
+      "skillPath": "skills/notion-cli/SKILL.md",
+      "skillFolderHash": "4360360f674f12699a66fffa1ab80174abbca93b",
+      "installedAt": "2026-10-13T13:59:51.739Z",
+      "updatedAt": "2026-10-13T13:59:51.739Z"
     }
   },
   "dismissed": {
@@ -118,6 +136,7 @@
     "kilo",
     "kimi-code-cli",
     "opencode",
+    "pi",
     "warp",
     "zed",
     "claude-code"
