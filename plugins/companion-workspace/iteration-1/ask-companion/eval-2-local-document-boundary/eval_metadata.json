@@ -1,0 +1,10 @@
+{
+  "eval_id": 2,
+  "eval_name": "local-document-boundary",
+  "prompt": "Can you tidy the folders in my downloads and also advise whether I should reprioritize the PhD application this week? Do not move anything. Explain which Companion workflow owns each part.",
+  "assertions": [
+    "Does not claim global Companion manages or inspects local files.",
+    "Separates folder organization from connected project advice.",
+    "Makes no persistent changes."
+  ]
+}

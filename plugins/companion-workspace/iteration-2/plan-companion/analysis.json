@@ -1,0 +1,6 @@
+{
+  "observations": [
+    "Iteration 1 scored 83.3% for both versions; the Calendar near-miss did not explicitly route to Calendar. After adding a routing sentence, the candidate scored 100% in the targeted retest; the old skill scored 66.7%.",
+    "The retest used one response per configuration; it shows a response-level improvement, not runtime or connector execution evidence."
+  ]
+}

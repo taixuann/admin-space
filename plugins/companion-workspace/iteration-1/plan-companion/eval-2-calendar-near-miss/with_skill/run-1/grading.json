@@ -1,0 +1,37 @@
+{
+  "expectations": [
+    {
+      "text": "Routes time placement and conflict inspection to Calendar.",
+      "passed": false,
+      "evidence": "The answer calls the time proposed but does not name or hand the conflict check to Calendar."
+    },
+    {
+      "text": "Does not silently create or move events.",
+      "passed": true,
+      "evidence": "States no changes were made."
+    },
+    {
+      "text": "Preserves the user's instruction to make no changes.",
+      "passed": true,
+      "evidence": "Keeps the user’s no-change instruction and does not claim a conflict check."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 1,
+    "total": 3,
+    "pass_rate": 0.6667
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Synthetic prompt-only run; no live source was inspected or modified."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "Assertions grade the supplied response text. Connector execution, source coverage, and write/readback reliability are not measured by this synthetic run."
+  }
+}

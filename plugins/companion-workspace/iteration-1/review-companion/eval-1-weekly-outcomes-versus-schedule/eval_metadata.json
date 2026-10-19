@@ -1,0 +1,10 @@
+{
+  "eval_id": 1,
+  "eval_name": "weekly-outcomes-versus-schedule",
+  "prompt": "Review last week for the manuscript. Fixture: agreed focus was revise Figure 2 and send the draft to coauthors; Calendar shows both events; user reports Figure 2 was revised but the email was not sent; GitHub has one substantive plot commit; Notion task statuses still say Not Started; the prior weekly log is readable. Report what happened and gaps; do not write.",
+  "assertions": [
+    "Separates scheduled events, owner report, Notion status and inspected GitHub evidence.",
+    "Does not infer completion from calendar or a due date.",
+    "Reports the unsent coauthor email and makes no writes."
+  ]
+}

@@ -1,19 +1,9 @@
 # Companion
 
-Personal plugin with eight workflows: init, ask, document, organize, plan, apply, capture and weekly review. Shared definitions and Simple English are internal references.
+Companion has six conversational workflows: Ask, Plan, Calendar, Review, Execute and Capture. They use connected sources and the single shared policy file at shared/references.md.
 
-Plan produces one self-contained local HTML proposal with retrieval metadata through the installed `answer-me-with-html` skill. The renderer uses a temporary Markdown draft and embeds it in the HTML; no separate Markdown plan file is saved. Organize reviews project Notes and Resources before handing a concrete proposal to Plan.
+Notion owns Research management, Linear owns Development work, GitHub owns code and Study Wiki sources, Google Calendar owns scheduled time, and Google Drive supplies reference documents and Rhythm plans. Companion does not manage local files. Personal Hub retains its own local document and organization workflows.
 
-Init Companion resolves the selected workspace, reads applicable ancestor and nested instructions, and hands the task to its owning workflow. It performs read-only orientation and preserves existing authorization.
+Ask and Review advise without writing. Plan returns a proposal in chat by default. Calendar handles the agreed Research, Development and Study scope. Execute performs exact authorized changes with readback. Capture records explicit inputs in a resolved existing Notion, Linear or GitHub destination. No request must pass through every skill.
 
-Document Companion follows local collection READMEs for file organization and naming. Ask routes local document requests to it while preserving the read-only discussion boundary.
-
-Notion is required for project records, but not for local-only document work. Use existing GitHub and Exa connections only when relevant. No connector credentials or custom MCP servers are bundled. Two shared priority references point to the owner’s Notion workspace.
-
-Source: `~/.agents/plugins/companion`. Install from the Personal Companion marketplace and start a new chat. Refresh or reinstall the plugin after source changes because the host loads a cached copy.
-
-English guidance is vendored from AminBlg/SimpleEnglish under MIT. See shared/writing/simple-english/PROVENANCE.md and LICENSE.
-
-## Updating the uploaded copy
-
-Edit this source, validate the relative links and workflow boundaries, and increase the version in both manifests. Package the plugin with `.codex-plugin/plugin.json`, `skills/`, and `shared/`. Update the existing uploaded Companion entry so it keeps its identity; do not install another marketplace copy. Verify the new version in a fresh chat before removing a workspace-local skill copy.
+The source bundle is under ~/.agents/plugins/companion. Source changes do not update a cached plugin. The existing Companion plugin identity is retained. See shared/writing/simple-english/PROVENANCE.md and LICENSE for the vendored writing asset.

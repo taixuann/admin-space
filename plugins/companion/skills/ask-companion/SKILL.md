@@ -1,26 +1,16 @@
 ---
 name: ask-companion
-description: Discuss and assess projects, milestones, tasks, priorities, resources, notes and research progress, and local document organization. Use when the user explores an idea, asks whether to add, split, merge or defer work, where information belongs, whether the workload is feasible, or what to do next. Read relevant context and use focused questions to advise without writing persistent state.
+description: Discuss project goals, choices, workload, priorities, research progress or where connected information belongs. Use when the user wants advice, context recovery or help deciding what to do; keep discussion read-only and route planning, scheduling, review, capture or exact changes to the owning Companion skill.
 ---
 
 # Ask Companion
 
-Read [shared definitions](../../shared/README.md) and the references relevant to the question.
-Use [Working context](../../shared/references/working-context.md) to start from the named object, follow relevant relations and ask for missing inputs. Read its owning Project when relevant. Inspect local progression, GitHub files or calendar constraints only as needed.
-Separate inspected facts, user updates, assumptions and unresolved differences.
-Follow [Coverage and effects](../../shared/references/working-context.md#coverage-and-effects) before concluding the advice. State material gaps and inspect related objects that could change the recommendation.
-Carry the settled context forward in a compact conversation summary.
+Read [core concepts](../../shared/references.md#core-concepts), [source ownership](../../shared/references.md#source-ownership-and-reads), [authorization](../../shared/references.md#authorization-and-verification), and [skill boundaries](../../shared/references.md#skill-boundaries-and-handoffs).
 
-For ideas, structure, workload or information-placement decisions, use [Consultation](../../shared/references/consultation.md). Assess only the relevant dimensions, compare plausible options and ask the question that can change the decision. Recommend a small next step with its reason and material effects. Let the user author tasks and place calendar events.
+Clarify the decision the user is making. Recover settled context from conversation, then inspect named connected records and only related sources that could change the advice. Use canonical sources, not local folders. Treat similar names as candidates until identity is verified. If a source is unavailable, reason from attributed information and state what remains unknown; do not claim exhaustive inventory.
 
-For local folders, files, collection READMEs, naming, or document moves, use [document-companion](../document-companion/SKILL.md). Carry the selected scope, inspected context, and any explicit authorization forward. Keep discussion read-only; Document Companion owns authorized local file changes. Do not require Notion access for a local-only request.
+Use consultation dimensions that could change the answer: purpose, placement, granularity, feasibility, capacity and source. Give a provisional recommendation and its reason. Offer alternatives only for a real tradeoff. Ask one focused question when its answer could materially change the recommendation. Reuse settled owner decisions; do not invent dates, priorities, capacity or completion.
 
-Keep Ask read-only. For settled Notion changes, finish with a concrete Plan and wait for an explicit Apply request. For local-only proposals and edits, Document Companion owns the workflow; do not route local files through Notion Plan or Apply. Agreement with an idea alone does not authorize a write. Reuse explicit authorization already given for the same changes.
-For project-wide Notes/Resources organization, use [organize-companion](../organize-companion/SKILL.md). Carry the inspected context forward.
-When the user requests a concrete Notion change proposal, use [plan-companion](../plan-companion/SKILL.md).
-When the user wants to review a week and select next week's work, use [weekly-review-companion](../weekly-review-companion/SKILL.md). Carry the inspected context and settled decisions forward.
-When the user explicitly requests recording project information, use [capture-companion](../capture-companion/SKILL.md).
-When the user explicitly requests a fully specified Notion write, use [apply-companion](../apply-companion/SKILL.md). Preserve the requested scope through the handoff.
+Keep advice in chat and make no persistent edits. A settled goal, roadmap, milestone or short-term focus belongs to Plan. Event matching or time placement belongs to Calendar. Past outcomes and evidence belong to Review. Recording supplied information belongs to Capture. A specifically authorized exact change belongs to Execute. Local folder or document organization stays in Personal Hub; do not launch a global organization process.
 
-Do not require command syntax or three separate invocations. Ordinary conversation can select the next workflow.
-Follow the next-step offers in [Working context](../../shared/references/working-context.md#offer-the-next-step) when the discussion reaches a useful decision point.
+Hand off only needed context: intent, sources and targets, inspected state, owner-reported information, evidence, settled choices, authorization and unresolved decisions. Do not force every request through another skill or end with a workflow menu.

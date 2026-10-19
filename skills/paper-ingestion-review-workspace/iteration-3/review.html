@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "paper-ingestion-review", "runs": [{"id": "eval-5-schindler-2019-real-paper-golden-review-with_skill-run-1", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "report.md", "type": "text", "content": "# Ingestion review \u2014 Schindler & Bechtold (2019)\n\n**Route:** `FULL`  \n**Scope:** Full frozen packet: Paper map, four material Experimental Records, eight active Findings, approved source representations, and reference map.  \n**Frozen revision:** `PAPER-SCHINDLER-2019@GOLD-2`; `EXP-01`\u2013`EXP-04@GOLD-2`; `FND-01`\u2013`FND-08@GOLD-2`.  \n**Source identity/access:** Accepted-manuscript PDF and its `pdftotext -layout` Markdown were readable. The final journal version was not compared. No SI is cited or required by the supplied manuscript; unseen publisher attachments were not assessed. Manifest PDF SHA-256 `5fcccdb2215a53b84fde0a208cd81fd1b13fe26e90276c5e2aa087d380ab431a` and Markdown SHA-256 `8b8821ba978e91ac04a62da196fcd8c5ce7850361d8fe46dbb326b9dafa240e3` matched at admission and final race check. Source identity is therefore established by the supplied byte hashes; no provider revision token was supplied.  \n**Reviewer qualification:** `QUALIFYING_INDEPENDENT` \u2014 fresh reviewer context; source inventory completed before opening producer objects.  \n**Reviewed at:** 2026-10-19 (UTC; exact review timestamp unavailable).  \n**Timing:** Elapsed runtime unavailable.  \n**Contract check:** The linked live review page and Ingestion Reviews schema were fetched read-only. The schema confirms the six active dimensions and active identity/outcome fields. The live page also contains an older full-route instruction to set `Legacy Target = INGESTION_PACKET`, which conflicts with its active-field section and the local review contract; the local contract resolves this by treating all `Legacy` fields as archival. No material review-contract conflict remained. The other linked Notion contracts are reported in the bundled references as deleted; the supplied quality-contract summary governed this offline fixture.\n\n## Blind source inventory\n\nThe paper asks how dopamine is first oxidized anodically near physiological pH and proposes that pH-dependent speciation helps explain subsequent polydopamine formation. The study combines gold-electrode cyclic voltammetry at pH 5.8 and 7.0 with a calculated acid\u2013base distribution using published pKa values and CurTiPot v4.2. The central mechanism is an author proposal, not direct radical identification.\n\nThe CV system uses dopamine hydrochloride (0.5, 2, and 5 mM) in 0.1 M phosphate buffer; the paper\u2019s abstract says phosphate-buffered saline, while methods, results, and captions mainly say phosphate buffer. The exact NaCl content of every CV solution is not clear. The three-electrode setup is Au working electrode, 2 mm diameter / 3.14 mm\u00b2; Pt-wire counter; Ag/AgCl (3 M KCl) reference; EG&G 264A potentiostat and Rikadenki X\u2013Y recorder. Solutions were Ar-deoxygenated for 8 min, measured at room temperature, and the reference checked before and after against a redox buffer. Scan rates were 5, 10, 20, 50, and 100 mV/s; experiments were duplicated and means reported. The Au electrode was cleaned with abrasive zeolite and rinsed after each CV.\n\nThe paper separately describes phosphate buffer preparation and adding 0.5 M NaCl for PBS; fresh dopamine solutions; and an air-exposed visual auto-oxidation demonstration at pH 5.0, 6.1, 6.5, and 7.0 after 24 and 96 h at room temperature. The text describes the air-oxidation range as pH 5.8\u20137.0, while Figure 4 includes pH 5.0. The demonstration\u2019s concentration, complete preparation details, and replicate count are not reported. The pH-distribution calculation uses pKa values 9.05, 10.58, and 12.07 from a cited study (20 \u00b0C, 0.125 mM dopamine, ionic strength 0.5 M NaCl); these are not established as the CV cell conditions, and the calculation input file is not reported.\n\nReported results include CV peak potentials and currents across concentration, pH, and scan rate (Table 1); lower cathodic peak-current magnitude at pH 7.0; a linear anodic peak-current versus square-root scan-rate relation (Figure 5); and qualitative pH/time-dependent coloration in Figure 4. The authors interpret the current trends as a fast, reversible initial electron transfer followed by pH-dependent chemistry, propose semiquinone formation and possible dimerization, and describe Michael addition / Schiff-type routes as lower-rate possibilities at the studied pH. They note that reactive products form in the diffusion layer and are difficult to identify or isolate. The pKa transfer, exact CV buffer salinity, and visual demonstration details remain limitations. There is no reported failed or null CV result or cited supplement.\n\nEvery material visual was checked in the PDF, not inferred from captions: Figure 1 (dopamine-to-quinone scheme), Figure 2 (species structures and distribution plot), Figure 3 (CV traces), Figure 4 (photographic panels a/b at 24/96 h), Figure 5 (scan-rate plot and error bars), Figure 6 (pathway overview), Figure 7 (proposed mechanism), and Table 1 (CV values). All were classified `MATERIAL`. The bibliography contains 29 entries; the reference map represents [1]\u2013[29] and preserves current-paper versus cited-prior lineage without claiming external validation of cited works.\n\n## Dimension states\n\n- **Source & Identity \u2014 `PASS`:** approved PDF and Markdown hashes match the manifest at admission and final check; scope and source version are explicit.\n- **Paper Coverage \u2014 `PASS`:** map covers the question, methods, conditions, major observations, interpretations, limitations, all material visuals, and object routes. It preserves PBS/phosphate and pH-range ambiguities and distinguishes calculation and interpretation from direct observation.\n- **Record Coverage \u2014 `PASS`:** EXP-01\u201304 represent preparation, CV, speciation calculation, and the separate air-oxidation demonstration at appropriate granularity. Unreported settings and partial order are not invented.\n- **Figure/Table Coverage \u2014 `PASS`:** all seven figures and Table 1 are accounted for and visually inspected in the approved PDF. Their result and context roles are represented.\n- **Finding Fidelity \u2014 `PASS`:** FND-01\u201308 are source-located, bounded, and distinguish observed, derived, and interpreted claims. Numeric conditions and duplicate count are retained where reported; the mechanism is not elevated to direct observation.\n- **Traceability & Lineage \u2014 `PASS`:** findings and records link to the Paper and one another where material; cited-prior IDs preserve all 29 bibliography entries and active reference lineage.\n\n## Issues and verdict\n\n**Anchored issues:** None. No independently repairable defect or unresolved blocker was found in the reviewed packet. The reported buffer wording, pKa transfer conditions, Figure 4 pH range, and missing visual-demonstration settings are source ambiguities that the packet explicitly preserves; they are not silently resolved.\n\n**Verdict:** `PASS`.\n\n**Object lifecycle adjudication:** `PAPER-SCHINDLER-2019`, `EXP-01`\u2013`EXP-04`, and `FND-01`\u2013`FND-08` qualify for `PASS`. The fixture files themselves were left untouched, so their stored lifecycle fields remain `NEEDS_REVIEW`; this report records the adjudicated states without writing back to the offline packet or Notion.\n\n**Readiness:** `READY_FOR_DOWNSTREAM` for use of this accepted-manuscript packet with its stated scope and limitations. Approved sources remain accessible, the qualifying full review and all six dimensions pass, material objects pass adjudication, and the final manifest/hash race check matched. This decision does not qualify the final typeset journal version or any unseen supplement.\n"}], "grading": {"expectations": [{"text": "The review identifies the source as the 2019 accepted manuscript, uses the frozen PDF/Markdown identities and fixture object revisions, and does not claim it compared the later typeset article.", "passed": true, "evidence": "States the 2019 accepted-manuscript identity, gives both manifest SHA-256 values, enumerates all GOLD-2 object revisions, and says the final typeset article was not compared."}, {"text": "The blind inventory accounts for all seven figures and Table 1, methods, pH/concentration/scan-rate regimes, duplicate measurements, reported results, interpretation limits, all 29 bibliography entries, and the stated lack of a cited supplement; material visuals are verified from the PDF.", "passed": true, "evidence": "The blind inventory and visual inventory cover all seven figures and Table 1, methods, pH/concentration/scan-rate settings, duplicates, results, limitations, all 29 references, no cited supplement, and PDF-based visual inspection."}, {"text": "EXP-01 through EXP-04 and FND-01 through FND-08 have correct locators, conditions, links, and reference lineage, and are reachable from the Paper narrative.", "passed": true, "evidence": "Explicitly reviews four Records and eight Findings, states source locators and material links, and confirms the Paper map covers object routes and all reference lineage."}, {"text": "Measured peak currents, the scan-rate relation, calculated speciation, and author interpretations remain distinct in bounded Findings; n=2, buffer/PBS wording ambiguity, pKa transfer limits, and unspecified Figure 4 preparation details are retained without invented values.", "passed": true, "evidence": "Separates observed currents and photographs, derived relation/speciation, and interpreted mechanisms; states n=2, buffer/PBS ambiguity, pKa conditions, and Figure 4's unreported concentration/preparation/replicate details."}, {"text": "A fresh independent FULL review passes all six active dimensions, records no unresolved blocker or major issue, confirms the final snapshot unchanged, and grants PASS/READY_FOR_DOWNSTREAM only after that check; no Notion/source writes are made.", "passed": true, "evidence": "Reports Route FULL, QUALIFYING_INDEPENDENT, all six dimensions PASS, no issues, PASS and READY_FOR_DOWNSTREAM; confirms the final hash/revision check and no Notion writes. The stored packet remains unchanged."}], "summary": {"passed": 5, "failed": 0, "total": 5, "pass_rate": 1.0}, "claims": [], "eval_feedback": {"suggestions": [], "overall": "The assertions cover source identity, full source review, packet traceability, evidence distinctions, and readiness gates; no material coverage gap was found."}}}, {"id": "eval-5-schindler-2019-real-paper-golden-review-without_skill-run-1", "prompt": "(No prompt found)", "eval_id": null, "outputs": [{"name": "report.md", "type": "text", "content": "# Evaluation report \u2014 Schindler 2019 offline packet\n\n## Route and reviewer qualification\n\n- **Route:** Offline frozen-fixture review of the accepted-manuscript packet. No Notion or external source was used. The task did not use the paper-ingestion-review skill or earlier evaluation reports.\n- **Qualification:** Suitable for source-to-object fidelity, traceability, and downstream-readiness review. This is not an independent electrochemistry peer review, raw-data reanalysis, or acceptance decision for the user's research.\n- **Scope:** The supplied accepted-manuscript version only. The final typeset version and any unseen supplements were outside the packet and were not assessed.\n\n## Six active dimensions\n\n1. **Source identity and version:** Title, authors, DOI, accepted-manuscript status, and scope align across the manifest and source. The PDF and Markdown hashes match the frozen manifest.\n2. **Source coverage and visual evidence:** The packet has 20 PDF pages, seven figures, and one material table. Figures 1\u20137 and Table 1 were checked in the PDF; the axes, conditions, labels, and visual content are consistent with the mapped descriptions. The complete source inventory was finished before opening producer objects.\n3. **Methods and experimental-record fidelity:** The records capture reagent and buffer preparation, CV setup and conditions, the species calculation inputs, and the air-exposed oxidation demonstration. Material omissions are identified rather than filled by inference.\n4. **Finding and evidence fidelity:** The eight findings distinguish observations, calculated results, and author interpretations. Numerical CV claims checked against Table 1 and the text agree, including \u221241/\u221248 \u00b5A anodic values and 23/3 \u00b5A cathodic values at 5 mM and 50 mV/s.\n5. **Lineage and references:** The object links connect methods, figures/tables, findings, and cited inputs. All 29 bibliography entries are represented. Reference identities were not externally revalidated, and cited papers were not treated as direct evidence for this paper's measurements.\n6. **Uncertainty and downstream usability:** The mapped limitations preserve the buffer/PBS ambiguity, pKa transfer conditions, duplicate count, incomplete visual-demonstration details, and lack of direct radical identification. These caveats must remain attached to any downstream use.\n\n## Anchored issues and caveats\n\n- **I-01 \u2014 Medium, accepted-manuscript \u00a72.1\u20132.2 and abstract; EXP-01/02, paper map:** The abstract describes PBS, while methods, results, Table 1, and captions mostly say phosphate buffer. The source does not unambiguously establish that 0.5 M NaCl was present in each CV solution. The objects preserve this ambiguity correctly; do not normalize the CV medium to PBS or infer its salt content.\n- **I-02 \u2014 Medium, \u00a73 and Figure 2; EXP-03/FND-01:** The pKa inputs came from 20 \u00b0C, 0.125 mM dopamine, ionic strength 0.5 M NaCl. The CV-cell conditions are not shown to match. FND-01 correctly labels the result as calculated and carries the transfer limitation; it must not be treated as an in-cell speciation measurement.\n- **I-03 \u2014 Medium, \u00a74.1 and Figure 5; FND-03/FND-07:** The plotted linear relation is based on means of two repetitions, with standard-deviation bars, and no raw CV data are supplied. FND-07 properly records reversibility as the authors' interpretation. The plotted relation should not be upgraded to an independent demonstration of reversibility.\n- **I-04 \u2014 Low, Figure 4 and \u00a74.1; EXP-04/FND-05:** The figure includes pH 5.0 while the nearby text describes an air-oxidation range beginning at pH 5.8; the caption reports 24 h and 96 h at room temperature, but concentration, complete preparation details, and replicate count are not specified. EXP-04 preserves the discrepancy and missing details.\n- **I-05 \u2014 Medium, \u00a7\u00a74.2\u20134.3 and Figure 7; FND-04:** The semiquinone/ring-bridged pathway is proposed, not directly isolated or structurally identified in this study. FND-04 correctly classifies it as `INTERPRETED`; keep that status explicit in downstream summaries.\n\nNo material source-to-object contradiction was found. The issues above are bounded caveats already substantially represented in the objects, rather than evidence that the source was misread.\n\n## Verdict and object states\n\n**Verdict:** Pass for source-grounded curation quality with limitations; no material fidelity defect found in this offline review.\n\n- `PAPER-SCHINDLER-2019@GOLD-2`: map reviewed; no explicit workflow state in the fixture.\n- `EXP-01`\u2013`EXP-04@GOLD-2`: all `NEEDS_REVIEW`.\n- `FND-01`\u2013`FND-08@GOLD-2`: all `NEEDS_REVIEW`.\n- `reference-map.md`: revision `GOLD-2`; all 29 entries represented; external citation identity validation is out of scope.\n\n**Readiness decision:** Ready for a qualified human review of the mapped records and findings. Not ready to be treated as accepted downstream evidence because the records and findings remain `NEEDS_REVIEW`, and the interpretation, buffer wording, and imported-speciation limitations must stay attached. This report does not change any object state.\n\n## Final revision and source-identity race check\n\nAfter reviewing the producer objects, the manifest still names revision `GOLD-2`; the Paper map, Experimental Records, Findings, and reference map all still identify `GOLD-2`. Final SHA-256 values matched the manifest:\n\n- `approved-paper.pdf`: `5fcccdb2215a53b84fde0a208cd81fd1b13fe26e90276c5e2aa087d380ab431a`\n- `approved-markdown.md`: `8b8821ba978e91ac04a62da196fcd8c5ce7850361d8fe46dbb326b9dafa240e3`\n\nThe fixture was treated as read-only. No comparison against an external knowledge-base copy was possible from the supplied inputs alone.\n\n## Duration\n\nApproximately 1 minute 30 seconds from the first recorded review timestamp (16:10:48 UTC) to the final race check (16:12:00 UTC); the actual start may have preceded the first timestamp slightly.\n"}], "grading": {"expectations": [{"text": "The review identifies the source as the 2019 accepted manuscript, uses the frozen PDF/Markdown identities and fixture object revisions, and does not claim it compared the later typeset article.", "passed": true, "evidence": "Identifies the accepted manuscript and exact PDF/Markdown SHA-256 values; lists PAPER, Records, Findings, and Reference Map at GOLD-2; states the final typeset article was not compared."}, {"text": "The blind inventory accounts for all seven figures and Table 1, methods, pH/concentration/scan-rate regimes, duplicate measurements, reported results, interpretation limits, all 29 bibliography entries, and the stated lack of a cited supplement; material visuals are verified from the PDF.", "passed": false, "evidence": "Visually checks all seven figures and Table 1 and records 29 references, no supplement, and some caveats. However, the blind inventory does not explicitly account for all pH/concentration/scan-rate regimes or the full reported result inventory."}, {"text": "EXP-01 through EXP-04 and FND-01 through FND-08 have correct locators, conditions, links, and reference lineage, and are reachable from the Paper narrative.", "passed": false, "evidence": "Says object links connect methods, figures/tables, findings, and cited inputs, but does not show that EXP-01\u201304 and FND-01\u201308 each have correct source locators and are reachable from the Paper narrative."}, {"text": "Measured peak currents, the scan-rate relation, calculated speciation, and author interpretations remain distinct in bounded Findings; n=2, buffer/PBS wording ambiguity, pKa transfer limits, and unspecified Figure 4 preparation details are retained without invented values.", "passed": true, "evidence": "Explicitly separates calculated speciation, author interpretations, and measured currents; retains n=2, buffer/PBS ambiguity, pKa transfer limits, and Figure 4's missing preparation details."}, {"text": "A fresh independent FULL review passes all six active dimensions, records no unresolved blocker or major issue, confirms the final snapshot unchanged, and grants PASS/READY_FOR_DOWNSTREAM only after that check; no Notion/source writes are made.", "passed": false, "evidence": "Does not report Route=FULL, Reviewer Qualification=QUALIFYING_INDEPENDENT, six canonical dimension states, PASS/READY_FOR_DOWNSTREAM, or a readiness decision after those gates. It explicitly withholds downstream acceptance because the fixture objects remain NEEDS_REVIEW."}], "summary": {"passed": 2, "failed": 3, "total": 5, "pass_rate": 0.4}, "claims": [], "eval_feedback": {"suggestions": [], "overall": "The assertions cover source identity, full source review, packet traceability, evidence distinctions, and readiness gates; no material coverage gap was found."}}}], "previous_feedback": {}, "previous_outputs": {"eval-5-schindler-2019-real-paper-golden-review-with_skill": [{"name": "report.md", "type": "text", "content": "# Independent review \u2014 Schindler & Bechtold (2019)\n\n## Route and frozen scope\n\n- **Route:** FULL \u2014 first review of the full packet, including source coverage, material Records, active Findings, figures/tables, and reference lineage.\n- **Scope:** `PAPER-SCHINDLER-2019`, `EXP-01`\u2013`EXP-03`, `FND-01`\u2013`FND-06`, and the paper-local Reference Map. IDs are evaluation-fixture-local.\n- **Frozen revision:** `GOLD-1`; handoff date in the manifest: 2026-10-19 (no exact time supplied). Paper/map, Records, Findings, and Reference Map each identify `GOLD-1`.\n- **Approved source:** accepted manuscript, DOI `10.1016/j.jelechem.2019.01.069`; PDF and Markdown were accessible and matched the manifest SHA-256 values: PDF `5fcccdb2215a53b84fde0a208cd81fd1b13fe26e90276c5e2aa087d380ab431a`; Markdown `8b8821ba978e91ac04a62da196fcd8c5ce7850361d8fe46dbb326b9dafa240e3`.\n- **Reviewer qualification:** `QUALIFYING_INDEPENDENT`. This isolated evaluation context had no producer conversation/history and completed the source inventory before opening the map, Records, Findings, or Reference Map.\n- **Contract basis:** bundled `review-contract.md` and `quality-contracts.md`; the live Notion review page was fetchable, and its active ledger schema exposes the six grouped dimensions used below. The linked Paper Map, Evidence, Experimental Record, Paper Finding, Reference Map, and Review Issue pages return as deleted, so their bundled contract summaries controlled. No Notion write was made; this is an offline evaluation report.\n\n## Blind source inventory\n\nThe article studies the initial anodic oxidation of dopamine on gold near physiological pH. It combines cyclic voltammetry at pH 5.8 and 7.0 with a calculated pH-dependent species distribution. The authors propose a fast reversible one-electron step followed by deprotonation to a semiquinone, with pH-dependent follow-up reactions. The radical is not directly isolated or identified.\n\nThe source reports dopamine hydrochloride solutions (0.5, 2, 5 mM); phosphate buffer preparation and an ambiguously specified PBS/NaCl relation; a separate pH 5 acetate buffer; three-electrode CV (2 mm Au working electrode, Pt counter, Ag/AgCl 3 M KCl reference), EG&G 264 A potentiostat and Rikadenki X\u2013Y recorder; Ar deoxygenation for 8 min; room temperature; scan rates 5\u2013100 mV/s; duplicate runs and means; electrode cleaning; and reference-potential checks. The species distribution uses published pKa values and CurTiPot; the cited pKa conditions differ from the CV conditions. The paper reports anodic/cathodic peak data, a scan-rate relation, qualitative air-oxidation appearance over time and pH, and an author-proposed mechanism. Limits include difficult isolation of individual products and unresolved reaction pathways. The accepted manuscript cites 29 references; no supplement is identified or required by it.\n\nAll figures are **MATERIAL**: Figure 1 (dopamine/DQ context), Figure 2 (species structures/distribution), Figures 3 and 5 (CV and scan-rate results), Figure 4 (time/pH-dependent oxidation appearance), and Figures 6 and 7 (reaction-pathway proposals). **Table 1 is MATERIAL** quantitative CV evidence. I visually inspected the panels, axes, conditions, and table cells in their PDF pages (figures on PDF pp. 3, 7, 10, 12, 13, 15; table on PDF p. 9). Captions were not treated as visual verification.\n\n## Six active dimension states\n\n| Dimension | State | Basis |\n|---|---|---|\n| Source & Identity | PASS | Approved PDF/Markdown accessible; both source hashes match the manifest and identify the accepted-manuscript version. |\n| Paper Coverage | PASS | The map preserves the question, methods, regimes, key results, interpretation limits, buffer ambiguity, and all figure/table routes. |\n| Record Coverage | FAIL | The Figure 4 air-oxidation demonstration has no distinct process Record; EXP-03 also omits source-reported calculation inputs and misstates software-version availability. |\n| Figure/Table Coverage | PASS | All seven material figures and Table 1 are inventoried and visually inspected; result/context routes are present. |\n| Finding Fidelity | FAIL | FND-06 combines an observed current comparison with an interpreted explanation while assigning both evidence modes to one Finding. |\n| Traceability & Lineage | FAIL | Reference identities and all 29 bibliography entries are mapped, but several raw citation transcriptions contain PDF folio extraction artifacts. |\n\n## Anchored issues\n\n### R-001 \u2014 MAJOR \u2014 EXP-03 calculation inputs\n\n- **Class:** omission\n- **Source locator:** accepted manuscript \u00a73 and Figure 2 (PDF p. 7); reference [24] (PDF p. 19).\n- **Observed:** EXP-03 names three pKa inputs but does not preserve their plotted values. It also says the software version is not reported, although reference [24] identifies CurTiPot version 4.2.\n- **Expected:** record pKa1 = 9.05, pKa2 = 10.58, pKa3 = 12.07 and CurTiPot v4.2; retain that the exact calculation input file is not specified by the manuscript.\n- **Repair required:** correct EXP-03\u2019s reported inputs/version.\n- **Re-review scope:** NEIGHBORHOOD (EXP-03 and dependent FND-01/FND-04).\n- **Status:** OPEN.\n\n### R-002 \u2014 MAJOR \u2014 missing Figure 4 process Record\n\n- **Class:** coverage\n- **Target:** Paper \u00a74.1 / Figure 4 and Records coverage.\n- **Source locator:** accepted manuscript \u00a74.1 and Figure 4 caption/image (PDF p. 10; printed p. 9).\n- **Observed:** Figure 4 is routed to FND-05, but the packet has no distinct Record for the air-exposed auto-oxidation demonstration. EXP-01 covers solution/buffer preparation, not the pH/time series and visible oxidation process.\n- **Expected:** add a coherent Record for the Figure 4 demonstration using only reported conditions (pH 5.0, 6.1, 6.5, 7.0; 24 h and 96 h; room temperature; air exposure from \u00a74.1), preserve unspecified preparation/concentration/replicate details as unreported or unresolved, and link FND-05. Do not infer missing values.\n- **Repair required:** create and link the source-bounded process Record.\n- **Re-review scope:** FULL, because the material Record inventory changes.\n- **Status:** OPEN.\n\n### R-003 \u2014 MAJOR \u2014 FND-06 mixes evidence modes\n\n- **Class:** evidence_mode\n- **Target:** FND-06.\n- **Source locator:** accepted manuscript \u00a74.3 and Table 1 (PDF pp. 9, 14; printed pp. 8, 13).\n- **Observed:** FND-06 states `OBSERVED` for the 23-to-3 \u00b5A cathodic-current comparison and `INTERPRETED` for the proposed faster-follow-up explanation, but presents both as one Finding.\n- **Expected:** use one evidence mode per bounded Finding. Preserve the measured comparison as `OBSERVED`; place the proposed reaction-rate explanation in a separate `INTERPRETED` Finding or remove it from this Finding.\n- **Repair required:** split the quantitative observation from the author interpretation and retain the conditions and links.\n- **Re-review scope:** NEIGHBORHOOD (FND-06 and direct dependencies).\n- **Status:** OPEN.\n\n### R-004 \u2014 MINOR \u2014 citation transcription artifacts\n\n- **Class:** reference_lineage\n- **Target:** Reference Map entries R011, R022, and R029.\n- **Source locator:** bibliography (PDF pp. 17\u201319; printed pp. 16\u201318).\n- **Observed:** the map\u2019s extracted \u201craw citations\u201d contain page-folio artifacts, including `Anal. 17 Chem.` for [11], `9. 18 A13+` for [22], and a trailing `19` for [29]. The PDF shows these as page-layout artifacts rather than citation text.\n- **Expected:** correct the affected transcriptions against the approved PDF and check the remaining bibliography entries for the same extraction artifact while retaining the paper-local numbering.\n- **Repair required:** clean and verify the affected raw citation strings.\n- **Re-review scope:** LOCAL (Reference Map entries only).\n- **Status:** OPEN.\n\n## Verdict, object states, and readiness\n\n- **Verdict:** `REPAIR`. Source evidence is sufficient for the listed producer repairs; no scientific failure is inferred.\n- **Object lifecycle states after this adjudication:** `EXP-01 PASS`, `EXP-02 PASS`, `EXP-03 REPAIR`; `FND-01 PASS`, `FND-02 PASS`, `FND-03 PASS`, `FND-04 PASS`, `FND-05 PASS`, `FND-06 REPAIR`. The missing Figure 4 Record has no current object state; if created, it starts at `NEEDS_REVIEW`. These states are reported for the fixture only and were not written to Notion.\n- **Readiness:** `NOT_READY` pending R-001 through R-004 and full re-review after the Figure 4 Record is added.\n\n## Final snapshot check and limitations\n\nImmediately before recording this verdict, I re-read the packet revision markers and recomputed hashes for the manifest, PDF, Markdown, Paper map, Records, Findings, Reference Map, and both bundled contracts. They matched the reviewed snapshot; PDF and Markdown hashes still match the manifest. No stale-revision issue was found.\n\nThe review covers only the supplied accepted-manuscript version; the final typeset article was not compared, and the paper identifies no required supplement. The cited works were not independently retrieved. The manifest supplies only a handoff date, not an exact time. This report is not an Ingestion Reviews ledger entry.\n"}], "eval-5-schindler-2019-real-paper-golden-review-without_skill": [{"name": "report.md", "type": "text", "content": "# Independent paper-ingestion review \u2014 Schindler & Bechtold (2019)\n\n## Route and qualification\n\n**Route:** read-only review of the supplied frozen paper, map, experimental records, findings, and reference map.  \n**Qualification:** qualified for an evidence-bounded review of the supplied accepted manuscript and its mapped objects. This review does not independently reproduce the CurTiPot calculation, reanalyze raw voltammetry, or verify cited works.  \n**Verdict:** **Ready for human acceptance with notes.** I found no material source-to-object error requiring correction. Keep the proposal/observation distinctions and the listed limits attached to the claims.  \n**Write status:** no live Notion review or object update was performed; all states below are fixture states, not changes made by this review.\n\n## Blind source inventory and visual check\n\nThe manifest identifies the supplied document as the accepted manuscript of \u201cMechanistic insights into the electrochemical oxidation of dopamine by cyclic voltammetry,\u201d by Sabrina Schindler and Thomas Bechtold, DOI 10.1016/j.jelechem.2019.01.069. The approved PDF is 20 pages; the approved Markdown is its `pdftotext -layout` reading representation. The paper contains Figures 1\u20137 and Table 1. I visually inspected every figure and the table in the PDF: Figure 1 (dopamine/DQ structures), Figure 2 (species-fraction plot and structures), Figure 3 (CV traces), Figure 4 (time- and pH-dependent solution photographs), Figure 5 (peak current against square-root scan rate), Figure 6 (pathway overview), Figure 7 (proposed EC/dimerization mechanism), and Table 1 (CV peak potentials and currents). The paper cites no supplementary file. Captions and model-readable text were checked against the rendered PDF pages; the PDF controls visual evidence.\n\n## Six review dimensions\n\n1. **Identity and scope \u2014 pass.** The map uses the correct paper identity and DOI and keeps the accepted-manuscript scope explicit. It does not substitute the final typeset article or imply acceptance for downstream research.\n2. **Source and figure/table coverage \u2014 pass.** The map accounts for the material figures and Table 1 and routes the relevant source pages to records and findings. Visual checks support the stated roles of Figure 4 as qualitative evidence and Figures 5/Table 1 as electrochemical results. No supplement is asserted or needed based on this manuscript.\n3. **Experimental procedures \u2014 pass with wording caveat.** EXP-01 and EXP-02 accurately preserve the reported buffers, concentrations, electrode configuration, deoxygenation, scan rates, room-temperature conditions, reference-electrode checks, cleaning, and duplicate measurements. The abstract says PBS, while methods, table, and captions generally say phosphate buffer; the record correctly leaves the presence of added 0.5 M NaCl in each CV solution unresolved.\n4. **Calculated and measured results \u2014 pass.** EXP-03 and FND-01 identify the species distribution as calculated from published pKa inputs with CurTiPot, not measured in the CV cell. FND-02 reports the signed anodic currents and their approximate magnitudes at 5 mM and 50 mV/s consistently with the discussion and Table 1. FND-03 accurately describes the plotted peak-current versus square-root-scan-rate relation and the paper\u2019s reversibility inference. FND-05 describes the Figure 4 photographs and the text\u2019s qualitative pH/time comparison without quantifying color or adding an unsupported concentration. FND-06 correctly separates the reported cathodic-current change from the proposed explanation of faster follow-up reactions.\n5. **Interpretation and uncertainty \u2014 pass.** FND-04 labels the single-electron/EC semiquinone pathway and possible dimerization as the authors\u2019 proposed mechanism, not a directly identified intermediate. The map and records retain the limitations on species-transfer conditions, follow-up chemistry, and product identification. The duplicate count (`n = 2`) remains attached to quantitative CV findings where relevant.\n6. **Evidence lineage and references \u2014 pass with boundary.** Object routes connect EXP-01\u201303 and FND-01\u201306 to paper sections, figures, and Table 1. The reference map labels prior work as paper-local context and does not claim that cited works were independently verified. The selected reference entries cover the mapped calculation and mechanistic context; this is not a full audit of every bibliography entry.\n\n## Issues and notes\n\n- **No blocking issue found.** The map and object claims reviewed are consistent with the supplied accepted manuscript.\n- **Retain the medium ambiguity.** Do not infer a specific NaCl concentration for every CV solution from the PBS wording alone.\n- **Retain the calculation transfer limit.** The cited pKa measurements used 20 \u00b0C, 0.125 mM dopamine, and ionic strength 0.5 M NaCl; the manuscript does not show these are the CV-cell conditions. CurTiPot version 4.2 is cited, but the exact calculation input file is not supplied.\n- **Keep evidence modes distinct.** The CV peaks are reported observations; the species fractions are a calculation; the semiquinone and follow-up pathway are interpretations. The manuscript reports duplicate experiments, not a large replication base, and does not isolate or structurally identify the proposed radical.\n- **Keep visual-result limits.** Figure 4 provides qualitative photographs and elapsed times, while full preparation details and replicate count for that demonstration are not reported.\n- **Version boundary.** The final typeset journal version was not compared. The cited papers were not independently retrieved. No claim is made about unseen attachments.\n\n## Object states and readiness\n\n| Object | Fixture state | Review readiness |\n|---|---|---|\n| PAPER-SCHINDLER-2019@GOLD-1 and paper map | Frozen at `GOLD-1`; no workflow state supplied | Ready for human acceptance with the scope and coverage notes above |\n| EXP-01@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance; preserve buffer/PBS ambiguity and Figure 4 preparation limits |\n| EXP-02@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance; conditions and duplicate count are supported |\n| EXP-03@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance; preserve pKa transfer and software-input limits |\n| FND-01@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance as a derived species-distribution result |\n| FND-02@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance as a reported current comparison |\n| FND-03@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance as the authors\u2019 plotted-data interpretation |\n| FND-04@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance only as an `INTERPRETED` mechanism proposal |\n| FND-05@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance as qualitative visual evidence with incomplete demonstration details |\n| FND-06@GOLD-1 | `NEEDS_REVIEW` | Ready for human acceptance with observed current comparison distinct from interpreted rate explanation |\n\nThese are review recommendations only. The fixture states remain unchanged.\n\n## Final snapshot and caveats\n\nAt final review, the manifest still identified the packet as revision `GOLD-1`; the reviewed paper map, records, findings, and reference map also declared `GOLD-1`. The approved PDF hash matched the manifest (`5fcccdb2215a53b84fde0a208cd81fd1b13fe26e90276c5e2aa087d380ab431a`), as did the approved Markdown hash (`8b8821ba978e91ac04a62da196fcd8c5ce7850361d8fe46dbb326b9dafa240e3`). This review is limited to the frozen offline packet and the supplied accepted manuscript.\n"}]}, "benchmark": {"metadata": {"skill_name": "paper-ingestion-review", "skill_path": "/Users/tai/.agents/skills/paper-ingestion-review", "executor_model": "not recorded by the executor notifications", "analyzer_model": "not used; assertion grading was performed from saved reports", "timestamp": "2026-10-19T16:14:06Z", "evals_run": [5], "runs_per_configuration": 1}, "runs": [{"eval_id": 5, "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1.0, "passed": 5, "failed": 0, "total": 5, "time_seconds": 0.0, "tokens": 0, "tool_calls": 0, "errors": 0}, "expectations": [{"text": "The review identifies the source as the 2019 accepted manuscript, uses the frozen PDF/Markdown identities and fixture object revisions, and does not claim it compared the later typeset article.", "passed": true, "evidence": "States the 2019 accepted-manuscript identity, gives both manifest SHA-256 values, enumerates all GOLD-2 object revisions, and says the final typeset article was not compared."}, {"text": "The blind inventory accounts for all seven figures and Table 1, methods, pH/concentration/scan-rate regimes, duplicate measurements, reported results, interpretation limits, all 29 bibliography entries, and the stated lack of a cited supplement; material visuals are verified from the PDF.", "passed": true, "evidence": "The blind inventory and visual inventory cover all seven figures and Table 1, methods, pH/concentration/scan-rate settings, duplicates, results, limitations, all 29 references, no cited supplement, and PDF-based visual inspection."}, {"text": "EXP-01 through EXP-04 and FND-01 through FND-08 have correct locators, conditions, links, and reference lineage, and are reachable from the Paper narrative.", "passed": true, "evidence": "Explicitly reviews four Records and eight Findings, states source locators and material links, and confirms the Paper map covers object routes and all reference lineage."}, {"text": "Measured peak currents, the scan-rate relation, calculated speciation, and author interpretations remain distinct in bounded Findings; n=2, buffer/PBS wording ambiguity, pKa transfer limits, and unspecified Figure 4 preparation details are retained without invented values.", "passed": true, "evidence": "Separates observed currents and photographs, derived relation/speciation, and interpreted mechanisms; states n=2, buffer/PBS ambiguity, pKa conditions, and Figure 4's unreported concentration/preparation/replicate details."}, {"text": "A fresh independent FULL review passes all six active dimensions, records no unresolved blocker or major issue, confirms the final snapshot unchanged, and grants PASS/READY_FOR_DOWNSTREAM only after that check; no Notion/source writes are made.", "passed": true, "evidence": "Reports Route FULL, QUALIFYING_INDEPENDENT, all six dimensions PASS, no issues, PASS and READY_FOR_DOWNSTREAM; confirms the final hash/revision check and no Notion writes. The stored packet remains unchanged."}], "notes": []}, {"eval_id": 5, "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 0.4, "passed": 2, "failed": 3, "total": 5, "time_seconds": 0.0, "tokens": 0, "tool_calls": 0, "errors": 0}, "expectations": [{"text": "The review identifies the source as the 2019 accepted manuscript, uses the frozen PDF/Markdown identities and fixture object revisions, and does not claim it compared the later typeset article.", "passed": true, "evidence": "Identifies the accepted manuscript and exact PDF/Markdown SHA-256 values; lists PAPER, Records, Findings, and Reference Map at GOLD-2; states the final typeset article was not compared."}, {"text": "The blind inventory accounts for all seven figures and Table 1, methods, pH/concentration/scan-rate regimes, duplicate measurements, reported results, interpretation limits, all 29 bibliography entries, and the stated lack of a cited supplement; material visuals are verified from the PDF.", "passed": false, "evidence": "Visually checks all seven figures and Table 1 and records 29 references, no supplement, and some caveats. However, the blind inventory does not explicitly account for all pH/concentration/scan-rate regimes or the full reported result inventory."}, {"text": "EXP-01 through EXP-04 and FND-01 through FND-08 have correct locators, conditions, links, and reference lineage, and are reachable from the Paper narrative.", "passed": false, "evidence": "Says object links connect methods, figures/tables, findings, and cited inputs, but does not show that EXP-01\u201304 and FND-01\u201308 each have correct source locators and are reachable from the Paper narrative."}, {"text": "Measured peak currents, the scan-rate relation, calculated speciation, and author interpretations remain distinct in bounded Findings; n=2, buffer/PBS wording ambiguity, pKa transfer limits, and unspecified Figure 4 preparation details are retained without invented values.", "passed": true, "evidence": "Explicitly separates calculated speciation, author interpretations, and measured currents; retains n=2, buffer/PBS ambiguity, pKa transfer limits, and Figure 4's missing preparation details."}, {"text": "A fresh independent FULL review passes all six active dimensions, records no unresolved blocker or major issue, confirms the final snapshot unchanged, and grants PASS/READY_FOR_DOWNSTREAM only after that check; no Notion/source writes are made.", "passed": false, "evidence": "Does not report Route=FULL, Reviewer Qualification=QUALIFYING_INDEPENDENT, six canonical dimension states, PASS/READY_FOR_DOWNSTREAM, or a readiness decision after those gates. It explicitly withholds downstream acceptance because the fixture objects remain NEEDS_REVIEW."}], "notes": []}], "run_summary": {"with_skill": {"pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0}, "time_seconds": {"mean": 0.0, "stddev": 0.0, "min": 0.0, "max": 0.0}, "tokens": {"mean": 0.0, "stddev": 0.0, "min": 0, "max": 0}}, "without_skill": {"pass_rate": {"mean": 0.4, "stddev": 0.0, "min": 0.4, "max": 0.4}, "time_seconds": {"mean": 0.0, "stddev": 0.0, "min": 0.0, "max": 0.0}, "tokens": {"mean": 0.0, "stddev": 0.0, "min": 0, "max": 0}}, "delta": {"pass_rate": "+0.60", "time_seconds": "+0.0", "tokens": "+0"}}, "notes": ["This iteration contains one paired run of eval 5 against packet GOLD-2; the 100% versus 40% rates are descriptive, not a variance estimate.", "Executor timing and token counts were not available in a comparable form. Aggregator zero values for those metrics are missing-data placeholders, not measured zero time or zero tokens.", "Earlier evals 1-4 are reported in iteration 1 and were not repeated in this positive real-paper run."]}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "expectations": [
+    {
+      "text": "Never reopens a Complete task or changes it to In Progress.",
+      "passed": true,
+      "evidence": "Keeps the Complete task closed and does not reopen it."
+    },
+    {
+      "text": "Uses verified identity instead of creating a duplicate task.",
+      "passed": true,
+      "evidence": "Uses the supplied linked task and does not create a duplicate."
+    },
+    {
+      "text": "Keeps the fixture read-only and reports the unresolved event intent if needed.",
+      "passed": true,
+      "evidence": "Makes no change and flags missing information about title intent."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 0,
+    "total": 3,
+    "pass_rate": 1.0
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Synthetic prompt-only run; no live source was inspected or modified."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "Assertions grade the supplied response text. Connector execution, source coverage, and write/readback reliability are not measured by this synthetic run."
+  }
+}

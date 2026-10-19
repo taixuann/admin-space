@@ -1,0 +1,42 @@
+{
+  "expectations": [
+    {
+      "text": "The supplied SSRN preprint is distinguished from the unverified journal version, and the pilot note is not treated as a complete packet.",
+      "passed": true,
+      "evidence": "It distinguishes the SSRN preprint from the final journal version and calls the page pilot-only/incomplete."
+    },
+    {
+      "text": "The report identifies nonqualifying same-context review and missing source/manifest/visual or supplement evidence, routes BLOCKED, and withholds READY_FOR_DOWNSTREAM.",
+      "passed": true,
+      "evidence": "It notes missing PDF, Markdown, manifest, figures, supplements, and independence, and routes BLOCKED with no downstream qualification."
+    },
+    {
+      "text": "The report does not invent Paper map, Experimental Records, or active Findings; it records their absence and keeps affected coverage unresolved.",
+      "passed": true,
+      "evidence": "It reports that no Paper map, structured Records, or active Findings were supplied and does not fabricate records."
+    },
+    {
+      "text": "The report uses the exact six active ledger dimension names with valid states and does not write to or alter Notion/source content.",
+      "passed": false,
+      "evidence": "It uses provisional noncanonical dimension labels and states including BLOCKED and NEEDS_REVIEW rather than the six active ledger fields and valid dimension enum."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 1,
+    "total": 4,
+    "pass_rate": 0.75
+  },
+  "execution_metrics": {
+    "errors_encountered": 0
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "active-schema-and-read-only-boundary",
+        "reason": "Separate the objective ledger-schema assertion from the no-write side effect. The latter needs readback or a run transcript, while the dimension enum can be verified directly from the report."
+      }
+    ],
+    "overall": "The first three assertions test meaningful real-source limitations. Split the schema and side-effect checks so each has direct evidence."
+  }
+}

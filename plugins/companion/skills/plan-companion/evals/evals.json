@@ -1,0 +1,29 @@
+{
+  "skill_name": "plan-companion",
+  "evals": [
+    {
+      "id": 1,
+      "name": "long-and-short-horizon-plan",
+      "prompt": "Help me plan the next quarter for the manuscript and choose what to focus on next week. Fixture: outcome is a submitted manuscript draft; Milestone M1 has a methods draft task blocked on data; M2 has a figure revision ready; no capacity estimate or weekly commitment is recorded. Return a proposal in chat only, no writes or calendar placement.",
+      "expected_output": "Separate quarterly outcome and milestones from a finite weekly candidate. Preserve blocked work, flag missing capacity and commitment, recommend the ready figure work only as a candidate, and make no changes.",
+      "files": [],
+      "expectations": [
+        "Distinguishes long-term outcome from next-week candidate work.",
+        "Does not treat blocked tasks, missing capacity or absence of an agreement as a settled commitment.",
+        "Returns the proposal in chat with no local HTML or source writes."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "calendar-near-miss",
+      "prompt": "Put the ready figure revision on Tuesday from 10 to 11 and check whether it conflicts with my existing events. Do not change anything yet.",
+      "expected_output": "Recognize this as Calendar scheduling and conflict work, not planning; hand off the target and requested week/time while preserving the no-change instruction.",
+      "files": [],
+      "expectations": [
+        "Routes time placement and conflict inspection to Calendar.",
+        "Does not silently create or move events.",
+        "Preserves the user's instruction to make no changes."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "eval_id": 1,
+  "eval_name": "explicit-existing-linear-destination",
+  "prompt": "Capture this update on Linear issue L-22: the figure draft is ready for coauthor review; I finished it today. Fixture: L-22 is the matching issue, its update section exists, and no identical note is present. Use a synthetic dry run only; do not call a live connector.",
+  "assertions": [
+    "Uses the explicitly selected existing Linear issue and preserves the stated event date.",
+    "Does not change status or any unrelated field without request.",
+    "Routes the exact capture to Execute and does not claim a live write."
+  ]
+}

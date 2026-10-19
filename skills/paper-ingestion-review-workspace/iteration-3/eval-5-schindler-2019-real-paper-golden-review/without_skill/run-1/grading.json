@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "The review identifies the source as the 2019 accepted manuscript, uses the frozen PDF/Markdown identities and fixture object revisions, and does not claim it compared the later typeset article.",
+      "passed": true,
+      "evidence": "Identifies the accepted manuscript and exact PDF/Markdown SHA-256 values; lists PAPER, Records, Findings, and Reference Map at GOLD-2; states the final typeset article was not compared."
+    },
+    {
+      "text": "The blind inventory accounts for all seven figures and Table 1, methods, pH/concentration/scan-rate regimes, duplicate measurements, reported results, interpretation limits, all 29 bibliography entries, and the stated lack of a cited supplement; material visuals are verified from the PDF.",
+      "passed": false,
+      "evidence": "Visually checks all seven figures and Table 1 and records 29 references, no supplement, and some caveats. However, the blind inventory does not explicitly account for all pH/concentration/scan-rate regimes or the full reported result inventory."
+    },
+    {
+      "text": "EXP-01 through EXP-04 and FND-01 through FND-08 have correct locators, conditions, links, and reference lineage, and are reachable from the Paper narrative.",
+      "passed": false,
+      "evidence": "Says object links connect methods, figures/tables, findings, and cited inputs, but does not show that EXP-01\u201304 and FND-01\u201308 each have correct source locators and are reachable from the Paper narrative."
+    },
+    {
+      "text": "Measured peak currents, the scan-rate relation, calculated speciation, and author interpretations remain distinct in bounded Findings; n=2, buffer/PBS wording ambiguity, pKa transfer limits, and unspecified Figure 4 preparation details are retained without invented values.",
+      "passed": true,
+      "evidence": "Explicitly separates calculated speciation, author interpretations, and measured currents; retains n=2, buffer/PBS ambiguity, pKa transfer limits, and Figure 4's missing preparation details."
+    },
+    {
+      "text": "A fresh independent FULL review passes all six active dimensions, records no unresolved blocker or major issue, confirms the final snapshot unchanged, and grants PASS/READY_FOR_DOWNSTREAM only after that check; no Notion/source writes are made.",
+      "passed": false,
+      "evidence": "Does not report Route=FULL, Reviewer Qualification=QUALIFYING_INDEPENDENT, six canonical dimension states, PASS/READY_FOR_DOWNSTREAM, or a readiness decision after those gates. It explicitly withholds downstream acceptance because the fixture objects remain NEEDS_REVIEW."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 3,
+    "total": 5,
+    "pass_rate": 0.4
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "The assertions cover source identity, full source review, packet traceability, evidence distinctions, and readiness gates; no material coverage gap was found."
+  }
+}

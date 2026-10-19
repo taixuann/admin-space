@@ -1,0 +1,206 @@
+{
+  "metadata": {
+    "skill_name": "ask-companion",
+    "skill_path": "/Users/tai/.agents/plugins/companion/skills/ask-companion",
+    "executor_model": "Codex subagent; exact model unavailable",
+    "analyzer_model": "Parent inline grader",
+    "timestamp": "2026-10-19T03:07:12Z",
+    "evals_run": [
+      1,
+      2
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses the fixture's existing project and issue readiness rather than inferring from names.",
+          "passed": true,
+          "evidence": "Recommends keeping the demo under active project P because no distinct outcome is supplied."
+        },
+        {
+          "text": "Keeps advice read-only and gives a reasoned recommendation.",
+          "passed": true,
+          "evidence": "Preserves issue A as blocked and issue B as ready; does not invent a separate project."
+        },
+        {
+          "text": "Asks at most one material clarifying question and does not force a plan artifact.",
+          "passed": true,
+          "evidence": "Asks a focused question about the demo outcome and labels live-record uncertainty."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Does not claim global Companion manages or inspects local files.",
+          "passed": true,
+          "evidence": "Keeps local Downloads organization in Personal Hub and leaves files unchanged."
+        },
+        {
+          "text": "Separates folder organization from connected project advice.",
+          "passed": true,
+          "evidence": "Does not make an unsupported priority change recommendation."
+        },
+        {
+          "text": "Makes no persistent changes.",
+          "passed": true,
+          "evidence": "Asks a focused follow-up about deadline and displaced work."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    },
+    {
+      "eval_id": 1,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses the fixture's existing project and issue readiness rather than inferring from names.",
+          "passed": true,
+          "evidence": "Recommends keeping the demo under active project P because no distinct outcome is supplied."
+        },
+        {
+          "text": "Keeps advice read-only and gives a reasoned recommendation.",
+          "passed": true,
+          "evidence": "Preserves issue A as blocked and issue B as ready; does not invent a separate project."
+        },
+        {
+          "text": "Asks at most one material clarifying question and does not force a plan artifact.",
+          "passed": true,
+          "evidence": "Asks a focused question about the demo outcome and labels live-record uncertainty."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Does not claim global Companion manages or inspects local files.",
+          "passed": true,
+          "evidence": "Keeps local Downloads organization in a local document workflow."
+        },
+        {
+          "text": "Separates folder organization from connected project advice.",
+          "passed": true,
+          "evidence": "Does not make an unsupported priority change recommendation."
+        },
+        {
+          "text": "Makes no persistent changes.",
+          "passed": true,
+          "evidence": "Asks for deadlines, status, other priorities, and weekly capacity."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "old_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.00",
+      "time_seconds": "+0.0",
+      "tokens": "+0"
+    }
+  },
+  "notes": [
+    "Synthetic, prompt-only comparison. One run per evaluation and configuration. No live connectors or writes. Token and duration telemetry was not exposed by the runner; zeros mean unavailable. Delta is candidate minus baseline."
+  ]
+}

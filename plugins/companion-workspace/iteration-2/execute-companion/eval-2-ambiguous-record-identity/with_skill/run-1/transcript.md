@@ -1,0 +1,3 @@
+Prompt:\nClose the duplicate bug from yesterday. Fixture has two matching GitHub issues with different repository IDs; neither is marked duplicate and the conversation does not name a repository. This is a dry run; no writes.\n\nConfiguration: with_skill\n\nResponse:\nI can’t identify which issue to close: the two matching issues are in different repositories, and the conversation names neither a repository nor an issue ID. Which repository and issue should be treated as the duplicate, and which issue is the canonical one?
+
+Uncertainty: Matching titles alone don’t establish that the issues are duplicates. This dry run made no changes.

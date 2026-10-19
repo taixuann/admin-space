@@ -1,20 +1,16 @@
 ---
 name: capture-companion
-description: Capture explicitly requested project updates, notes or snapshots into the project's canonical log, reuse existing Resources, and surface actionable open questions in its Progress log tab. Use for requests to capture or record project information. Discussion about capture alone stays read-only.
+description: Record information the user explicitly asks to capture in an existing Notion, Linear or GitHub destination. Use for decisions, progress notes, project updates or authored documentation; preserve attribution and source dates, resolve the canonical target, and ask only when the destination is materially ambiguous.
 ---
 
 # Capture Companion
 
-Read [shared definitions](../../shared/README.md), [Working context](../../shared/references/working-context.md) and [Capture and evidence](../../shared/references/capture.md).
+Read [source ownership](../../shared/references.md#source-ownership-and-reads), [authorization](../../shared/references.md#authorization-and-verification), and the relevant [domain guidance](../../shared/references.md#domain-guidance).
 
-Resolve the named Project and requested input. Read its existing log, relevant Resources and Progress log tab. Reuse the canonical destination and check for duplicate captures before proposing a new page. If the destination is missing, follow [Resource templates and creation](../../shared/references/resources.md#templates-and-creation) to prepare its template, relation and properties. Settle material ambiguity with the user.
+Treat the user's supplied text, decision or update as the capture input. Keep attribution, source, capture date and any known event date distinct. Preserve settled wording and uncertainty; do not turn reported progress into an independently verified result.
 
-Record the supplied update, capture date and source identity. Keep the event date separate when known. Attribute owner reports and preserve unresolved differences. Inspect only relevant source files when comparison is needed. Capturing a report does not prove technical completion.
-Follow [Coverage and effects](../../shared/references/working-context.md#coverage-and-effects) at Capture scope. If the update implies status, ownership or priority changes, preserve it as attributed information and route the proposed record changes through Plan and Apply when requested.
-If a source is inaccessible, retain the supplied information with that limitation. Never invent a source comparison or completion result. Ask for clarification only when the missing input changes the requested entry or destination.
+Resolve the appropriate existing Notion, Linear or GitHub record from the input and current context. Check canonical identity and likely duplicates before writing. If the destination is materially ambiguous, ask one focused question. If no existing destination fits, explain the gap and let the user choose; do not create a local inbox, a second tracker, a guessed GitHub Issue or an automatic taxonomy.
 
-Keep the entry short. Link existing content instead of copying it. If the input needs a decision, confirmation or source check, include a concise pending item in the Progress log tab with a link to the canonical entry. Show what needs attention without duplicating the entry.
+A direct capture request authorizes recording that input at the resolved existing destination. State the exact target and proposed content, then hand the target, content, attribution and requested effect to Execute. In a dry run, label this as a proposed Execute handoff and do not claim it was saved. Do not change unrelated status, priority, ownership, deadlines or history. Read back the saved content and report what was recorded or what remains unresolved.
 
-An explicit capture request authorizes the specified entry and its relevant pending pointer. It does not authorize other project edits. For a proposed layout, return to [plan-companion](../plan-companion/SKILL.md). For concrete writes, follow [apply-companion](../apply-companion/SKILL.md), including current-state refresh, scoped edits and readback. No separate invocation is needed.
-
-When asked to resolve a pending item, preserve its dated conclusion in the canonical entry first. Verify that write before removing the matching reminder. Preserve the original capture and source links. Report the captured entry, any pending pointer and any unresolved part.
+Capture destination recipes are intentionally minimal. Improve routing only when the owner provides concrete examples and asks for that refinement.

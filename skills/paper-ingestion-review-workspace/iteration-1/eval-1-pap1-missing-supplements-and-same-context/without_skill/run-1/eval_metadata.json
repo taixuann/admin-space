@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "eval_name": "pap1-missing-supplements-and-same-context",
+  "prompt": "Audit the attached frozen paper packet. Return the review report and route it to PASS, REPAIR, or BLOCKED. Do not alter source content.",
+  "assertions": [
+    {"name": "same-context-review-cannot-pass", "text": "The reviewer is marked NON_QUALIFYING_SAME_CONTEXT and verdict is not PASS."},
+    {"name": "missing-material-evidence-blocks-readiness", "text": "Missing S1-S4 and unresolved source identity/visual checks are explicit blockers; READY_FOR_DOWNSTREAM is withheld."},
+    {"name": "no-missing-evidence-as-not-reported", "text": "Unavailable supplement evidence is not recast as NOT_REPORTED or complete coverage."},
+    {"name": "active-six-dimension-schema", "text": "The report uses the active fields Source & Identity, Paper Coverage, Record Coverage, Figure/Table Coverage, Finding Fidelity, and Traceability & Lineage with valid dimension states."}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "skill_name": "calendar-companion",
+  "evals": [
+    {
+      "id": 1,
+      "name": "completed-research-task-match",
+      "prompt": "Audit this Research event before a possible title cleanup. Fixture: event E is on the Research calendar and links to Task T; T is Complete. The event text says 'send final paper to advisor'. Do not write. Use the currently approved Calendar rules.",
+      "expected_output": "Keep the event from reopening or associating it as active work; report the completed task and avoid changing status. Preserve the existing event.",
+      "files": [],
+      "expectations": [
+        "Never reopens a Complete task or changes it to In Progress.",
+        "Uses verified identity instead of creating a duplicate task.",
+        "Keeps the fixture read-only and reports the unresolved event intent if needed."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "planning-versus-calendar-near-miss",
+      "prompt": "Help me decide whether to schedule two or three manuscript sessions next week. Fixture: project priority is Core, figure task is ready, data task is blocked, and saved Rhythm mapping shows two research blocks. I want a recommendation, not event changes.",
+      "expected_output": "Use Calendar/Rhythm only for relevant capacity context, separate candidate work from progress, recommend a feasible schedule without writing events or records.",
+      "files": [],
+      "expectations": [
+        "Uses capacity as a constraint, not as proof of completion.",
+        "Does not schedule or edit anything when the user asked only for a recommendation.",
+        "Keeps blocked data work from being treated as ready."
+      ]
+    }
+  ]
+}

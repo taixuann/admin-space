@@ -1,0 +1,37 @@
+{
+  "expectations": [
+    {
+      "text": "Uses capacity as a constraint, not as proof of completion.",
+      "passed": true,
+      "evidence": "Uses the two saved Research blocks as a capacity constraint."
+    },
+    {
+      "text": "Does not schedule or edit anything when the user asked only for a recommendation.",
+      "passed": true,
+      "evidence": "Recommends rather than schedules or edits Calendar events."
+    },
+    {
+      "text": "Keeps blocked data work from being treated as ready.",
+      "passed": true,
+      "evidence": "Keeps the blocked data task out of eligible work."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 0,
+    "total": 3,
+    "pass_rate": 1.0
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Synthetic prompt-only run; no live source was inspected or modified."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "Assertions grade the supplied response text. Connector execution, source coverage, and write/readback reliability are not measured by this synthetic run."
+  }
+}

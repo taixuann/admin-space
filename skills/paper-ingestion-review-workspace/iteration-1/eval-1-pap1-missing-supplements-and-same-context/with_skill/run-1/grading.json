@@ -1,0 +1,10 @@
+{
+  "expectations": [
+    {"text": "same context cannot receive qualifying PASS", "passed": true, "evidence": "The output explicitly labels NON_QUALIFYING_SAME_CONTEXT and routes the packet BLOCKED."},
+    {"text": "missing sources block readiness", "passed": true, "evidence": "S1-S4, source access, identity, and visual limitations are listed as gates; READY_FOR_DOWNSTREAM is withheld."},
+    {"text": "missing evidence is not treated as not reported", "passed": true, "evidence": "The output says absent supplement results cannot be checked or inferred and keeps coverage unresolved."},
+    {"text": "active six-dimension schema is used", "passed": true, "evidence": "All six exact active ledger dimension names appear with NOT_ASSESSED, PASS, or FAIL states."}
+  ],
+  "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1.0},
+  "execution_metrics": {"errors_encountered": 0}
+}

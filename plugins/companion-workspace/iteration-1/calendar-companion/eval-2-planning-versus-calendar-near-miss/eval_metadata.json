@@ -1,0 +1,10 @@
+{
+  "eval_id": 2,
+  "eval_name": "planning-versus-calendar-near-miss",
+  "prompt": "Help me decide whether to schedule two or three manuscript sessions next week. Fixture: project priority is Core, figure task is ready, data task is blocked, and saved Rhythm mapping shows two research blocks. I want a recommendation, not event changes.",
+  "assertions": [
+    "Uses capacity as a constraint, not as proof of completion.",
+    "Does not schedule or edit anything when the user asked only for a recommendation.",
+    "Keeps blocked data work from being treated as ready."
+  ]
+}

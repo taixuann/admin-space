@@ -1,0 +1,10 @@
+{
+  "eval_id": 1,
+  "eval_name": "long-and-short-horizon-plan",
+  "prompt": "Help me plan the next quarter for the manuscript and choose what to focus on next week. Fixture: outcome is a submitted manuscript draft; Milestone M1 has a methods draft task blocked on data; M2 has a figure revision ready; no capacity estimate or weekly commitment is recorded. Return a proposal in chat only, no writes or calendar placement.",
+  "assertions": [
+    "Distinguishes long-term outcome from next-week candidate work.",
+    "Does not treat blocked tasks, missing capacity or absence of an agreement as a settled commitment.",
+    "Returns the proposal in chat with no local HTML or source writes."
+  ]
+}

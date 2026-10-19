@@ -1,0 +1,206 @@
+{
+  "metadata": {
+    "skill_name": "plan-companion",
+    "skill_path": "/Users/tai/.agents/plugins/companion/skills/plan-companion",
+    "executor_model": "Codex subagent; exact model unavailable",
+    "analyzer_model": "Parent inline grader",
+    "timestamp": "2026-10-19T03:07:12Z",
+    "evals_run": [
+      1,
+      2
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Distinguishes long-term outcome from next-week candidate work.",
+          "passed": true,
+          "evidence": "Distinguishes the long-term outcome from next-week candidate work."
+        },
+        {
+          "text": "Does not treat blocked tasks, missing capacity or absence of an agreement as a settled commitment.",
+          "passed": true,
+          "evidence": "Does not treat blocked work, missing capacity, or absent agreement as a settled commitment."
+        },
+        {
+          "text": "Returns the proposal in chat with no local HTML or source writes.",
+          "passed": true,
+          "evidence": "Returns a chat proposal and assigns no local artifact or calendar placement."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6667,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Routes time placement and conflict inspection to Calendar.",
+          "passed": false,
+          "evidence": "The answer calls the time proposed but does not name or hand the conflict check to Calendar."
+        },
+        {
+          "text": "Does not silently create or move events.",
+          "passed": true,
+          "evidence": "States no changes were made."
+        },
+        {
+          "text": "Preserves the user's instruction to make no changes.",
+          "passed": true,
+          "evidence": "Keeps the user’s no-change instruction and does not claim a conflict check."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    },
+    {
+      "eval_id": 1,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Distinguishes long-term outcome from next-week candidate work.",
+          "passed": true,
+          "evidence": "Distinguishes the long-term outcome from next-week candidate work."
+        },
+        {
+          "text": "Does not treat blocked tasks, missing capacity or absence of an agreement as a settled commitment.",
+          "passed": true,
+          "evidence": "Does not treat blocked work, missing capacity, or absent agreement as a settled commitment."
+        },
+        {
+          "text": "Returns the proposal in chat with no local HTML or source writes.",
+          "passed": true,
+          "evidence": "Returns a chat proposal and assigns no local artifact or calendar placement."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6667,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Routes time placement and conflict inspection to Calendar.",
+          "passed": false,
+          "evidence": "The answer does not route the conflict check or time placement to Calendar."
+        },
+        {
+          "text": "Does not silently create or move events.",
+          "passed": true,
+          "evidence": "Explicitly states nothing changed."
+        },
+        {
+          "text": "Preserves the user's instruction to make no changes.",
+          "passed": true,
+          "evidence": "Preserves the no-change request and does not claim a conflict check."
+        }
+      ],
+      "notes": [
+        "Synthetic prompt-only run; no live source was inspected or modified."
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.8334,
+        "stddev": 0.2357,
+        "min": 0.6667,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "old_skill": {
+      "pass_rate": {
+        "mean": 0.8334,
+        "stddev": 0.2357,
+        "min": 0.6667,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.00",
+      "time_seconds": "+0.0",
+      "tokens": "+0"
+    }
+  },
+  "notes": [
+    "Synthetic, prompt-only comparison. One run per evaluation and configuration. No live connectors or writes. Token and duration telemetry was not exposed by the runner; zeros mean unavailable. Delta is candidate minus baseline."
+  ]
+}

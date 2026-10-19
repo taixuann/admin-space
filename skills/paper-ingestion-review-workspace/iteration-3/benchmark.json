@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "skill_name": "paper-ingestion-review",
+    "skill_path": "/Users/tai/.agents/skills/paper-ingestion-review",
+    "executor_model": "not recorded by the executor notifications",
+    "analyzer_model": "not used; assertion grading was performed from saved reports",
+    "timestamp": "2026-10-19T16:14:06Z",
+    "evals_run": [
+      5
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 5,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The review identifies the source as the 2019 accepted manuscript, uses the frozen PDF/Markdown identities and fixture object revisions, and does not claim it compared the later typeset article.",
+          "passed": true,
+          "evidence": "States the 2019 accepted-manuscript identity, gives both manifest SHA-256 values, enumerates all GOLD-2 object revisions, and says the final typeset article was not compared."
+        },
+        {
+          "text": "The blind inventory accounts for all seven figures and Table 1, methods, pH/concentration/scan-rate regimes, duplicate measurements, reported results, interpretation limits, all 29 bibliography entries, and the stated lack of a cited supplement; material visuals are verified from the PDF.",
+          "passed": true,
+          "evidence": "The blind inventory and visual inventory cover all seven figures and Table 1, methods, pH/concentration/scan-rate settings, duplicates, results, limitations, all 29 references, no cited supplement, and PDF-based visual inspection."
+        },
+        {
+          "text": "EXP-01 through EXP-04 and FND-01 through FND-08 have correct locators, conditions, links, and reference lineage, and are reachable from the Paper narrative.",
+          "passed": true,
+          "evidence": "Explicitly reviews four Records and eight Findings, states source locators and material links, and confirms the Paper map covers object routes and all reference lineage."
+        },
+        {
+          "text": "Measured peak currents, the scan-rate relation, calculated speciation, and author interpretations remain distinct in bounded Findings; n=2, buffer/PBS wording ambiguity, pKa transfer limits, and unspecified Figure 4 preparation details are retained without invented values.",
+          "passed": true,
+          "evidence": "Separates observed currents and photographs, derived relation/speciation, and interpreted mechanisms; states n=2, buffer/PBS ambiguity, pKa conditions, and Figure 4's unreported concentration/preparation/replicate details."
+        },
+        {
+          "text": "A fresh independent FULL review passes all six active dimensions, records no unresolved blocker or major issue, confirms the final snapshot unchanged, and grants PASS/READY_FOR_DOWNSTREAM only after that check; no Notion/source writes are made.",
+          "passed": true,
+          "evidence": "Reports Route FULL, QUALIFYING_INDEPENDENT, all six dimensions PASS, no issues, PASS and READY_FOR_DOWNSTREAM; confirms the final hash/revision check and no Notion writes. The stored packet remains unchanged."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.4,
+        "passed": 2,
+        "failed": 3,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The review identifies the source as the 2019 accepted manuscript, uses the frozen PDF/Markdown identities and fixture object revisions, and does not claim it compared the later typeset article.",
+          "passed": true,
+          "evidence": "Identifies the accepted manuscript and exact PDF/Markdown SHA-256 values; lists PAPER, Records, Findings, and Reference Map at GOLD-2; states the final typeset article was not compared."
+        },
+        {
+          "text": "The blind inventory accounts for all seven figures and Table 1, methods, pH/concentration/scan-rate regimes, duplicate measurements, reported results, interpretation limits, all 29 bibliography entries, and the stated lack of a cited supplement; material visuals are verified from the PDF.",
+          "passed": false,
+          "evidence": "Visually checks all seven figures and Table 1 and records 29 references, no supplement, and some caveats. However, the blind inventory does not explicitly account for all pH/concentration/scan-rate regimes or the full reported result inventory."
+        },
+        {
+          "text": "EXP-01 through EXP-04 and FND-01 through FND-08 have correct locators, conditions, links, and reference lineage, and are reachable from the Paper narrative.",
+          "passed": false,
+          "evidence": "Says object links connect methods, figures/tables, findings, and cited inputs, but does not show that EXP-01\u201304 and FND-01\u201308 each have correct source locators and are reachable from the Paper narrative."
+        },
+        {
+          "text": "Measured peak currents, the scan-rate relation, calculated speciation, and author interpretations remain distinct in bounded Findings; n=2, buffer/PBS wording ambiguity, pKa transfer limits, and unspecified Figure 4 preparation details are retained without invented values.",
+          "passed": true,
+          "evidence": "Explicitly separates calculated speciation, author interpretations, and measured currents; retains n=2, buffer/PBS ambiguity, pKa transfer limits, and Figure 4's missing preparation details."
+        },
+        {
+          "text": "A fresh independent FULL review passes all six active dimensions, records no unresolved blocker or major issue, confirms the final snapshot unchanged, and grants PASS/READY_FOR_DOWNSTREAM only after that check; no Notion/source writes are made.",
+          "passed": false,
+          "evidence": "Does not report Route=FULL, Reviewer Qualification=QUALIFYING_INDEPENDENT, six canonical dimension states, PASS/READY_FOR_DOWNSTREAM, or a readiness decision after those gates. It explicitly withholds downstream acceptance because the fixture objects remain NEEDS_REVIEW."
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.4,
+        "stddev": 0.0,
+        "min": 0.4,
+        "max": 0.4
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.60",
+      "time_seconds": "+0.0",
+      "tokens": "+0"
+    }
+  },
+  "notes": [
+    "This iteration contains one paired run of eval 5 against packet GOLD-2; the 100% versus 40% rates are descriptive, not a variance estimate.",
+    "Executor timing and token counts were not available in a comparable form. Aggregator zero values for those metrics are missing-data placeholders, not measured zero time or zero tokens.",
+    "Earlier evals 1-4 are reported in iteration 1 and were not repeated in this positive real-paper run."
+  ]
+}

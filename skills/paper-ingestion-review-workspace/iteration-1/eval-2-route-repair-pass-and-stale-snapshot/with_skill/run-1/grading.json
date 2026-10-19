@@ -1,0 +1,12 @@
+{
+  "expectations": [
+    {"text": "repair is distinct from blocked", "passed": true, "evidence": "Case A is REPAIR, names FND-07, keeps it out of PASS, and requires bounded re-review."},
+    {"text": "qualified clean packet can pass", "passed": true, "evidence": "Case B is QUALIFYING_INDEPENDENT; all six dimensions pass, the final manifest matches, and the verdict is PASS."},
+    {"text": "revision race invalidates pending pass", "passed": true, "evidence": "Case C is BLOCKED with stale_revision, no object PASS, and a fresh full review required."},
+    {"text": "readiness gates are explicit", "passed": true, "evidence": "Only unchanged Case B receives READY_FOR_DOWNSTREAM."},
+    {"text": "canonical dimension names are used", "passed": true, "evidence": "Cases A-C all use the six active dimension names."},
+    {"text": "dimension states follow the schema", "passed": true, "evidence": "Each dimension is NOT_ASSESSED, PASS, or FAIL; Case C keeps BLOCKED as the verdict."}
+  ],
+  "summary": {"passed": 6, "failed": 0, "total": 6, "pass_rate": 1.0},
+  "execution_metrics": {"errors_encountered": 0}
+}

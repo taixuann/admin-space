@@ -1,0 +1,23 @@
+{
+  "eval_id": 4,
+  "eval_name": "real-paper-pilot-incomplete-review",
+  "prompt": "Review this real paper pilot packet for downstream readiness. Return the route, reviewer qualification, six active dimension states, issues, verdict, object state, and readiness. Do not modify the source or fill missing evidence from memory.",
+  "assertions": [
+    {
+      "name": "real-paper-snapshot-is-not-misrepresented-as-complete",
+      "text": "The supplied SSRN preprint is distinguished from the unverified journal version, and the pilot note is not treated as a complete packet."
+    },
+    {
+      "name": "independence-and-source-gaps-block-readiness",
+      "text": "The report identifies nonqualifying same-context review and missing source/manifest/visual or supplement evidence, routes BLOCKED, and withholds READY_FOR_DOWNSTREAM."
+    },
+    {
+      "name": "absent-structured-objects-are-not-invented",
+      "text": "The report does not invent Paper map, Experimental Records, or active Findings; it records their absence and keeps affected coverage unresolved."
+    },
+    {
+      "name": "active-schema-and-read-only-boundary",
+      "text": "The report uses the exact six active ledger dimension names with valid states and does not write to or alter Notion/source content."
+    }
+  ]
+}

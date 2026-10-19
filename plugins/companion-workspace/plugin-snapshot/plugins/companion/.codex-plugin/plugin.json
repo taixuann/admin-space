@@ -1,0 +1,12 @@
+{
+  "name": "companion",
+  "version": "0.1.5",
+  "description": "Discuss and manage Notion project work and maintain local documents through collection READMEs. Plans use single-file retrievable local HTML artifacts.",
+  "interface": {
+    "displayName": "Companion",
+    "shortDescription": "A companion for projects and local documents",
+    "developerName": "Tai",
+    "category": "Productivity"
+  },
+  "skills": "./skills"
+}

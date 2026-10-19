@@ -1,0 +1,3 @@
+Prompt:\nCan you tidy the folders in my downloads and also advise whether I should reprioritize the PhD application this week? Do not move anything. Explain which Companion workflow owns each part.\n\nConfiguration: old_skill\n\nResponse:\nI can help plan the Downloads cleanup, but local document organization should follow your local document workflow. Weekly priorities belong in Companion/Notion. Before recommending whether to move the PhD application up, I’d need its current deadlines and status, your other priorities, and your capacity this week.
+
+Uncertainty: I don’t know the proposed boundaries or your current records, so this is a general routing suggestion.

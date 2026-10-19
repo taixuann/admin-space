@@ -1,0 +1,3 @@
+Prompt:\nClose the duplicate bug from yesterday. Fixture has two matching GitHub issues with different repository IDs; neither is marked duplicate and the conversation does not name a repository. This is a dry run; no writes.\n\nConfiguration: old_skill\n\nResponse:\nI can’t identify which issue to close: the two matching issues belong to different repositories, and the conversation does not specify the repository. Please provide the repository ID/name or the exact issue URL. No changes made in this dry run.
+
+Uncertainty: “from yesterday” is not recoverable from the supplied context; the matching fixture does not resolve target identity.

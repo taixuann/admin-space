@@ -1,0 +1,6 @@
+{
+  "observations": [
+    "Iteration 1 scored 66.7% for the candidate versus 83.3% for the old skill. The candidate's first response omitted the exact destination and Execute handoff; the second-pass candidate scored 100% after the output instruction was clarified.",
+    "For the ambiguous-destination prompt, both versions asked which destination to use. The explicit Linear-target case was useful for distinguishing the new cross-source capture boundary from the old Notion Progress Log behavior."
+  ]
+}

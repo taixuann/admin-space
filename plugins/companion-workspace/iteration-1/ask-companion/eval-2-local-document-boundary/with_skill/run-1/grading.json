@@ -1,0 +1,37 @@
+{
+  "expectations": [
+    {
+      "text": "Does not claim global Companion manages or inspects local files.",
+      "passed": true,
+      "evidence": "Keeps local Downloads organization in Personal Hub and leaves files unchanged."
+    },
+    {
+      "text": "Separates folder organization from connected project advice.",
+      "passed": true,
+      "evidence": "Does not make an unsupported priority change recommendation."
+    },
+    {
+      "text": "Makes no persistent changes.",
+      "passed": true,
+      "evidence": "Asks a focused follow-up about deadline and displaced work."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 0,
+    "total": 3,
+    "pass_rate": 1.0
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Synthetic prompt-only run; no live source was inspected or modified."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "Assertions grade the supplied response text. Connector execution, source coverage, and write/readback reliability are not measured by this synthetic run."
+  }
+}

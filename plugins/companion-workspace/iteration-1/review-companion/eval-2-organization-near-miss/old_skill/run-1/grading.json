@@ -1,0 +1,37 @@
+{
+  "expectations": [
+    {
+      "text": "Does not execute or plan note/catalogue restructuring as a global Review workflow.",
+      "passed": false,
+      "evidence": "Treats merge/reorganization planning as part of global weekly Review."
+    },
+    {
+      "text": "Identifies the Personal Hub boundary.",
+      "passed": false,
+      "evidence": "Does not identify the Personal Hub workflow boundary."
+    },
+    {
+      "text": "Makes no persistent edits.",
+      "passed": true,
+      "evidence": "Makes no persistent edits."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 2,
+    "total": 3,
+    "pass_rate": 0.3333
+  },
+  "claims": [],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Synthetic prompt-only run; no live source was inspected or modified."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "Assertions grade the supplied response text. Connector execution, source coverage, and write/readback reliability are not measured by this synthetic run."
+  }
+}

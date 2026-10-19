@@ -1,0 +1,29 @@
+{
+  "skill_name": "capture-companion",
+  "evals": [
+    {
+      "id": 1,
+      "name": "explicit-existing-linear-destination",
+      "prompt": "Capture this update on Linear issue L-22: the figure draft is ready for coauthor review; I finished it today. Fixture: L-22 is the matching issue, its update section exists, and no identical note is present. Use a synthetic dry run only; do not call a live connector.",
+      "expected_output": "Preserve the owner attribution and event date, target the existing Linear issue, check for duplicate, hand the exact entry to Execute and state that no write was performed in the dry run.",
+      "files": [],
+      "expectations": [
+        "Uses the explicitly selected existing Linear issue and preserves the stated event date.",
+        "Does not change status or any unrelated field without request.",
+        "Routes the exact capture to Execute and does not claim a live write."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "ambiguous-destination",
+      "prompt": "Please save this decision: we will delay the application draft until the recommendation letters arrive. Fixture has a Notion Research project and a Linear Development project with similarly named tasks; no destination was specified. Dry run only.",
+      "expected_output": "Ask which canonical destination should receive the decision; do not guess by title or save to a local inbox.",
+      "files": [],
+      "expectations": [
+        "Recognizes the destination as materially ambiguous.",
+        "Does not choose between Notion and Linear by title similarity.",
+        "Does not create a local inbox or claim a save."
+      ]
+    }
+  ]
+}
