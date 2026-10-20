@@ -1,0 +1,289 @@
+#!/usr/bin/env python3
+"""Palette-driven plotting and hierarchical figure bundle generator for research studies.
+
+Contract and Guidelines:
+- Figures are organized by purpose into hierarchical categories:
+    figures/primary/    - Core deliverables answering the research questions
+    figures/diagnostic/ - QC, extraction interval validation, signal stability
+    figures/extended/   - Supplementary sweeps, exploratory parameter mappings
+- Each figure is preserved as a self-contained bundle directory:
+    <bundle_dir>/
+      ├── <figure_id>.pdf          (vector publication export)
+      ├── <figure_id>.png          (raster visual companion)
+      ├── plot.yaml                (native FigRecipe recipe)
+      ├── plot_data/               (native FigRecipe per-series x/y CSVs)
+      └── <figure_id>.meta.yaml    (palette provenance and execution metadata)
+- No runtime caches are dumped into study runs.
+"""
+
+from __future__ import annotations
+
+import csv
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+import yaml
+
+_MM_TO_PT = 72.0 / 25.4
+
+
+def resolve_preset_path(preset_path: Optional[Path | str], study_root: Optional[Path] = None) -> Optional[Path]:
+    """Validate and resolve figure preset path fail-closed.
+
+    Supports direct paths, preset names (e.g. 'PAPER_USTH', 'nature-single'),
+    and relative paths inside tools/figrecipe/presets/.
+    """
+    if preset_path is None:
+        return None
+    p = Path(preset_path)
+    if p.is_file():
+        return p.resolve()
+
+    from modules.data import find_project_root
+    proj_root = find_project_root(study_root or Path.cwd())
+    presets_dir = proj_root / "tools" / "figrecipe" / "presets"
+
+    candidates = [
+        presets_dir / p,
+        presets_dir / f"{p}.yaml",
+        presets_dir / "archived" / p,
+        presets_dir / "archived" / f"{p}.yaml",
+        presets_dir / "archived" / f"{p.name}.yaml",
+    ]
+    for cand in candidates:
+        if cand.is_file():
+            return cand.resolve()
+
+    raise FileNotFoundError(f"FigRecipe preset missing or unresolvable: {preset_path}")
+
+
+def load_style(preset_path: Optional[Path]):
+    """Load FigRecipe style object if preset is provided and figrecipe is installed."""
+    if preset_path is None:
+        return None
+    try:
+        import figrecipe as fr
+        return fr.load_style(str(preset_path))
+    except (ImportError, Exception) as exc:
+        raise RuntimeError(f"Failed loading FigRecipe preset {preset_path}: {exc}") from exc
+
+
+def create_figure_axes(preset_path: Optional[Path] = None, style=None):
+    """Build matplotlib figure and axes using FigRecipe style specifications."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    if preset_path is None and style is None:
+        return plt.subplots(figsize=(7, 4.5), constrained_layout=True)
+
+    if style is None and preset_path is not None:
+        style = load_style(preset_path)
+
+    try:
+        import figrecipe as fr
+
+        fig, ax = fr.subplots(
+            axes_width_mm=style.axes.width_mm,
+            axes_height_mm=style.axes.height_mm,
+            constrained_layout=False,
+        )
+        behavior = style.behavior
+        spine_pt = float(style.axes.thickness_mm) * _MM_TO_PT
+        for side in ("top", "bottom", "left", "right"):
+            ax.spines[side].set_linewidth(spine_pt)
+        ax.spines["top"].set_visible(not bool(behavior.hide_top_spine))
+        ax.spines["right"].set_visible(not bool(behavior.hide_right_spine))
+        ax.spines["left"].set_visible(not bool(behavior.get("hide_left_spine", False)))
+        ax.spines["bottom"].set_visible(not bool(behavior.get("hide_bottom_spine", False)))
+
+        theme = getattr(style, "theme", None)
+        inks: dict = {}
+        if theme is not None:
+            try:
+                inks = dict(theme.get(theme.get("mode", "light"), {}))
+            except (AttributeError, TypeError):
+                inks = {}
+        fig.patch.set_facecolor(inks.get("figure_bg", "white"))
+        ax.set_facecolor(inks.get("axes_bg", "white"))
+        ink = inks.get("text", "black")
+        for spine in ax.spines.values():
+            spine.set_color(inks.get("spine", "black"))
+
+        ax.tick_params(color=inks.get("tick", "black"), labelcolor=inks.get("tick", "black"))
+        ax.xaxis.label.set_color(ink)
+        ax.yaxis.label.set_color(ink)
+        family = str(style.fonts.family)
+        ax.xaxis.label.set_fontfamily(family)
+        ax.yaxis.label.set_fontfamily(family)
+        ax.title.set_fontfamily(family)
+
+        ticks = style.ticks
+        ax.tick_params(
+            direction=str(ticks.direction),
+            length=float(ticks.length_mm) * _MM_TO_PT,
+            width=float(ticks.thickness_mm) * _MM_TO_PT,
+            pad=float(style.padding.tick_pt),
+        )
+        ax.xaxis.labelpad = float(style.padding.label_pt)
+        ax.yaxis.labelpad = float(style.padding.label_pt)
+        ax.grid(bool(behavior.grid))
+        if bool(behavior.auto_scale_axes):
+            ax.autoscale(True)
+        return fig, ax
+    except Exception as exc:
+        raise RuntimeError(f"Failed to create FigRecipe canvas: {exc}") from exc
+
+
+def save_figure_bundle(
+    fig,
+    run_dir: Path,
+    figure_id: str,
+    category: str = "primary",
+    preset_path: Optional[Path] = None,
+    plotted: Optional[List[Dict[str, Any]]] = None,
+    data_rows: Optional[List[List[Any]]] = None,
+    x_display: str = "",
+    y_display: str = "",
+    warnings: Optional[List[Any]] = None,
+    palette_file: str = "",
+    style=None,
+    dpi: int = 300,
+    study_slug: str = "study",
+    bundle_dir: Optional[Path] = None,
+) -> Path:
+    """Save a self-contained figure bundle honoring FigRecipe contracts and hierarchy.
+
+    Directory structure:
+      runs/<run_id>/figures/<category>/<bundle_name>/
+        ├── <figure_id>.pdf
+        ├── <figure_id>.png
+        ├── plot.yaml
+        ├── plot_data/
+        └── <figure_id>.meta.yaml
+    """
+    run_dir = Path(run_dir)
+    plotted = plotted or []
+    data_rows = data_rows or []
+    warnings = warnings or []
+
+    if bundle_dir is None:
+        stamp = datetime.now().strftime("%d%m%y-%H%M%S")
+        bundle_name = f"{stamp}_{study_slug}_{figure_id}"
+        bundle_dir = run_dir / "figures" / category / bundle_name
+
+    bundle_dir.mkdir(parents=True, exist_ok=True)
+
+    png_path = bundle_dir / f"{figure_id}.png"
+    pdf_path = bundle_dir / f"{figure_id}.pdf"
+
+    if style is not None:
+        import figrecipe as fr
+
+        # Native recording: writes png + plot.yaml + plot_data/ in bundle_dir
+        fr.save(fig, str(png_path))
+
+        # Vector companion (warning level ignores small floating point MSE mismatches)
+        save_kw: Dict[str, Any] = {"format": "pdf"}
+        try:
+            fig.savefig(pdf_path, validate_error_level="warning", **save_kw)
+        except TypeError:
+            fig.savefig(pdf_path, **save_kw)
+
+        # Validate native recipe & series data files exist
+        recipe_candidates = [bundle_dir / "plot.yaml", bundle_dir / f"{figure_id}.yaml"]
+        data_candidates = [bundle_dir / "plot_data", bundle_dir / f"{figure_id}_data"]
+        recipe_found = any(rc.is_file() for rc in recipe_candidates)
+        data_found = any(dc.is_dir() for dc in data_candidates)
+        if not recipe_found or not data_found:
+            raise RuntimeError(f"FigRecipe native bundle incomplete in {bundle_dir}")
+    else:
+        fig.savefig(png_path, dpi=dpi)
+        fig.savefig(pdf_path, format="pdf")
+
+    import matplotlib.pyplot as plt
+    plt.close(fig)
+
+    # Save numeric backup if data_rows provided
+    if data_rows:
+        with (bundle_dir / f"{figure_id}.data.csv").open("w", encoding="utf-8", newline="") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(["series", x_display, y_display])
+            writer.writerows(data_rows)
+
+    preset_id = Path(preset_path).stem if preset_path is not None else None
+    meta = {
+        "schema_version": 1,
+        "figure_id": figure_id,
+        "category": category,
+        "preset": preset_id,
+        "preset_path": str(preset_path) if preset_path is not None else None,
+        "fallback": preset_id is None,
+        "palette": {item["name"]: item.get("color", "") for item in plotted if "name" in item},
+        "palette_file": palette_file,
+        "series": plotted,
+        "warnings": warnings,
+        "saved_at": datetime.now().isoformat(),
+    }
+    (bundle_dir / f"{figure_id}.meta.yaml").write_text(
+        yaml.safe_dump(meta, sort_keys=False), encoding="utf-8"
+    )
+
+    # Validate essential outputs exist
+    for required in (png_path, pdf_path, bundle_dir / f"{figure_id}.meta.yaml"):
+        if not required.is_file():
+            raise RuntimeError(f"Bundle incomplete, missing: {required.name}")
+
+    return bundle_dir
+
+
+def plot_study_results(
+    data: Dict[str, Any],
+    palette: Dict[str, str],
+    run_dir: Path,
+    preset_path: Optional[Path] = None,
+    params: Optional[Dict[str, Any]] = None,
+    figure_id: str = "primary-result",
+    category: str = "primary",
+    study_slug: str = "study",
+) -> Optional[Path]:
+    """Single-figure standard rendering entrypoint."""
+    preset_path = resolve_preset_path(preset_path)
+    style = load_style(preset_path) if preset_path else None
+    fig, ax = create_figure_axes(preset_path, style)
+
+    series_list = data.get("series", [])
+    plotted: List[Dict[str, Any]] = []
+    data_rows: List[List[Any]] = []
+
+    for s in series_list:
+        xs = s.get("x") or []
+        ys = s.get("y") or []
+        name = s.get("name", "series")
+        color = palette.get(name, "#000000")
+        if xs and ys:
+            if style is not None:
+                ax.plot(xs, ys, color=color, label=name, id=name)
+            else:
+                ax.plot(xs, ys, color=color, label=name)
+            plotted.append({"name": name, "color": color, "points": len(xs)})
+            for x, y in zip(xs, ys):
+                data_rows.append([name, x, y])
+
+    if not plotted:
+        return None
+
+    ax.legend(loc="best", frameon=False)
+
+    return save_figure_bundle(
+        fig=fig,
+        run_dir=run_dir,
+        figure_id=figure_id,
+        category=category,
+        preset_path=preset_path,
+        plotted=plotted,
+        data_rows=data_rows,
+        palette_file="",
+        style=style,
+        study_slug=study_slug,
+    )

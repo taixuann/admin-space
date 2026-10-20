@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+"""Domain-specific analysis logic, numerical extraction, and signal processing.
+
+All scientific domain logic belongs here:
+- parse and clean instrument measurements
+- compute extracted metrics, intervals, and summary statistics
+- structure plottable outputs for rendering
+"""
+
+from __future__ import annotations
+
+from typing import Any, Dict, List, Optional, Tuple
+
+
+def extract_window_metrics(
+    time_series: List[float],
+    signal_series: List[float],
+    t_start: float,
+    t_end: float,
+) -> Dict[str, float]:
+    """Calculate mean and standard deviation within [t_start, t_end]."""
+    points = [y for t, y in zip(time_series, signal_series) if t_start <= t <= t_end]
+    if not points:
+        return {"mean": float("nan"), "std": float("nan"), "count": 0}
+    mean_val = sum(points) / len(points)
+    variance = sum((p - mean_val) ** 2 for p in points) / max(1, len(points) - 1)
+    return {
+        "mean": mean_val,
+        "std": variance ** 0.5,
+        "count": len(points),
+    }
+
+
+def analyze_series_data(
+    raw_series: Dict[str, Any],
+    params: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Process single experimental series according to method specifications."""
+    params = params or {}
+    columns = raw_series.get("columns", [])
+    rows = raw_series.get("rows", [])
+    xs: List[float] = []
+    ys: List[float] = []
+    if len(columns) >= 2 and rows:
+        for r in rows:
+            if len(r) >= 2:
+                try:
+                    xs.append(float(r[0]))
+                    ys.append(float(r[1]))
+                except (ValueError, TypeError):
+                    continue
+
+    return {
+        "object_id": raw_series.get("object_id", ""),
+        "name": raw_series.get("name", "series"),
+        "x": xs,
+        "y": ys,
+        "raw": raw_series,
+        "status": "PROCESSED",
+    }
+
+
+def run_study_analysis(
+    data: Dict[str, Any],
+    params: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Main domain analysis entrypoint consumed by run.py."""
+    params = params or {}
+    series_list = data.get("series", [])
+    processed_series = [analyze_series_data(s, params) for s in series_list]
+
+    return {
+        "status": "SUCCESS",
+        "params": params,
+        "study_root": data.get("study_root"),
+        "run_dir": data.get("run_dir"),
+        "series": processed_series,
+        "channel_units": data.get("channel_units", {}),
+    }

@@ -1,0 +1,12 @@
+{
+  "name": "orchestra-companion",
+  "version": "0.1.0",
+  "description": "Coordinate Agents Tickets through intake, context gathering, human review and explicit routing.",
+  "interface": {
+    "displayName": "Orchestra Companion",
+    "shortDescription": "Coordinate ticket intake and routing",
+    "developerName": "Tai",
+    "category": "Productivity"
+  },
+  "skills": "./skills"
+}

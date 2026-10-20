@@ -120,6 +120,24 @@
       "skillFolderHash": "4360360f674f12699a66fffa1ab80174abbca93b",
       "installedAt": "2026-10-13T13:59:51.739Z",
       "updatedAt": "2026-10-13T13:59:51.739Z"
+    },
+    "archify": {
+      "source": "tt-a1i/archify",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/tt-a1i/archify.git",
+      "skillPath": "archify/SKILL.md",
+      "skillFolderHash": "39069dd190f574064fe410aa3af1b6dfd98a522c",
+      "installedAt": "2026-10-20T07:30:24.410Z",
+      "updatedAt": "2026-10-20T07:30:24.410Z"
+    },
+    "pretty-mermaid": {
+      "source": "imxv/pretty-mermaid-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/imxv/pretty-mermaid-skills.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "e234ab73c2992f03c36db04fd55ebb90abca9c45",
+      "installedAt": "2026-10-20T15:36:39.616Z",
+      "updatedAt": "2026-10-20T15:36:39.616Z"
     }
   },
   "dismissed": {
@@ -131,6 +149,7 @@
     "codex",
     "cursor",
     "droid",
+    "fx",
     "gemini-cli",
     "github-copilot",
     "kilo",

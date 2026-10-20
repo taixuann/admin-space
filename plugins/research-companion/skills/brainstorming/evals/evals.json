@@ -1,0 +1,16 @@
+{
+  "skill_name": "brainstorming",
+  "evals": [
+    {
+      "id": 2,
+      "scenario_id": 2,
+      "prompt": "Using only this synthetic observation, help me explore possible explanations and what evidence could distinguish them: device A shows a larger current after switching than before. I have not chosen a direction. Give candidate directions and leave the selection to me.",
+      "expected_output": "Follow the shared owner contract; preserve scope, evidence and decision boundaries for this synthetic case.",
+      "files": [],
+      "expectations": [
+        "Offers competing directions or explanations grounded only in the supplied synthetic observation.",
+        "Leaves the direction selection to the scientist."
+      ]
+    }
+  ]
+}

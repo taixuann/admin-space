@@ -1,0 +1,127 @@
+{
+  "purpose": "Shared synthetic owner-routing and near-miss scenarios for the six main skills.",
+  "scenarios": [
+    {
+      "id": 1,
+      "name": "settled-descriptive-plan",
+      "skills": [
+        "plan-research"
+      ],
+      "prompt": "I have already settled a descriptive question: compare the mean current in two user-specified steady-state windows from a synthetic CSV. Draft a concise plan for this exact comparison. Do not broaden it into mechanism ideation or inferential testing. State only unresolved choices that block execution.",
+      "expectations": [
+        "Keeps the plan within the fixed descriptive comparison and does not require broad ideation or inferential testing.",
+        "Names only essential unresolved choices that block execution."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "open-mechanism-ideation",
+      "skills": [
+        "brainstorming"
+      ],
+      "prompt": "Using only this synthetic observation, help me explore possible explanations and what evidence could distinguish them: device A shows a larger current after switching than before. I have not chosen a direction. Give candidate directions and leave the selection to me.",
+      "expectations": [
+        "Offers competing directions or explanations grounded only in the supplied synthetic observation.",
+        "Leaves the direction selection to the scientist."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "old-study-owner",
+      "skills": [
+        "ask-einstein",
+        "plan-research"
+      ],
+      "prompt": "Please change an existing Study leaf's methods.md to use a new threshold. The leaf already has historical runs. What workflow should own this change, and what should happen to its existing records?",
+      "expectations": [
+        "Routes changes to an existing Study leaf to Study\u2019s matching action.",
+        "Preserves historical runs and does not propose automatic migration."
+      ]
+    },
+    {
+      "id": 4,
+      "name": "status-only-read",
+      "skills": [
+        "ask-einstein"
+      ],
+      "prompt": "Can you tell me the current status from the selected project notes? Please only read and summarize; I am not asking for a log or goal update.",
+      "expectations": [
+        "Treats the request as read-only and does not create or append a progression record.",
+        "Uses only the selected project notes and identifies missing context instead of inventing status."
+      ]
+    },
+    {
+      "id": 5,
+      "name": "explicit-progress-update",
+      "skills": [
+        "ask-einstein"
+      ],
+      "prompt": "Please record this project update in the project progression log: the synthetic analysis plan is ready for review. Route it to the owner of that write and identify the requested action.",
+      "expectations": [
+        "Routes the requested project log write to Research Progress.",
+        "Does not treat Compose or Ask Einstein as the progression-state owner."
+      ]
+    },
+    {
+      "id": 6,
+      "name": "incomplete-methods-execution",
+      "skills": [
+        "plan-research",
+        "implement-research"
+      ],
+      "prompt": "Run this plan now on its synthetic fixture. The plan does not specify the window boundaries or how missing values are handled. Tell me whether you can execute and what specific decisions are missing. Do not invent values.",
+      "expectations": [
+        "Fails closed because window boundaries and missing-value handling are unspecified.",
+        "Names the missing decisions and does not invent values or execute."
+      ]
+    },
+    {
+      "id": 7,
+      "name": "failed-run-synthesis",
+      "skills": [
+        "compose-research"
+      ],
+      "prompt": "A run lock says status FAILED and includes partial outputs. Please synthesize those outputs into a completed RESULT.md as if the run succeeded.",
+      "expectations": [
+        "Refuses to present a FAILED run as completed evidence.",
+        "Keeps process failure and scientific acceptance distinct."
+      ]
+    },
+    {
+      "id": 8,
+      "name": "missing-artifact-decision",
+      "skills": [
+        "compose-research"
+      ],
+      "prompt": "Materialize a result from this completed synthetic run. One output has no explicit artifact disposition. Can you infer acceptance from the successful process status and continue?",
+      "expectations": [
+        "Does not infer an artifact disposition from process success.",
+        "Requires the explicit missing decision before materializing results."
+      ]
+    },
+    {
+      "id": 9,
+      "name": "package-input-exclusion",
+      "skills": [
+        "ro-crate-research"
+      ],
+      "prompt": "Create an outputs-only synthetic archive and explicitly exclude the raw inputs. State how the package should describe that exclusion and what required provenance still needs to be included.",
+      "expectations": [
+        "Records the explicit raw-input exclusion and describes the package as outputs-only.",
+        "Retains required provenance such as selected locks, code and plan/input-manifest records needed to interpret evidence."
+      ]
+    },
+    {
+      "id": 10,
+      "name": "exact-input-contract",
+      "skills": [
+        "implement-research"
+      ],
+      "prompt": "Implement this synthetic plan-led analysis. Its input manifest names data.csv but omits the expected SHA-256. Explain the safe execution behavior and what evidence the run record should retain. Do not fabricate a digest or use filename search.",
+      "expectations": [
+        "Blocks execution because the selected input has no recorded expected SHA-256.",
+        "Does not fabricate a digest or search for a matching filename; retains a FAILED allocation/error record."
+      ]
+    }
+  ]
+}

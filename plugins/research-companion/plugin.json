@@ -1,0 +1,11 @@
+{
+  "name": "research-companion",
+  "displayName": "Scientific Research Companion",
+  "description": "Unified scientific research companion: meta-routing dispatcher, ideation, question-led study planning, TDD execution, result synthesis, RO-Crate packaging, and progress/presentation delivery; explicit research-intent capture to the Agents Ticket database.",
+  "version": "1.3.2",
+  "suggestedPrompts": [
+    "Discuss a scientific research request and route it to its owner",
+    "Capture this research intent in the Agents Ticket database",
+    "Plan a selected new research analysis"
+  ]
+}

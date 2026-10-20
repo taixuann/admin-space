@@ -1,0 +1,157 @@
+#!/usr/bin/env python3
+"""Load only the exact input files declared by the plan-led v1 manifest."""
+
+from __future__ import annotations
+
+import csv
+import hashlib
+import os
+import re
+import shutil
+from pathlib import Path
+from typing import Any, Dict, List
+
+try:
+    import yaml
+except ImportError as exc:  # pragma: no cover - exercised in isolated dependency check
+    raise RuntimeError("PyYAML is required to read the plan-led input manifest; install it in the project environment") from exc
+
+DIGEST = re.compile(r"^[0-9a-f]{64}$")
+
+
+def find_project_root(study_root: Path | None = None) -> Path:
+    """Return only an explicitly selected project root; never infer it by search."""
+    injected = os.environ.get("STUDY_PROJECT_ROOT")
+    if not injected:
+        raise ValueError("Set STUDY_PROJECT_ROOT or pass --project-root explicitly")
+    project_root = Path(injected).resolve()
+    if not project_root.is_dir():
+        raise FileNotFoundError(f"Selected project root not found: {project_root}")
+    return project_root
+
+
+def checked_input_path(project_root: Path, value: Any) -> Path:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError("Each declared input file requires a non-empty path")
+    supplied = Path(value)
+    candidate = supplied if supplied.is_absolute() else project_root / supplied
+    current = candidate
+    while current != current.parent:
+        if current.is_symlink():
+            raise ValueError(f"Symlinked input is not allowed: {current}")
+        current = current.parent
+    resolved = candidate.resolve(strict=False)
+    root = project_root.resolve()
+    if resolved != root and root not in resolved.parents:
+        raise ValueError(f"Input path escapes selected project root: {value}")
+    if not resolved.is_file():
+        raise FileNotFoundError(f"Declared input file does not exist: {resolved}")
+    return resolved
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(65536), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def series_from_csv(file_path: Path) -> Dict[str, Any]:
+    """Read a delimited input into columns and rows without changing source bytes."""
+    with file_path.open(encoding="utf-8-sig", errors="strict", newline="") as stream:
+        rows = [row for row in csv.reader(stream) if row]
+    if not rows:
+        return {"columns": [], "rows": []}
+    return {"columns": [col.strip() for col in rows[0]], "rows": rows[1:]}
+
+
+def load_study_measurements(
+    study_root: Path | None = None,
+    run_dir: Path | None = None,
+    project_root: Path | None = None,
+) -> Dict[str, Any]:
+    """Verify and load each explicitly declared input file; no filename search fallback."""
+    if study_root is None:
+        study_root = Path(__file__).resolve().parents[2]
+    study_root = Path(study_root).resolve()
+    if project_root is None:
+        project_root = find_project_root(study_root)
+    project_root = Path(project_root).resolve()
+    if not project_root.is_dir():
+        raise FileNotFoundError(f"Selected project root not found: {project_root}")
+    if run_dir is None:
+        run_dir = Path(os.environ.get("STUDY_RUN_DIR", study_root / "runs" / "unallocated"))
+    run_dir = Path(run_dir).resolve()
+
+    input_yaml = study_root / "input.yaml"
+    if input_yaml.is_symlink() or not input_yaml.is_file():
+        raise FileNotFoundError(f"input.yaml missing or symlinked in study root: {input_yaml}")
+    with input_yaml.open(encoding="utf-8") as stream:
+        raw_doc = yaml.safe_load(stream)
+    if (not isinstance(raw_doc, dict)
+            or set(raw_doc) - {"schema_version", "owner", "inputs", "channel_units"}
+            or raw_doc.get("schema_version") != 1
+            or raw_doc.get("owner") != "implement-research"):
+        raise ValueError("Unsupported input manifest; expected schema_version 1 owner implement-research")
+    declared = raw_doc.get("inputs")
+    if not isinstance(declared, list) or not declared:
+        raise ValueError("input.yaml must contain a non-empty inputs list")
+
+    object_ids: set[str] = set()
+    series_list: List[Dict[str, Any]] = []
+    verified_inputs: List[Dict[str, Any]] = []
+    for record in declared:
+        if not isinstance(record, dict) or set(record) - {"object_id", "role", "files", "name"} or not {"object_id", "role", "files"} <= set(record):
+            raise ValueError("Each input must be a mapping")
+        object_id, role, files = record.get("object_id"), record.get("role"), record.get("files")
+        if not isinstance(object_id, str) or not object_id.strip() or object_id in object_ids:
+            raise ValueError("Each input requires a unique non-empty object_id")
+        if not isinstance(role, str) or not role.strip() or not isinstance(files, list) or not files:
+            raise ValueError(f"Input {object_id} requires a role and non-empty files list")
+        name = record.get("name")
+        if "name" in record and (not isinstance(name, str) or not name.strip()):
+            raise ValueError(f"Input {object_id} name must be a non-empty string when supplied")
+        object_ids.add(object_id)
+        verified_files = []
+        for file_record in files:
+            if (not isinstance(file_record, dict)
+                    or set(file_record) - {"path", "sha256"}
+                    or "path" not in file_record):
+                raise ValueError(f"Input {object_id} contains a malformed file record")
+            path_value, expected = file_record.get("path"), file_record.get("sha256")
+            if not isinstance(expected, str) or not DIGEST.fullmatch(expected):
+                raise ValueError(f"Missing or malformed SHA-256 for input {object_id}: {path_value}")
+            path = checked_input_path(project_root, path_value)
+            actual = sha256_file(path)
+            if actual != expected:
+                raise ValueError(f"SHA-256 mismatch for input {object_id} ({path_value}): expected {expected}, got {actual}")
+            project_relative = path.relative_to(project_root).as_posix()
+            staged_path = run_dir / "inputs" / "raw" / project_relative
+            staged_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path, staged_path)
+            if sha256_file(staged_path) != actual:
+                raise ValueError(f"Staged input hash mismatch for {object_id} ({path_value})")
+            parsed = series_from_csv(staged_path)
+            series_list.append({
+                "object_id": object_id,
+                "name": name.strip() if isinstance(name, str) else object_id,
+                "path": str(staged_path),
+                "columns": parsed["columns"],
+                "rows": parsed["rows"],
+                "meta": record,
+            })
+            verified_files.append({"path": path_value, "sha256": expected})
+        verified_record = {"object_id": object_id, "role": role, "files": verified_files}
+        if isinstance(name, str):
+            verified_record["name"] = name.strip()
+        verified_inputs.append(verified_record)
+
+    return {
+        "study_root": str(study_root),
+        "project_root": str(project_root),
+        "run_dir": str(run_dir),
+        "inputs": verified_inputs,
+        "series": series_list,
+        "channel_units": raw_doc.get("channel_units", {}),
+    }

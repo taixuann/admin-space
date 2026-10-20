@@ -1,0 +1,38 @@
+{
+  "skill_name": "ask-einstein",
+  "evals": [
+    {
+      "id": 3,
+      "scenario_id": 3,
+      "prompt": "Please change an existing Study leaf's methods.md to use a new threshold. The leaf already has historical runs. What workflow should own this change, and what should happen to its existing records?",
+      "expected_output": "Follow the shared owner contract; preserve scope, evidence and decision boundaries for this synthetic case.",
+      "files": [],
+      "expectations": [
+        "Routes changes to an existing Study leaf to Study\u2019s matching action.",
+        "Preserves historical runs and does not propose automatic migration."
+      ]
+    },
+    {
+      "id": 4,
+      "scenario_id": 4,
+      "prompt": "Can you tell me the current status from the selected project notes? Please only read and summarize; I am not asking for a log or goal update.",
+      "expected_output": "Follow the shared owner contract; preserve scope, evidence and decision boundaries for this synthetic case.",
+      "files": [],
+      "expectations": [
+        "Treats the request as read-only and does not create or append a progression record.",
+        "Uses only the selected project notes and identifies missing context instead of inventing status."
+      ]
+    },
+    {
+      "id": 5,
+      "scenario_id": 5,
+      "prompt": "Please record this project update in the project progression log: the synthetic analysis plan is ready for review. Route it to the owner of that write and identify the requested action.",
+      "expected_output": "Follow the shared owner contract; preserve scope, evidence and decision boundaries for this synthetic case.",
+      "files": [],
+      "expectations": [
+        "Routes the requested project log write to Research Progress.",
+        "Does not treat Compose or Ask Einstein as the progression-state owner."
+      ]
+    }
+  ]
+}

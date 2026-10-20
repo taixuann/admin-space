@@ -1,0 +1,35 @@
+{
+  "skill_name": "receiving-ticket",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Orchestra, receive this ticket: the request is to add a shared skill for validating plugin manifests. Check it and prepare it for my review; don't start the work.",
+      "expected_output": "Assess the selected ticket, classify tools/skills work as Admin, request scoped context when available, update the ticket with an attributed intake packet, set Human review, and stop for a human decision.",
+      "expectations": [
+        "Does not start implementation or claim a downstream route.",
+        "Reports source lookup as pending unless Wiki Companion actually ran.",
+        "Does not invent plan content or approval."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "This ticket continues the existing research milestone discussion. Receive the same ticket and summarize what is still open; don't make a duplicate.",
+      "expected_output": "Reuse the identified ticket, preserve its category and history, update the intake packet, and prepare it for human review with remaining open questions.",
+      "expectations": [
+        "Checks identity before assuming the ticket is the same.",
+        "Preserves existing intent and does not create another ticket.",
+        "Does not silently change category or imply route approval."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "The Wiki Companion capability is unavailable. Receive this ticket, record that gap, and prepare it for my review.",
+      "expected_output": "Record the unavailable context check as a limitation, set Human review when supported, and present the packet without claiming context completeness.",
+      "expectations": [
+        "Names the unavailable source check.",
+        "Does not claim context completeness.",
+        "Stops before routing or execution."
+      ]
+    }
+  ]
+}

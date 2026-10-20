@@ -1,0 +1,115 @@
+---
+type: {{type}}
+version: "1.0.0"
+revision: 1
+status: DRAFT
+created: "{{date}}"
+updated: "{{date}}"
+target: "{{project_relative_target}}"
+action: "{{action}}"
+approval: null
+supersedes: null
+---
+
+# {{title}}
+
+This is renderer source, not a separately maintained Markdown plan.
+Render the primary HTML with answer-me-with-html and retain its embedded source.
+Lead with a question index and mark the current question.
+Link the index entries to the rendered question sections.
+Combine short explanations with diagrams for relationships or choices.
+Develop question titles from the scientist's frame.
+Use the sections below as coverage prompts, not mandatory page headings.
+
+## Start here
+
+Current question: {{current_question}}
+Next decision: {{next_decision}}
+
+| Question | State | Section link |
+| --- | --- | --- |
+| Q1: {{question}} | Current | {{rendered_section_link}} |
+
+## Q1: {{question}}
+
+Explain why this question matters in one or two sentences.
+State the current answer, its source and its limits.
+Name the open point and the decision owner.
+Recommend a skill, local inspection or discussion based on the question.
+Explain the reason, expected result and completion condition.
+If existing evidence is enough, state that basis.
+Add a small diagram only when it clarifies the relationship or choice.
+Repeat question sections only as the frame requires.
+
+## Frame
+
+State the question, purpose, owning Project and requested action.
+Combine scope, current context and source limits here.
+Separate scientist decisions, inspected facts and proposed choices.
+If related studies help answer the question, link them.
+State what each source contributes and where its use stops.
+
+## Requirements
+
+| ID | Needed outcome or constraint | Basis | Completion condition |
+| --- | --- | --- | --- |
+
+Keep requirements proportional to the question.
+Name expected evidence and interpretation limits.
+If alternatives affect a decision, include them.
+
+## Inputs
+
+State exact sources or the open selection rule.
+Include relevant IDs, paths, roles, display names and integrity state.
+If the comparison needs observation units and groups, define them.
+Distinguish context links from inputs consumed by execution.
+
+## Methods
+
+Explain the accepted or proposed method and its limits.
+For a plan-led analysis, state the analysis type and rationale, observation unit,
+parameters/windows, units, baseline/transformation/exclusion rules, missing-data
+treatment, uncertainty or no-inference boundary, and numerical/output checks.
+Name implement-research as the owner when selected. Separate accepted choices
+from recommendations and essential unknowns.
+Link reusable methods from related studies instead of duplicating them.
+State the conditions needed for their use in this study.
+If the question needs hypotheses or metric definitions, include them.
+
+### Consultation actions
+
+| State | Question or gap | Capability and scope | Expected evidence | Decision informed |
+| --- | --- | --- | --- | --- |
+
+For literature needs, propose HyperResearch Level 0 first.
+For a remaining bounded gap, use Level 1.
+Read its installed skill before use.
+After a lookup, record sources actually read.
+If no consultation is needed, omit this subsection.
+
+## Tasks (Implementation Plan)
+
+### Task 1: [Component / Step Name]
+- **Files:**
+  - Create: `exact/path/to/file.py`
+  - Modify: `exact/path/to/existing.py`
+  - Test: `scripts/tests/test_something.py`
+- **Steps:**
+  - [ ] Step 1: Write synthetic failing test (TDD RED)
+  - [ ] Step 2: Implement minimal code (TDD GREEN)
+  - [ ] Step 3: Verify outputs and edge cases
+  - [ ] Step 4: Check absence of unintended side-effects
+
+Repeat tasks for all components:
+1. Input reader & validation
+2. Numerical extraction & summary metrics
+3. Visualization & FigRecipe presets
+4. Execution runner & provenance locking
+
+## Review and Handoff
+
+- Location of spec: `<study-root>/spec/`
+- Location of plan: `<study-root>/plans/`
+- Next owner: `implement-research`
+- Record explicit implementation/execution authorization separately when supplied.
