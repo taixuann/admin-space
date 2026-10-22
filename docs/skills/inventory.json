@@ -1,0 +1,368 @@
+[
+  {
+    "skill": "humanizer",
+    "group": "Writing and documents",
+    "path": "skills/humanizer/SKILL.md",
+    "sha256": "0612f1dfb1672b0ea9b97e139bf1f06cabe98d8b27424fe8ff01e1fb4cc99cad"
+  },
+  {
+    "skill": "simple-english",
+    "group": "Writing and documents",
+    "path": "skills/simple-english/SKILL.md",
+    "sha256": "3fb3e41a144e61f540ac15ca2e5d57e5c35c61833bef36ed4aa478762cbb3d61"
+  },
+  {
+    "skill": "technical-documentation",
+    "group": "Writing and documents",
+    "path": "skills/technical-documentation/SKILL.md",
+    "sha256": "98b3932422cbd27b6ae04de8bf35efeeea82bcf9b6aef9111a3f4ff2156194b8"
+  },
+  {
+    "skill": "writing-for-agents",
+    "group": "Writing and documents",
+    "path": "skills/writing-for-agents/SKILL.md",
+    "sha256": "5eb7d75fbc3548e3fb7c495fb8845cd6d5f326843e8e24b52c98ab1a412dfb38"
+  },
+  {
+    "skill": "prompt-refine",
+    "group": "Writing and documents",
+    "path": "skills/prompt-refine/SKILL.md",
+    "sha256": "eaa997de3db5e23171724db65a82105a6f383d9279e6ea1a8b9623af2aa59eec"
+  },
+  {
+    "skill": "handoff",
+    "group": "Writing and documents",
+    "path": "skills/handoff/SKILL.md",
+    "sha256": "7c62de979fdc7ac32fb5ddb2146156c917f80ee070d30fadc9d40343c4b6ed25"
+  },
+  {
+    "skill": "academic-pptx",
+    "group": "Diagrams and presentations",
+    "path": "skills/academic-pptx/SKILL.md",
+    "sha256": "c321851cd9d9b98d429de4798766207525024f3f28c3fe6dd5932ae79a2efb28"
+  },
+  {
+    "skill": "anatomy",
+    "group": "Diagrams and presentations",
+    "path": "skills/anatomy/SKILL.md",
+    "sha256": "be7a15ff9fc571e5e2ffb44ada5ee43602d5fc03cf9e4d9f84452a25ca33c024"
+  },
+  {
+    "skill": "answer-me-with-html",
+    "group": "Diagrams and presentations",
+    "path": "skills/answer-me-with-html/SKILL.md",
+    "sha256": "8006baa2d73e24037f0368caec31f574b6493e1ddf94002c78c6d43b1a77488f"
+  },
+  {
+    "skill": "archify",
+    "group": "Diagrams and presentations",
+    "path": "skills/archify/SKILL.md",
+    "sha256": "93434ad579983f4cff639c2b7230c311e0785cc48a25b66b1498e1802be7de91"
+  },
+  {
+    "skill": "consulting-pptx-skill",
+    "group": "Diagrams and presentations",
+    "path": "skills/consulting-pptx-skill/SKILL.md",
+    "sha256": "e99feb1f53d2c510719497da12fe2cdf059a686d469a79ad2e7dfce2b551a322"
+  },
+  {
+    "skill": "pptx-posters",
+    "group": "Diagrams and presentations",
+    "path": "skills/pptx-posters/SKILL.md",
+    "sha256": "fe91eeb462117c667e58858469fe17b30f7c690e45c1a925c378b79b8b4f6a59"
+  },
+  {
+    "skill": "pretty-mermaid",
+    "group": "Diagrams and presentations",
+    "path": "skills/pretty-mermaid/SKILL.md",
+    "sha256": "48eb5ab19c027ed305f9868a6cebc33b7b647027626c47a2a203fe2aeec1dbdb"
+  },
+  {
+    "skill": "scientific-schematics",
+    "group": "Diagrams and presentations",
+    "path": "skills/scientific-schematics/SKILL.md",
+    "sha256": "24a66721f1bc8013815a92a9329604b45e6a48ec0ab553cb0ce5ce0fa73a8530"
+  },
+  {
+    "skill": "scientific-slides",
+    "group": "Diagrams and presentations",
+    "path": "skills/scientific-slides/SKILL.md",
+    "sha256": "4b77504335d0f2bcd33e1e2773528204d1bfaeb673b9bd588be4e287ca133ae5"
+  },
+  {
+    "skill": "scientific-visualization",
+    "group": "Diagrams and presentations",
+    "path": "skills/scientific-visualization/SKILL.md",
+    "sha256": "4f7c2dae349a5ae1db115b9449943a73bbd12772b6f1507ad7c36bcc80bf18ca"
+  },
+  {
+    "skill": "citation-management",
+    "group": "Research and evidence",
+    "path": "skills/citation-management/SKILL.md",
+    "sha256": "7578631d9b333db5505ae05b0e04cb629e718b362166f6823d4635088a615edb"
+  },
+  {
+    "skill": "experimental-design",
+    "group": "Research and evidence",
+    "path": "skills/experimental-design/SKILL.md",
+    "sha256": "d29ef070514416d974ec9a656f58a563346d4691a9cd785851adbbbf6551d8e3"
+  },
+  {
+    "skill": "exploratory-data-analysis",
+    "group": "Research and evidence",
+    "path": "skills/exploratory-data-analysis/SKILL.md",
+    "sha256": "2d8570ec73396afdd57cc9fa6dca4c4fb47f33bc512e5c8bd59db9125f082421"
+  },
+  {
+    "skill": "hyperresearch",
+    "group": "Research and evidence",
+    "path": "skills/hyperresearch/SKILL.md",
+    "sha256": "67ac004eff0389489ecd2b57572bca437bb637dd074fa9ac2a805be006c3e5dc"
+  },
+  {
+    "skill": "hypothesis-generation",
+    "group": "Research and evidence",
+    "path": "skills/hypothesis-generation/SKILL.md",
+    "sha256": "02e081e3c1c20cc244c630c5f6e6f37c3298831f4d0ed9b9edae47a2e618424f"
+  },
+  {
+    "skill": "literature-review",
+    "group": "Research and evidence",
+    "path": "skills/literature-review/SKILL.md",
+    "sha256": "3d22ef9956d9c685657eb9d885a466e3a8b71503ba4247679c89906219eb58b0"
+  },
+  {
+    "skill": "openresearch",
+    "group": "Research and evidence",
+    "path": "skills/openresearch/SKILL.md",
+    "sha256": "9e2e7b9329b841eadbfb763f3b3f646a39d14efffa2b8ebc0b88d0a25542af50"
+  },
+  {
+    "skill": "paper-ingestion-review",
+    "group": "Research and evidence",
+    "path": "skills/paper-ingestion-review/SKILL.md",
+    "sha256": "e39b462ba903853f188a3c1750f2041ae05bfab5ee58d74410bcb6d5dd3e78b3"
+  },
+  {
+    "skill": "paper-lookup",
+    "group": "Research and evidence",
+    "path": "skills/paper-lookup/SKILL.md",
+    "sha256": "8eaba3ca6ae80c968b7283681e7b1efade83528b72bf6dea9d83b09fadc846a4"
+  },
+  {
+    "skill": "peer-review",
+    "group": "Research and evidence",
+    "path": "skills/peer-review/SKILL.md",
+    "sha256": "d2d63fd148eb014b3dd7d58d258ccc54b06ab39e7cf6713d481b09529d84440b"
+  },
+  {
+    "skill": "research-grants",
+    "group": "Research and evidence",
+    "path": "skills/research-grants/SKILL.md",
+    "sha256": "1fc126310dba49cbcdc7c24bfca3c8b0a503f8fb7715b7eb8fac8b427026bc60"
+  },
+  {
+    "skill": "research-lookup",
+    "group": "Research and evidence",
+    "path": "skills/research-lookup/SKILL.md",
+    "sha256": "b9da87b44ba4bdb5b6a8ad30aab87a82e69aedb23a29fd265c32abdf73426ffe"
+  },
+  {
+    "skill": "scholar-evaluation",
+    "group": "Research and evidence",
+    "path": "skills/scholar-evaluation/SKILL.md",
+    "sha256": "9340e858cb43b38a9aee377bffee6a05257733cbc7321fde06cd462e80d2a098"
+  },
+  {
+    "skill": "scientific-brainstorming",
+    "group": "Research and evidence",
+    "path": "skills/scientific-brainstorming/SKILL.md",
+    "sha256": "6ec22af651d1092d7ad0d0013b15a44d2bace5086ff503e697a182c7aed73d22"
+  },
+  {
+    "skill": "scientific-critical-thinking",
+    "group": "Research and evidence",
+    "path": "skills/scientific-critical-thinking/SKILL.md",
+    "sha256": "2faa5db66077fc2c28f1d983ba2b712f3a9582e054da80b80a4938e33500803e"
+  },
+  {
+    "skill": "scientific-writing",
+    "group": "Research and evidence",
+    "path": "skills/scientific-writing/SKILL.md",
+    "sha256": "3f669d25ec251da7c7cab52fe2940c214462f180dc15a75093ea97a28aaecb6f"
+  },
+  {
+    "skill": "statistical-analysis",
+    "group": "Research and evidence",
+    "path": "skills/statistical-analysis/SKILL.md",
+    "sha256": "d4fc2fa15dd27e62a4bb957f2699240e0e3fe55e9c81b998f3ab4825b79f2436"
+  },
+  {
+    "skill": "statistical-power",
+    "group": "Research and evidence",
+    "path": "skills/statistical-power/SKILL.md",
+    "sha256": "1b8691d2cbc368d9fc77ffa6fdc16d2280c24d2877868dc77288c2add62cdd96"
+  },
+  {
+    "skill": "venue-templates",
+    "group": "Research and evidence",
+    "path": "skills/venue-templates/SKILL.md",
+    "sha256": "7499eed134bfa61d47442d2cc5755064e8ebc87553a48f0558ad8ccb9ef9c6bd"
+  },
+  {
+    "skill": "github-repo-care",
+    "group": "Agent and system operations",
+    "path": "skills/github-repo-care/SKILL.md",
+    "sha256": "9a4401a2244a88c6989c3a69114c9292c405e28fe3d018cd6f832f4c5bd6c1d1"
+  },
+  {
+    "skill": "improve",
+    "group": "Agent and system operations",
+    "path": "skills/improve/SKILL.md",
+    "sha256": "e6b0f2f52a1c2e49994362647aed3e67705270f9a6928f2756b2a5d7d52a2b08"
+  },
+  {
+    "skill": "launchd-automation",
+    "group": "Agent and system operations",
+    "path": "skills/launchd-automation/SKILL.md",
+    "sha256": "48747c3a939d9a4a1f2037332ebca7a85301f865aec8c96789c10b65537e392f"
+  },
+  {
+    "skill": "miyo-task",
+    "group": "Agent and system operations",
+    "path": "skills/miyo-task/SKILL.md",
+    "sha256": "8818fd03391405e8e745fd0e284a3b7ee06dde3d67b9e5a2a91c974a5610bf0d"
+  },
+  {
+    "skill": "notion-cli",
+    "group": "Agent and system operations",
+    "path": "skills/notion-cli/SKILL.md",
+    "sha256": "3b261091e8e2d32c38ca933901b3aeabe811e0a13a8f73e9617d323123f6e39b"
+  },
+  {
+    "skill": "onevra",
+    "group": "Agent and system operations",
+    "path": "skills/onevra/SKILL.md",
+    "sha256": "028a4fcb267caeae3c22b29a739510a5573068d9fa8f01a0fdfa1f8e5f1adda2"
+  },
+  {
+    "skill": "opencode-delegate",
+    "group": "Agent and system operations",
+    "path": "skills/opencode-delegate/SKILL.md",
+    "sha256": "6ab6df19b1a8e7319e9abd97cc254a30f92b274d7e76598b464688f817fb8971"
+  },
+  {
+    "skill": "skill-creator",
+    "group": "Agent and system operations",
+    "path": "skills/skill-creator/SKILL.md",
+    "sha256": "dcd4803e61e913e6fc27294184cd3a71f09f5e924ff20c8a9a20173e7b3c2bcf"
+  },
+  {
+    "skill": "terminal-title",
+    "group": "Agent and system operations",
+    "path": "skills/terminal-title/SKILL.md",
+    "sha256": "63d6658af10f7bfd461164150e41eb97871a1d15426094aa9ffb50950ead9617"
+  },
+  {
+    "skill": "miyo-parse",
+    "group": "Knowledge retrieval and parsing",
+    "path": "skills/miyo-parse/SKILL.md",
+    "sha256": "4e53f07417771059e73e85bf2b1198099d8a85c60068be9f0eed426ddda3cd19"
+  },
+  {
+    "skill": "miyo-search",
+    "group": "Knowledge retrieval and parsing",
+    "path": "skills/miyo-search/SKILL.md",
+    "sha256": "80570b3d4139ef2efc678eca769e391f2228a034478e5391e9178669636cde62"
+  },
+  {
+    "skill": "import-refine",
+    "group": "Manuscript workflows",
+    "path": "skills/import-refine/SKILL.md",
+    "sha256": "88db4ba2244401a05678c6fcb032d89037556fcbf2bc2211efe24dcacbc96963"
+  },
+  {
+    "skill": "oleafly-data-analysis",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-data-analysis/SKILL.md",
+    "sha256": "acd45cbe42292193ca99ad513c110087c511f999b8b03146463a1c8ce764b1e8"
+  },
+  {
+    "skill": "oleafly-figure-prep",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-figure-prep/SKILL.md",
+    "sha256": "0f4b3313aea5894d3cf022613ec7a0e862a7c0c263d1e5c10f0f14cc1f026aa5"
+  },
+  {
+    "skill": "oleafly-latex-build",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-latex-build/SKILL.md",
+    "sha256": "047a7bfeb988805be932f98a80cbee850d38a2e18c297eec89c3aa5390a85308"
+  },
+  {
+    "skill": "oleafly-literature-sweep",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-literature-sweep/SKILL.md",
+    "sha256": "4e1c2fbf2c43aeb109375315b5f9468594f757e7797a887a94736df8d901354c"
+  },
+  {
+    "skill": "oleafly-manuscript-scaffold",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-manuscript-scaffold/SKILL.md",
+    "sha256": "8929e604f0912f8fc6c5b880dc4c55dba724a7e366d7a969e15d33b4515db771"
+  },
+  {
+    "skill": "oleafly-pre-submission",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-pre-submission/SKILL.md",
+    "sha256": "e2cbb35bf42a9057a02893544137c0790bc84d6b0b263835126db9eb19df59a8"
+  },
+  {
+    "skill": "oleafly-related-work",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-related-work/SKILL.md",
+    "sha256": "e2aa0c967a85764d0217d96e0a5103ba49edc7ab0ddb119b0941d81db9757b53"
+  },
+  {
+    "skill": "oleafly-research-loop",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-research-loop/SKILL.md",
+    "sha256": "811288ea3269f9fe0db75e476162fd914a95e7ca6ec0f1a48f15acb6f8b1ce77"
+  },
+  {
+    "skill": "oleafly-response-letter",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-response-letter/SKILL.md",
+    "sha256": "0c7b8b5b741ca19b92554d5caab9341e4284aa3a869af3070d4c0626c2087d20"
+  },
+  {
+    "skill": "oleafly-review-manuscript",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-review-manuscript/SKILL.md",
+    "sha256": "58cc3b1077c43cc6bbccb5fd2d250bc53f2252fa9ab17040995da15d38675f4e"
+  },
+  {
+    "skill": "oleafly-slides-and-posters",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-slides-and-posters/SKILL.md",
+    "sha256": "acb125a47acea5ae2bdc57d74dc3b89e9fb22c2a219c15cbc0d63554897430c1"
+  },
+  {
+    "skill": "oleafly-verify-claims",
+    "group": "Manuscript workflows",
+    "path": "skills/oleafly-verify-claims/SKILL.md",
+    "sha256": "a3f1b01df98ac0060219f1418916d28f97467de6439198f25ffd84cd4fced029"
+  },
+  {
+    "skill": "pdf-to-latex",
+    "group": "Manuscript workflows",
+    "path": "skills/pdf-to-latex/SKILL.md",
+    "sha256": "8158e05abde0b905008dd7c510c0c0158b542c48028752e95e1745eae67c806b"
+  },
+  {
+    "skill": "template-generate",
+    "group": "Manuscript workflows",
+    "path": "skills/template-generate/SKILL.md",
+    "sha256": "ffb6bac0638c234a39f9fa751a77a0dc5485ddfc711f01a2816af513fef3a042"
+  }
+]

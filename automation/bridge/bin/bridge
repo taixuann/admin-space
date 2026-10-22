@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Bridge executable entrypoint
+# Resolves the python environment containing required packages (PyYAML)
+set -e
+
+if [ -x "/opt/miniconda3/envs/core/bin/python3" ]; then
+    PYTHON_EXEC="/opt/miniconda3/envs/core/bin/python3"
+elif command -v python3 >/dev/null 2>&1; then
+    PYTHON_EXEC="$(command -v python3)"
+else
+    PYTHON_EXEC="python3"
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CLI_PATH="${SCRIPT_DIR}/../cli.py"
+
+if [ ! -f "${CLI_PATH}" ]; then
+    echo "Error: ${CLI_PATH} not found." >&2
+    exit 1
+fi
+
+exec "$PYTHON_EXEC" "${CLI_PATH}" "$@"

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Track Automation CLI Wrapper
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TRACK_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+exec python3 "${TRACK_DIR}/scan_automations.py" "$@"

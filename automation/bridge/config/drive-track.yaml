@@ -1,0 +1,45 @@
+version: 1
+settings:
+  remote_prefix: "gdrive:"
+
+profiles:
+  - id: personal-space-sync
+    name: Personal Hub
+    category: Personal & LifeOS
+    source_path: /Users/tai/personal-space
+    remote_target: gdrive:personal-hub/
+    include_folders: "*"
+    exclude_patterns: ".git, .venv, .pytest_cache, .DS_Store, node_modules, .obsidian/workspace*"
+    enabled: true
+    last_synced: null
+
+  - id: research-projects-sync
+    name: Research Projects (Full)
+    category: Scientific Research
+    source_path: /Users/tai/research-projects
+    remote_target: gdrive:research/projects/
+    include_folders: "*"
+    exclude_patterns: ".git, .venv, venv, .build, .pytest_cache, .ruff_cache, .DS_Store, __pycache__, node_modules, worktree, worktrees"
+    timeout: 7200
+    enabled: true
+    last_synced: null
+
+  - id: learn-sync
+    name: Learn / Wiki
+    category: Digital Garden
+    source_path: /Users/tai/learn
+    remote_target: gdrive:learn/
+    include_folders: "*"
+    exclude_patterns: ".git, .venv, .pytest_cache, .DS_Store, node_modules, .obsidian/workspace*"
+    enabled: true
+    last_synced: null
+
+  - id: knowledge-base-sync
+    name: Knowledge Base
+    category: Knowledge Management
+    source_path: /Users/tai/knowledge-base
+    remote_target: gdrive:knowledge-base/
+    include_folders: "*"
+    exclude_patterns: ".git, .venv, .pytest_cache, .DS_Store, node_modules, .obsidian/workspace*"
+    enabled: true
+    last_synced: null

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "71904c92-3055-4966-b2fe-8a18bfd6498d",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/tai/.agents/tools/opencode-free-router/docs/candidate.json",
+  "output": "/Users/tai/.agents/tools/opencode-free-router/docs/routing.html",
+  "specification": {
+    "sha256": "0000b5f7871be0b161a4178d958bf758c6ad556d968e0b0fe6c01010be0bef2d",
+    "bytes": 3961
+  },
+  "artifact": {
+    "sha256": "91f584f4866bd1e18643e8ad93c833c1f0b68340c5a9c27f6db53cf881b54266",
+    "bytes": 820456
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "e9ed3190-9927-40eb-b016-a20aa31cc636",
+  "status": "current",
+  "command": "deliver",
+  "type": "tree",
+  "input": "/Users/tai/.agents/docs/skills/candidate.json",
+  "output": "/Users/tai/.agents/docs/skills/skills.html",
+  "specification": {
+    "sha256": "d99bcdbf8071c45734a994d924265d4e25d116498ee2022d90653dc90aa5b6a8",
+    "bytes": 8812
+  },
+  "artifact": {
+    "sha256": "c52312e7a78411be9991b2cff95f0bff94e98960e5db01a4c7f519286d1a3d6f",
+    "bytes": 901483
+  }
+}

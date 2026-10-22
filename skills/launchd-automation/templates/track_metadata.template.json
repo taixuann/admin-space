@@ -1,0 +1,19 @@
+{
+  "id": "{{SERVICE_ID}}",
+  "label": "{{LABEL}}",
+  "name": "{{SERVICE_NAME}}",
+  "description": "{{SERVICE_DESCRIPTION}}",
+  "space": "{{SPACE_NAME}}",
+  "working_dir": "{{WORKING_DIR}}",
+  "runner": "{{RUNNER_PATH}}",
+  "schedule": {
+    "type": "{{SCHEDULE_TYPE}}",
+    "cron": "{{CRON_EXPRESSION}}",
+    "human_readable": "{{SCHEDULE_HUMAN_READABLE}}"
+  },
+  "logs": {
+    "stdout": "{{STDOUT_LOG}}",
+    "stderr": "{{STDERR_LOG}}"
+  },
+  "created_at": "{{CREATED_AT}}"
+}

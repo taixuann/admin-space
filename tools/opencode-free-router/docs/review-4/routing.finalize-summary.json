@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/tools/opencode-free-router/docs/candidate.json",
+    "sha256": "b9698f70be8fc7d21c98d960032bf46d691abff2d040af1f16041a02be788ea3",
+    "bytes": 3929
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/tools/opencode-free-router/docs/routing.html",
+    "sha256": "af0ce21536915b0dea127eca614f675452ad6a8f7d14085de6adf38b4d4fc055",
+    "bytes": 820424
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/tools/opencode-free-router/docs/review-4/routing.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/tools/opencode-free-router/docs/review-4/routing.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/tools/opencode-free-router/docs/review-4/routing.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T11:51:16.605Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2262,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

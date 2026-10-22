@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "OpenCode model groups and daily selection",
+    "locale": "en",
+    "output": "tools/opencode-free-router/docs/routing.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "daily", "type": "backend", "label": "Daily automation", "sublabel": "Existing midnight LaunchAgent", "pos": [40, 40], "size": [220, 74] },
+    { "id": "manual", "type": "external", "label": "Manual command", "sublabel": "model-control-sync", "pos": [40, 270], "size": [220, 74] },
+    { "id": "tool", "type": "backend", "label": "Model selection tool", "sublabel": "Rank, probe, apply default", "pos": [400, 155], "size": [240, 74] },
+    { "id": "selection", "type": "database", "label": "selection.json", "sublabel": "Ordered groups and benchmark weights", "pos": [400, 345], "size": [250, 74] },
+    { "id": "state", "type": "database", "label": "model-list.json", "sublabel": "Group order, scores, checks, dateUpdated", "pos": [820, 155], "size": [270, 74] },
+    { "id": "config", "type": "database", "label": "OpenCode configuration", "sublabel": "Update default model only", "pos": [400, 535], "size": [250, 74] },
+    { "id": "runtime", "type": "backend", "label": "Native OpenCode", "sublabel": "New sessions use the selected default", "pos": [820, 535], "size": [270, 74] }
+  ],
+  "connections": [
+    { "id": "daily-tool", "from": "daily", "to": "tool", "label": "run" },
+    { "id": "manual-tool", "from": "manual", "to": "tool", "label": "run / status" },
+    { "id": "selection-tool", "from": "selection", "to": "tool", "label": "ordered groups and weights" },
+    { "id": "tool-state", "from": "tool", "to": "state", "label": "fresh: reuse; stale: rank and probe" },
+    { "id": "tool-config", "from": "tool", "to": "config", "label": "highest-ranked reachable model" },
+    { "id": "config-runtime", "from": "config", "to": "runtime", "label": "load default" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Provider groups in selection.json",
+      "items": [
+        "1 · Zen free: beam-free, deepseek-v4.1-flash-free, flint-40b-free, glm-5.3-flash-free, jev-1.13-free, mimo-v2.6-flash-free, minimax-m3.1-flash-free, nemotron-3.5-lightning-free, nemotron-3.5-super-vl-free.",
+        "2 · Go free: beam-free, minimax-m3.1-flash-free.",
+        "3 · Google AI Studio free: gemini-3.8-flash, only with native OpenCode Google auth.",
+        "4 · Go Muse Spark contributor: fixed final fallback after free ranked routes."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Best-ranked model selection",
+      "items": [
+        "Each free group is scored by weighted LMArena percentiles: agent 0.35, webdev 0.35, text 0.15.",
+        "Both agent and webdev matches are required. Highest quality score is probed first; exhausted routes move to the next ranked model.",
+        "Unranked models are listed but skipped. Stale or missing benchmark data preserves the current OpenCode default."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Extending provider order",
+      "items": [
+        "Add or reorder a provider group in selection.json; Zen and Go groups receive their daily model lists automatically.",
+        "A new provider can use a fixed group with explicit model IDs; confirm its billing behavior before placing it in the order.",
+        "The daily runner remains in automation/model-control; this tool owns ranking, model-list.json, and OpenCode configuration."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Quality evidence limit",
+      "items": [
+        "Arena is a public human-preference leaderboard proxy, not a direct measurement of this user's coding tasks.",
+        "Only the chosen model receives a live synthetic OK route check; remaining candidates are not marked healthy.",
+        "The free-name suffix is a provider convention, not an independent billing audit."
+      ]
+    }
+  ]
+}

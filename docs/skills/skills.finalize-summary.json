@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "tree",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/docs/skills/candidate.json",
+    "sha256": "d99bcdbf8071c45734a994d924265d4e25d116498ee2022d90653dc90aa5b6a8",
+    "bytes": 8812
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/skills/skills.html",
+    "sha256": "c52312e7a78411be9991b2cff95f0bff94e98960e5db01a4c7f519286d1a3d6f",
+    "bytes": 901483
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/Users/tai/.agents/docs/skills/skills.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v22.22.3, libuv 1.51.0, darwin; pid=26586, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/docs/skills/skills.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/docs/skills/skills.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/docs/skills/skills.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-21T11:51:16.605Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 629,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

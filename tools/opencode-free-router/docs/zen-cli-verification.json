@@ -1,0 +1,86 @@
+{
+  "results": [
+    {
+      "model": "beam-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 26.96
+    },
+    {
+      "model": "deepseek-v4.1-flash-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 25.4
+    },
+    {
+      "model": "flint-40b-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 18.93
+    },
+    {
+      "model": "glm-5.3-flash-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 19.76
+    },
+    {
+      "model": "jev-1.13-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 1,
+      "ok": false,
+      "error_count": 1,
+      "nonempty_response": false,
+      "seconds": 0.65
+    },
+    {
+      "model": "mimo-v2.6-flash-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 34.1
+    },
+    {
+      "model": "minimax-m3.1-flash-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 38.46
+    },
+    {
+      "model": "nemotron-3.5-lightning-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 2.66
+    },
+    {
+      "model": "nemotron-3.5-super-vl-free",
+      "transport": "native OpenCode CLI",
+      "exit_code": 0,
+      "ok": true,
+      "error_count": 0,
+      "nonempty_response": true,
+      "seconds": 3.13
+    }
+  ],
+  "complete": true
+}
