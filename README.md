@@ -20,7 +20,8 @@ This is the first working edition. Refine these documents as actual use reveals 
 - `plugins/` contains maintained plugin sources.
 - `automation/` contains local automation assets. Read each component's README before use.
 - `memories/` provides access to existing memory locations. Preserve its links and contents.
-- `plans/` holds existing plans and execution evidence.
+- `docs/superpowers/` holds current specs and plans.
+- `docs/history/legacy-plans/` preserves retired requests and execution evidence.
 - `managed-links/` records links maintained by external tooling.
 - `bin/` contains existing executable entrypoints.
 

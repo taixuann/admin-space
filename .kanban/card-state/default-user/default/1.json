@@ -1,0 +1,14 @@
+{
+  "actorId": "default-user",
+  "boardId": "default",
+  "cardId": "1",
+  "domains": {
+    "open": {
+      "value": {
+        "openedAt": "2026-10-23T16:39:36.926Z",
+        "readThrough": null
+      },
+      "updatedAt": "2026-10-23T16:39:36.926Z"
+    }
+  }
+}

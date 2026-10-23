@@ -28,7 +28,7 @@ Why serial either way:
   previous step exists" only because the previous step's changes are still there — verified and
   uncommitted, or committed if the governing workflow commits between units.
 - **Landing per unit keeps history reviewable** and any single unit revertible — when commits are
-  authorized at all. Under a read-only governing workflow (e.g. `improve`), nothing lands; the batch
+  authorized at all. Under a read-only governing workflow (for example, an advisory-only review), nothing lands; the batch
   stays uncommitted and the review is the boundary.
 - **Each review is honest.** A tree holding only the current unit's changes means the next task's
   `touchedFiles` shows *its* changes, not a pile-up from earlier work.

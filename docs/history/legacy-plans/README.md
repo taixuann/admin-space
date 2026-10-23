@@ -1,7 +1,7 @@
 # Admin request briefs and historical plans
 
 For new designs and implementation plans, use
-[Superpowers specs and plans](../docs/superpowers/plans/README.md).
+[Superpowers specs and plans](../../superpowers/plans/README.md).
 This supersedes the 2026-10-02 single-home convention for new work. Preserve
 older plans, decisions, evaluation artifacts and execution records here.
 Historical Improve instructions below describe their original workflow; they do
@@ -16,9 +16,9 @@ been removed by this documentation update.
 | 008 model refresh | Preserve request and execution evidence; tool implementation stays in its own repository/worktree |
 | 009 tool repositories / workshop | Preserve migration evidence; follow current docs/tools.md for new work |
 | 010 Admin workflow composition | Superseded direction: use Superpowers plus component docs; stages 2 and 3 are linked below |
-| Native execution | [Stage 1](../docs/superpowers/plans/2026-10-23-native-opencode-execution.md) |
-| Skills and plugins | [Stage 2](../docs/superpowers/plans/2026-10-23-admin-skills-plugins-management.md) |
-| Root documents and docs | [Stage 3](../docs/superpowers/plans/2026-10-23-admin-document-foundation.md) |
+| Native execution | [Stage 1](../../superpowers/plans/2026-10-23-native-opencode-execution.md) |
+| Skills and plugins | [Stage 2](../../superpowers/plans/2026-10-23-admin-skills-plugins-management.md) |
+| Root documents and docs | [Stage 3](../../superpowers/plans/2026-10-23-admin-document-foundation.md) |
 
 Adapt only remaining actionable requirements into an approved Superpowers spec
 and then a task plan. Link back to these request IDs and their evidence. Do not
@@ -173,4 +173,4 @@ artifact names inside `global-instructions/`.
 
 ## Native execution follow-up
 
-- [011: Native OpenCode execution](../docs/superpowers/plans/2026-10-23-native-opencode-execution.md): DRAFT. Final Decision Engine review, one repair cycle and one re-review. Mechanism research and design approval precede executable configuration steps.
+- [011: Native OpenCode execution](../../superpowers/plans/2026-10-23-native-opencode-execution.md): DRAFT. Final Decision Engine review, one repair cycle and one re-review. Mechanism research and design approval precede executable configuration steps.

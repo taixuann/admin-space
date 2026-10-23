@@ -62,7 +62,6 @@ These are candidate handoffs, not automatic execution chains. Read the selected 
 | Research and evidence | [statistical-power](../../skills/statistical-power/SKILL.md) |
 | Research and evidence | [venue-templates](../../skills/venue-templates/SKILL.md) |
 | Agent and system operations | [github-repo-care](../../skills/github-repo-care/SKILL.md) |
-| Agent and system operations | [improve](../../skills/improve/SKILL.md) |
 | Agent and system operations | [launchd-automation](../../skills/launchd-automation/SKILL.md) |
 | Agent and system operations | [miyo-task](../../skills/miyo-task/SKILL.md) |
 | Agent and system operations | [notion-cli](../../skills/notion-cli/SKILL.md) |

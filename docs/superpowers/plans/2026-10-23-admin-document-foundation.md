@@ -131,3 +131,14 @@ after this task as well.
 Self-review addendum: Task 4 implements the accepted docs layout. Task 3 covers
 its final navigation checks. Tutorial folders, duplicated skill catalogs and a
 second planning system are not needed for this deliverable.
+
+
+## Reconciled request 010
+
+Keep the existing workflow/profile documents as the starting point. The earlier
+Improve rewrite is canceled. Profiles, root documents and cross-Space routing
+are owned by Tasks 1–4 above. Plugin packaging remains a future choice after the
+local workflow and representative behavior checks work; do not create a package
+merely to replace the deleted skill. Verify the Admin-upgrade, automation-failure,
+skill-update, plugin-change, CLI-handoff and unrelated-project scenarios against
+the selected routing. Expect one owner per request and no implicit deployment.

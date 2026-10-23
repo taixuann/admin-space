@@ -105,16 +105,13 @@ scheduled work they are in [Automation](../automation.md).
 | Attached skill set | Candidate list above, not evaluated as a bundle | Runtime configuration |
 | Ticket schema and trigger | Not defined | Automatic handoff |
 | Independent-review threshold and cross-Space authorization | Not defined | Any cross-Space change |
-| Where canonical plan, evidence, and revision history live | Requests in `plans/`; evidence beside them | Packaging |
+| Where canonical plan, evidence, and revision history live | Current plans in `docs/superpowers/`; old evidence in `docs/history/` | Packaging |
 
-## Relation to Improve
+## Planning workflow
 
-`improve` remains installed and available. Its advisor scope is unchanged. This
-profile is not a rewrite of it, and no replacement is installed.
-
-Improve is removed only after the replacement passes representative behavior
-checks and active references have migrated. Until then both exist, and
-[Admin workflows](../admin-workflows.md) states which one a request uses.
+Use Superpowers brainstorming and writing-plans for new work. Improve was
+removed at the user's request. Historical Improve candidates remain archival
+evidence and are not installed capabilities. Profile host wiring remains draft.
 
 ## Evidence that this is a draft
 

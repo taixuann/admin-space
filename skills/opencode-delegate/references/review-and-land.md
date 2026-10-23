@@ -92,7 +92,7 @@ verified the work, not the one that produced it. Write a clear message describin
 your project attributes co-authorship, that's the place for it.
 
 Where it doesn't — or the brief says leave the work uncommitted (a read-only governing workflow such
-as `improve`, a batch parked at a checkpoint) — hand the tree back instead: report the diff, the
+as an advisory review, a batch parked at a checkpoint) — hand the tree back instead: report the diff, the
 gate results, and what remains uncommitted. Pushes, PRs, and merges each need their own authority.
 
 From dispatch until the work lands or is explicitly discarded, the uncommitted working tree is the

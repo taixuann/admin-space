@@ -203,7 +203,7 @@ the work, and only after the gates pass and the diff holds:
   from the result; use `--resume-last` only when no concurrent session makes the identity ambiguous —
   then review again.
 
-Where the governing workflow does not grant that authority (a read-only advisor such as `improve`,
+Where the governing workflow does not grant that authority (a read-only advisory workflow,
 or a brief that says "leave it uncommitted"), hand the tree back instead: report the diff, the gate
 results, and where the work sits. Pushes, PRs, and merges are separate authority; opting into
 delegation is not opting into publication.

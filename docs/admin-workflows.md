@@ -10,10 +10,8 @@ skills can support it without creating another plan or execution authority.
 user accepts a design. `executing-plans` or `subagent-driven-development` runs
 the plan. `verification-before-completion` gates any claim of completion.
 
-Improve provides a read-only advisory workflow and handoff plans. Use it when
-asked, or when the task is a pure advisory survey of an unfamiliar codebase. It
-is not required as the entrypoint for every Admin task, and it is not the Admin
-planning profile.
+Superpowers owns new Admin design and implementation planning. The Improve
+skill was removed at the user's request. Historical records do not activate it.
 
 Preserve an explicitly selected lifecycle for existing work. A replacement
 workflow must be stated before changing the task's lifecycle or artifacts. Do not
@@ -60,7 +58,8 @@ while evaluating it.
 
 Admin request IDs describe intent, scope, and success criteria. Link derived
 design, task plans, and execution evidence back to that request. Keep request
-briefs in `plans/`, indexed by `plans/README.md`. Preserve existing artifacts and
+briefs in `docs/history/legacy-plans/`. New specs and plans live in
+`docs/superpowers/`, indexed by `docs/superpowers/plans/README.md`. Preserve existing artifacts and
 task tracking when selecting a new workflow. Establish the artifact locations in
 the task handoff rather than creating a second active plan through a skill's
 default path.

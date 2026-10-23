@@ -1,15 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "improve": {
-      "source": "shadcn/improve",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/shadcn/improve.git",
-      "skillPath": "skills/improve/SKILL.md",
-      "skillFolderHash": "7d77d76815e6deb704427f17f6e393f55e3cb6da",
-      "installedAt": "2026-10-01T11:21:34.407Z",
-      "updatedAt": "2026-10-01T11:21:34.407Z"
-    },
     "opencode-delegate": {
       "source": "amElnagdy/delegate-skills",
       "sourceType": "github",
