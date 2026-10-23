@@ -1,0 +1,52 @@
+# Pre-migration state, 2026-10-23T13:18:12Z
+## Workshop repository
+path: /Users/tai/agent-development
+toplevel: /Users/tai/agent-development
+head: 2fa7343800e57891947ab6683bacfcb5af350a1e
+branch: master
+dirty:
+tracked files: 306
+## Worktree registration (workshop repo)
+worktree /Users/tai/agent-development
+HEAD 2fa7343800e57891947ab6683bacfcb5af350a1e
+branch refs/heads/master
+
+worktree /Users/tai/.gemini/antigravity/worktrees/b73db2fd-8399-4a0d-a567-a83b2d8804df/subagent-Senior-Code-Reviewer-research-fb0a4441
+HEAD ec5cd1c2904af7776f6359083f24ac36234aa96f
+branch refs/heads/subagent-Senior-Code-Reviewer-research-fb0a4441
+
+## research-projects worktrees
+worktree /Users/tai/research-projects
+HEAD 0fd7b267f6290add2b0a328b1cdb38baf7b5e048
+branch refs/heads/main
+
+worktree /Users/tai/agent-development/worktree/research-companion-plan-022/research-projects
+HEAD 00916c42e2f2c844355a2aff37454f77515ac9fa
+detached
+
+worktree /Users/tai/agent-development/worktree/research-companion-remediation/research-projects
+HEAD 2f1a7273d7f7855ac437e0d4c564289a9c8a305a
+detached
+
+worktree /Users/tai/agent-development/worktrees/res-volatile-rawviewer-profile-scope
+HEAD edfdda65e9b4e42ebbaef27511e245b7e510bf85
+branch refs/heads/codex/rawview-profiles-final
+
+worktree /Users/tai/agent-development/worktrees/res-volatile-rawviewer-profiles-complete
+HEAD 54ecbbf5fd52f7776127d7d7e36f32aaae0c433b
+branch refs/heads/codex/rawview-profiles-complete
+
+worktree /Users/tai/agent-development/worktrees/res-volatile-rawviewer-profiles-verified
+HEAD 54ecbbf5fd52f7776127d7d7e36f32aaae0c433b
+branch refs/heads/codex/rawview-profiles
+
+worktree /Users/tai/agent-development/worktrees/res-volatile-rawviewer-ticket-3-profiles
+HEAD 5bda1118fe14e83653e1b8439ca956dbc4a93d70
+branch refs/heads/codex/raw-viewer-ticket-3-profiles
+
+## Live consumers of the old path
+3
+## Installed plist hash
+1641cb7ed1b8ed03a8f5afa58236a448e625fd1849599282d311aa436779c19d  /Users/tai/Library/LaunchAgents/com.tai.linear-notion-sync.plist
+## Source plist hash
+no source plist in workspace

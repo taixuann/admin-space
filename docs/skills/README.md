@@ -1,5 +1,11 @@
 # Skill inventory and handoffs
 
+Historical snapshot: 36 research/manuscript symlinks were removed from Admin
+on 2026-10-23 with user authorization. Their original targets remain intact.
+The table and generated diagram below predate that cleanup; removed local links
+are historical references, not current availability. See the
+[removal manifest](../superpowers/plans/evidence/2026-10-23-removed-research-symlinks.json).
+
 This inventory covers direct readable `skills/*/SKILL.md` entries on 2026-10-22.
 The groups support navigation. They do not change skill discovery or invocation.
 

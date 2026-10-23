@@ -2,22 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- Unique label identifying the service -->
+    <!-- Label is read from these contents, never from the filename. -->
     <key>Label</key>
     <string>{{LABEL}}</string>
 
-    <!-- Program arguments: always invoke the wrapper runner script with bash -->
+    <!-- Absolute program path. Add a wrapper only when it does work the job needs. -->
     <key>ProgramArguments</key>
     <array>
-        <string>/bin/bash</string>
-        <string>{{RUNNER_PATH}}</string>
+{{PROGRAM_ARGUMENTS}}
     </array>
 
-    <!-- Working directory for relative paths inside scripts -->
-    <key>WorkingDirectory</key>
-    <string>{{WORKING_DIR}}</string>
-
-    <!-- Complete environment variables: prevents Exit 127 (command not found) -->
+    <!-- The job declares the environment it needs. It loads no other file. -->
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
@@ -26,33 +21,21 @@
         <string>{{HOME_DIR}}</string>
         <key>LANG</key>
         <string>en_US.UTF-8</string>
-        <key>LC_ALL</key>
-        <string>en_US.UTF-8</string>
     </dict>
 
-    <!-- Standard output and error logging -->
+    <!-- Runtime reports live under the report root, outside this source folder. -->
     <key>StandardOutPath</key>
     <string>{{STDOUT_LOG}}</string>
 
     <key>StandardErrorPath</key>
     <string>{{STDERR_LOG}}</string>
 
-    <!-- Process behavior: background efficiency -->
     <key>ProcessType</key>
     <string>Background</string>
 
     <key>LowPriorityIO</key>
     <true/>
-
-    <key>Nice</key>
-    <integer>1</integer>
-
-    <!-- Run immediately when loaded (optional, set to false for strict scheduled tasks) -->
-    <key>RunAtLoad</key>
-    <{{RUN_AT_LOAD}}/>
-
-    <!-- Schedule: StartCalendarInterval (e.g. daily at 04:00) -->
-    <!-- Alternatively use <key>StartInterval</key><integer>3600</integer> for periodic intervals in seconds -->
-    {{SCHEDULE_BLOCK}}
+{{RUN_AT_LOAD_BLOCK}}
+{{SCHEDULE_BLOCK}}
 </dict>
 </plist>

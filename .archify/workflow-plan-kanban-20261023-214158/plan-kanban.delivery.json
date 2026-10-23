@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "2d9698cb-49f7-4f0a-a863-174b9518fb94",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/tai/.agents/.archify/workflow-plan-kanban-20261023-214158/candidate.json",
+  "output": "/Users/tai/.agents/.archify/workflow-plan-kanban-20261023-214158/plan-kanban.html",
+  "specification": {
+    "sha256": "77fe1e9237b6db56dd4ed9cc203d3002c3b0f79d3fabdfb449d5b123394151c2",
+    "bytes": 6130
+  },
+  "artifact": {
+    "sha256": "133aebb2b3fd86d87823c3ad453cf0772d46c540c1076d6a3afde5e650b9bd7e",
+    "bytes": 834562
+  }
+}

@@ -1,195 +1,451 @@
 #!/usr/bin/env python3
-"""
-Scaffolds a standardized macOS launchd automation folder structure with templates.
+"""Scaffold a launchd job source folder plus its runtime report root.
+
+Two source layouts are supported:
+
+  tool   <tool-repo>/automation/<job-name>/   branch admin/<tool-name>_<request-id>
+  space  ~/.agents/automation/<job-name>/     branch automation/<job-name>
+
+Both kinds write runtime reports to an explicit absolute report root, normally
+/Users/tai/.agents/automation/<stable-job-name>/logs/. That root is outside the
+source folder and git-ignored.
+
 Usage:
     python3 scaffold_automation.py \
-        --target-dir /path/to/my-space/automation/job-name \
-        --label com.tai.myspace.jobname \
-        --title "My Space Daily Sync" \
-        --description "Synchronizes local records with remote storage" \
+        --layout space \
+        --target-dir /Users/tai/.agents/automation/nightly-report \
+        --report-root /Users/tai/.agents/automation/nightly-report-runtime/logs \
+        --label com.tai.nightly.report \
+        --title "Nightly report" \
         --schedule "0 4 * * *" \
-        --command "python3 scripts/sync.py"
+        --program /opt/homebrew/bin/python3 \
+        --command "/Users/tai/.agents/automation/nightly-report/run.py"
+
+Standard library only.
 """
 
+from __future__ import annotations
+
 import argparse
-import os
+import plistlib
 import re
+import shlex
+import shutil
+import subprocess
 import sys
-from datetime import datetime
+import time
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 SKILL_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = SKILL_DIR / "templates"
+ADMIN_ROOT = Path.home() / ".agents"
+REQUIRED_FILES = ("README.md", "AGENTS.md", "launchd.plist")
+DEFAULT_PATH = (
+    "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:"
+    "{home}/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+)
 
-def parse_schedule_to_plist_block(schedule_str: str) -> tuple[str, str]:
-    """
-    Parses a schedule string (e.g. '0 4 * * *', 'interval:3600', 'daily:04:00')
-    into a launchd XML block and human-readable text.
-    """
-    schedule_str = schedule_str.strip()
-    
-    # Format: interval:SECS or every X seconds/minutes
-    interval_match = re.match(r"(?:interval:|every\s+)?(\d+)\s*(s|m|h)?", schedule_str, re.IGNORECASE)
-    if "interval:" in schedule_str or (interval_match and interval_match.group(2)):
-        val = int(interval_match.group(1))
-        unit = (interval_match.group(2) or "s").lower()
-        multiplier = {"s": 1, "m": 60, "h": 3600}.get(unit, 1)
-        seconds = val * multiplier
-        xml = f"""    <key>StartInterval</key>
-    <integer>{seconds}</integer>"""
-        return xml, f"Every {seconds} seconds ({val}{unit})"
 
-    # Format: daily:HH:MM or cron minute hour * * *
-    parts = schedule_str.split()
-    if len(parts) == 5:
-        minute, hour, dom, month, dow = parts
-        xml_lines = [
-            "    <key>StartCalendarInterval</key>",
-            "    <dict>"
-        ]
-        readable = []
-        if minute != "*":
-            xml_lines.append(f"        <key>Minute</key>\n        <integer>{int(minute)}</integer>")
-            readable.append(f"minute {minute}")
-        if hour != "*":
-            xml_lines.append(f"        <key>Hour</key>\n        <integer>{int(hour)}</integer>")
-            readable.append(f"hour {hour}:00")
-        if dom != "*":
-            xml_lines.append(f"        <key>Day</key>\n        <integer>{int(dom)}</integer>")
-            readable.append(f"day of month {dom}")
-        if month != "*":
-            xml_lines.append(f"        <key>Month</key>\n        <integer>{int(month)}</integer>")
-            readable.append(f"month {month}")
-        if dow != "*":
-            xml_lines.append(f"        <key>Weekday</key>\n        <integer>{int(dow)}</integer>")
-            readable.append(f"day of week {dow}")
-        xml_lines.append("    </dict>")
-        return "\n".join(xml_lines), "Scheduled at " + ", ".join(readable)
+class ScaffoldError(Exception):
+    """A refused or invalid scaffold request."""
 
-    # Fallback default: daily at 04:00
-    return """    <key>StartCalendarInterval</key>
-    <dict>
-        <key>Hour</key>
-        <integer>4</integer>
-        <key>Minute</key>
-        <integer>0</integer>
-    </dict>""", "Daily at 04:00 AM (default)"
 
-def main():
-    parser = argparse.ArgumentParser(description="Scaffold launchd automation structure")
-    parser.add_argument("--target-dir", required=True, help="Directory to scaffold the automation into")
-    parser.add_argument("--label", required=True, help="Unique reverse-DNS label (e.g. com.tai.bridge.sync)")
-    parser.add_argument("--title", default="", help="Human title for service")
-    parser.add_argument("--description", default="", help="Summary of purpose")
-    parser.add_argument("--schedule", default="0 4 * * *", help="Schedule cron format (e.g. '0 4 * * *') or 'interval:3600'")
-    parser.add_argument("--command", default="echo 'Hello from automation'", help="Main command to execute inside runner")
-    parser.add_argument("--run-at-load", action="store_true", help="Whether to run immediately upon load")
-    parser.add_argument("--deploy", action="store_true", help="Copy plist to ~/Library/LaunchAgents and bootstrap")
+def base_path() -> str:
+    return DEFAULT_PATH.format(home=Path.home())
 
+
+def emit(message: str) -> None:
+    print(message)
+
+
+def find_enclosing_repo(path: Path) -> Path | None:
+    """Return the nearest ancestor (or self) holding a .git entry."""
+    for candidate in (path, *path.parents):
+        if (candidate / ".git").exists():
+            return candidate
+    return None
+
+
+def build_schedule(schedule: str) -> tuple[str, str]:
+    """Render a schedule string into an indented plist block and readable text."""
+    text = schedule.strip()
+    if not text:
+        raise ScaffoldError("--schedule is empty")
+
+    interval = re.fullmatch(r"interval:(\d+)", text)
+    if interval:
+        seconds = int(interval.group(1))
+        if seconds < 10:
+            raise ScaffoldError("interval must be at least 10 seconds")
+        block = (
+            "    <key>StartInterval</key>\n"
+            f"    <integer>{seconds}</integer>"
+        )
+        return block, f"Every {seconds} seconds"
+
+    daily = re.fullmatch(r"daily:(\d{1,2}):(\d{2})", text)
+    if daily:
+        hour, minute = int(daily.group(1)), int(daily.group(2))
+        if hour > 23 or minute > 59:
+            raise ScaffoldError("daily:HH:MM is out of range")
+        block = (
+            "    <key>StartCalendarInterval</key>\n"
+            "    <dict>\n"
+            f"        <key>Hour</key>\n        <integer>{hour}</integer>\n"
+            f"        <key>Minute</key>\n        <integer>{minute}</integer>\n"
+            "    </dict>"
+        )
+        return block, f"Daily at {hour:02d}:{minute:02d} local time"
+
+    parts = text.split()
+    if len(parts) != 5:
+        raise ScaffoldError(
+            "unknown schedule %r; use '0 4 * * *', 'daily:04:00', or 'interval:3600'"
+            % schedule
+        )
+
+    names = ("Minute", "Hour", "Day", "Month", "Weekday")
+    lines = ["    <key>StartCalendarInterval</key>", "    <dict>"]
+    readable = []
+    for field, value in zip(names, parts):
+        if value == "*":
+            continue
+        if not value.isdigit():
+            raise ScaffoldError(
+                "unsupported cron field %r; this scaffold accepts digits or '*'" % value
+            )
+        number = int(value)
+        limits = {"Minute": 59, "Hour": 23, "Day": 31, "Month": 12, "Weekday": 7}
+        if number > limits[field]:
+            raise ScaffoldError(f"cron {field} {number} is out of range")
+        lines.append(f"        <key>{field}</key>")
+        lines.append(f"        <integer>{number}</integer>")
+        readable.append(f"{field.lower()} {number}")
+    lines.append("    </dict>")
+    return "\n".join(lines), "Scheduled at " + ", ".join(readable) + " local time"
+
+
+def validate_report_root(value: str, source_dir: Path) -> Path:
+    raw = value.strip()
+    if not raw:
+        raise ScaffoldError("--report-root is required")
+    candidate = Path(raw)
+    if not candidate.is_absolute():
+        raise ScaffoldError(
+            f"--report-root must be absolute, got {raw!r}. "
+            "launchd does not expand '~' or resolve a working directory."
+        )
+    resolved = candidate.resolve()
+    if resolved == source_dir or source_dir in resolved.parents:
+        raise ScaffoldError(
+            f"--report-root {resolved} is inside the source folder {source_dir}. "
+            "Runtime reports must live outside the source tree."
+        )
+    if resolved in source_dir.parents:
+        raise ScaffoldError(
+            f"--report-root {resolved} contains the source folder. "
+            "Pick a report root beside the source, not above it."
+        )
+    return resolved
+
+
+def validate_layout(args: argparse.Namespace, source_dir: Path) -> tuple[Path, str, str]:
+    """Return (repo_root, layout_description, branch)."""
+    enclosing = find_enclosing_repo(source_dir.parent)
+
+    if args.layout == "space":
+        repo_root = enclosing or ADMIN_ROOT
+        if enclosing is None and ADMIN_ROOT not in source_dir.parents:
+            emit(f"  warning: no Git repository above {source_dir}; "
+                 f"treating the owner as {ADMIN_ROOT}")
+        if enclosing and enclosing != ADMIN_ROOT and not args.allow_foreign_repo:
+            raise ScaffoldError(
+                f"space layout expects a job under {ADMIN_ROOT}, but {source_dir} "
+                f"is inside the Git repository {enclosing}. Use --layout tool when "
+                "the job belongs to a tool repository, or --allow-foreign-repo to override."
+            )
+        layout_text = f"Space-owned (Admin `automation/<job-name>`)"
+        return repo_root, layout_text, f"automation/{source_dir.name}"
+
+    if args.layout == "tool":
+        if source_dir.parent.name != "automation":
+            raise ScaffoldError(
+                "tool layout expects <tool-repo>/automation/<job-name>; "
+                f"got {source_dir}"
+            )
+        repo_root = source_dir.parent.parent
+        if not (repo_root / ".git").exists():
+            raise ScaffoldError(
+                f"{repo_root} is not a Git repository. Tool-owned jobs live inside "
+                "the tool's own repository."
+            )
+        tool_name = repo_root.name
+        request_id = args.request_id or "<request-id>"
+        if request_id and request_id != "<request-id>" and not re.fullmatch(r"\d+", request_id):
+            raise ScaffoldError("--request-id must keep its digits, for example 008")
+        return (
+            repo_root,
+            f"Tool-owned (`{tool_name}/automation/<job-name>`)",
+            f"admin/{tool_name}_{request_id}",
+        )
+
+    raise ScaffoldError(f"unknown layout {args.layout!r}")
+
+
+def check_existing(source_dir: Path) -> None:
+    existing = [name for name in REQUIRED_FILES if (source_dir / name).exists()]
+    existing.extend(sorted(p.name for p in source_dir.glob("*.plist")))
+    wrapper = source_dir / "scripts" / "run.sh"
+    if wrapper.exists():
+        existing.append("scripts/run.sh")
+    existing = sorted(set(existing))
+    if existing:
+        raise ScaffoldError(
+            "refusing to overwrite an existing scaffold in "
+            f"{source_dir}: {', '.join(existing)}"
+        )
+
+
+def program_arguments(args: argparse.Namespace, source_dir: Path) -> tuple[list[str], str]:
+    """Return argv for the plist and the command line a wrapper should run."""
+    if args.wrapper:
+        runner = source_dir / "scripts" / "run.sh"
+        argv = ["/bin/bash", str(runner)]
+        if args.program:
+            tokens = [args.program, *shlex.split(args.command or "")]
+            command_line = " ".join(shlex.quote(token) for token in tokens)
+        else:
+            if not args.command:
+                raise ScaffoldError("--wrapper needs --program or --command")
+            command_line = args.command
+        return argv, command_line
+
+    if not args.program:
+        raise ScaffoldError(
+            "direct execution needs --program with an absolute path. "
+            "Pass --wrapper only when a wrapper does work the job needs."
+        )
+    program = Path(args.program)
+    if not program.is_absolute():
+        raise ScaffoldError(f"--program must be absolute, got {args.program!r}")
+    if not program.exists():
+        raise ScaffoldError(f"--program does not exist: {program}")
+    if not program.is_file() or not (program.stat().st_mode & 0o111):
+        raise ScaffoldError(f"--program is not an executable file: {program}")
+
+    tokens = shlex.split(args.command or "")
+    for token in tokens:
+        if token.startswith("-") or "/" not in token:
+            continue
+        path = Path(token)
+        if not path.is_absolute():
+            raise ScaffoldError(
+                f"argument path {token!r} is relative. launchd sets no working "
+                "directory in this template; pass an absolute path."
+            )
+        if not path.exists():
+            emit(f"  warning: argument path does not exist yet: {path}")
+    return [args.program, *tokens], " ".join(shlex.quote(t) for t in [args.program, *tokens])
+
+
+def render(template: str, values: dict[str, str]) -> str:
+    text = (TEMPLATES_DIR / template).read_text()
+    for key, value in values.items():
+        text = text.replace("{{" + key + "}}", value)
+    unresolved = sorted(set(re.findall(r"\{\{([A-Z_]+)\}\}", text)))
+    if unresolved:
+        raise ScaffoldError(f"{template} has unresolved placeholders: {unresolved}")
+    return text
+
+
+def deploy(plist_path: Path, label: str) -> None:
+    """Copy the plist and bootstrap it. Opt-in, explicit, and reversible."""
+    uid = sys.getuid()
+    installed = Path.home() / "Library" / "LaunchAgents" / f"{label}.plist"
+    previous = installed.with_name(installed.name + ".previous")
+    commands = [
+        ["launchctl", "bootout", f"gui/{uid}/{label}"],
+        ["launchctl", "bootstrap", f"gui/{uid}", str(installed)],
+    ]
+    emit("\nDeploy is authorized for this run. Exact commands:")
+    emit("  " + " ".join(shlex.quote(part) for part in commands[0]))
+    if installed.exists():
+        emit("  " + " ".join(shlex.quote(part) for part in ["cp", str(installed), str(previous)]))
+    emit("  " + " ".join(shlex.quote(part) for part in ["cp", str(plist_path), str(installed)]))
+    emit("  " + " ".join(shlex.quote(part) for part in commands[1]))
+
+    bootout = subprocess.run(commands[0], capture_output=True, text=True)
+    if bootout.returncode != 0:
+        emit(f"  bootout returned {bootout.returncode}; the job was probably not loaded")
+
+    installed.parent.mkdir(parents=True, exist_ok=True)
+    if installed.exists():
+        shutil.copyfile(installed, previous)
+        emit(f"  previous plist saved at {previous}")
+    shutil.copyfile(plist_path, installed)
+
+    bootstrap = subprocess.run(commands[1], capture_output=True, text=True)
+    if bootstrap.returncode != 0:
+        raise ScaffoldError(
+            "bootstrap failed: "
+            + (bootstrap.stderr.strip() or bootstrap.stdout.strip())
+            + f". The job is not loaded. Roll back with the saved copy at {previous}"
+        )
+    emit(f"  bootstrapped {installed}")
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Scaffold a launchd job source folder and its report root"
+    )
+    parser.add_argument("--layout", choices=("tool", "space"), required=True,
+                        help="tool: <tool-repo>/automation/<job>; space: ~/.agents/automation/<job>")
+    parser.add_argument("--target-dir", required=True,
+                        help="Absolute path of the job source folder")
+    parser.add_argument("--report-root", required=True,
+                        help="Absolute report root outside the source folder")
+    parser.add_argument("--label", required=True, help="Reverse-DNS label, for example com.tai.bridge.sync")
+    parser.add_argument("--title", default="", help="Human title")
+    parser.add_argument("--description", default="", help="What the job does")
+    parser.add_argument("--schedule", default="0 4 * * *",
+                        help="'0 4 * * *', 'daily:04:00', or 'interval:3600'")
+    parser.add_argument("--program", default="", help="Absolute executable path")
+    parser.add_argument("--command", default="",
+                        help="Arguments for --program, or a shell line for --wrapper. "
+                             "Write --command='--flag' when the value starts with '-'")
+    parser.add_argument("--wrapper", action="store_true",
+                        help="Also emit scripts/run.sh (lock, one-line terminal event)")
+    parser.add_argument("--run-at-load", action="store_true",
+                        help="Also run once at bootstrap (default: schedule only)")
+    parser.add_argument("--request-id", default="", help="Admin request id for a tool branch, for example 008")
+    parser.add_argument("--deploy", action="store_true",
+                        help="Opt-in: copy the plist and bootstrap it now")
+    parser.add_argument("--allow-foreign-repo", action="store_true",
+                        help="Allow a space layout outside the Admin repository")
+    return parser
+
+
+def main() -> int:
+    parser = build_parser()
     args = parser.parse_args()
 
-    target_dir = Path(args.target_dir).resolve()
-    target_dir.mkdir(parents=True, exist_ok=True)
-    scripts_dir = target_dir / "scripts"
-    logs_dir = target_dir / "logs"
-    scripts_dir.mkdir(parents=True, exist_ok=True)
-    logs_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        source_dir = Path(args.target_dir)
+        if not source_dir.is_absolute():
+            raise ScaffoldError(f"--target-dir must be absolute, got {args.target_dir!r}")
+        source_dir = source_dir.resolve()
+        if source_dir.exists() and not source_dir.is_dir():
+            raise ScaffoldError(f"--target-dir is not a directory: {source_dir}")
 
-    # Ensure .gitignore in logs directory
-    gitignore_file = logs_dir / ".gitignore"
-    if not gitignore_file.exists():
-        gitignore_file.write_text("*\n!.gitignore\n")
+        report_root = validate_report_root(args.report_root, source_dir)
+        repo_root, layout_text, branch = validate_layout(args, source_dir)
+        check_existing(source_dir)
 
-    label = args.label.strip()
-    title = args.title or label
-    description = args.description or f"Automated background service for {label}"
-    schedule_xml, schedule_readable = parse_schedule_to_plist_block(args.schedule)
-    
-    home_dir = str(Path.home())
-    runner_path = str(scripts_dir / "run.sh")
-    stdout_log = str(logs_dir / "stdout.log")
-    stderr_log = str(logs_dir / "stderr.log")
-    plist_path = target_dir / f"{label}.plist"
-    path_value = f"/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:{home_dir}/.local/bin:{home_dir}/.cargo/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        schedule_block, schedule_readable = build_schedule(args.schedule)
+        program_path = args.program or (source_dir / "scripts" / "run.sh").as_posix()
+        argv, command_line = program_arguments(args, source_dir)
 
-    # 1. Render plist
-    plist_tpl = (TEMPLATES_DIR / "plist.template.xml").read_text()
-    rendered_plist = plist_tpl.replace("{{LABEL}}", label) \
-                              .replace("{{RUNNER_PATH}}", runner_path) \
-                              .replace("{{WORKING_DIR}}", str(target_dir)) \
-                              .replace("{{PATH_VALUE}}", path_value) \
-                              .replace("{{HOME_DIR}}", home_dir) \
-                              .replace("{{STDOUT_LOG}}", stdout_log) \
-                              .replace("{{STDERR_LOG}}", stderr_log) \
-                              .replace("{{RUN_AT_LOAD}}", "true" if args.run_at_load else "false") \
-                              .replace("{{SCHEDULE_BLOCK}}", schedule_xml)
-    plist_path.write_text(rendered_plist)
-    print(f" Generated plist: {plist_path}")
+        label = args.label.strip()
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.-]+", label):
+            raise ScaffoldError(f"--label is not a reverse-DNS label: {label!r}")
+        title = args.title or label
+        description = args.description or f"Scheduled job {label}"
 
-    # 2. Render runner.sh
-    runner_tpl = (TEMPLATES_DIR / "runner.sh.template").read_text()
-    rendered_runner = runner_tpl.replace("{{LOCK_NAME}}", label) \
-                                .replace("{{JOB_NAME}}", label) \
-                                .replace("{{MAIN_EXECUTION_COMMAND}}", args.command)
-    runner_file = scripts_dir / "run.sh"
-    runner_file.write_text(rendered_runner)
-    runner_file.chmod(0o755)
-    print(f" Generated runner script: {runner_file} (chmod +x)")
+        source_dir.mkdir(parents=True, exist_ok=True)
+        report_root.mkdir(parents=True, exist_ok=True)
+        plist_path = source_dir / "launchd.plist"
 
-    # 3. Render README.md
-    readme_tpl = (TEMPLATES_DIR / "README.template.md").read_text()
-    rendered_readme = readme_tpl.replace("{{SERVICE_TITLE}}", title) \
-                                .replace("{{SERVICE_DESCRIPTION}}", description) \
-                                .replace("{{LABEL}}", label) \
-                                .replace("{{SCHEDULE_HUMAN_READABLE}}", schedule_readable) \
-                                .replace("{{WORKING_DIR}}", str(target_dir)) \
-                                .replace("{{RUNNER_RELATIVE_PATH}}", "scripts/run.sh") \
-                                .replace("{{DIR_NAME}}", target_dir.name) \
-                                .replace("{{MAIN_TASK_FILE}}", "run.sh")
-    (target_dir / "README.md").write_text(rendered_readme)
-    print(f" Generated runbook: {target_dir / 'README.md'}")
+        argument_lines = "\n".join(
+            f"        <string>{escape(token)}</string>" for token in argv
+        )
+        plist_values = {
+            "LABEL": label,
+            "PROGRAM_ARGUMENTS": argument_lines,
+            "PATH_VALUE": escape(base_path()),
+            "HOME_DIR": escape(str(Path.home())),
+            "STDOUT_LOG": escape(str(report_root / "stdout.log")),
+            "STDERR_LOG": escape(str(report_root / "stderr.log")),
+            "RUN_AT_LOAD_BLOCK": "    <key>RunAtLoad</key>\n    <true/>" if args.run_at_load else "",
+            "SCHEDULE_BLOCK": schedule_block,
+        }
+        plist_path.write_text(render("plist.template.xml", plist_values))
+        with plist_path.open("rb") as handle:
+            parsed = plistlib.load(handle)
+        if parsed.get("Label") != label:
+            raise ScaffoldError("rendered plist label does not match --label")
+        emit(f"plist       {plist_path}")
+        emit(f"label       {label} (from plist contents)")
 
-    # 4. Render AGENTS.md
-    agents_tpl = (TEMPLATES_DIR / "AGENTS.template.md").read_text()
-    rendered_agents = agents_tpl.replace("{{SERVICE_TITLE}}", title) \
-                                .replace("{{LABEL}}", label) \
-                                .replace("{{WORKING_DIR}}", str(target_dir)) \
-                                .replace("{{DIR_NAME}}", target_dir.name) \
-                                .replace("{{MAIN_TASK_FILE}}", "run.sh")
-    (target_dir / "AGENTS.md").write_text(rendered_agents)
-    print(f" Generated agent contract: {target_dir / 'AGENTS.md'}")
+        if args.wrapper:
+            runner = source_dir / "scripts" / "run.sh"
+            runner.parent.mkdir(parents=True, exist_ok=True)
+            runner.write_text(
+                render(
+                    "runner.sh.template",
+                    {
+                        "JOB_NAME": label,
+                        "LABEL": label,
+                        "REPORT_ROOT": escape(str(report_root)),
+                        "PATH_VALUE": base_path(),
+                        "MAIN_EXECUTION_COMMAND": command_line,
+                    },
+                )
+            )
+            runner.chmod(0o755)
+            emit(f"runner      {runner} (mode 755)")
 
-    # 5. Render metadata.json for track-automation
-    metadata_tpl = (TEMPLATES_DIR / "track_metadata.template.json").read_text()
-    rendered_meta = metadata_tpl.replace("{{SERVICE_ID}}", label.replace(".", "-")) \
-                                .replace("{{LABEL}}", label) \
-                                .replace("{{SERVICE_NAME}}", title) \
-                                .replace("{{SERVICE_DESCRIPTION}}", description) \
-                                .replace("{{SPACE_NAME}}", target_dir.parent.name) \
-                                .replace("{{WORKING_DIR}}", str(target_dir)) \
-                                .replace("{{RUNNER_PATH}}", runner_path) \
-                                .replace("{{SCHEDULE_TYPE}}", "calendar" if "StartCalendarInterval" in schedule_xml else "interval") \
-                                .replace("{{CRON_EXPRESSION}}", args.schedule) \
-                                .replace("{{SCHEDULE_HUMAN_READABLE}}", schedule_readable) \
-                                .replace("{{STDOUT_LOG}}", stdout_log) \
-                                .replace("{{STDERR_LOG}}", stderr_log) \
-                                .replace("{{CREATED_AT}}", datetime.utcnow().isoformat() + "Z")
-    (target_dir / "metadata.json").write_text(rendered_meta)
-    print(f" Generated tracking metadata: {target_dir / 'metadata.json'}")
+        readme_values = {
+            "SERVICE_TITLE": title,
+            "SERVICE_DESCRIPTION": description,
+            "LABEL": label,
+            "OWNER_DESCRIPTION": f"{layout_text}, repository {repo_root}",
+            "BRANCH": branch,
+            "WORKING_DIR": str(source_dir),
+            "REPORT_ROOT": str(report_root),
+            "SCHEDULE_HUMAN_READABLE": schedule_readable,
+            "LOCAL_TIMEZONE": time.tzname[0],
+            "PROGRAM_PATH": program_path,
+            "WRAPPER_LINE": (
+                "\nA thin wrapper runs at `scripts/run.sh`. It holds the job lock and "
+                "writes one terminal event per run. It loads no other file.\n"
+                if args.wrapper
+                else "\nThe plist calls the program directly. It has no wrapper.\n"
+            ),
+            "MANUAL_RUN_COMMAND": command_line,
+        }
+        (source_dir / "README.md").write_text(render("README.template.md", readme_values))
+        emit(f"runbook     {source_dir / 'README.md'}")
 
-    # 6. Optional deploy to LaunchAgents
-    if args.deploy:
-        user_launch_agents = Path.home() / "Library" / "LaunchAgents"
-        user_launch_agents.mkdir(parents=True, exist_ok=True)
-        dest_plist = user_launch_agents / f"{label}.plist"
-        
-        # Unload if existing
-        os.system(f"launchctl bootout gui/$(id -u)/{label} 2>/dev/null || true")
-        dest_plist.write_text(rendered_plist)
-        os.system(f"launchctl bootstrap gui/$(id -u) '{dest_plist}'")
-        print(f" Deployed and bootstrapped to launchd: {dest_plist}")
+        agents_values = {
+            "SERVICE_TITLE": title,
+            "LABEL": label,
+            "REPO_ROOT": str(repo_root),
+            "LAYOUT_DESCRIPTION": layout_text,
+            "BRANCH": branch,
+            "WORKING_DIR": str(source_dir),
+            "REPORT_ROOT": str(report_root),
+        }
+        (source_dir / "AGENTS.md").write_text(render("AGENTS.template.md", agents_values))
+        emit(f"contract    {source_dir / 'AGENTS.md'}")
+        emit(f"report root {report_root} (outside source, keep it git-ignored)")
 
-    print("\n Scaffolding complete! Run verify script to validate.")
+        if args.deploy:
+            deploy(plist_path, label)
+
+        emit("\nNext:")
+        emit(f"  plutil -lint {plist_path}")
+        emit(
+            "  python3 "
+            f"{SKILL_DIR / 'scripts' / 'verify_automation.py'} "
+            f"\"{source_dir}\" --static --report-root \"{report_root}\""
+        )
+        emit("No job was started and no launchd record was changed.")
+        return 0
+    except ScaffoldError as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 2
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

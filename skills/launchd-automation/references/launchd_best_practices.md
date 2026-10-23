@@ -1,108 +1,113 @@
-# macOS launchd Best Practices & Reference Manual
+# launchd lifecycle reference
 
-A comprehensive engineering guide for authoring, debugging, and maintaining background daemons and user agents on macOS.
+Read this when a job misbehaves at load, at run, or after a change. Placement and
+report-root rules live in `docs/automation.md`. The workflow lives in `SKILL.md`.
 
----
+## Domains
 
-## 1. Domains: Where Services Run
+| Domain target | Typical location | Runs as |
+| --- | --- | --- |
+| `gui/<uid>` | `~/Library/LaunchAgents/` | The logged-in user, with keychain and display access |
+| `system` | `/Library/LaunchDaemons/` | Root, with no user session |
 
-macOS `launchd` manages services across distinct domains:
+User automation belongs in `gui/<uid>`. A daemon cannot reach the user keychain or
+a mounted network home the way an agent can. Moving a job between domains changes
+its environment more than its command.
 
-| Domain Target | Typical Path | Context & Permissions | Use Case |
-| :--- | :--- | :--- | :--- |
-| **User Agent** (`gui/<uid>`) | `~/Library/LaunchAgents/` | Runs as logged-in GUI user. Has access to user files, keychain, display server. | **Default for 99% of user automations** (sync, scripts, backups). |
-| **System Agent** | `/Library/LaunchAgents/` | Runs per user on login, configured globally by admin. | Multi-user workstation software. |
-| **System Daemon** (`system`) | `/Library/LaunchDaemons/` | Runs as `root` even when no user is logged in. No GUI access. | Hardware monitors, network proxies, low-level servers. |
+## Modern launchctl
 
-> **Always use User Agents (`gui/$(id -u)`)** for personal tasks, repositories, and data sync. Never install user automation into `LaunchDaemons`.
-
----
-
-## 2. Modern `launchctl` vs Legacy Commands
-
-Apple deprecated `load` / `unload` in macOS 10.11+. Modern tooling uses domain targets:
-
-### The Modern Way (Recommended):
 ```bash
-# Bootstrap (load and enable service in user GUI session):
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.service.plist
-
-# Bootout (unload and stop service):
-launchctl bootout gui/$(id -u)/com.example.service
-
-# Kickstart (force immediate execution / restart):
-launchctl kickstart -k gui/$(id -u)/com.example.service
-
-# Inspect live status, environment, and error states:
-launchctl print gui/$(id -u)/com.example.service
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/<label>.plist
+launchctl bootout   gui/$(id -u)/<label>
+launchctl print     gui/$(id -u)/<label>
+launchctl kickstart gui/$(id -u)/<label>
 ```
 
-### The Legacy Fallback:
-```bash
-launchctl load -w ~/Library/LaunchAgents/com.example.service.plist
-launchctl unload -w ~/Library/LaunchAgents/com.example.service.plist
-launchctl list | grep com.example
-```
+`load` and `unload` are legacy. `bootstrap` reads the plist and registers it.
+`bootout` by label removes the registration even when the plist file is gone.
+`print` is read-only and is the safe inspection call.
 
----
+`bootstrap` fails with `Bootstrap failed: 5: Input/output error` when the label is
+already loaded in that domain. Boot out first, then bootstrap. A plist the domain
+rejects, a missing executable, or unreadable permissions produce other failures;
+read the message instead of retrying.
 
-## 3. The 3 Deadly Traps of macOS `launchd`
+`kickstart` starts the job now. Its exit code 0 means the request was accepted,
+not that the job ran, and never that the job finished. `kickstart -k` kills a
+running instance first; use it only when an interruption is authorized.
 
-### Trap 1: Minimal Default PATH (Exit 127)
-`launchd` runs in a stripped sandbox where `PATH` is only `/usr/bin:/bin:/usr/sbin:/sbin`.
-- Tools installed via Homebrew (`/opt/homebrew/bin` on Apple Silicon, `/usr/local/bin` on Intel) or managers (`pyenv`, `mise`, `nvm`, `cargo`) will **fail with Exit 127: Command not found**.
-- **Fix:** 
-  1. Define `<key>EnvironmentVariables</key>` with explicit `PATH` in the `.plist`.
-  2. Use a wrapper script (`scripts/run.sh`) that explicitly exports the full PATH and sources tool shims.
+## Absolute paths and environment
 
-### Trap 2: Working Directory Pitfall
-If `WorkingDirectory` is omitted, the process runs in `/`. Any relative file access (e.g., `open('data.json')` or `./scripts/task.sh`) will fail or attempt to write to the read-only root volume.
-- **Fix:** Always set `<key>WorkingDirectory</key>` to the absolute path of the automation directory.
+launchd starts a process with a minimal `PATH` (`/usr/bin:/bin:/usr/sbin:/sbin`),
+no shell profile, no version manager, and no working directory guarantee.
 
-### Trap 3: Silent Failure & Stale Exit Codes
-`launchctl list` only reports the last exit code, and launchd will not log to the system console by default. If `StandardOutPath` and `StandardErrorPath` are not specified, stderr disappears into `/dev/null`.
-- **Fix:** Always specify explicit log paths in a `logs/` subdirectory and inspect them after bootstrapping.
+- Give `ProgramArguments` an absolute executable path.
+- Pass file arguments as absolute paths. A relative path resolves against a
+  directory the plist did not choose.
+- Declare `EnvironmentVariables` in the plist. That declaration is the job's
+  environment.
+- A wrapper is optional. Add one for a lock, a terminal event line, or shared
+  setup. Do not add one to source `.env`, a shell profile, or `mise`/`pyenv`/`nvm`;
+  those make the scheduled environment differ from the declared one.
 
----
+## Scheduling and sleep
 
-## 4. Exit Code Diagnostics
+`StartCalendarInterval` fires at local wall-clock time. A time that passes while
+the Mac sleeps fires when it wakes, once, late. A time skipped across a shutdown
+does not replay. `StartInterval` counts from the previous start and does not
+advance while asleep. Neither primitive retries a failed run.
 
-| Code | POSIX Name | Root Cause & Diagnostic |
-| :--- | :--- | :--- |
-| `0` | `EX_OK` | Successful termination. |
-| `1` | General Error | Script or application threw an uncaught error. Check `logs/stderr.log`. |
-| `78` | `EX_CONFIG` | Launchd configuration failure. Usually: plist syntax invalid, permissions issue, or `ProgramArguments` target does not exist. |
-| `126` | Permission Denied | Runner script is not marked executable. Fix with `chmod +x scripts/run.sh`. |
-| `127` | Command Not Found | A binary called inside the script is missing from PATH. |
+`RunAtLoad` starts the job at bootstrap. It is off unless the job needs it; it is
+not a verification step. `KeepAlive` restarts a service that exits; a scheduled
+job that should exit normally does not want it.
 
----
+Timezone: the plist stores no zone. The Mac's zone at fire time decides the
+moment. A job whose correct time is fixed must convert in its own code and record
+the zone it used.
 
-## 5. Scheduling Primitives
+## Logs and reports
 
-### Option A: Calendar-based (`StartCalendarInterval`)
-Run at specific times of day, day of week, or day of month:
-```xml
-<!-- Daily at 04:00 AM -->
-<key>StartCalendarInterval</key>
-<dict>
-    <key>Hour</key>
-    <integer>4</integer>
-    <key>Minute</key>
-    <integer>0</integer>
-</dict>
-```
+`StandardOutPath` and `StandardErrorPath` capture the process streams. They are
+append-only and never rotate. Point them at the report root, outside the source
+folder. Structured run records, rotation, and `latest-result.json` belong to the
+job; a wrapper that writes one terminal line per run makes a live check possible
+without reading the whole log.
 
-### Option B: Interval-based (`StartInterval`)
-Run periodically every $N$ seconds:
-```xml
-<!-- Every 1 hour (3600 seconds) -->
-<key>StartInterval</key>
-<integer>3600</integer>
-```
+## Exit codes
 
-### Option C: Run At Load
-Run once as soon as the service is registered with `launchctl bootstrap`:
-```xml
-<key>RunAtLoad</key>
-<true/>
-```
+| Code | Name | Usual cause |
+| --- | --- | --- |
+| `0` | success | The program finished normally. It says nothing about the intended effect. |
+| `1` | general failure | The program raised an error. Read the stderr log. |
+| `78` | `EX_CONFIG` | launchd rejected the configuration: bad plist, missing program, unusable path, or a refused bootstrap. |
+| `126` | not executable | The program or wrapper lacks the executable bit, or the volume refuses execution. |
+| `127` | command not found | The program path is wrong, or the program calls a tool absent from the declared `PATH`. |
+
+`launchctl print` shows the last exit status under `last exit code`. A status from
+an earlier run is stale evidence; match it to a run record before trusting it.
+
+## Deploy sequence
+
+1. Lint: `plutil -lint <source plist>`.
+2. Compare the source and installed copies when both exist.
+3. `launchctl bootout gui/$(id -u)/<label>` and tolerate "not loaded".
+4. Copy the source plist to `~/Library/LaunchAgents/<label>.plist`.
+5. `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/<label>.plist`.
+6. Read `launchctl print` and confirm the loaded `path`.
+
+Keep the previous plist before step 4. Rollback repeats the sequence with the
+saved copy.
+
+## Verification
+
+Static checks read files and call `plutil -lint` and read-only `launchctl print`.
+They never execute the job.
+
+A live check may kickstart the loaded job, then waits for a fresh terminal
+outcome: a `latest-result.json` with an `outcome`, or a `terminal=` line appended
+to the log after the kickstart. Absence of a result is a failure, even when
+dispatch succeeded. A `failed` outcome proves the job ran and did not succeed;
+report it as failure, not as a completed check.
+
+A runner cannot report its own absence. Detect a missed schedule with a separate
+observer that reads the age of the latest result.

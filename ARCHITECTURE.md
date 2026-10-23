@@ -37,17 +37,32 @@ Hindsight is a recall layer. Current configuration and accepted instructions rem
 
 ## Tools and automation
 
-A tool is a callable capability. An automation chooses when and how to call capabilities.
-A component can provide both without requiring duplicate source trees.
+A tool is a callable capability. An automation chooses when and how to call
+capabilities. A component can provide both without requiring duplicate source
+trees.
 
-The workspace currently contains `automation/bridge/`, `automation/model-control/`, and `automation/track-automation/`.
-Read their current entrypoints before use. Tai reports that the existing automation is running.
-This document does not independently establish scheduler health or completion of a path migration.
+Each tool is an independent Git repository at `tools/<tool-name>/` with a stable
+checkout. Admin Git ignores the whole `tools/` subtree; the index and handoff
+contract live in [docs/tools.md](docs/tools.md). Development Space at
+`~/development-space/` hosts linked worktrees of those repositories and owns no
+product source. It never becomes the canonical source home.
 
-Bridge provides synchronization capabilities. Model Control provides model checks and selection.
-The shared [OpenCode tool](tools/opencode-free-router/README.md) owns model discovery, daily state, and default-model updates.
-The model-control automation calls this tool. Compatibility links preserve older spec consumers.
-Keep current source paths until dependencies and running service references are checked.
+Automation source follows its owner. A job dedicated to one tool lives inside
+that tool repository. A job that coordinates several tools or applies Space
+policy lives under Admin `automation/<job-name>/`. Runtime reports for both kinds
+go to an explicit absolute `automation/<stable-job-name>/logs/` root, outside the
+source folder. [docs/automation.md](docs/automation.md) owns the placement rules.
+
+The workspace currently contains `automation/bridge/`, `automation/model-control/`,
+and `automation/track-automation/`. Read their current entrypoints before use.
+Tai reports that the existing automation is running. This document does not
+independently establish scheduler health.
+
+Bridge provides synchronization capabilities. Model Control runs the existing
+daily model check and selection job. The OpenCode tool, indexed in
+[docs/tools.md](docs/tools.md), owns model discovery, daily state, and
+default-model updates; a replacement job is implemented in that repository but
+its schedule is not installed. Compatibility links preserve older spec consumers.
 
 Skill and plugin maintenance is the next automation design area.
 Define the selected component, update source, verification, and recovery before enabling new update behavior.

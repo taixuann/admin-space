@@ -3,3 +3,11 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .aqg/
+
+# Independent tool repositories. Each tool owns its source and history.
+# Read docs/tools.md for the tool index and handoff contract.
+/tools/
+
+# Runtime reports for Space-reporting jobs. Source lives with the owning repository.
+/automation/opencode-model-refresh/logs/
+/automation/*-runtime/

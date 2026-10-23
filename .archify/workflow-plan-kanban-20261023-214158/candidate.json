@@ -1,0 +1,288 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Proposed Plan-to-Kanban Automation",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/workflow-plan-kanban-20261023-214158/plan-kanban.html"
+  },
+  "lanes": [
+    {
+      "id": "local",
+      "label": "1 \u00b7 Plan and local tracking"
+    },
+    {
+      "id": "execute",
+      "label": "2 \u00b7 Execute and review"
+    },
+    {
+      "id": "exception",
+      "label": "Failure and bounded repair"
+    },
+    {
+      "id": "publish",
+      "label": "Result publication"
+    },
+    {
+      "id": "future",
+      "label": "3 \u00b7 Notion extension \u2014 not enabled"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "plan",
+      "lane": "local",
+      "col": 0,
+      "type": "database",
+      "label": "Spec + plan",
+      "sublabel": "Phase 1: local tracking"
+    },
+    {
+      "id": "card",
+      "lane": "local",
+      "col": 1,
+      "type": "frontend",
+      "label": "Kanban card",
+      "sublabel": "One card per run"
+    },
+    {
+      "id": "approve",
+      "lane": "local",
+      "col": 2,
+      "type": "security",
+      "label": "Launch approval",
+      "sublabel": "Exact plan revision"
+    },
+    {
+      "id": "runner",
+      "lane": "execute",
+      "col": 2,
+      "type": "backend",
+      "label": "Runner + lock",
+      "sublabel": "Phase 2: unattended"
+    },
+    {
+      "id": "execute",
+      "lane": "execute",
+      "col": 3,
+      "type": "backend",
+      "label": "OpenCode",
+      "sublabel": "Native Superpowers"
+    },
+    {
+      "id": "review",
+      "lane": "execute",
+      "col": 4,
+      "type": "security",
+      "label": "Verify + review",
+      "sublabel": "Final Decision Engine"
+    },
+    {
+      "id": "result",
+      "lane": "execute",
+      "col": 5,
+      "type": "database",
+      "label": "Durable result",
+      "sublabel": "Session + evidence"
+    },
+    {
+      "id": "repair",
+      "lane": "exception",
+      "col": 4,
+      "type": "backend",
+      "label": "One repair",
+      "sublabel": "Verify + re-review once"
+    },
+    {
+      "id": "unknown",
+      "lane": "exception",
+      "col": 5,
+      "type": "security",
+      "label": "Blocked / unknown",
+      "sublabel": "Crash or unresolved gate"
+    },
+    {
+      "id": "publisher",
+      "lane": "publish",
+      "col": 5,
+      "type": "backend",
+      "label": "Codex / Claude",
+      "sublabel": "Read + summarize only"
+    },
+    {
+      "id": "patch",
+      "lane": "publish",
+      "col": 4,
+      "type": "security",
+      "label": "Validate patch",
+      "sublabel": "Run, card, revision"
+    },
+    {
+      "id": "board",
+      "lane": "publish",
+      "col": 3,
+      "type": "frontend",
+      "label": "Update same card",
+      "sublabel": "Review; human accepts"
+    },
+    {
+      "id": "sync",
+      "lane": "future",
+      "col": 3,
+      "type": "messagebus",
+      "label": "Outward sync",
+      "sublabel": "Phase 3: proposed"
+    },
+    {
+      "id": "notion",
+      "lane": "future",
+      "col": 2,
+      "type": "cloud",
+      "label": "Notion observe",
+      "sublabel": "Linked ticket"
+    },
+    {
+      "id": "request",
+      "lane": "future",
+      "col": 1,
+      "type": "messagebus",
+      "label": "Inbound request",
+      "sublabel": "Future extension"
+    },
+    {
+      "id": "validate",
+      "lane": "future",
+      "col": 0,
+      "type": "security",
+      "label": "Validate request",
+      "sublabel": "Approval + freshness"
+    }
+  ],
+  "edges": [
+    {
+      "to": "card",
+      "label": "",
+      "from": "plan"
+    },
+    {
+      "to": "approve",
+      "label": "",
+      "from": "card"
+    },
+    {
+      "to": "runner",
+      "label": "",
+      "from": "approve"
+    },
+    {
+      "to": "execute",
+      "label": "",
+      "from": "runner"
+    },
+    {
+      "to": "review",
+      "label": "",
+      "from": "execute"
+    },
+    {
+      "to": "result",
+      "label": "",
+      "from": "review"
+    },
+    {
+      "to": "publisher",
+      "label": "",
+      "from": "result"
+    },
+    {
+      "to": "patch",
+      "label": "",
+      "from": "publisher"
+    },
+    {
+      "to": "board",
+      "label": "",
+      "from": "patch"
+    },
+    {
+      "to": "sync",
+      "label": "",
+      "from": "board"
+    },
+    {
+      "to": "notion",
+      "label": "",
+      "from": "sync"
+    },
+    {
+      "to": "request",
+      "label": "",
+      "from": "notion"
+    },
+    {
+      "to": "validate",
+      "label": "",
+      "from": "request"
+    },
+    {
+      "to": "repair",
+      "label": "findings",
+      "role": "branch",
+      "from": "review"
+    },
+    {
+      "to": "review",
+      "label": "one retry",
+      "role": "return",
+      "from": "repair"
+    },
+    {
+      "to": "unknown",
+      "label": "failed / missing",
+      "role": "error",
+      "from": "result"
+    },
+    {
+      "to": "publisher",
+      "label": "report uncertainty",
+      "from": "unknown"
+    },
+    {
+      "to": "approve",
+      "label": "validated request only",
+      "variant": "dashed",
+      "role": "return",
+      "from": "validate"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Ownership",
+      "items": [
+        "Superpowers owns task execution and native review.",
+        "Codex / Claude reads results and updates Kanban; it does not review code.",
+        "The patch validator is the only machine card writer."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Recovery and authority",
+      "items": [
+        "A card move is not launch authorization. One active writer per workspace.",
+        "A crash or missing evidence stays unknown; retry publication without rerunning work.",
+        "Notion inbound changes become validated requests, not direct execution commands."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Scope",
+      "items": [
+        "Target workflow only; no automation is installed or activated by this diagram.",
+        "Stable evidence survives scratch cleanup. Memory is context, not job state.",
+        "Notion sync and inbound control need separate implementation designs."
+      ]
+    }
+  ]
+}

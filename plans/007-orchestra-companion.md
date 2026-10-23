@@ -11,7 +11,7 @@
 - Effort: M
 - Risk: MED. The main risks are invented dispatch, duplicated tickets and excess write authority.
 - Category: direction
-- Status: TODO. Plan only. Implementation has not started.
+- Status: DEFERRED, 2026-10-23, at the user's request. Implementation and installation have not started. Resume only when the user selects this work again.
 - Depends on: no other local plan. Live dispatch and universal Wiki lookup have explicit gates below.
 - Planned at: `5e3572e59e95d0736d9daef79b0efaa2b11c1829`, 2026-10-20.
 - Repository: `/Users/tai/.agents`, branch observed as `codex/companion-v2`.

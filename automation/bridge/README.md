@@ -43,7 +43,7 @@ assets/bridge/
 | :--- | :--- | :--- | :--- | :---: | :--- |
 | `research-projects` | `~/research-projects` | `taixuann/research-projects` | `main` | Yes | Scientific research projects |
 | `agent-skills` | `~/.agents` | `taixuann/agent-skills` | `master` | Yes | Agent skills library |
-| `agent-development` | `~/agent-development` | `taixuann/agent-development` | `master` | Yes | Agent development sandbox |
+| `agent-development` | `~/development-space` | `taixuann/agent-development` | `master` | Yes | Engineering workshop; hosts linked worktrees only |
 | `raw-viewer` | `~/research-projects/tools/raw-viewer` | `taixuann/raw-viewer` | `master` | Yes | Scientific data viewer tool |
 | `academic-portfolio` | `~/personal-hub/professional/portfolio/site` | `taixuann/academic-portfolio` | `main` | Yes | Academic and personal portfolio website |
 | `personal-hub` | `~/personal-hub` | `taixuann/non-research-projects` | `main` | No | No | Personal LifeOS (local Git only) |

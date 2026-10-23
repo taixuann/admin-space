@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/workflow-plan-kanban-20261023-214158/candidate.json",
+    "sha256": "77fe1e9237b6db56dd4ed9cc203d3002c3b0f79d3fabdfb449d5b123394151c2",
+    "bytes": 6130
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/workflow-plan-kanban-20261023-214158/plan-kanban.html",
+    "sha256": "133aebb2b3fd86d87823c3ad453cf0772d46c540c1076d6a3afde5e650b9bd7e",
+    "bytes": 834562
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/workflow-plan-kanban-20261023-214158/review-2/plan-kanban.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/workflow-plan-kanban-20261023-214158/review-2/plan-kanban.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/workflow-plan-kanban-20261023-214158/review-2/plan-kanban.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-23T09:27:22.647Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2293,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

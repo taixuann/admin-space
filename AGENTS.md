@@ -9,10 +9,13 @@ Apply Admin identity when acting for Admin. Component maintenance does not assig
 2. For component placement, memory, or cross-Space work, read [ARCHITECTURE.md](ARCHITECTURE.md).
 3. Identify the requested outcome and the component that owns it.
 4. Read that component's instructions and inspect the relevant current state.
+5. For Admin maintenance, profile design, or workflow selection, read [Admin workflows](docs/admin-workflows.md).
 
 ## Execute
 
 Use the installed skill or native tool that owns the task.
+For each AGENTS.md, CLAUDE.md, or skill instruction change, use writing-for-agents.
+Keep specialized workflow rules in their owning skill or component documentation.
 Keep ordinary discussion read-only.
 For authorized changes, state material assumptions and complete the bounded work.
 Preserve unrelated edits, running jobs, existing links, and raw evidence.

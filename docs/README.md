@@ -10,6 +10,17 @@ Use these views to explore Admin. The operating contract stays in the root docum
 
 Open the HTML views in a browser. Expand skill groups to inspect their members. Use the viewer controls to explore the diagram.
 
+## Operating reference
+
+For Admin maintenance and workflow selection, read [Admin workflows](admin-workflows.md). This reference complements the root instructions; the interactive views above remain snapshots.
+
+| Reference | Question |
+| --- | --- |
+| [Admin workflows](admin-workflows.md) | Which method owns this request, and which profile is in effect? |
+| [Admin Architect & Planning profile](profiles/admin-architect-planning.md) | What does the draft planning profile cover, and what is still open? |
+| [Admin tool handoff](tools.md) | Where does tool source live, and how is a tool task handed off? |
+| [Automation](automation.md) | Does this job belong to a tool or to Admin, and where do reports go? |
+
 ## Coverage and maintenance
 
 Snapshot date: 2026-10-22. Skill grouping is editorial. Membership edges do not represent calls or dependencies.

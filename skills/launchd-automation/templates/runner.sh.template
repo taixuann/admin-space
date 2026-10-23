@@ -1,81 +1,42 @@
-#!/usr/bin/env bash
-# ==============================================================================
-# Runner Wrapper Template for macOS launchd Automations
-# ==============================================================================
-# Purpose: Ensures complete environment injection (PATH, Homebrew, pyenv, mise),
-#          prevents overlapping runs via lockfile, and redirects logs reliably.
-# ==============================================================================
+#!/bin/bash
+# Optional runner wrapper for {{JOB_NAME}}.
+# The plist already declares this PATH. This line is the second and only copy,
+# so a direct call and a scheduled call see the same tools.
+set -u -o pipefail
+export PATH="{{PATH_VALUE}}"
 
-set -euo pipefail
+JOB="{{LABEL}}"
+REPORT_ROOT="{{REPORT_ROOT}}"
+LOCK_DIR="${REPORT_ROOT}/${JOB}.lock.d"
 
-# 1. Resolve Script Directory & Project Root
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SERVICE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-LOGS_DIR="${SERVICE_ROOT}/logs"
-LOCK_FILE="/tmp/{{LOCK_NAME}}.lock"
-
-mkdir -p "${LOGS_DIR}"
-
-# 2. Comprehensive PATH Injection (Fixes Exit 127: command not found)
-# Apple Silicon Brew + Intel Brew + User bins + System defaults
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:${HOME}/.local/bin:${HOME}/.cargo/bin:${PATH:-/usr/bin:/bin:/usr/sbin:/sbin}"
-
-# 3. Load user environment managers if present
-if [ -s "${HOME}/.nvm/nvm.sh" ]; then
-    export NVM_DIR="${HOME}/.nvm"
-    # shellcheck disable=SC1091
-    source "${NVM_DIR}/nvm.sh" 2>/dev/null || true
-fi
-
-if command -v mise >/dev/null 2>&1; then
-    eval "$(mise activate bash --shims 2>/dev/null || true)"
-fi
-
-if [ -d "${HOME}/.pyenv/shims" ]; then
-    export PATH="${HOME}/.pyenv/shims:${PATH}"
-fi
-
-# Load optional .env file from service root if present
-if [ -f "${SERVICE_ROOT}/.env" ]; then
-    # shellcheck disable=SC1091
-    set -a
-    source "${SERVICE_ROOT}/.env"
-    set +a
-fi
-
-# 4. Lockfile Protection (Prevent overlapping runs)
-exec 200>"${LOCK_FILE}"
-if ! flock -n 200 2>/dev/null; then
-    # Fallback to shlock or directory lock if flock is unavailable on older macOS
-    if ! mkdir "${LOCK_FILE}.d" 2>/dev/null; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] Another instance is already running. Exiting."
-        exit 0
-    fi
-    trap 'rm -rf "${LOCK_FILE}.d"' EXIT
-fi
-
-# 5. Timestamped Execution Log
 log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+    printf '%s %s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$*"
 }
 
-log "=== Starting Job: {{JOB_NAME}} ==="
-log "Working Directory: ${SERVICE_ROOT}"
-
-# 6. Error Handling Trap
-handle_error() {
-    local exit_code=$?
-    local line_no=$1
-    log "ERROR: Command failed at line ${line_no} with exit code ${exit_code}"
-    exit "${exit_code}"
+mkdir -p "${REPORT_ROOT}" || {
+    echo "report root is not writable: ${REPORT_ROOT}" >&2
+    exit 78
 }
-trap 'handle_error $LINENO' ERR
 
-# 7. Execute Main Task
-cd "${SERVICE_ROOT}"
+# One writer per job. A held lock is a recorded skip, not a failure.
+if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
+    log "event=lock_skipped terminal=skipped_locked job=${JOB}"
+    exit 0
+fi
 
+cleanup() {
+    rmdir "${LOCK_DIR}" 2>/dev/null || true
+}
+trap cleanup EXIT
+trap 'cleanup; exit 130' INT
+trap 'cleanup; exit 143' TERM
+
+log "event=start job=${JOB} report_root=${REPORT_ROOT}"
 {{MAIN_EXECUTION_COMMAND}}
-
-EXIT_STATUS=$?
-log "=== Finished Job: {{JOB_NAME}} (Exit Code: ${EXIT_STATUS}) ==="
-exit ${EXIT_STATUS}
+status=$?
+if [ "${status}" -eq 0 ]; then
+    log "event=finish terminal=success exit_code=0 job=${JOB}"
+else
+    log "event=finish terminal=failed exit_code=${status} job=${JOB}"
+fi
+exit "${status}"

@@ -1,101 +1,70 @@
-# {{SERVICE_TITLE}} (`{{LABEL}}`)
+# {{SERVICE_TITLE}}
 
 {{SERVICE_DESCRIPTION}}
 
----
+| Field | Value |
+| --- | --- |
+| Label | `{{LABEL}}` |
+| Source owner | {{OWNER_DESCRIPTION}} |
+| Branch | `{{BRANCH}}` |
+| Source folder | `{{WORKING_DIR}}` |
+| Report root | `{{REPORT_ROOT}}` |
+| Installed plist | `~/Library/LaunchAgents/{{LABEL}}.plist` |
 
-## 1. Quick Info & Schedule
+## Schedule and time
 
-| Property | Value |
-| :--- | :--- |
-| **Service Label** | `{{LABEL}}` |
-| **Schedule** | `{{SCHEDULE_HUMAN_READABLE}}` |
-| **Root Directory** | `{{WORKING_DIR}}` |
-| **Runner Script** | `{{RUNNER_RELATIVE_PATH}}` |
-| **Standard Output Log** | `logs/stdout.log` |
-| **Standard Error Log** | `logs/stderr.log` |
-| **macOS LaunchAgent** | `~/Library/LaunchAgents/{{LABEL}}.plist` |
+{{SCHEDULE_HUMAN_READABLE}}. The installed plist is the only authority for the trigger; this file describes it.
 
----
+Wall-clock times use the Mac's local timezone at fire time ({{LOCAL_TIMEZONE}} when scaffolded). A timezone change moves the next run. `StartCalendarInterval` fires late after sleep; a time that passes while the Mac is asleep runs only if launchd replays it. `StartInterval` counts from the last start and does not count sleep. Record the real start time in the run report rather than assuming the nominal one.
 
-## 2. Directory Layout
+## Runtime
 
-```text
-{{DIR_NAME}}/
-├── README.md                           # This operational runbook
-├── AGENTS.md                           # Operating instructions and safety contracts for AI agents
-├── scripts/
-│   ├── run.sh                          # Main wrapper script (sets up PATH and handles locks)
-│   └── {{MAIN_TASK_FILE}}              # Core logic implementation
-├── logs/
-│   ├── stdout.log                      # Standard execution output
-│   └── stderr.log                      # Error outputs and stack traces
-└── {{LABEL}}.plist                     # Original plist version (mirrored to ~/Library/LaunchAgents)
-```
+The job calls `{{PROGRAM_PATH}}` with absolute arguments. `PATH`, `HOME`, and `LANG` come from the plist `EnvironmentVariables`. The job loads no `.env`, no shell profile, and no version-manager init.
+{{WRAPPER_LINE}}
+## Reports and retention
 
----
+Reports go to `{{REPORT_ROOT}}`:
 
-## 3. Operational Runbook
+| File | Purpose |
+| --- | --- |
+| `stdout.log` | Process output and one-line run events |
+| `stderr.log` | Diagnostics and tracebacks |
+| `latest-result.json` | Last terminal outcome, written atomically |
+| `runs/` | One record per run, named by `run_id` |
 
-### Run Manually (Test)
-To run the job immediately in the foreground without waiting for the scheduled time:
+A run record holds `run_id`, label, source revision and dirty state, start and end time, outcome, exit code, and duration. Keep 30 days and at most 100 completed runs. Rotation never removes `latest-result.json`.
+
+## Outcomes
+
+| Outcome | Meaning |
+| --- | --- |
+| `success` | The job reached its intended effect. |
+| `cached` | No change was needed. This is a successful run. |
+| `skipped_locked` | Another run held the lock. Record the skip, exit 0, leave the active run's record alone. |
+| `failed` | The tool failed. Keep the previous valid state and exit nonzero. |
+
+Delivery failure: a local report stays valid when external delivery fails. Pending deliveries stay in the tool's own queue, are reconciled before retry, and retry within a bounded limit.
+
+## Replay and recovery
+
+Replay a failed run by calling the same entrypoint with the old parameters and a new `run_id`. A replay is a new run; it does not rewrite history.
+
+Recovery keeps the last valid configuration:
+1. `launchctl bootout gui/$(id -u)/{{LABEL}}`
+2. Copy the saved plist over `~/Library/LaunchAgents/{{LABEL}}.plist`.
+3. `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/{{LABEL}}.plist`
+4. Confirm a fresh terminal outcome in `latest-result.json`.
+
+## Known limit
+
+A runner cannot report its own absence. A run that never starts leaves no local trace. Detect missed runs with a separate observer that reads the age of `latest-result.json`; do not claim the job is healthy from schedule alone.
+
+## Commands
+
 ```bash
-cd "{{WORKING_DIR}}"
-bash scripts/run.sh
+# Static check. Never starts the job.
+python3 ~/.agents/skills/launchd-automation/scripts/verify_automation.py "{{WORKING_DIR}}" --static --report-root "{{REPORT_ROOT}}"
+
+# Manual run, when authorized.
+{{MANUAL_RUN_COMMAND}} --report-root "{{REPORT_ROOT}}"
 ```
-
-### Check Service Status in launchd
-Check if the service is loaded and see its PID / last exit status:
-```bash
-launchctl list | grep "{{LABEL}}"
-```
-
-### Inspect Detailed launchd Properties
-Inspect state, scheduling, environment, and error conditions:
-```bash
-launchctl print gui/$(id -u)/{{LABEL}}
-```
-
-### Trigger Immediate Execution via launchctl
-Force `launchd` to kick off the service right now:
-```bash
-launchctl kickstart -k gui/$(id -u)/{{LABEL}}
-```
-
-### View Live Logs
-Stream execution logs and errors:
-```bash
-# Follow both output and errors
-tail -f logs/stdout.log logs/stderr.log
-```
-
-### Reload / Apply Changes
-After editing the `.plist` file:
-```bash
-# Unload existing job
-launchctl bootout gui/$(id -u)/{{LABEL}} 2>/dev/null || true
-
-# Copy latest plist to LaunchAgents
-cp "{{LABEL}}.plist" ~/Library/LaunchAgents/
-
-# Bootstrap the updated job
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/{{LABEL}}.plist
-```
-
-### Uninstall / Disable Service
-To stop and permanently remove the scheduled service:
-```bash
-launchctl bootout gui/$(id -u)/{{LABEL}} 2>/dev/null || true
-rm -f ~/Library/LaunchAgents/{{LABEL}}.plist
-```
-
----
-
-## 4. Troubleshooting & Exit Codes
-
-| Exit Code | Meaning | Remediation |
-| :--- | :--- | :--- |
-| `0` | Success | Normal operation. |
-| `78` | Configuration / Permission Error | `launchd` could not read the plist or execute the runner. Check file permissions (`chmod +x scripts/run.sh`). |
-| `127` | Command Not Found | A required binary is not in PATH. Check `PATH` in `scripts/run.sh` and plist `EnvironmentVariables`. |
-| `1` | Task Execution Failure | Check `logs/stderr.log` for Python/Node/Shell tracebacks. |

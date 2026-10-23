@@ -340,12 +340,12 @@
       "program": "/bin/bash",
       "arguments": [
         "/bin/bash",
-        "/Users/tai/agent-development/automation/linear-notion-tracking/run-sync.sh"
+        "/Users/tai/development-space/automation/linear-notion-tracking/run-sync.sh"
       ],
       "working_dir": null,
       "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.linear-notion-sync.plist",
       "stdout_log": {
-        "path": "/Users/tai/agent-development/automation/linear-notion-tracking/logs/launchd.stdout.log",
+        "path": "/Users/tai/development-space/automation/linear-notion-tracking/logs/launchd.stdout.log",
         "exists": true,
         "size": 967,
         "size_formatted": "967 B",
@@ -353,7 +353,7 @@
         "snippet": "2026-10-22 00:00:04,138 [INFO] [TAI-81] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] [TAI-80] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] [TAI-79] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] [TAI-78] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] Sync complete. Stats: {'created': 0, 'updated': 0, 'skipped': 5, 'dry-run': 0}"
       },
       "stderr_log": {
-        "path": "/Users/tai/agent-development/automation/linear-notion-tracking/logs/launchd.stderr.log",
+        "path": "/Users/tai/development-space/automation/linear-notion-tracking/logs/launchd.stderr.log",
         "exists": true,
         "size": 0,
         "size_formatted": "0 B",

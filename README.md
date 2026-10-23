@@ -42,4 +42,4 @@ Open [docs/README.md](docs/README.md) for interactive memory and skill views, so
 
 ## Tools
 
-[Admin tools](tools/README.md) includes the native Hindsight memory explorer.
+[Admin tools](docs/tools.md) includes the native Hindsight memory explorer.

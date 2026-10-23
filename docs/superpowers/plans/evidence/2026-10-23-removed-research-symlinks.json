@@ -1,0 +1,149 @@
+{
+  "reason": "User authorized removing Admin research/manuscript symlinks; preserve targets.",
+  "links": [
+    {
+      "link": "/Users/tai/.agents/skills/citation-management",
+      "target": "/Users/tai/.oleafly/skills/citation-management"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/experimental-design",
+      "target": "/Users/tai/.oleafly/skills/experimental-design"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/exploratory-data-analysis",
+      "target": "/Users/tai/.oleafly/skills/exploratory-data-analysis"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/hypothesis-generation",
+      "target": "/Users/tai/.oleafly/skills/hypothesis-generation"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/import-refine",
+      "target": "/Users/tai/.oleafly/skills/import-refine"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/literature-review",
+      "target": "/Users/tai/.oleafly/skills/literature-review"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-data-analysis",
+      "target": "/Users/tai/.oleafly/skills/oleafly-data-analysis"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-figure-prep",
+      "target": "/Users/tai/.oleafly/skills/oleafly-figure-prep"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-latex-build",
+      "target": "/Users/tai/.oleafly/skills/oleafly-latex-build"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-literature-sweep",
+      "target": "/Users/tai/.oleafly/skills/oleafly-literature-sweep"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-manuscript-scaffold",
+      "target": "/Users/tai/.oleafly/skills/oleafly-manuscript-scaffold"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-pre-submission",
+      "target": "/Users/tai/.oleafly/skills/oleafly-pre-submission"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-related-work",
+      "target": "/Users/tai/.oleafly/skills/oleafly-related-work"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-research-loop",
+      "target": "/Users/tai/.oleafly/skills/oleafly-research-loop"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-response-letter",
+      "target": "/Users/tai/.oleafly/skills/oleafly-response-letter"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-review-manuscript",
+      "target": "/Users/tai/.oleafly/skills/oleafly-review-manuscript"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-slides-and-posters",
+      "target": "/Users/tai/.oleafly/skills/oleafly-slides-and-posters"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/oleafly-verify-claims",
+      "target": "/Users/tai/.oleafly/skills/oleafly-verify-claims"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/openresearch",
+      "target": "/Users/tai/.oleafly/skills/openresearch"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/paper-lookup",
+      "target": "/Users/tai/.oleafly/skills/paper-lookup"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/pdf-to-latex",
+      "target": "/Users/tai/.oleafly/skills/pdf-to-latex"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/peer-review",
+      "target": "/Users/tai/.oleafly/skills/peer-review"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/pptx-posters",
+      "target": "/Users/tai/.oleafly/skills/pptx-posters"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/research-grants",
+      "target": "/Users/tai/.oleafly/skills/research-grants"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/research-lookup",
+      "target": "/Users/tai/.oleafly/skills/research-lookup"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/scholar-evaluation",
+      "target": "/Users/tai/.oleafly/skills/scholar-evaluation"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/scientific-brainstorming",
+      "target": "/Users/tai/.oleafly/skills/scientific-brainstorming"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/scientific-critical-thinking",
+      "target": "/Users/tai/.oleafly/skills/scientific-critical-thinking"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/scientific-schematics",
+      "target": "/Users/tai/.oleafly/skills/scientific-schematics"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/scientific-slides",
+      "target": "/Users/tai/.oleafly/skills/scientific-slides"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/scientific-visualization",
+      "target": "/Users/tai/.oleafly/skills/scientific-visualization"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/scientific-writing",
+      "target": "/Users/tai/.oleafly/skills/scientific-writing"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/statistical-analysis",
+      "target": "/Users/tai/.oleafly/skills/statistical-analysis"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/statistical-power",
+      "target": "/Users/tai/.oleafly/skills/statistical-power"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/template-generate",
+      "target": "/Users/tai/.oleafly/skills/template-generate"
+    },
+    {
+      "link": "/Users/tai/.agents/skills/venue-templates",
+      "target": "/Users/tai/.oleafly/skills/venue-templates"
+    }
+  ]
+}

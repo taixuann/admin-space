@@ -21,9 +21,9 @@ workspaces:
     tracked: true
 
   - id: agent-development
-    name: Agent Development
+    name: Development Space
     category: Agent Infrastructure
-    path: /Users/tai/agent-development
+    path: /Users/tai/development-space
     remote_repo: taixuann/agent-development
     default_branch: master
     tracked: true
