@@ -19,9 +19,11 @@ Decide from the primary responsibility and the job's own lifecycle. A shared inc
 
 ## 2. Fix the report root first
 
-Runtime reports go to an explicit absolute path outside the source folder. In this workspace use `/Users/tai/.agents/automation/<stable-job-name>/logs/`. A Space-owned job uses `<source-folder>-runtime` as its stable job name; a tool-owned job may use the job name.
+Runtime reports go to an explicit absolute path.
+- **Space-contained layout (default for space tools)**: Keep logs inside the owning space at `<job-dir>/logs/` (with a `.gitignore` ignoring `*.log`, `latest-result.json`, `runs/`) so each space fully owns its logs.
+- **External layout**: Use `/Users/tai/.agents/automation/<stable-job-name>/logs/` when an external runtime store is required.
 
-The scheduled entrypoint receives that path as an argument. The source folder holds no `logs/` and no runtime state. A worktree or fixture run uses a temporary report root, temporary state, and fake configuration, and writes nothing to the live root.
+The scheduled entrypoint receives that path as an argument. A worktree or fixture run uses a temporary report root, temporary state, and fake configuration, and writes nothing to the live root.
 
 ## 3. Scaffold
 

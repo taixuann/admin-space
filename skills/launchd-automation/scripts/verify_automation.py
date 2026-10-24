@@ -248,7 +248,10 @@ def validate_static(args: argparse.Namespace, checker: Checker, job_dir: Path) -
 
     report_root = Path(str(stdout_path)).parent.resolve()
     state["report_root"] = report_root
-    outside = report_root != job_dir and job_dir not in report_root.parents
+    local_logs_allowed = getattr(args, "allow_local_logs", False) or (
+        job_dir in report_root.parents and (report_root / ".gitignore").is_file()
+    )
+    outside = (report_root != job_dir and job_dir not in report_root.parents) or local_logs_allowed
     checker.record(outside, "report-outside-source", f"{report_root} vs {job_dir}")
     if not logs_ok:
         return state
@@ -416,6 +419,8 @@ def build_parser() -> argparse.ArgumentParser:
                         help="Compare the source plist with ~/Library/LaunchAgents/<label>.plist")
     parser.add_argument("--allow-missing-args", action="store_true",
                         help="Do not fail when an absolute ProgramArguments token does not exist")
+    parser.add_argument("--allow-local-logs", action="store_true",
+                        help="Allow report-root to be inside the job directory (e.g. for space-contained logs)")
     parser.add_argument("--skip-launchctl", action="store_true",
                         help="Skip the read-only launchctl print check")
     parser.add_argument("--timeout", type=int, default=300,
