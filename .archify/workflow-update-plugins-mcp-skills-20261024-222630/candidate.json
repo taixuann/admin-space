@@ -1,0 +1,204 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Update Plugins MCP Skills Workflow",
+    "quality_profile": "showcase",
+    "output": ".archify/workflow-update-plugins-mcp-skills-20261024-222630/update-plugins-mcp-skills.html"
+  },
+  "lanes": [
+    { "id": "trigger", "label": "macOS launchd" },
+    { "id": "policy", "label": "Concurrency & Guard", "variant": "exception" },
+    { "id": "control", "label": "Process & Locking" },
+    { "id": "plugins", "label": "Plugins Subsystem" },
+    { "id": "skills", "label": "Skills Subsystem" },
+    { "id": "reporting", "label": "Persistence & Logs" }
+  ],
+  "phases": [
+    { "id": "phase_dispatch", "label": "Dispatch & Guard", "fromCol": 0, "toCol": 1 },
+    { "id": "phase_exec", "label": "Maintenance Execution", "fromCol": 2, "toCol": 3 },
+    { "id": "phase_report", "label": "Mirror & Outcome", "fromCol": 4, "toCol": 5 }
+  ],
+  "mainPath": [
+    "timer",
+    "launchd_agent",
+    "lock_gate",
+    "runner",
+    "sp_update",
+    "caveman_hook",
+    "skills_update",
+    "mirror_sync",
+    "logs_file",
+    "latest_json",
+    "terminal_out"
+  ],
+  "nodes": [
+    {
+      "id": "timer",
+      "lane": "trigger",
+      "col": 0,
+      "type": "external",
+      "icon": "clock",
+      "label": "03:00 Timer",
+      "sublabel": "StartCalendarInterval"
+    },
+    {
+      "id": "launchd_agent",
+      "lane": "trigger",
+      "col": 1,
+      "type": "backend",
+      "icon": "start",
+      "label": "LaunchAgent Plist",
+      "sublabel": "com.tai.update-plugins-mcp-skills"
+    },
+    {
+      "id": "lock_gate",
+      "lane": "control",
+      "col": 1,
+      "type": "security",
+      "icon": "decision",
+      "label": "Lock Gate",
+      "sublabel": ".lock non-blocking flock",
+      "tag": "concurrency guard"
+    },
+    {
+      "id": "lock_skip",
+      "lane": "policy",
+      "col": 2,
+      "type": "security",
+      "icon": "stop",
+      "label": "Skip Locked",
+      "sublabel": "exit 0 (skipped_locked)"
+    },
+    {
+      "id": "runner",
+      "lane": "control",
+      "col": 2,
+      "type": "backend",
+      "icon": "active",
+      "label": "Python Runner",
+      "sublabel": "main.py entrypoint"
+    },
+    {
+      "id": "sp_update",
+      "lane": "plugins",
+      "col": 2,
+      "type": "cloud",
+      "icon": "cloud",
+      "label": "Superpowers Sync",
+      "sublabel": "git pull --ff-only"
+    },
+    {
+      "id": "caveman_hook",
+      "lane": "plugins",
+      "col": 3,
+      "type": "backend",
+      "icon": "backend",
+      "label": "Caveman Hooks",
+      "sublabel": "caveman tools hooks install"
+    },
+    {
+      "id": "skills_update",
+      "lane": "skills",
+      "col": 3,
+      "type": "cloud",
+      "icon": "cloud",
+      "label": "Vercel Skills Update",
+      "sublabel": "npx skills update -g -y"
+    },
+    {
+      "id": "mirror_sync",
+      "lane": "skills",
+      "col": 4,
+      "type": "messagebus",
+      "icon": "flag",
+      "label": "Mirror Sync",
+      "sublabel": "sync-skills -> Claude & Gemini"
+    },
+    {
+      "id": "logs_file",
+      "lane": "reporting",
+      "col": 4,
+      "type": "database",
+      "icon": "database",
+      "label": "Log Streams",
+      "sublabel": "stdout.log & stderr.log"
+    },
+    {
+      "id": "latest_json",
+      "lane": "reporting",
+      "col": 5,
+      "type": "database",
+      "icon": "success",
+      "label": "Atomic Outcome",
+      "sublabel": "latest-result.json"
+    },
+    {
+      "id": "terminal_out",
+      "lane": "trigger",
+      "col": 5,
+      "type": "frontend",
+      "icon": "neutral",
+      "label": "Terminal Event",
+      "sublabel": "terminal={outcome, exit_code}"
+    }
+  ],
+  "edges": [
+    {
+      "from": "timer",
+      "to": "launchd_agent",
+      "label": "fires"
+    },
+    {
+      "from": "launchd_agent",
+      "to": "lock_gate",
+      "label": "spawns"
+    },
+    {
+      "from": "lock_gate",
+      "to": "lock_skip",
+      "label": "held",
+      "variant": "security"
+    },
+    {
+      "from": "lock_gate",
+      "to": "runner",
+      "label": "acquired"
+    },
+    {
+      "from": "runner",
+      "to": "sp_update",
+      "label": "Phase 1"
+    },
+    {
+      "from": "sp_update",
+      "to": "caveman_hook",
+      "label": "Phase 2"
+    },
+    {
+      "from": "caveman_hook",
+      "to": "skills_update",
+      "label": "Phase 3"
+    },
+    {
+      "from": "skills_update",
+      "to": "mirror_sync",
+      "label": "Phase 4"
+    },
+    {
+      "from": "mirror_sync",
+      "to": "logs_file",
+      "label": "appends"
+    },
+    {
+      "from": "logs_file",
+      "to": "latest_json",
+      "label": "writes"
+    },
+    {
+      "from": "latest_json",
+      "to": "terminal_out",
+      "label": "prints"
+    }
+  ]
+}

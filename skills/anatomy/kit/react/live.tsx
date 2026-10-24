@@ -58,16 +58,9 @@ export function Stage({ className, children }: { className: string; children: Re
 
 export function useReadout<T extends Element>() {
   const anchor = React.useRef<T>(null);
-  const slot = React.useRef<Element | null>(null);
-  const said = React.useRef<string | null>(null);
-  React.useEffect(() => {
-    slot.current = anchor.current?.closest(".iso-plate")?.querySelector("[data-readout]") ?? null;
-  }, []);
   const say = React.useCallback((text: string) => {
-    slot.current ??= anchor.current?.closest(".iso-plate")?.querySelector("[data-readout]") ?? null;
-    if (!slot.current || text === said.current) return;
-    said.current = text;
-    slot.current.textContent = text;
+    const slot = anchor.current?.closest(".iso-plate")?.querySelector("[data-readout]");
+    if (slot && slot.textContent !== text) slot.textContent = text;
   }, []);
   return { anchor, say };
 }

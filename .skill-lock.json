@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/amElnagdy/delegate-skills.git",
       "skillPath": "skills/opencode-delegate/SKILL.md",
-      "skillFolderHash": "028f10fa26f1e973d3e4396946cc42f852bc1e94",
+      "skillFolderHash": "a67105e9e3091b25183496501970885faa96e334",
       "installedAt": "2026-10-01T11:49:13.022Z",
-      "updatedAt": "2026-10-01T11:49:13.022Z"
+      "updatedAt": "2026-10-24T15:20:11.427Z"
     },
     "simple-english": {
       "source": "AminBlg/SimpleEnglish",
@@ -34,10 +34,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/handoff/SKILL.md",
-      "skillFolderHash": "2242e8f05424b8c2ae94194a90d97b88d16108ec",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "ce24892bd2d4b9e7fd5ac9b95c03175e18bef388",
       "installedAt": "2026-10-02T11:58:45.002Z",
-      "updatedAt": "2026-10-02T11:58:45.002Z"
+      "updatedAt": "2026-10-24T15:20:14.594Z"
     },
     "github-repo-care": {
       "source": "ellmos-ai/skills",
@@ -63,45 +62,45 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/QingYunA/answer-me-with-html.git",
       "skillPath": "skills/answer-me-with-html/SKILL.md",
-      "skillFolderHash": "aea9db0dff12cd8532b8a66f6d34420dfb77f8ed",
+      "skillFolderHash": "993aa21d57e18ebc82801d20c22c0efb4183369e",
       "installedAt": "2026-10-04T07:53:15.067Z",
-      "updatedAt": "2026-10-13T13:53:49.150Z"
+      "updatedAt": "2026-10-24T15:20:26.369Z"
     },
     "terminal-title": {
       "source": "bluzername/claude-code-terminal-title",
       "sourceType": "github",
       "sourceUrl": "https://github.com/bluzername/claude-code-terminal-title.git",
-      "skillPath": "skills/terminal-title/SKILL.md",
-      "skillFolderHash": "3e2e8f2224332d7dee53291e5d63738f57fc4841",
+      "skillPath": "skill/terminal-title/SKILL.md",
+      "skillFolderHash": "13c17971cae121da83b27c7dbde53266882d3fe5",
       "installedAt": "2026-10-02T13:45:55Z",
-      "updatedAt": "2026-10-02T13:45:55Z"
+      "updatedAt": "2026-10-24T15:20:29.219Z"
     },
     "skill-creator": {
       "source": "anthropics/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/skill-creator/SKILL.md",
-      "skillFolderHash": "98a510d1cfef9f82c3b1eec200229ca68725e613",
+      "skillFolderHash": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
       "installedAt": "2026-10-02T13:45:55Z",
-      "updatedAt": "2026-10-02T13:45:55Z"
+      "updatedAt": "2026-10-24T15:20:35.345Z"
     },
     "prompt-refine": {
       "source": "Apeironics/prompt-refine-skill",
       "sourceType": "github",
       "sourceUrl": "https://github.com/Apeironics/prompt-refine-skill.git",
-      "skillPath": "skills/prompt-refine/SKILL.md",
-      "skillFolderHash": "2ce892ad79600149d75816da45f81b1ecfec935a",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "5e05b2f31889ded8e085709ff7a7fccf47b54659",
       "installedAt": "2026-10-04T10:53:28Z",
-      "updatedAt": "2026-10-04T10:53:28Z"
+      "updatedAt": "2026-10-24T15:20:38.153Z"
     },
     "anatomy": {
       "source": "wheresryan22/anatomy",
       "sourceType": "github",
       "sourceUrl": "https://github.com/wheresryan22/anatomy.git",
       "skillPath": "SKILL.md",
-      "skillFolderHash": "689dcf966e63d92be10a5d593c6e19e10acd4422",
+      "skillFolderHash": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
       "installedAt": "2026-10-12T13:47:27.258Z",
-      "updatedAt": "2026-10-12T13:47:27.258Z"
+      "updatedAt": "2026-10-24T15:20:53.892Z"
     },
     "notion-cli": {
       "source": "makenotion/skills",

@@ -54,7 +54,7 @@ Schedules: `"0 4 * * *"`, `"daily:04:00"`, or `"interval:3600"`. `RunAtLoad` is 
 - Write one terminal outcome per run: `latest-result.json` with `run_id`, label, source revision and dirty state, start and end time, `outcome`, exit code, and duration. Outcomes are `success`, `cached`, `failed`, and `skipped_locked`.
 - Treat a held lock as a recorded skip, not a failure, and leave the active run's record alone.
 - Keep the previous valid state when the tool fails.
-- Set retention in the README and enforce it in the job. Keep `latest-result.json` outside rotation.
+- Set retention in the README and enforce it in the job: purge `runs/` snapshots and rotated logs older than 30 days. Keep `latest-result.json` outside rotation.
 - Fill the runbook: schedule and timezone, sleep and wake limits, absolute tool paths, report location, outcomes, delivery failure, replay, rollback, and the statement that a runner cannot report its own absence.
 
 ## 5. Validate statically
@@ -90,6 +90,22 @@ python3 ~/.agents/skills/launchd-automation/scripts/verify_automation.py \
 `--live` is the only mode that kickstarts, and only after the static checks pass. Dispatch is not completion: a kickstart exit code of 0 proves the request was accepted. The verifier then polls for a fresh terminal result file or a `terminal=` log line and fails when none appears, or when the outcome is `failed`.
 
 Report configuration checks, live checks, and skipped checks separately. State the authorization you relied on.
+
+## 8. Incident escalation & ticket submission
+
+When a launchd job fails, encounters an unhandled exception, or registers persistent drift:
+- Reference and use the `/ticket-submit` skill (`~/.agents/skills/ticket-submit/scripts/ticket_submit.py`).
+- **Target Space**: Inferred dynamically from the job's directory root:
+  - `~/development-space` → `Development`
+  - `~/.agents` → `Admin` or `Cross-space`
+  - `~/research-projects` → `Research`
+  - `~/study` → `Study`
+  - `~/personal` → `Personal`
+- **System Component**: Always `Automations & Runtime`.
+- **Request Type**: Always `Fix`.
+- **Status**: `Blocked` (for failures) or `Captured`.
+- **Deduping**: `ticket_submit` checks for existing open tickets with the issue signature. If found, it appends a recurrence comment; if not, it creates a new ticket.
+- **Resilience**: The failure escalation call must fail softly. An outage of Notion or `ntn` must log to `stderr` and never mask the underlying automation exit code.
 
 ## Reference
 

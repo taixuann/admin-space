@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "1b5ef515-7896-42bb-833c-9a6687ea1d63",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/tai/.agents/.archify/workflow-update-plugins-mcp-skills-20261024-222630/candidate.json",
+  "output": "/Users/tai/.agents/.archify/workflow-update-plugins-mcp-skills-20261024-222630/update-plugins-mcp-skills.html",
+  "specification": {
+    "sha256": "7590e3a9bd7af0d404f035cb50c366e6487377a3f2d614209be8240634d5ee3b",
+    "bytes": 4713
+  },
+  "artifact": {
+    "sha256": "a92aec9da9622c801f3f2f3c10fc2bc5245c1f22b9e503beb4425d792e7e4d4c",
+    "bytes": 830720
+  }
+}

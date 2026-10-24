@@ -5,10 +5,20 @@
   "domains": {
     "open": {
       "value": {
-        "openedAt": "2026-10-23T16:39:36.926Z",
-        "readThrough": null
+        "openedAt": "2026-10-24T01:59:24.992Z",
+        "readThrough": {
+          "cursor": "2026-10-24T01:45:30.398Z:2",
+          "updatedAt": "2026-10-24T01:45:30.398Z"
+        }
       },
-      "updatedAt": "2026-10-23T16:39:36.926Z"
+      "updatedAt": "2026-10-24T01:59:24.992Z"
+    },
+    "unread": {
+      "value": {
+        "cursor": "2026-10-24T01:45:30.398Z:2",
+        "updatedAt": "2026-10-24T01:45:30.398Z"
+      },
+      "updatedAt": "2026-10-24T01:45:30.398Z"
     }
   }
 }

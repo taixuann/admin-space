@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Label is read from these contents, never from the filename. -->
+    <key>Label</key>
+    <string>com.tai.update-plugins-mcp-skills</string>
+
+    <!-- Absolute program path. Add a wrapper only when it does work the job needs. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/miniconda3/envs/core/bin/python3</string>
+        <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/backend/main.py</string>
+        <string>--report-root</string>
+        <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/logs</string>
+    </array>
+
+    <!-- The job declares the environment it needs. It loads no other file. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/tai/.local/share/fnm/aliases/default/bin:/opt/miniconda3/envs/core/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Users/tai/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+        <string>/Users/tai</string>
+        <key>LANG</key>
+        <string>en_US.UTF-8</string>
+    </dict>
+
+    <!-- Runtime reports live in space-contained logs folder. -->
+    <key>StandardOutPath</key>
+    <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stderr.log</string>
+
+    <key>ProcessType</key>
+    <string>Background</string>
+
+    <key>LowPriorityIO</key>
+    <true/>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Minute</key>
+        <integer>0</integer>
+        <key>Hour</key>
+        <integer>3</integer>
+    </dict>
+</dict>
+</plist>

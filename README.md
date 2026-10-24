@@ -39,7 +39,8 @@ Hindsight provides the shared Admin memory bank for Codex and Claude. See [memor
 
 ## Explore Admin
 
-Open [docs/README.md](docs/README.md) for interactive memory and skill views, source inventory, and coverage limits.
+Open [docs/README.md](docs/README.md) for the documentation wiki (seven aspects),
+interactive memory and skill views, source inventory, and coverage limits.
 
 ## Tools
 

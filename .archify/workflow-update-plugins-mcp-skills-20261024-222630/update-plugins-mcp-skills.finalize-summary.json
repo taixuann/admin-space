@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/workflow-update-plugins-mcp-skills-20261024-222630/candidate.json",
+    "sha256": "7590e3a9bd7af0d404f035cb50c366e6487377a3f2d614209be8240634d5ee3b",
+    "bytes": 4713
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/workflow-update-plugins-mcp-skills-20261024-222630/update-plugins-mcp-skills.html",
+    "sha256": "a92aec9da9622c801f3f2f3c10fc2bc5245c1f22b9e503beb4425d792e7e4d4c",
+    "bytes": 830720
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/workflow-update-plugins-mcp-skills-20261024-222630/update-plugins-mcp-skills.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/workflow-update-plugins-mcp-skills-20261024-222630/update-plugins-mcp-skills.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/workflow-update-plugins-mcp-skills-20261024-222630/update-plugins-mcp-skills.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 8467,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

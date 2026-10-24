@@ -39,8 +39,8 @@ Options:
 | `--no-auto` | The relay passes `opencode`'s `--auto` (auto-approve permissions) **by default** so a headless run doesn't hang on a prompt; `--no-auto` drops it and honors the agent's own permission config instead. A `--read-only`/`plan` run never gets `--auto`, so it can't be auto-approved into edits. |
 | `--resume-last` | Continue the most recent OpenCode session; send only the delta brief (see review-and-land). |
 | `--session <id>` | Continue a specific session id (`ses_…`); send only the delta brief. |
-| `--pure` | Run OpenCode without external plugins (cleaner event stream). |
-| `--timeout <dur>` | Relay-side watchdog (e.g. `30m`, `2h`); on expiry the child is killed and `result.json` gets `status: "timeout"`. Off by default. This is the run's only timeout — don't stack another around it. |
+| `--pure` | Run OpenCode without external plugins (cleaner event stream). Version-gated: 1.x only — opencode 2.x dropped the flag from `run` with no replacement, so the relay rejects `--pure` there (usage error) after probing the version. |
+| `--timeout <dur>` | Relay-side watchdog (e.g. `30m`, `2h`); on expiry the child is killed and `result.json` gets `status: "timeout"`. Off by default. |
 | `--out-dir <dir>` | Where artifacts go (default: a fresh dir under the system temp dir). |
 
 Artifacts default to the system temp dir on purpose: the repo under review stays clean, so the
@@ -76,56 +76,22 @@ branch on success/failure directly.
 
 ## Waiting for completion
 
-Keep five things distinct — they fail differently and recover differently:
+The helper blocks until OpenCode finishes. Back it with whatever your orchestrator offers:
 
-| Layer | What it is | What it does not mean |
-| --- | --- | --- |
-| Tool-call yielding | Your shell call returning early (backgrounding, a host notification) | Not the job's outcome, not a failure, not proof of a future wake-up |
-| Job lifetime | The relay process until OpenCode exits, `--timeout` fires, or it is aborted | — |
-| Relay watchdog | `--timeout` only; the relay kills the child and writes `status: "timeout"` | Not a second monitoring system — don't add one |
-| Worker-reported outcome | `result.json`'s lower-case `status` + `finalMessage` | `completed` = process exited 0, not task success and not reviewer acceptance |
-| Reviewer verdict | Yours, after re-running the gates and reading the diff | Not derivable from any of the above |
+- **Claude Code:** run the `Bash` call with `run_in_background: true`; you're notified on completion,
+  then read `result.json`.
+- **Plain shell / other agents:** foreground for short tasks, or background and poll — `node relay.mjs
+  … &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job` in PowerShell,
+  `start /b` in cmd). A run is done when `result.json` exists with a `status`. **But** a pre-run usage
+  error (bad args, empty brief) exits with code 2 *before* writing any file — so check the exit code
+  too, don't only watch for the file. (A missing `opencode` binary exits 127 but *does* write a
+  `result.json` with status `opencode_unavailable`.)
 
-A run is terminal only on **process exit plus a readable `result.json`**.
-
-**Which wait to use:**
-
-- **Short tasks:** a supported foreground facility.
-- **Long tasks:** a managed background facility only when job survival, terminal notification, result
-  access, and cancellation behavior are verified *for that host*. **Claude Code:** the `Bash` call
-  with `run_in_background: true` — you are notified on completion, then read `result.json`. **Other
-  shells:** foreground, or background and come back to the process — `node relay.mjs … &` in bash/zsh
-  (including Git Bash/WSL), `Start-Job` in PowerShell, `start /b` in cmd.
-- **No proven completion notification (Codex: NOT_ASSESSED):** state that before dispatch and agree an
-  explicit **manual-resume** step with the user — a command to run or a file to paste back when the
-  relay exits. No automatic next-batch dispatch is promised, and no model-generated polling loop is
-  started to wait. Runtime-side polling by an existing host/runtime without model turns is fine; this
-  skill ships no polling script or scheduler.
-- Never re-issue a tool call in a loop as a substitute for process monitoring, and never launch a
-  second writer while the prior job may still be alive.
-
-**Before trusting the result:** exit codes are part of the contract — a pre-run usage error (bad args,
-empty brief) exits `2` *before* writing any file; a missing `opencode` binary exits `127` but *does*
-write `result.json` with status `opencode_unavailable`; on `timeout` the relay forces a non-zero code
-even if the child exited `0`. An unreadable or schema-invalid `result.json` is **no result**: fall
-back to `eventsPath` and the working tree, and treat the run as unresolved rather than guessing a
-status. Do not write, normalize, or invent statuses — the schema's lower-case values are the contract.
-
-Trust the working tree and the process state over any progress display: `git status`, `git diff`,
-`git diff --cached`, and untracked files before any retry or re-dispatch.
+Trust the working tree and the process state over any progress display. A run is finished when the
+process has exited and `result.json` is written — not when a status line says so.
 
 ## When a run misbehaves
 
-Inspect before recovering, every time: `git status`, `git diff`, `git diff --cached`, and untracked
-files (`??`) — the tree is evidence, and a timeout or abort may have left partial edits. Never launch
-a second writer while the prior job may still be alive, and surface what a failure left behind before
-deciding how to recover.
-
-- **`status: completed` but the work reports a problem** — BLOCKED in `finalMessage`, failed gates, a
-  truncated job: process success is not task success and not reviewer acceptance. Act on the blocker,
-  and don't dispatch work that depends on it.
-- **No `result.json` at all:** unresolved, never success — read `events.jsonl` and the tree (see
-  `aborted` below for the same shape).
 - **`status: opencode_unavailable` (exit 127):** `opencode` isn't on PATH or isn't found. Install
   (`npm i -g opencode-ai`) and `opencode auth login`, then re-dispatch.
 - **an `error` mentioning `version preflight` (`failed`, or `timeout` at exit 124):** the bounded
@@ -188,7 +154,5 @@ If you ever want it, raw `opencode run` is fine for one-offs — you just give u
 
 ## The commit boundary
 
-The helper never commits — by design, not omission. The robust contract is: OpenCode edits the
-working tree, the orchestrator reviews it, and the governing workflow (repo instructions, plan, or
-explicit user instruction) decides who commits and what may be pushed. See
-[review-and-land.md](review-and-land.md).
+The helper never commits — by design, not omission. The robust contract is: OpenCode edits the working
+tree, the orchestrator reviews and commits. See [review-and-land.md](review-and-land.md).

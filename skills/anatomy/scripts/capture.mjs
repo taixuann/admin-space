@@ -62,6 +62,17 @@ function parse(argv) {
   return options;
 }
 
+function problemWith(options) {
+  const positive = (value) => Number.isFinite(value) && value > 0;
+  const numbers = (list, count) => list.length === count && list.every(Number.isFinite);
+  for (const name of ["width", "height", "scale", "zoomScale"]) if (!positive(options[name])) return `--${name === "zoomScale" ? "zoom-scale" : name} needs a number above 0`;
+  if (!Number.isFinite(options.wait) || options.wait < 0) return "--wait needs a number of milliseconds, 0 or more";
+  if (options.zoom && !(numbers(options.zoom, 4) && options.zoom[2] > 0 && options.zoom[3] > 0)) return "--zoom needs x,y,w,h in CSS px, with a width and height above 0";
+  if (options.hover && !numbers(options.hover, 2)) return "--hover needs fx,fy, two fractions like 0.6,0.5";
+  if (!options.times.every((delay) => Number.isFinite(delay) && delay >= 0)) return "--times needs milliseconds, 0 or more, comma separated";
+  if (options.theme !== undefined && options.theme !== "dark" && options.theme !== "light") return "--theme must be dark or light";
+}
+
 function chromePath() {
   const candidates = [
     process.env.CHROME_PATH,
@@ -73,6 +84,10 @@ function chromePath() {
     "/usr/bin/chromium",
     "/usr/bin/chromium-browser",
     "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+    ...(process.env.LOCALAPPDATA ? [join(process.env.LOCALAPPDATA, "Google\\Chrome\\Application\\chrome.exe")] : []),
+    "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+    "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
   ].filter(Boolean);
   const playwright = join(homedir(), "Library/Caches/ms-playwright");
   if (existsSync(playwright)) {
@@ -82,6 +97,10 @@ function chromePath() {
       }
     }
   }
+  const linux = join(homedir(), ".cache/ms-playwright");
+  if (existsSync(linux)) for (const dir of readdirSync(linux).sort().reverse()) for (const sub of ["chrome-linux64/chrome", "chrome-linux/chrome"]) candidates.push(join(linux, dir, sub));
+  const win = join(homedir(), "AppData/Local/ms-playwright");
+  if (existsSync(win)) for (const dir of readdirSync(win).sort().reverse()) for (const sub of ["chrome-win/chrome.exe", "chromium-win64/chrome.exe"]) candidates.push(join(win, dir, sub));
   return candidates.find((path) => existsSync(path));
 }
 
@@ -90,6 +109,11 @@ async function main() {
   if (options.help || !options.target) {
     usage();
     process.exit(options.help ? 0 : 1);
+  }
+  const problem = problemWith(options);
+  if (problem) {
+    console.error(`capture: ${problem}`);
+    process.exit(1);
   }
   const url = /^https?:|^file:/.test(options.target) ? options.target : pathToFileURL(resolve(options.target)).href;
   const out = resolve(options.out ?? "capture.png");
@@ -100,7 +124,7 @@ async function main() {
   }
   const profile = mkdtempSync(join(tmpdir(), "iso-capture-"));
   const chrome = spawn(binary, [
-    "--headless=new",
+    "--headless=new", ...(process.platform === "linux" ? ["--no-sandbox"] : []), ...(process.platform === "win32" ? ["--do-not-de-elevate"] : []),
     "--remote-debugging-port=0",
     `--user-data-dir=${profile}`,
     "--no-first-run",
@@ -125,8 +149,10 @@ async function main() {
     let id = 0;
     const pending = new Map();
     const problems = [];
+    let loaded = () => {};
     socket.onmessage = (message) => {
       const data = JSON.parse(message.data);
+      if (data.method === "Page.loadEventFired") loaded();
       if (data.id && pending.has(data.id)) {
         pending.get(data.id)(data);
         pending.delete(data.id);
@@ -139,9 +165,16 @@ async function main() {
     };
     await new Promise((done) => (socket.onopen = done));
     const send = (method, params = {}) =>
-      new Promise((done) => {
+      new Promise((done, fail) => {
         const call = ++id;
-        pending.set(call, done);
+        const timer = setTimeout(() => {
+          pending.delete(call);
+          fail(new Error(`Chrome did not answer ${method} within 60 s`));
+        }, 60000);
+        pending.set(call, (data) => {
+          clearTimeout(timer);
+          done(data);
+        });
         socket.send(JSON.stringify({ id: call, method, params }));
       });
     const evaluate = async (expression) => (await send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true })).result?.result?.value;
@@ -153,9 +186,14 @@ async function main() {
     if (options.theme) features.push({ name: "prefers-color-scheme", value: options.theme });
     if (features.length) await send("Emulation.setEmulatedMedia", { features });
     await send("Emulation.setDeviceMetricsOverride", { width: options.width, height: options.height, deviceScaleFactor: options.scale, mobile: options.width < 600 });
+    const load = new Promise((done) => {
+      loaded = done;
+      setTimeout(done, 10000);
+    });
     const navigation = await send("Page.navigate", { url });
     if (navigation.error) throw new Error(`Navigation failed: ${navigation.error.message}`);
     if (navigation.result?.errorText) throw new Error(`Navigation failed: ${navigation.result.errorText}`);
+    await load;
     await sleep(Math.min(options.wait, 1500));
     await evaluate(`(async()=>{const h=document.documentElement.scrollHeight;for(let y=0;y<h;y+=400){scrollTo(0,y);await new Promise(r=>setTimeout(r,60))}scrollTo(0,0)})()`);
     await sleep(Math.max(0, options.wait - 1500));
@@ -203,6 +241,7 @@ async function main() {
       const [zx, zy, zw, zh] = options.zoom;
       return { clip: { x: box.x + zx, y: box.y + zy, width: zw, height: zh }, scale: options.zoomScale / options.scale };
     };
+    box = await boxOf();
     const first = clipOf();
     await shoot(out, first.clip, first.scale);
     const shotAt = Date.now();
@@ -210,6 +249,7 @@ async function main() {
     const readouts = [];
     for (const delay of [...options.times].sort((a, b) => a - b)) {
       await sleep(Math.max(0, shotAt + delay - Date.now()));
+      box = await boxOf();
       const next = clipOf();
       await shoot(out.replace(/\.png$/, `-${delay}.png`), next.clip, next.scale);
       readouts.push(`+${delay}ms "${await readoutOf()}"`);

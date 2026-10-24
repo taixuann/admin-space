@@ -41,11 +41,12 @@ A tool is a callable capability. An automation chooses when and how to call
 capabilities. A component can provide both without requiring duplicate source
 trees.
 
-Each tool is an independent Git repository at `tools/<tool-name>/` with a stable
-checkout. Admin Git ignores the whole `tools/` subtree; the index and handoff
-contract live in [docs/tools.md](docs/tools.md). Development Space at
-`~/development-space/` hosts linked worktrees of those repositories and owns no
-product source. It never becomes the canonical source home.
+The canonical home for internal tool repositories has transitioned to **Development Space**
+at `~/development-space/tools/<space>/<tool-name>/`. Development Space acts as the central
+software platform and workshop: it owns tool lifecycles, ephemeral task worktrees (`worktrees/`),
+engineering discipline (TDD, Superpowers, Codebase Design), and tool distribution via CLI binaries
+packaged into `~/.local/bin`. Admin Space owns no product source code and consumes tools as a client.
+The global ecosystem roles and boundaries are defined in `space.yaml`.
 
 Automation source follows its owner. A job dedicated to one tool lives inside
 that tool repository. A job that coordinates several tools or applies Space
