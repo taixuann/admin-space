@@ -31,6 +31,7 @@ class TestUpdatePluginsMcpSkills(unittest.TestCase):
             self.assertEqual(data["exit_code"], 0)
             self.assertEqual(data["label"], "com.tai.update-plugins-mcp-skills")
             self.assertIn("superpowers", data["details"])
+            self.assertIn("branch_prune", data["details"])
 
     def test_lock_skips_concurrent(self):
         with tempfile.TemporaryDirectory() as tmpdir:

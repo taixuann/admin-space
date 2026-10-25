@@ -18,6 +18,7 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 if CURRENT_DIR not in sys.path:
     sys.path.insert(0, CURRENT_DIR)
 
+from branches_cleaner import prune_merged_branches
 from notion_reporter import report_incident
 from plugins_updater import update_caveman, update_superpowers
 from skills_updater import sync_mirrors, update_global_skills
@@ -140,6 +141,7 @@ def run_maintenance(
             "caveman": {"dry_run": True},
             "skills_update": {"dry_run": True},
             "skills_sync": {"dry_run": True},
+            "branch_prune": {"dry_run": True},
         }
         outcome = "cached"
         exit_code = 0
@@ -191,7 +193,26 @@ def run_maintenance(
                 component="Skills & Integrations",
             )
 
-        all_ok = sp_res["success"] and caveman_res["success"] and skills_res["success"] and sync_res["success"]
+        # Phase 5: Prune local branches of ~/.agents already merged into master (never merges)
+        log("Phase 5: Pruning merged local branches...")
+        prune_res = prune_merged_branches()
+        if prune_res["success"]:
+            log(f"Phase 5: Branch prune OK (deleted={prune_res['deleted']}, skipped={sorted(prune_res['skipped'])})")
+        else:
+            log_err(f"Phase 5: Branch prune failed: {prune_res['output']}")
+            report_incident(
+                title="[Auto-Sync] Merged-branch prune failure",
+                error_details=prune_res["output"],
+                component="Automations & Runtime",
+            )
+
+        all_ok = (
+            sp_res["success"]
+            and caveman_res["success"]
+            and skills_res["success"]
+            and sync_res["success"]
+            and prune_res["success"]
+        )
         outcome = "success" if all_ok else "failed"
         exit_code = 0 if all_ok else 1
 
@@ -200,6 +221,7 @@ def run_maintenance(
             "caveman": caveman_res,
             "skills_update": skills_res,
             "skills_sync": sync_res,
+            "branch_prune": prune_res,
         }
 
     duration = time.time() - t0
