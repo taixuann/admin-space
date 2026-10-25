@@ -17,7 +17,7 @@ Open the [ecosystem map](ecosystem.html) for the existing Admin and Development 
 | Coordinator (Asura) | Communicate scoped handoffs with bots in other Spaces and return evidence pointers | [Coordinator](coordinator/README.md) | [HTML view](coordinator/capabilities.html) |
 | Executor | Run plans sent by any authorized profile through kanban on a task branch in the owning Space; run OpenCode for code; report, then merge on Tai's approval | [Executor](executor/README.md) | [SOUL](executor/SOUL.md) · [Workflow](executor/executor-workflow.html) |
 | Forge | Own Development Space: turn tool-repo issues into plans, dispatch to Executor via kanban, review, merge | [Forge](forge/README.md) | [SOUL](forge/SOUL.md) · [Workflow](forge/forge-workflow.html) |
-| Supervisor (draft) | Academic Space principal investigator: ideation, literature, planning, evidence evaluation, RO-Crate packaging | [Supervisor](supervisor/README.md) | [SOUL](supervisor/SOUL.md) |
+| Supervisor (draft) | Academic Space principal investigator: ideation, literature, planning, evidence evaluation, RO-Crate packaging | [Supervisor](supervisor/README.md) | [SOUL](supervisor/SOUL.md) · [Workflow](supervisor/supervisor-workflow.html) |
 | Writer (draft) | Academic Space scientific author: manuscripts, reports, slides from sealed runs | [Writer](writer/README.md) | [SOUL](writer/SOUL.md) |
 
 Tai retains final authority. Secretary writes plans and verifies results; Coordinator handles cross-Space communication. Executor (profile `executor`) runs plans from any authorized profile in the owning Space and reports back. Its model is runtime-managed. See [Admin Space roles and flow](../README.md) and [docs instructions](../AGENTS.md).
