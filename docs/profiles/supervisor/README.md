@@ -78,3 +78,17 @@ Open questions: where supervisor-authored plans are stored when Academic Space a
 | Definition (README, SOUL, workflow HTML) | Draft, reconciled to research-space |
 | Runtime profile `supervisor` | Not created |
 | Model, memory, skills, `terminal.cwd` | Not configured |
+
+## Runtime status
+
+Verified 2026-10-25:
+
+| Check | Result |
+| --- | --- |
+| Profile | `~/.hermes/profiles/supervisor`, cloned from `executor` (no channels); rollback: `hermes profile delete supervisor` |
+| Identity | Runtime `SOUL.md` is a symlink to this folder's [SOUL.md](SOUL.md); cloned original kept in the profile's `backups/` |
+| Working directory | `terminal.cwd=~/academic-space/research-space`; fresh session `pwd` confirmed |
+| Skills | `skills.external_dirs`: `~/.agents/skills`, `openscience-adapter/skills`, `.openscience/skills`; `acceptance-checks` and `compose-research` loaded in a fresh session |
+| Memory | Built-in enabled; no shared bank |
+| Model | Seeded `claude-haiku-5-5` / `anthropic` from executor; Tai sets the real choice |
+| Not tested | Discord/Bot Chat reachability, a real study run via `/opencode`, `/plan` state machine |
