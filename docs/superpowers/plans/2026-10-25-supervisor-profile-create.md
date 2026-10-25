@@ -3,9 +3,9 @@ requester: secretary
 space: ~/.agents
 base: master
 branch: executor/supervisor-profile
-scope: [docs/profiles/supervisor/, docs/profiles/README.md]
+scope: [docs/profiles/supervisor/README.md, docs/profiles/supervisor/supervisor-workflow.html, docs/profiles/supervisor/capabilities.yaml, docs/profiles/README.md]
 checks:
-  - test -f docs/profiles/supervisor/README.md -a -f docs/profiles/supervisor/SOUL.md -a -f docs/profiles/supervisor/supervisor-workflow.html
+  - test -f docs/profiles/supervisor/README.md -a -f docs/profiles/supervisor/supervisor-workflow.html
   - test ! -e docs/profiles/supervisor/capabilities.yaml
   - every relative Markdown link in the changed files resolves to an existing file
   - git status shows no changes outside scope
@@ -16,7 +16,7 @@ report: kanban card comment + kanban_complete summary to Secretary
 
 # Supervisor profile (Academic Space): reconcile definition, then create runtime
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans. Task 1 is for Executor. Task 2 is attended: Secretary runs it only after Tai approves, never an unattended card.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans. Task 1 is for Executor (kanban). SOUL edit and Task 2 is attended: Secretary runs it only after Tai approves, never an unattended card.
 
 **Goal:** `supervisor` becomes a Hermes profile whose working directory is `~/academic-space/research-space`, with skills loaded from `openscience-adapter`, and a definition in Admin that matches the research-space content.
 
@@ -36,26 +36,26 @@ report: kanban card comment + kanban_complete summary to Secretary
 
 ## Review Focus
 
-- **Experimenter vs Executor.** research-space still names `experimenter`; Admin settled on shared `executor`. Default in this plan: Hermes-level delegation goes to `executor` by kanban card; `experimenter` stays the OpenScience subagent name inside `.openscience`. Tai confirms before Task 1 ends.
-- **Skill gap.** `compose-research`, `ro-crate-research`, `figrecipe-run` live in `research-space/.openscience/skills`, not in the 46-skill adapter. Adapter-only means Supervisor cannot load them in Hermes. Report it; adding `.openscience/skills` is Tai's call.
-- **Dirty Admin tree.** `~/.agents` has many uncommitted edits. Executor blocks on a dirty tree. Tai commits or stashes first, or Task 1 runs attended.
+- **Experimenter (settled by Tai).** In research-space, `experimenter` is the run step: Supervisor runs it itself with `/opencode` in `research-space`. No Executor card for study runs, no separate experimenter profile. Replace every 'delegate to executor' statement in README accordingly; SOUL is updated by Secretary (see below).
+- **Skill gap (settled by Tai).** `compose-research`, `ro-crate-research`, `figrecipe-run` live in `research-space/.openscience/skills`; load that directory as a second external dir next to the adapter.
+- **Protected file.** Executor does not edit `SOUL.md` on an unattended card. Secretary edits `docs/profiles/supervisor/SOUL.md` attended after Task 1 (experimenter wording: Supervisor runs studies itself with `/opencode`, no Executor hand-off).
 - **Unrelated skills.** The adapter exposes document, poster, and image skills. A broad skill set may crowd the Supervisor's prompt; trim with `skills.disabled` after observing.
 - **Executor reach.** Supervisor sends Executor into research-space; this needs the Executor README to allow an owner-bot requester outside Admin. It already does ("scope = requester's own authority").
 
 ## Task 1: Reconcile the Admin definition to the research-space content
 
 **Files:**
-- Modify: `docs/profiles/supervisor/README.md`, `docs/profiles/supervisor/SOUL.md`, `docs/profiles/README.md`
+- Modify: `docs/profiles/supervisor/README.md`, `docs/profiles/README.md` (SOUL.md is out of scope)
 - Create: `docs/profiles/supervisor/supervisor-workflow.html` (copy of `~/academic-space/research-space/docs/profiles/supervisor/supervisor-workflow.html`)
 - Delete: `docs/profiles/supervisor/capabilities.yaml` if it exists (tracked, recoverable)
 
 **Interfaces:**
 - Consumes: research-space `docs/profiles/supervisor/{README.md,SOUL.md,supervisor-workflow.html}`, `docs/profiles/AGENTS.md`.
-- Produces: a README with the three required sections whose content follows research-space (responsibilities 1–5, gates, contract wording), with the Review Focus default on delegation. SOUL keeps the Admin provenance note updated to "reconciled to research-space".
+- Produces: a README with the three required sections whose content follows research-space (responsibilities 1–5, gates, contract wording), with the settled experimenter wording (Supervisor runs studies itself via `/opencode`). SOUL keeps the Admin provenance note updated to "reconciled to research-space".
 
 - [ ] **Step 1: Diff.** Run `diff` of both README and SOUL pairs; list content that exists only in research-space.
-- [ ] **Step 2: Rewrite README.** Keep the Admin three-section layout and permissions table; replace the narrative of responsibilities and workflow with research-space content; capabilities section names skills from `openscience-adapter` and marks `compose-research` and `ro-crate-research` as "outside adapter" until Tai decides. Status line: draft reconciled, runtime pending.
-- [ ] **Step 3: Update SOUL** only where research-space has substance Admin lacks; keep the `executor` delegation sentence.
+- [ ] **Step 2: Rewrite README.** Keep the Admin three-section layout and permissions table; replace the narrative of responsibilities and workflow with research-space content; capabilities section names skills from `openscience-adapter` and lists `.openscience/skills` (`compose-research`, `ro-crate-research`, `figrecipe-run`) as a second external skills dir. Status line: draft reconciled, runtime pending.
+- [ ] **Step 3: Do not touch SOUL.md.** Report any SOUL differences found in Step 1 for Secretary.
 - [ ] **Step 4: Copy the workflow HTML** with `cp`; keep it as-is. Do not rebuild or copy receipts. Link it from the README workflow section.
 - [ ] **Step 5: Run checks** from the header; report output.
 - [ ] **Step 6: Commit on `executor/supervisor-profile`**, then stop for Tai's review.
@@ -73,7 +73,7 @@ report: kanban card comment + kanban_complete summary to Secretary
 - [ ] **Step 3: Identity.** Back up the runtime `SOUL.md` to the profile's `backups/`, then replace it by symlink to `docs/profiles/supervisor/SOUL.md` per the canonical-identity procedure in `hermes-fleet-admin`.
 - [ ] **Step 4: Directory and skills.**
   `hermes -p supervisor config set terminal.cwd ~/academic-space/research-space`
-  `hermes -p supervisor config set skills.external_dirs '["~/.agents/skills","~/academic-space/research-space/.agents/plugins/openscience-adapter/skills"]'`
+  `hermes -p supervisor config set skills.external_dirs '["~/.agents/skills","~/academic-space/research-space/.agents/plugins/openscience-adapter/skills","~/academic-space/research-space/.openscience/skills"]'`
   Read back both. Keep `~/.agents/skills` only if the executor seed already had it.
-- [ ] **Step 5: Verify.** `COLUMNS=250 hermes -p supervisor skills list --enabled-only` shows the 46 adapter skills. Fresh session: `hermes -p supervisor chat -q "Read-only check, change nothing: 1) name and role 2) run pwd 3) load skill acceptance-checks and quote its first heading 4) say which skill you cannot load for compose-research"`. Expected: role Supervisor, pwd research-space, heading quoted, compose-research reported not loaded.
+- [ ] **Step 5: Verify.** `COLUMNS=250 hermes -p supervisor skills list --enabled-only` shows the 46 adapter skills plus the 3 OpenScience skills. Fresh session: `hermes -p supervisor chat -q "Read-only check, change nothing: 1) name and role 2) run pwd 3) load skill acceptance-checks and quote its first heading 4) load skill compose-research and quote its first heading"`. Expected: role Supervisor, pwd research-space, both headings quoted.
 - [ ] **Step 6: Report** saved vs observed separately. Update the README runtime-status table. Gateway/Discord and Bot Chat registration stay untested.
