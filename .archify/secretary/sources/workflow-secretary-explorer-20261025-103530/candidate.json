@@ -1,0 +1,69 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Secretary workflow: request to verified report",
+    "subtitle": "Conditional workflow; not every request invokes every skill.",
+    "animation": "trace",
+    "visual_preset": "classic",
+    "quality_profile": "showcase",
+    "output": "docs/profiles/secretary/workflow.html"
+  },
+  "lanes": [
+    { "id": "secretary", "label": "Secretary flow" },
+    { "id": "conditional", "label": "Conditional skills" },
+    { "id": "execution", "label": "Execution paths" },
+    { "id": "evidence", "label": "Evidence and records", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "Intake", "fromCol": 0, "toCol": 1 },
+    { "id": "decide", "label": "Decide depth", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "execute", "label": "Execute", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "conditional_branch", "label": "Only when needed", "lane": "conditional", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "execution_paths", "label": "Direct or delegated", "lane": "execution", "fromCol": 3, "toCol": 4, "variant": "dashed" }
+  ],
+  "mainPath": ["request", "inspect", "direct", "verify", "record"],
+  "nodes": [
+    { "id": "request", "lane": "secretary", "col": 0, "type": "external", "label": "Request", "sublabel": "Tai asks", "width": 120 },
+    { "id": "inspect", "lane": "secretary", "col": 1, "type": "backend", "label": "Inspect context", "sublabel": "docs, YAML, runtime", "tag": "targets vs observed", "width": 132 },
+    { "id": "memory", "lane": "evidence", "col": 1, "type": "database", "label": "Memory context", "sublabel": "Hindsight desired", "width": 132 },
+    { "id": "brainstorm", "lane": "conditional", "col": 2, "type": "backend", "label": "Brainstorm if needed", "sublabel": "superpowers:brainstorming", "width": 150 },
+    { "id": "plan", "lane": "conditional", "col": 3, "type": "backend", "label": "Plan if needed", "sublabel": "superpowers:writing-plans", "width": 150 },
+    { "id": "delegate", "lane": "execution", "col": 3, "type": "messagebus", "label": "Delegate via opencode", "sublabel": "implementation path", "width": 150 },
+    { "id": "direct", "lane": "execution", "col": 4, "type": "backend", "label": "Perform directly", "sublabel": "small scoped work", "width": 132 },
+    { "id": "verify", "lane": "secretary", "col": 4, "type": "security", "label": "Verify", "sublabel": "superpowers:verification-before-completion", "width": 200 },
+    { "id": "record", "lane": "secretary", "col": 5, "type": "backend", "label": "Record and report", "sublabel": "docs, tickets", "width": 132 }
+  ],
+  "edges": [
+    { "id": "request-inspect", "from": "request", "to": "inspect", "variant": "emphasis" },
+    { "id": "inspect-memory", "from": "inspect", "to": "memory", "label": "memory-assisted", "variant": "dashed" },
+    { "id": "inspect-brainstorm", "from": "inspect", "to": "brainstorm", "label": "if unclear", "variant": "default" },
+    { "id": "inspect-plan", "from": "inspect", "to": "plan", "label": "if multi-step", "variant": "default" },
+    { "id": "brainstorm-plan", "from": "brainstorm", "to": "plan", "label": "then", "variant": "dashed" },
+    { "id": "plan-perform", "from": "plan", "to": "delegate", "label": "implementation", "variant": "emphasis" },
+    { "id": "inspect-direct", "from": "inspect", "to": "direct", "label": "small work", "variant": "default" },
+    { "id": "direct-verify", "from": "direct", "to": "verify", "variant": "default" },
+    { "id": "delegate-verify", "from": "delegate", "to": "verify", "variant": "emphasis" },
+    { "id": "verify-record", "from": "verify", "to": "record", "variant": "emphasis" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Conditional",
+      "items": [
+        "Brainstorm and plan are branches, not mandatory steps",
+        "Each request uses only needed capabilities"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Targets",
+      "items": [
+        "Approved capability targets are not runtime health",
+        "Disabling a capability affects authored stages only"
+      ]
+    }
+  ]
+}

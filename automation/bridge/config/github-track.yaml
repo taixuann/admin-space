@@ -5,18 +5,18 @@ settings:
 
 workspaces:
   - id: research-projects
-    name: Research Projects
+    name: Research Space
     category: Scientific Research
-    path: /Users/tai/research-projects
+    path: /Users/tai/academic-space/research-space
     remote_repo: taixuann/research-projects
     default_branch: main
     tracked: true
 
-  - id: agent-skills
-    name: Agent Skills
+  - id: admin-space
+    name: Admin Space
     category: Agent Infrastructure
     path: /Users/tai/.agents
-    remote_repo: taixuann/agent-skills
+    remote_repo: taixuann/admin-space
     default_branch: master
     tracked: true
 
@@ -31,7 +31,7 @@ workspaces:
   - id: raw-viewer
     name: Raw Viewer
     category: Scientific Tools
-    path: /Users/tai/research-projects/tools/raw-viewer
+    path: /Users/tai/academic-space/research-space/tools/raw-viewer
     remote_repo: taixuann/raw-viewer
     default_branch: master
     tracked: true
@@ -47,7 +47,7 @@ workspaces:
   - id: learn-wiki
     name: Learn / Wiki
     category: Digital Garden
-    path: /Users/tai/learn
+    path: /Users/tai/academic-space/knowledge-space
     remote_repo: taixuann/wiki
     default_branch: main
     tracked: false

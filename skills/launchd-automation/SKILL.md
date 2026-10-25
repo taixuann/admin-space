@@ -6,7 +6,7 @@ compatibility: macOS (darwin)
 
 # launchd automation
 
-Own one job at a time: where its source lives, where it reports, and what proves a change works. Placement rules live in `docs/automation.md`; branch rules in `docs/tools.md`. Lifecycle detail is in [`references/launchd_best_practices.md`](references/launchd_best_practices.md).
+Own one job at a time: where its source lives, where it reports, and what proves a change works. Placement rules live in `automation/README.md` and `automation/AGENTS.md`; tool-owned jobs belong to Development Space (`tools/AGENTS.md`). Lifecycle detail is in [`references/launchd_best_practices.md`](references/launchd_best_practices.md).
 
 ## 1. Classify the owner
 
@@ -14,6 +14,12 @@ Own one job at a time: where its source lives, where it reports, and what proves
 | --- | --- | --- | --- |
 | serves one tool | `tool` | `<tool-repo>/automation/<job-name>/` | `admin/<tool-name>_<request-id>` |
 | coordinates several tools, or applies Space policy | `space` | `~/.agents/automation/<job-name>/` | `automation/<job-name>` |
+
+> [!IMPORTANT]
+> **Production Isolation Invariant**: A production LaunchAgent (`~/Library/LaunchAgents/<label>.plist`) must NEVER execute against a `development-space` source path (`/Users/tai/development-space/...`). It must point strictly to the target consumer space runner (e.g. `/Users/tai/.agents/automation/<job-name>/run.sh`) or a globally installed CLI in `/Users/tai/.local/bin/`. Development space is an active workshop with isolated worktrees and uncommitted changes; background daemons must never depend on development trees.
+
+> [!IMPORTANT]
+> **Production Isolation Invariant**: A production LaunchAgent (`~/Library/LaunchAgents/<label>.plist`) must NEVER execute against a `development-space` source path (`/Users/tai/development-space/...`). It must point strictly to the target consumer space runner (e.g. `/Users/tai/.agents/automation/<job-name>/run.sh`) or a globally installed CLI in `/Users/tai/.local/bin/`. Development space is an active workshop with isolated worktrees and uncommitted changes; background daemons must never depend on development trees.
 
 Decide from the primary responsibility and the job's own lifecycle. A shared incident reporter or a shared helper does not move ownership. Ask when the owner is unclear; the layout decides the repository, and the repository decides who reviews the change.
 

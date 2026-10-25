@@ -1,0 +1,25 @@
+profile: forge
+status: approved targets; runtime loading recorded separately
+scope: plan, dispatch, review, and merge work on Development Space tool repos
+notes: "Model is runtime-managed (opencode-model-router coding). Memory is default built-in."
+skills:
+  - name: superpowers:brainstorming
+    detail: shape the fix when an issue is not obvious
+  - name: superpowers:writing-plans
+    detail: write the plan Executor runs
+  - name: superpowers:receiving-code-review
+    detail: judge Executor's result against the plan
+  - name: superpowers:verification-before-completion
+    detail: rerun the plan's checks before merging
+  - name: github
+    detail: read issues, merge, push, close issues
+  - name: launchd-automation
+    detail: scheduled jobs for tools
+plugins:
+  - name: superpowers
+    detail: source of the methods
+mcps: []
+external_tools:
+  - name: hermes kanban
+    detail: dispatch plans to Executor in a worktree; review column
+automation: []

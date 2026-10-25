@@ -1,0 +1,203 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Executor task run",
+    "locale": "en",
+    "output": "docs/profiles/executor/executor-workflow.html",
+    "quality_profile": "showcase"
+  },
+  "mainPath": [
+    "received",
+    "executing",
+    "verified",
+    "reported",
+    "done"
+  ],
+  "states": [
+    {
+      "id": "received",
+      "type": "start",
+      "label": "Received",
+      "sublabel": "brief or plan header",
+      "tag": "any profile",
+      "step": "01"
+    },
+    {
+      "id": "executing",
+      "type": "active",
+      "label": "Executing",
+      "sublabel": "executing-plans",
+      "tag": "in scope",
+      "step": "02"
+    },
+    {
+      "id": "verified",
+      "type": "decision",
+      "label": "Verified",
+      "sublabel": "checks run",
+      "tag": "pass",
+      "step": "03"
+    },
+    {
+      "id": "reported",
+      "type": "waiting",
+      "label": "Reported",
+      "sublabel": "report sent",
+      "tag": "Tai",
+      "step": "04"
+    },
+    {
+      "id": "done",
+      "type": "success",
+      "label": "Done",
+      "sublabel": "Tai accepts",
+      "tag": "accepted",
+      "step": "05"
+    },
+    {
+      "id": "blocked",
+      "type": "waiting",
+      "label": "Blocked",
+      "sublabel": "header / authority",
+      "tag": "uncommitted"
+    },
+    {
+      "id": "subtasks",
+      "type": "active",
+      "label": "Subtasks",
+      "sublabel": "subagent-driven",
+      "tag": "optional"
+    },
+    {
+      "id": "debugging",
+      "type": "active",
+      "label": "Debugging",
+      "sublabel": "systematic",
+      "tag": "root cause"
+    },
+    {
+      "id": "feedback",
+      "type": "waiting",
+      "label": "Review feedback",
+      "sublabel": "receiving-review",
+      "tag": "changes"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "received-executing",
+      "from": "received",
+      "to": "executing",
+      "label": "valid"
+    },
+    {
+      "id": "executing-verified",
+      "from": "executing",
+      "to": "verified",
+      "label": "built"
+    },
+    {
+      "id": "verified-reported",
+      "from": "verified",
+      "to": "reported",
+      "label": "pass"
+    },
+    {
+      "id": "reported-done",
+      "from": "reported",
+      "to": "done",
+      "label": "accepted"
+    },
+    {
+      "id": "received-blocked",
+      "from": "received",
+      "to": "blocked",
+      "label": "invalid",
+      "variant": "security"
+    },
+    {
+      "id": "blocked-received",
+      "from": "blocked",
+      "to": "received",
+      "label": "fixed"
+    },
+    {
+      "id": "executing-subtasks",
+      "from": "executing",
+      "to": "subtasks",
+      "label": "split"
+    },
+    {
+      "id": "subtasks-executing",
+      "from": "subtasks",
+      "to": "executing",
+      "label": "joined"
+    },
+    {
+      "id": "verified-debugging",
+      "from": "verified",
+      "to": "debugging",
+      "label": "fail"
+    },
+    {
+      "id": "debugging-executing",
+      "from": "debugging",
+      "to": "executing",
+      "label": "fixed"
+    },
+    {
+      "id": "reported-feedback",
+      "from": "reported",
+      "to": "feedback",
+      "label": "review"
+    },
+    {
+      "id": "feedback-executing",
+      "from": "feedback",
+      "to": "executing",
+      "label": "changes"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Brief or plan contract (input)",
+      "items": [
+        "From any authorized profile; a task brief or a plan from the owning Space's docs/superpowers/plans/.",
+        "Header: requester, space, scope, checks, report. A missing field is a blocker.",
+        "Scope = the requester's own authority, never more."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Methods",
+      "items": [
+        "Executing: superpowers:executing-plans + test-driven-development.",
+        "Subtasks: subagent-driven-development only for independent subtasks.",
+        "Debugging: systematic-debugging. Verified: verification-before-completion before report.",
+        "Review feedback: receiving-code-review."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Commit and approval rules",
+      "items": [
+        "Work directly in the owning Space; no task branch.",
+        "Commits, push, publish, and destructive actions need Tai's approval.",
+        "Never overwrite someone else's uncommitted work.",
+        "Never commit credentials or raw research data."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Limits",
+      "items": [
+        "Push, publish, external sharing: Tai approval only.",
+        "Hermes runtime config: only with Tai's approval and a rollback step in the plan.",
+        "Never writes credentials or raw research data.",
+        "Model is runtime-managed (OpenCode Go); memory is default profile memory."
+      ]
+    }
+  ]
+}

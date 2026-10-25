@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "dbbd548d-7f92-4318-8c5b-b8a088bb01be",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/tai/.agents/.archify/architecture-secretary-environment-20261025-103530/candidate.json",
+  "output": "/Users/tai/.agents/docs/profiles/secretary/environment.html",
+  "specification": {
+    "sha256": "db461b23471fe7dd11c36d2dc19b2ea7fbe9bfb8f8df752fec2e200a556ca5cf",
+    "bytes": 4120
+  },
+  "artifact": {
+    "sha256": "71c31c3a30bb88c863d946261e7bfe9d0d78091ca15455848ba321bae8852e06",
+    "bytes": 834034
+  }
+}

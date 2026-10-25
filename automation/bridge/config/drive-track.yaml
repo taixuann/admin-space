@@ -16,7 +16,7 @@ profiles:
   - id: research-projects-sync
     name: Research Projects (Full)
     category: Scientific Research
-    source_path: /Users/tai/research-projects
+    source_path: /Users/tai/academic-space/research-space
     remote_target: gdrive:research/projects/
     include_folders: "*"
     exclude_patterns: ".git, .venv, venv, .build, .pytest_cache, .ruff_cache, .DS_Store, __pycache__, node_modules, worktree, worktrees"
@@ -25,9 +25,9 @@ profiles:
     last_synced: null
 
   - id: learn-sync
-    name: Learn / Wiki
+    name: Knowledge Space / Wiki
     category: Digital Garden
-    source_path: /Users/tai/learn
+    source_path: /Users/tai/academic-space/knowledge-space
     remote_target: gdrive:learn/
     include_folders: "*"
     exclude_patterns: ".git, .venv, .pytest_cache, .DS_Store, node_modules, .obsidian/workspace*"
@@ -37,7 +37,7 @@ profiles:
   - id: knowledge-base-sync
     name: Knowledge Base
     category: Knowledge Management
-    source_path: /Users/tai/knowledge-base
+    source_path: /Users/tai/academic-space/knowledge-space/knowledge-base
     remote_target: gdrive:knowledge-base/
     include_folders: "*"
     exclude_patterns: ".git, .venv, .pytest_cache, .DS_Store, node_modules, .obsidian/workspace*"

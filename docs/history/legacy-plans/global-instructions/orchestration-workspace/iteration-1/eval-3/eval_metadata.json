@@ -1,8 +1,0 @@
-{
-  "eval_id": 3,
-  "eval_name": "batch-stops-for-decision",
-  "prompt": "Parser batch A is approved; migration B requires my decision after A.",
-  "assertions": [
-    {"text": "Runs batch A and explicitly stops before migration B for the recorded user decision", "passed": true, "evidence": "with_skill: 'So A moves, B does not' + 'STOP — decision checkpoint: migration B. Do not start, draft, or stage B' + What-I-need-from-you with independent work that can continue. old_skill: also stops ('Nothing moves on B until you decide') but via a generic lifecycle stop, no batch-boundary concept, no independent-work-continues line."}
-  ]
-}

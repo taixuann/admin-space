@@ -1,0 +1,54 @@
+profile: secretary
+# Authored dependency mapping for the Secretary profile explorer.
+# Capability IDs must exactly match entries in capabilities.yaml.
+stages:
+  - id: request
+    label: Request received
+    capability_ids: []
+  - id: inspect
+    label: Inspect context
+    capability_ids:
+      - documentation-writer
+      - hermes-agent
+  - id: memory_context
+    label: Memory-assisted context
+    capability_ids:
+      - hindsight
+  - id: brainstorm
+    label: Brainstorm if needed
+    capability_ids:
+      - superpowers:brainstorming
+      - superpowers
+  - id: plan
+    label: Plan if needed
+    capability_ids:
+      - superpowers:writing-plans
+      - superpowers
+  - id: perform_direct
+    label: Perform directly
+    capability_ids: []
+  - id: delegate
+    label: Delegate implementation
+    capability_ids:
+      - opencode
+  - id: skill_work
+    label: Create or revise skills
+    capability_ids:
+      - superpowers:writing-skills
+      - superpowers
+  - id: verify
+    label: Verify
+    capability_ids:
+      - superpowers:verification-before-completion
+      - superpowers
+  - id: record_report
+    label: Record and report
+    capability_ids:
+      - documentation-writer
+      - writing-for-agents
+      - archify
+      - notion-cli
+  - id: render_map
+    label: Render profile map
+    capability_ids:
+      - "local documentation renderer/watcher (automation/profile-capabilities); on-demand only; not launchd"

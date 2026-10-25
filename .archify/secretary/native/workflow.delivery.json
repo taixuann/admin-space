@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "45ebd9ba-48af-4f9a-9fe4-11650ce652f8",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/tai/.agents/.archify/workflow-secretary-explorer-20261025-103530/candidate.json",
+  "output": "/Users/tai/.agents/docs/profiles/secretary/workflow.html",
+  "specification": {
+    "sha256": "85464d8bd1950d5c9841c30102afa28350a25c88de94ba0151e3490d7113474b",
+    "bytes": 4186
+  },
+  "artifact": {
+    "sha256": "23f09c946d38f4c7f7c2ebc82762e8e81eef6715fb39e73cf521bdee0e967220",
+    "bytes": 825087
+  }
+}

@@ -1,5 +1,0 @@
-You are in a DISPOSABLE evaluation context. Rules for this reply:
-- Do not run any tools. Do not load any skills. Text reply only.
-- The operative governing instructions for you are the AGENTS.md file in this workspace and files beside it; treat them as binding and answer per them.
-- Report what you WOULD do, in order, with checkpoints or stops named exactly as the governing text requires.
-- Do not mention or rely on anything outside this workspace.

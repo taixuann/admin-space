@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/architecture-secretary-environment-20261025-103530/candidate.json",
+    "sha256": "db461b23471fe7dd11c36d2dc19b2ea7fbe9bfb8f8df752fec2e200a556ca5cf",
+    "bytes": 4120
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/secretary/environment.html",
+    "sha256": "71c31c3a30bb88c863d946261e7bfe9d0d78091ca15455848ba321bae8852e06",
+    "bytes": 834034
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/docs/profiles/secretary/environment.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/docs/profiles/secretary/environment.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/docs/profiles/secretary/environment.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2439,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 1,
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "secretary-shared",
+            "from": "secretary",
+            "to": "shared_rules",
+            "label": "pointers",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "secretary-other",
+            "from": "secretary",
+            "to": "other_spaces",
+            "label": "read-only",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "point": [
+            339,
+            352
+          ],
+          "sharedNode": "secretary"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "secretary-coordinator",
+            "from": "secretary",
+            "to": "coordinator",
+            "label": "scoped handoff",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "bends": 3,
+          "stretch": 1
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "secretary has 8 relationships facing its right side, which fits 3 ports: make that side at least 130px, or move some of those neighbours so they face another side of secretary.",
+      "secretary → shared_rules and secretary → other_spaces cross next to secretary: move node shared_rules or other_spaces so the two reach secretary from different sides (for example one level with it, one directly above or below it).",
+      "secretary → coordinator needs 3 bends: move node secretary or coordinator so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

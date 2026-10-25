@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Admin Space — intended operating model",
+    "locale": "en",
+    "output": ".archify/architecture-admin-operating-model-20261025-090128/admin-operating-model.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {"id":"tai","type":"external","label":"Tai","sublabel":"Direction and final authority","pos":[40,40],"size":[220,72]},
+    {"id":"secretary","type":"backend","label":"Secretary","sublabel":"Plan, dispatch, observe, verify, report","pos":[440,40],"size":[280,72]},
+    {"id":"coordinator","type":"backend","label":"OpenCode controller","sublabel":"Own execution method and task ledger","pos":[40,270],"size":[270,72]},
+    {"id":"documents","type":"database","label":"Admin documents","sublabel":"Current explanations and work plans","pos":[440,270],"size":[260,72]},
+    {"id":"capabilities","type":"backend","label":"Reviewed results","sublabel":"Changes, tests, findings, blockers","pos":[440,500],"size":[260,72]},
+    {"id":"owners","type":"backend","label":"OpenCode workers","sublabel":"Scoped implementers and reviewers","pos":[40,500],"size":[270,72]}
+  ],
+  "connections": [
+    {"id":"tai-secretary","from":"tai","to":"secretary","label":"Direct / receive report","variant":"emphasis"},
+    {"id":"secretary-docs","from":"secretary","to":"documents","label":"Record and reconcile"},
+    {"id":"docs-controller","from":"documents","to":"coordinator","label":"Scoped task brief"},
+    {"id":"controller-workers","from":"coordinator","to":"owners","label":"Dispatch and review"},
+    {"id":"workers-results","from":"owners","to":"capabilities","label":"Return evidence"},
+    {"id":"results-docs","from":"capabilities","to":"documents","label":"Verify and update"}
+  ],
+  "cards": [
+    {"dot":"cyan","title":"Current team and responsibility","items":["Tai leads. Secretary brainstorms with Tai, writes plans, dispatches bounded work to OpenCode, observes progress, verifies evidence, updates plans, and reports results.","Only Tai, Secretary, and the OpenCode execution team are included for now. Asura is not contacted. Secretary remains accountable; worker claims are not automatic acceptance."]},
+    {"dot":"emerald","title":"Execution methods are alternatives","items":["OpenCode controller uses subagent-driven-development for suitable independent tasks: fresh implementer, task review, and final review. Workers do not recursively spawn their own teams.","Use executing-plans for inline execution inside the OpenCode controller when selected or appropriate. Do not stack two competing execution lifecycles. Secretary uses writing-skills only for a demonstrated reusable-method gap."]},
+    {"dot":"rose","title":"Authority and ownership","items":["Tai retains approval of commits, publication, external sharing, destructive actions, and Hermes configuration changes. Scope is passed to every executor.","Admin documents record explanations, decisions, plans, and evidence pointers. Skills own reusable methods; automations own executable triggers and runners. Other Spaces retain domain authority."]},
+    {"dot":"cyan","title":"Observed readiness and remaining gap","items":["OpenCode v2.1.4 reads existing global config with opencode-go/beam-free and a Superpowers plugin declaration. A real run returned OPENCODE_SMOKE_OK; a real general subagent returned MINION_SMOKE_OK.","Superpowers skill loading was not demonstrated by the first probe: it stopped before loading skills. Full plan execution is not yet proven. No global settings were changed and no Development Space settings were copied globally."]}
+  ]
+}

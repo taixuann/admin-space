@@ -1,0 +1,263 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Secretary profile management - states and artifacts",
+    "locale": "en",
+    "output": "docs/profiles/secretary/secretary-workflow.html",
+    "quality_profile": "showcase"
+  },
+  "mainPath": [
+    "draft",
+    "defined",
+    "planned",
+    "executing",
+    "verifying",
+    "done"
+  ],
+  "states": [
+    {
+      "id": "draft",
+      "type": "start",
+      "label": "Draft",
+      "sublabel": "Tai+Secretary",
+      "tag": "requirements",
+      "step": "01"
+    },
+    {
+      "id": "defined",
+      "type": "active",
+      "label": "Defined",
+      "sublabel": "Secretary",
+      "tag": "README / SOUL / YAML",
+      "step": "02"
+    },
+    {
+      "id": "planned",
+      "type": "active",
+      "label": "Planned",
+      "sublabel": "Secretary",
+      "tag": "writing-plans",
+      "step": "03"
+    },
+    {
+      "id": "executing",
+      "type": "active",
+      "label": "Executing",
+      "sublabel": "Approved plan tasks",
+      "tag": "Executor proposed",
+      "step": "04"
+    },
+    {
+      "id": "verifying",
+      "type": "decision",
+      "label": "Verifying",
+      "sublabel": "Secretary",
+      "tag": "runtime evidence",
+      "step": "05"
+    },
+    {
+      "id": "done",
+      "type": "success",
+      "label": "Done",
+      "sublabel": "Secretary",
+      "tag": "docs / plan / report",
+      "step": "06"
+    },
+    {
+      "id": "approval",
+      "type": "waiting",
+      "label": "Approval",
+      "sublabel": "Tai sign-off",
+      "tag": "pause"
+    },
+    {
+      "id": "executor_missing",
+      "type": "waiting",
+      "label": "Executor Not Ready",
+      "sublabel": "definition + runtime",
+      "tag": "bootstrap then verify"
+    },
+    {
+      "id": "blocked",
+      "type": "waiting",
+      "label": "Blocked",
+      "sublabel": "access/creds",
+      "tag": "stop"
+    },
+    {
+      "id": "rework",
+      "type": "active",
+      "label": "Rework",
+      "sublabel": "update plan",
+      "tag": "retry"
+    },
+    {
+      "id": "cancelled",
+      "type": "neutral",
+      "label": "Cancelled",
+      "sublabel": "denied",
+      "tag": "terminal"
+    },
+    {
+      "id": "docs_only",
+      "type": "neutral",
+      "label": "Docs Only",
+      "sublabel": "definition done",
+      "tag": "no runtime"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "draft-defined",
+      "from": "draft",
+      "to": "defined",
+      "label": "defined"
+    },
+    {
+      "id": "defined-planned",
+      "from": "defined",
+      "to": "planned",
+      "label": "plan"
+    },
+    {
+      "id": "planned-executing",
+      "from": "planned",
+      "to": "executing",
+      "label": "approved + ready"
+    },
+    {
+      "id": "executing-verifying",
+      "from": "executing",
+      "to": "verifying",
+      "label": "done"
+    },
+    {
+      "id": "verifying-done",
+      "from": "verifying",
+      "to": "done",
+      "label": "passed"
+    },
+    {
+      "id": "planned-approval",
+      "from": "planned",
+      "to": "approval",
+      "label": "needs approval",
+      "variant": "security"
+    },
+    {
+      "id": "approval-planned",
+      "from": "approval",
+      "to": "planned",
+      "label": "approved"
+    },
+    {
+      "id": "approval-cancelled",
+      "from": "approval",
+      "to": "cancelled",
+      "label": "denied",
+      "variant": "security"
+    },
+    {
+      "id": "planned-executor_missing",
+      "from": "planned",
+      "to": "executor_missing",
+      "label": "not ready"
+    },
+    {
+      "id": "executor_missing-planned",
+      "from": "executor_missing",
+      "to": "planned",
+      "label": "verified"
+    },
+    {
+      "id": "executing-blocked",
+      "from": "executing",
+      "to": "blocked",
+      "label": "access missing"
+    },
+    {
+      "id": "blocked-executing",
+      "from": "blocked",
+      "to": "executing",
+      "label": "authorized fix"
+    },
+    {
+      "id": "verifying-rework",
+      "from": "verifying",
+      "to": "rework",
+      "label": "checks fail"
+    },
+    {
+      "id": "rework-planned",
+      "from": "rework",
+      "to": "planned",
+      "label": "plan updated"
+    },
+    {
+      "id": "defined-docs_only",
+      "from": "defined",
+      "to": "docs_only",
+      "label": "docs only"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Definition Artifacts + Ownership",
+      "items": [
+        "Maintained path: docs/profiles/<id>/",
+        "Contents: README, SOUL, capabilities.yaml, workflow HTML when needed",
+        "Owner: Secretary with hermes-fleet-admin and documentation-writer",
+        "Exact model/effort and skill/plugin/MCP/automation manifest are approved targets, not assumptions",
+        "Target: Secretary itself or another profile. Operation: create / update / maintain / delete. Same workflow, not separate planning or skill-writing work types."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Executor Plan Contract",
+      "items": [
+        "Secretary uses superpowers:writing-plans: docs/superpowers/plans/<task>.md, created or updated before handing write tasks to Executor.",
+        "Includes files/profile paths, inputs, authorized delta, tools/skills, dependencies",
+        "Acceptance checks, rollback, status/evidence pointers",
+        "Bootstrap uses current approved runner (OpenCode); Executor stays patch-only until approved application contract",
+        "Executor reads both the approved definition and approved plan. Incomplete readiness pauses handoff; it does not authorize unrestricted fallback.",
+        "A live-configuration plan names the target Hermes home and exact settings; application is allowed only under an explicitly approved access contract. No invented keys or secrets in tracked docs."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Capability Loading / Activation",
+      "items": [
+        "Skills: select, discover, load, verify in fresh session",
+        "Plugins: install/enable/configure approved targets; test lifecycle hooks",
+        "MCP: profile-scoped connection, user auth, verify tool calls, secrets outside docs",
+        "Automation: inspect trigger/runner/side effects/recovery; run authorized test; memory bank health",
+        "Verify identity/project context and only the approved capability set. A listed skill, enabled plugin or declared MCP connection is not proof of successful runtime loading."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Status / Evidence",
+      "items": [
+        "Desired definition != saved runtime != observed operation",
+        "Reports/receipts retained in owning task/bundle",
+        "State is conceptual lifecycle of one request, not a live control panel",
+        "Delete requires destructive confirmation, dependency checks, recoverable backup",
+        "Coordinator is optional authorized source-information support, not another executor.",
+        "No runtime setup by this diagram. Executor is still a draft; model and provider stay task/runtime-selected.",
+        "Definition-only approval stops at Docs Only. Failed checks produce Rework and an updated plan before retry, not a Done claim."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Transition guards",
+      "items": [
+        "defined -> planned: Create or update the executable plan before Executor handoff.",
+        "planned -> executing: requires approved plan, verified Executor readiness, authorized task scope",
+        "executing -> verifying: Patch-only tasks verify patches; live setup requires an explicitly approved application contract and supported configuration tools.",
+        "executor_missing -> planned: Complete Executor docs first, then approved bootstrap and actual readiness tests with the current runner."
+      ]
+    }
+  ]
+}

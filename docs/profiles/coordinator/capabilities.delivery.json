@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "e3e511da-38f1-4b57-8066-6fb28c6ae917",
+  "status": "current",
+  "command": "deliver",
+  "type": "explainer",
+  "input": "/Users/tai/.agents/.archify/profile-capabilities-coordinator/candidate.archify.md",
+  "output": "/Users/tai/.agents/docs/profiles/coordinator/capabilities.html",
+  "specification": {
+    "sha256": "c5f163516cef9cf0b0c9565020bb327a4f424181301781eae88b49424ef0ec80",
+    "bytes": 1157
+  },
+  "artifact": {
+    "sha256": "10dce84166c742c02be099e3f54afa8f49b8e9b8bed4604d14e4a6a0f02192d1",
+    "bytes": 125223
+  },
+  "explainer": {
+    "preparedSha256": "f2288c2e64ee29c19d969ff5640b402ec59a34b09b3ae67683a119d5ee2fc34b",
+    "dependencies": []
+  }
+}

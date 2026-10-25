@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "installed": {
+    "documentation-writer": {
+      "source": "skills.sh",
+      "identifier": "skills-sh/github/awesome-copilot/skills/documentation-writer",
+      "trust_level": "community",
+      "scan_verdict": "safe",
+      "content_hash": "sha256:dfd5bd9eff3b98d7",
+      "install_path": "documentation-writer",
+      "files": [
+        "SKILL.md"
+      ],
+      "metadata": {
+        "source_url": "https://github.com/github/awesome-copilot/tree/d85f762d6e521abf5fe16703946e9b38adc42da7/skills/documentation-writer",
+        "source_revision": "d85f762d6e521abf5fe16703946e9b38adc42da7",
+        "detail_url": "https://skills.sh/github/awesome-copilot/skills/documentation-writer",
+        "repo_url": "https://github.com/github/awesome-copilot"
+      },
+      "scan_provenance": {
+        "bundle_hash": "sha256:dfd5bd9eff3b98d7bc91d5751b725d8fc16f252ae4ba561defa37b2e66329abf",
+        "scanner_version": "skills-guard-v10",
+        "source": "skills-sh/github/awesome-copilot/skills/documentation-writer",
+        "source_url": "https://github.com/github/awesome-copilot/tree/d85f762d6e521abf5fe16703946e9b38adc42da7/skills/documentation-writer",
+        "verdict": "safe",
+        "trust_level": "community",
+        "findings": [],
+        "rules": [],
+        "scanned_at": "2026-10-25T01:44:38.532931+00:00",
+        "summary": "documentation-writer: clean scan, no threats detected",
+        "fresh": true
+      },
+      "installed_at": "2026-10-25T01:44:38.549819+00:00",
+      "updated_at": "2026-10-25T01:44:38.549819+00:00"
+    }
+  }
+}

@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-10-22 13:30:36",
+  "timestamp": "2026-10-25 11:15:16",
   "stats": {
-    "total": 17,
-    "running": 5,
-    "idle": 10,
-    "active": 15,
+    "total": 24,
+    "running": 6,
+    "idle": 14,
+    "active": 20,
     "errors": 0,
-    "scheduled": 6
+    "scheduled": 10
   },
   "category_counts": {
     "sync": 5,
     "lifeos": 0,
     "ai": 7,
-    "system": 5,
-    "custom": 0
+    "system": 9,
+    "custom": 3
   },
   "automations": [
     {
@@ -39,18 +39,18 @@
       "stdout_log": {
         "path": "/Users/tai/.hermes/logs/gateway.log",
         "exists": true,
-        "size": 1233684,
-        "size_formatted": "1.2 MB",
-        "modified": "2026-10-22 12:42:13",
-        "snippet": "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tai/.hermes/installs/c9db08219fd35180/environments/68dcc769b66c4a3d99f46e1f969835ab/venv/lib/python3.14/site-packages/discord/http.py\", line 772, in request\n    raise Forbidden(response, data)\ndiscord.errors.Forbidden: 403 Forbidden (error code: 50001): Missing Access\n2026-10-22 12:42:13,502 WARNING gateway.run: Home-channel startup notification failed for discord:1559808210783834164: 403 Forbidden (error code: 50001): Missing Access"
+        "size": 1384637,
+        "size_formatted": "1.3 MB",
+        "modified": "2026-10-25 11:11:02",
+        "snippet": "2026-10-25 11:08:16,507 INFO gateway.run: response ready: platform=local chat=local-a1a44f3538be1d6c4436914779000a80573bec3b70fac6d0b0f5ed04893f04b3 session=agent:main:local:dm:local-a1a44f3538be1d6c4436914779000a80573bec3b70fac6d0b0f5ed04893f04b3 time=1066.8s api_calls=18 response=634 chars\n2026-10-25 11:08:16,627 INFO gateway.platforms.base: [Local] Sending response (571 chars) to local-a1a44f3538be1d6c4436914779000a80573bec3b70fac6d0b0f5ed04893f04b3\n2026-10-25 11:08:16,628 INFO gateway.platforms.base: [Local] Delivering 1 non-image MEDIA attachment(s)\n2026-10-25 11:08:16,628 WARNING gateway.platforms.base: [Local] send_document fallback: native file send unavailable for /Users/tai/.agents/docs/profiles/secretary/profile.html\n2026-10-25 11:11:02,480 INFO gateway.run: inbound message: platform=local user=uid:503 chat=local-a1a44f3538be1d6c4436914779000a80573bec3b70fac6d0b0f5ed04893f04b3 msg=\"hey i diddn't mean like that, why don't use just show me the profile html?? and \" reply_to_id=None reply_to_text=''"
       },
       "stderr_log": {
         "path": "/Users/tai/.hermes/logs/gateway.error.log",
         "exists": true,
-        "size": 7311666,
-        "size_formatted": "7.0 MB",
-        "modified": "2026-10-22 12:44:32",
-        "snippet": "2026-10-22 12:42:13,503 discord.errors.Forbidden: 403 Forbidden (error code: 50001): Missing Access\n2026-10-22 12:42:13,502 WARNING gateway.run: Home-channel startup notification failed for discord:1559808210783834164: 403 Forbidden (error code: 50001): Missing Access\n2026-10-22 12:44:10,360 WARNING tools.mcp_tool: MCP server 'linear': revived — session healthy again after parking (state: parked → connected)\n2026-10-22 12:44:21,432 WARNING tools.mcp_tool: MCP server 'linear': revived — session healthy again after parking (state: parked → connected)\n2026-10-22 12:44:32,465 WARNING tools.mcp_tool: MCP server 'notion': revived — session healthy again after parking (state: parked → connected)"
+        "size": 8613713,
+        "size_formatted": "8.2 MB",
+        "modified": "2026-10-25 11:11:02",
+        "snippet": "2026-10-25 11:08:16,467   File \"/Users/tai/.hermes/installs/c9db08219fd35180/environments/68dcc769b66c4a3d99f46e1f969835ab/venv/lib/python3.14/site-packages/aiohttp/connector.py\", line 1324, in _wrap_create_connection\n2026-10-25 11:08:16,467     raise client_error(req.connection_key, exc) from exc\n2026-10-25 11:08:16,467 aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host localhost:8888 ssl:default [Multiple exceptions: [Errno 61] Connect call failed ('::1', 8888, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 8888)]\n2026-10-25 11:08:16,628 WARNING gateway.platforms.base: [Local] send_document fallback: native file send unavailable for /Users/tai/.agents/docs/profiles/secretary/profile.html\n2026-10-25 11:11:02,634 WARNING agent.chat_completion_helpers: Interrupted provider wait counted as stale after 63s with no output; consecutive stale attempts=1."
       },
       "last_exit_code": 75,
       "pid": 29326,
@@ -58,6 +58,80 @@
       "description": "Hermes Gateway: Local AI gateway proxy service.",
       "keep_alive": true,
       "run_at_load": true
+    },
+    {
+      "id": "at.studio.AsideUpdater.wake",
+      "label": "at.studio.AsideUpdater.wake",
+      "name": "At Studio Asideupdater Wake",
+      "category": "system",
+      "type": "LaunchAgent",
+      "status": "Loaded (Idle)",
+      "status_code": "idle",
+      "schedule": "Every 1h",
+      "schedule_type": "interval",
+      "program": "/Users/tai/Library/Application Support/Aside/AsideUpdater/Current/AsideUpdater.app/Contents/MacOS/AsideUpdater",
+      "arguments": [
+        "/Users/tai/Library/Application Support/Aside/AsideUpdater/Current/AsideUpdater.app/Contents/MacOS/AsideUpdater",
+        "--wake-all",
+        "--enable-logging",
+        "--vmodule=*/components/update_client/*=2,*/chrome/enterprise_companion/*=2,*/chrome/updater/*=2"
+      ],
+      "working_dir": null,
+      "plist_path": "/Users/tai/Library/LaunchAgents/at.studio.AsideUpdater.wake.plist",
+      "stdout_log": null,
+      "stderr_log": null,
+      "last_exit_code": 0,
+      "pid": null,
+      "is_active": true,
+      "description": "Automated background task running AsideUpdater.",
+      "keep_alive": false,
+      "run_at_load": false
+    },
+    {
+      "id": "at.studio.asidekeystone.agent",
+      "label": "at.studio.asidekeystone.agent",
+      "name": "At Studio Asidekeystone Agent",
+      "category": "system",
+      "type": "LaunchAgent",
+      "status": "Unloaded",
+      "status_code": "unloaded",
+      "schedule": "Manual / On-demand",
+      "schedule_type": "manual",
+      "program": "",
+      "arguments": [],
+      "working_dir": null,
+      "plist_path": "/Users/tai/Library/LaunchAgents/at.studio.asidekeystone.agent.plist",
+      "stdout_log": null,
+      "stderr_log": null,
+      "last_exit_code": null,
+      "pid": null,
+      "is_active": false,
+      "description": "Automated background task running script.",
+      "keep_alive": false,
+      "run_at_load": false
+    },
+    {
+      "id": "at.studio.asidekeystone.xpcservice",
+      "label": "at.studio.asidekeystone.xpcservice",
+      "name": "At Studio Asidekeystone Xpcservice",
+      "category": "system",
+      "type": "LaunchAgent",
+      "status": "Unloaded",
+      "status_code": "unloaded",
+      "schedule": "Manual / On-demand",
+      "schedule_type": "manual",
+      "program": "",
+      "arguments": [],
+      "working_dir": null,
+      "plist_path": "/Users/tai/Library/LaunchAgents/at.studio.asidekeystone.xpcservice.plist",
+      "stdout_log": null,
+      "stderr_log": null,
+      "last_exit_code": null,
+      "pid": null,
+      "is_active": false,
+      "description": "Automated background task running script.",
+      "keep_alive": false,
+      "run_at_load": false
     },
     {
       "id": "com.decision-engine.stopper.hostbridge",
@@ -77,18 +151,18 @@
       "plist_path": "/Users/tai/Library/LaunchAgents/com.decision-engine.stopper.hostbridge.plist",
       "stdout_log": {
         "path": "/private/tmp/decision-engine-host-bridge-503/.runtime/logs/stopper.log",
-        "exists": false,
+        "exists": true,
         "size": 0,
         "size_formatted": "0 B",
-        "modified": null,
+        "modified": "2026-10-23 18:51:40",
         "snippet": ""
       },
       "stderr_log": {
         "path": "/private/tmp/decision-engine-host-bridge-503/.runtime/logs/stopper.log",
-        "exists": false,
+        "exists": true,
         "size": 0,
         "size_formatted": "0 B",
-        "modified": null,
+        "modified": "2026-10-23 18:51:40",
         "snippet": ""
       },
       "last_exit_code": 0,
@@ -248,6 +322,89 @@
       "run_at_load": true
     },
     {
+      "id": "com.reasonmachines.updater",
+      "label": "com.reasonmachines.updater",
+      "name": "Reasonmachines Updater",
+      "category": "system",
+      "type": "LaunchAgent",
+      "status": "Loaded (Idle)",
+      "status_code": "idle",
+      "schedule": "Every 15m",
+      "schedule_type": "interval",
+      "program": "/Users/tai/.local/bin/reason",
+      "arguments": [
+        "/Users/tai/.local/bin/reason",
+        "__auto-update",
+        "once"
+      ],
+      "working_dir": null,
+      "plist_path": "/Users/tai/Library/LaunchAgents/com.reasonmachines.updater.plist",
+      "stdout_log": {
+        "path": "/Users/tai/Library/Logs/Reason/updater.log",
+        "exists": true,
+        "size": 1505,
+        "size_formatted": "1.5 KB",
+        "modified": "2026-10-25 09:48:48",
+        "snippet": "This computer's Reason connection restarted on the new version.\nUpdated managed Reason worker 0.2.595 → 0.2.596; future commands use it automatically.\nThis computer's Reason connection restarted on the new version.\nUpdated managed Reason worker 0.2.596 → 0.2.598; future commands use it automatically.\nThis computer's Reason connection restarted on the new version."
+      },
+      "stderr_log": {
+        "path": "/Users/tai/Library/Logs/Reason/updater-error.log",
+        "exists": true,
+        "size": 0,
+        "size_formatted": "0 B",
+        "modified": "2026-10-24 21:22:46",
+        "snippet": ""
+      },
+      "last_exit_code": 0,
+      "pid": null,
+      "is_active": true,
+      "description": "Automated background task running reason.",
+      "keep_alive": false,
+      "run_at_load": true
+    },
+    {
+      "id": "com.reasonmachines.worker.connect",
+      "label": "com.reasonmachines.worker.connect",
+      "name": "Reasonmachines Worker Connect",
+      "category": "custom",
+      "type": "LaunchAgent",
+      "status": "Running",
+      "status_code": "running",
+      "schedule": "Always Running (Daemon)",
+      "schedule_type": "daemon",
+      "program": "/Users/tai/Library/Application Support/Reason/Background/Reason.app/Contents/MacOS/ReasonBackgroundIdentity",
+      "arguments": [
+        "/Users/tai/Library/Application Support/Reason/Background/Reason.app/Contents/MacOS/ReasonBackgroundIdentity",
+        "--run-worker",
+        "/Users/tai/.local/bin/reason",
+        "connect"
+      ],
+      "working_dir": null,
+      "plist_path": "/Users/tai/Library/LaunchAgents/com.reasonmachines.worker.connect.plist",
+      "stdout_log": {
+        "path": "/Users/tai/.config/reason/connect/service.log",
+        "exists": true,
+        "size": 26123,
+        "size_formatted": "25.5 KB",
+        "modified": "2026-10-25 11:06:26",
+        "snippet": "{\"event_id\":\"24aee13a-8267-4d35-9d84-145f2e74805c\",\"event\":\"worker.model_jobs_egress\",\"occurred_at\":\"2026-10-25T02:48:49.739Z\",\"runtime_version\":\"0.2.598\",\"reason_code\":\"not_root_host\",\"device_id\":\"aca62a4d-03ed-4bff-a84a-c814f1047d7d\"}\nReason worker: PR video proof ready (ffmpeg /Users/tai/.local/share/reason/desktop/ffmpeg/9.0.2/ffmpeg)\nReason worker: deferred lanes decided (ready: pty.start, tunnel.open, tunnel.close, preview.serve.v1, automation.call.v1, browser.pr-proof.v1).\n{\"event\":\"worker.startup\",\"stage\":\"ready\",\"pid\":22497,\"timestamp\":\"2026-10-25T02:48:51.673Z\"}\nReason worker: CLI 0.2.599 is published; the updater is checking now."
+      },
+      "stderr_log": {
+        "path": "/Users/tai/.config/reason/connect/service.log",
+        "exists": true,
+        "size": 26123,
+        "size_formatted": "25.5 KB",
+        "modified": "2026-10-25 11:06:26",
+        "snippet": "{\"event_id\":\"24aee13a-8267-4d35-9d84-145f2e74805c\",\"event\":\"worker.model_jobs_egress\",\"occurred_at\":\"2026-10-25T02:48:49.739Z\",\"runtime_version\":\"0.2.598\",\"reason_code\":\"not_root_host\",\"device_id\":\"aca62a4d-03ed-4bff-a84a-c814f1047d7d\"}\nReason worker: PR video proof ready (ffmpeg /Users/tai/.local/share/reason/desktop/ffmpeg/9.0.2/ffmpeg)\nReason worker: deferred lanes decided (ready: pty.start, tunnel.open, tunnel.close, preview.serve.v1, automation.call.v1, browser.pr-proof.v1).\n{\"event\":\"worker.startup\",\"stage\":\"ready\",\"pid\":22497,\"timestamp\":\"2026-10-25T02:48:51.673Z\"}\nReason worker: CLI 0.2.599 is published; the updater is checking now."
+      },
+      "last_exit_code": 0,
+      "pid": 22494,
+      "is_active": true,
+      "description": "Automated background task running ReasonBackgroundIdentity.",
+      "keep_alive": true,
+      "run_at_load": true
+    },
+    {
       "id": "com.tai.bridge.sync",
       "label": "com.tai.bridge.sync",
       "name": "Bridge Sync",
@@ -267,23 +424,65 @@
       "stdout_log": {
         "path": "/Users/tai/.agents/automation/bridge/logs/launchd.stdout.log",
         "exists": true,
-        "size": 8591,
-        "size_formatted": "8.4 KB",
-        "modified": "2026-10-22 04:01:41",
-        "snippet": ">>> Google Drive sync completed successfully.\n\n======================================================================\n[2026-10-22 04:01:41] Bridge Daily Unattended Automation Finished\n======================================================================"
+        "size": 16526,
+        "size_formatted": "16.1 KB",
+        "modified": "2026-10-25 04:01:55",
+        "snippet": ">>> Google Drive sync completed successfully.\n\n======================================================================\n[2026-10-25 04:01:55] Bridge Daily Unattended Automation Finished\n======================================================================"
       },
       "stderr_log": {
         "path": "/Users/tai/.agents/automation/bridge/logs/launchd.stderr.log",
         "exists": true,
         "size": 0,
         "size_formatted": "0 B",
-        "modified": "2026-10-19 01:00:04",
+        "modified": "2026-10-23 22:26:03",
         "snippet": ""
       },
       "last_exit_code": 0,
       "pid": null,
       "is_active": true,
       "description": "Bridge Daily Unattended Sync: Pulls Wiki updates (--ff-only), auto-commits & pushes tracked repos, and mirrors 4 local workspaces to Google Drive.",
+      "keep_alive": false,
+      "run_at_load": false
+    },
+    {
+      "id": "com.tai.development-space.update",
+      "label": "com.tai.development-space.update",
+      "name": "Development-Space Update",
+      "category": "custom",
+      "type": "LaunchAgent",
+      "status": "Loaded (Idle)",
+      "status_code": "idle",
+      "schedule": "Daily at 03:00",
+      "schedule_type": "calendar",
+      "program": "/opt/miniconda3/envs/core/bin/python3",
+      "arguments": [
+        "/opt/miniconda3/envs/core/bin/python3",
+        "/Users/tai/development-space/automation/plugin-mcp-skills-update/backend/main.py",
+        "--report-root",
+        "/Users/tai/development-space/automation/plugin-mcp-skills-update/logs"
+      ],
+      "working_dir": null,
+      "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.development-space.update.plist",
+      "stdout_log": {
+        "path": "/Users/tai/development-space/automation/plugin-mcp-skills-update/logs/stdout.log",
+        "exists": true,
+        "size": 3606,
+        "size_formatted": "3.5 KB",
+        "modified": "2026-10-25 03:00:04",
+        "snippet": "[2026-10-24T20:00:04.382382+00:00] Phase 2: Superpowers check OK (HEAD: 2ce8aa15d05b)\n[2026-10-24T20:00:04.382781+00:00] Phase 3: Checking MCP Xerj and config sync...\n[2026-10-24T20:00:04.444793+00:00] Phase 3: MCP sync OK (xerj ver: xerj v1.0.0-rc.98)\n[2026-10-24T20:00:04.445986+00:00] === Maintenance completed with outcome=success (exit_code=0, duration=2.68s) ===\nterminal={\"outcome\": \"success\", \"exit_code\": 0}"
+      },
+      "stderr_log": {
+        "path": "/Users/tai/development-space/automation/plugin-mcp-skills-update/logs/stderr.log",
+        "exists": true,
+        "size": 0,
+        "size_formatted": "0 B",
+        "modified": "2026-10-24 22:25:38",
+        "snippet": ""
+      },
+      "last_exit_code": 0,
+      "pid": null,
+      "is_active": true,
+      "description": "Automated background task running python3.",
       "keep_alive": false,
       "run_at_load": false
     },
@@ -300,20 +499,20 @@
       "program": "/opt/miniconda3/envs/core/bin/python3",
       "arguments": [
         "/opt/miniconda3/envs/core/bin/python3",
-        "/Users/tai/learn/automation/scripts/run_pipeline.py"
+        "/Users/tai/academic-space/knowledge-space/automation/scripts/run_pipeline.py"
       ],
       "working_dir": null,
       "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.learn.notion-export.plist",
       "stdout_log": {
-        "path": "/Users/tai/learn/automation/logs/launchd.stdout.log",
+        "path": "/Users/tai/academic-space/knowledge-space/automation/logs/launchd.stdout.log",
         "exists": true,
-        "size": 1389,
-        "size_formatted": "1.4 KB",
-        "modified": "2026-10-22 00:00:08",
-        "snippet": "hint: Disable this message with \"git config set advice.diverging false\"\nfatal: Not possible to fast-forward, aborting.\n[2026-10-22 00:00:05] [INFO] Step 1: Fetching Ready pages from Notion database...\n[2026-10-22 00:00:08] [INFO] Notion export completed. 0 new file(s) pulled.\n[2026-10-22 00:00:08] [INFO] No new files exported from Notion. Pipeline completed cleanly."
+        "size": 4920,
+        "size_formatted": "4.8 KB",
+        "modified": "2026-10-25 00:00:12",
+        "snippet": "hint: Disable this message with \"git config set advice.diverging false\"\nfatal: Not possible to fast-forward, aborting.\n[2026-10-25 00:00:06] [INFO] Step 1: Fetching Ready pages from Notion database...\n[2026-10-25 00:00:12] [INFO] Notion export completed. 0 new file(s) pulled.\n[2026-10-25 00:00:12] [INFO] No new files exported from Notion. Pipeline completed cleanly."
       },
       "stderr_log": {
-        "path": "/Users/tai/learn/automation/logs/launchd.stderr.log",
+        "path": "/Users/tai/academic-space/knowledge-space/automation/logs/launchd.stderr.log",
         "exists": true,
         "size": 0,
         "size_formatted": "0 B",
@@ -347,10 +546,10 @@
       "stdout_log": {
         "path": "/Users/tai/development-space/automation/linear-notion-tracking/logs/launchd.stdout.log",
         "exists": true,
-        "size": 967,
-        "size_formatted": "967 B",
-        "modified": "2026-10-22 00:00:04",
-        "snippet": "2026-10-22 00:00:04,138 [INFO] [TAI-81] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] [TAI-80] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] [TAI-79] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] [TAI-78] No property changes detected. Skipping.\n2026-10-22 00:00:04,138 [INFO] Sync complete. Stats: {'created': 0, 'updated': 0, 'skipped': 5, 'dry-run': 0}"
+        "size": 3868,
+        "size_formatted": "3.8 KB",
+        "modified": "2026-10-25 00:00:07",
+        "snippet": "2026-10-25 00:00:07,045 [INFO] [TAI-81] No property changes detected. Skipping.\n2026-10-25 00:00:07,045 [INFO] [TAI-80] No property changes detected. Skipping.\n2026-10-25 00:00:07,045 [INFO] [TAI-79] No property changes detected. Skipping.\n2026-10-25 00:00:07,046 [INFO] [TAI-78] No property changes detected. Skipping.\n2026-10-25 00:00:07,046 [INFO] Sync complete. Stats: {'created': 0, 'updated': 0, 'skipped': 5, 'dry-run': 0}"
       },
       "stderr_log": {
         "path": "/Users/tai/development-space/automation/linear-notion-tracking/logs/launchd.stderr.log",
@@ -387,10 +586,10 @@
       "stdout_log": {
         "path": "/Users/tai/.agents/automation/model-control/logs/launchd.stdout.log",
         "exists": true,
-        "size": 3425,
-        "size_formatted": "3.3 KB",
-        "modified": "2026-10-22 00:00:34",
-        "snippet": "📊 HyperResearch : LOCKED  (muse-spark-1.3-contributor)\n📊 PaperQA (pqa) : DYNAMIC (minimax-m3.1-flash-free | Reasoning: Medium)\n============================================================\n📚 All PDFs in knowledge-base are up to date with index.\n=== [2026-10-22 00:00:34] Automated sync finished successfully ==="
+        "size": 4658,
+        "size_formatted": "4.5 KB",
+        "modified": "2026-10-25 00:01:14",
+        "snippet": "=== [2026-10-24 00:00:39] Automated sync finished successfully ===\n=== [2026-10-25 00:00:02] Starting automated model-control sync ===\n{\"dateUpdated\": \"2026-10-25T00:00:51.862993+07:00\", \"selected\": \"opencode-go/beam-free\", \"freshToday\": true}\n📚 All PDFs in knowledge-base are up to date with index.\n=== [2026-10-25 00:01:14] Automated sync finished successfully ==="
       },
       "stderr_log": {
         "path": "/Users/tai/.agents/automation/model-control/logs/launchd.stderr.log",
@@ -408,6 +607,48 @@
       "run_at_load": false
     },
     {
+      "id": "com.tai.update-plugins-mcp-skills",
+      "label": "com.tai.update-plugins-mcp-skills",
+      "name": "Update-Plugins-Mcp-Skills",
+      "category": "custom",
+      "type": "LaunchAgent",
+      "status": "Loaded (Idle)",
+      "status_code": "idle",
+      "schedule": "Daily at 03:00",
+      "schedule_type": "calendar",
+      "program": "/opt/miniconda3/envs/core/bin/python3",
+      "arguments": [
+        "/opt/miniconda3/envs/core/bin/python3",
+        "/Users/tai/.agents/automation/update_plugins-mcp-skills/backend/main.py",
+        "--report-root",
+        "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs"
+      ],
+      "working_dir": null,
+      "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.update-plugins-mcp-skills.plist",
+      "stdout_log": {
+        "path": "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stdout.log",
+        "exists": true,
+        "size": 3800,
+        "size_formatted": "3.7 KB",
+        "modified": "2026-10-25 03:00:19",
+        "snippet": "[2026-10-24T20:00:17.378054+00:00] Phase 3: Global skills update OK (exit 0, reconciled=[])\n[2026-10-24T20:00:17.378530+00:00] Phase 4: Syncing skill mirrors...\n[2026-10-24T20:00:19.439518+00:00] Phase 4: Skill mirrors synchronized OK\n[2026-10-24T20:00:19.443441+00:00] === Maintenance completed with outcome=success (exit_code=0, duration=17.53s) ===\nterminal={\"outcome\": \"success\", \"exit_code\": 0}"
+      },
+      "stderr_log": {
+        "path": "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stderr.log",
+        "exists": true,
+        "size": 0,
+        "size_formatted": "0 B",
+        "modified": "2026-10-24 23:31:49",
+        "snippet": ""
+      },
+      "last_exit_code": 0,
+      "pid": null,
+      "is_active": true,
+      "description": "Automated background task running python3.",
+      "keep_alive": false,
+      "run_at_load": false
+    },
+    {
       "id": "com.tai.zotero-oakreader-sync",
       "label": "com.tai.zotero-oakreader-sync",
       "name": "Zotero-Oakreader-Sync",
@@ -420,7 +661,7 @@
       "program": "/usr/local/bin/python3",
       "arguments": [
         "/usr/local/bin/python3",
-        "/Users/tai/learn/automation/zotero-oakreader/zotero-oakreader.py",
+        "/Users/tai/academic-space/knowledge-space/automation/zotero-oakreader/zotero-oakreader.py",
         "sync",
         "--auto"
       ],
@@ -428,19 +669,19 @@
       "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.zotero-oakreader-sync.plist",
       "stdout_log": {
         "path": "/Users/tai/OakReader/logs/sync-cron.log",
-        "exists": false,
-        "size": 0,
-        "size_formatted": "0 B",
-        "modified": null,
-        "snippet": ""
+        "exists": true,
+        "size": 11407,
+        "size_formatted": "11.1 KB",
+        "modified": "2026-10-25 02:01:20",
+        "snippet": "[2026-10-25 02:01:20]   NEW [4YS5B4U3] Solid State Materials Chemistry\n[2026-10-25 02:01:20]   NEW [2FTLHUG3] Roadmap to neuromorphic computing with emerging technol\n[2026-10-25 02:01:20]   NEW [JVD68K8J] A comprehensive review on emerging artificial neuromorp\n[2026-10-25 02:01:20]   NEW [I86JSXPL] Emerging Materials for Neuromorphic Devices and Systems\n[2026-10-25 02:01:20] ===== sync end ====="
       },
       "stderr_log": {
         "path": "/Users/tai/OakReader/logs/sync-cron.log",
-        "exists": false,
-        "size": 0,
-        "size_formatted": "0 B",
-        "modified": null,
-        "snippet": ""
+        "exists": true,
+        "size": 11407,
+        "size_formatted": "11.1 KB",
+        "modified": "2026-10-25 02:01:20",
+        "snippet": "[2026-10-25 02:01:20]   NEW [4YS5B4U3] Solid State Materials Chemistry\n[2026-10-25 02:01:20]   NEW [2FTLHUG3] Roadmap to neuromorphic computing with emerging technol\n[2026-10-25 02:01:20]   NEW [JVD68K8J] A comprehensive review on emerging artificial neuromorp\n[2026-10-25 02:01:20]   NEW [I86JSXPL] Emerging Materials for Neuromorphic Devices and Systems\n[2026-10-25 02:01:20] ===== sync end ====="
       },
       "last_exit_code": 0,
       "pid": null,
@@ -521,18 +762,18 @@
       "stdout_log": {
         "path": "/Users/tai/.codex/codex-router/router.log",
         "exists": true,
-        "size": 9054900,
-        "size_formatted": "8.6 MB",
-        "modified": "2026-10-22 13:30:31",
-        "snippet": "INFO:     127.0.0.1:59497 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59511 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59528 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59555 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59598 - \"GET /health/liveliness HTTP/1.1\" 200 OK"
+        "size": 10306489,
+        "size_formatted": "9.8 MB",
+        "modified": "2026-10-25 11:15:01",
+        "snippet": "INFO:     127.0.0.1:60593 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60643 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60673 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60692 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60706 - \"GET /health/liveliness HTTP/1.1\" 200 OK"
       },
       "stderr_log": {
         "path": "/Users/tai/.codex/codex-router/router.log",
         "exists": true,
-        "size": 9054900,
-        "size_formatted": "8.6 MB",
-        "modified": "2026-10-22 13:30:31",
-        "snippet": "INFO:     127.0.0.1:59497 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59511 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59528 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59555 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:59598 - \"GET /health/liveliness HTTP/1.1\" 200 OK"
+        "size": 10306489,
+        "size_formatted": "9.8 MB",
+        "modified": "2026-10-25 11:15:01",
+        "snippet": "INFO:     127.0.0.1:60593 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60643 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60673 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60692 - \"GET /health/liveliness HTTP/1.1\" 200 OK\nINFO:     127.0.0.1:60706 - \"GET /health/liveliness HTTP/1.1\" 200 OK"
       },
       "last_exit_code": 0,
       "pid": 20696,
@@ -561,18 +802,18 @@
       "stdout_log": {
         "path": "/opt/homebrew/var/log/ollama.log",
         "exists": true,
-        "size": 36125596,
-        "size_formatted": "34.5 MB",
-        "modified": "2026-10-22 06:34:05",
-        "snippet": "[GIN] 2026/10/22 - 00:10:40 | 200 |    4.825208ms |       127.0.0.1 | POST     \"/api/show\"\n[GIN] 2026/10/22 - 00:11:10 | 200 |    3.928667ms |       127.0.0.1 | GET      \"/api/tags\"\n[GIN] 2026/10/22 - 00:11:10 | 200 |    2.568292ms |       127.0.0.1 | POST     \"/api/show\"\ntime=2026-10-22T03:16:14.136+07:00 level=INFO source=model_recommendations.go:177 msg=\"model recommendations cache sleep scheduled\" wait=3h17m51.317490795s consecutive_failures=0\ntime=2026-10-22T06:34:05.912+07:00 level=INFO source=model_recommendations.go:177 msg=\"model recommendations cache sleep scheduled\" wait=3h40m10.655703401s consecutive_failures=0"
+        "size": 36451063,
+        "size_formatted": "34.8 MB",
+        "modified": "2026-10-25 11:15:03",
+        "snippet": "[GIN] 2026/10/25 - 11:14:03 | 200 |    8.541666ms |       127.0.0.1 | POST     \"/api/show\"\n[GIN] 2026/10/25 - 11:14:33 | 200 |    5.269792ms |       127.0.0.1 | GET      \"/api/tags\"\n[GIN] 2026/10/25 - 11:14:33 | 200 |    8.024667ms |       127.0.0.1 | POST     \"/api/show\"\n[GIN] 2026/10/25 - 11:15:03 | 200 |   11.696333ms |       127.0.0.1 | GET      \"/api/tags\"\n[GIN] 2026/10/25 - 11:15:03 | 200 |    4.272791ms |       127.0.0.1 | POST     \"/api/show\""
       },
       "stderr_log": {
         "path": "/opt/homebrew/var/log/ollama.log",
         "exists": true,
-        "size": 36125596,
-        "size_formatted": "34.5 MB",
-        "modified": "2026-10-22 06:34:05",
-        "snippet": "[GIN] 2026/10/22 - 00:10:40 | 200 |    4.825208ms |       127.0.0.1 | POST     \"/api/show\"\n[GIN] 2026/10/22 - 00:11:10 | 200 |    3.928667ms |       127.0.0.1 | GET      \"/api/tags\"\n[GIN] 2026/10/22 - 00:11:10 | 200 |    2.568292ms |       127.0.0.1 | POST     \"/api/show\"\ntime=2026-10-22T03:16:14.136+07:00 level=INFO source=model_recommendations.go:177 msg=\"model recommendations cache sleep scheduled\" wait=3h17m51.317490795s consecutive_failures=0\ntime=2026-10-22T06:34:05.912+07:00 level=INFO source=model_recommendations.go:177 msg=\"model recommendations cache sleep scheduled\" wait=3h40m10.655703401s consecutive_failures=0"
+        "size": 36451063,
+        "size_formatted": "34.8 MB",
+        "modified": "2026-10-25 11:15:03",
+        "snippet": "[GIN] 2026/10/25 - 11:14:03 | 200 |    8.541666ms |       127.0.0.1 | POST     \"/api/show\"\n[GIN] 2026/10/25 - 11:14:33 | 200 |    5.269792ms |       127.0.0.1 | GET      \"/api/tags\"\n[GIN] 2026/10/25 - 11:14:33 | 200 |    8.024667ms |       127.0.0.1 | POST     \"/api/show\"\n[GIN] 2026/10/25 - 11:15:03 | 200 |   11.696333ms |       127.0.0.1 | GET      \"/api/tags\"\n[GIN] 2026/10/25 - 11:15:03 | 200 |    4.272791ms |       127.0.0.1 | POST     \"/api/show\""
       },
       "last_exit_code": 0,
       "pid": 58084,

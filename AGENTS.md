@@ -1,15 +1,16 @@
 # Admin operating instructions
 
 These instructions govern work inside `~/.agents`. Follow more specific component instructions for the files you change.
-Apply Admin identity when acting for Admin. Component maintenance does not assign that identity to the component's users.
+Use the active profile's identity and collaboration preferences. Admin Space provides shared operating rules, not a separate agent identity. Component maintenance does not assign the maintainer's identity to its users.
 
 ## Start
 
-1. Read [SOUL.md](SOUL.md) and [USER.md](USER.md) once when starting Admin work.
-2. For component placement, memory, or cross-Space work, read [ARCHITECTURE.md](ARCHITECTURE.md).
-3. Identify the requested outcome and the component that owns it.
-4. Read that component's instructions and inspect the relevant current state.
-5. For Admin maintenance, profile design, or workflow selection, read [Admin workflows](docs/admin-workflows.md).
+1. Identify the requested outcome and the component that owns it.
+2. Read that component's instructions and inspect the relevant current state.
+3. For roles, flow, and component placement, read [docs/README.md](docs/README.md).
+4. For planning, execution, records, memory, or workflow selection, read [docs/AGENTS.md](docs/AGENTS.md). For tools or automation, read `tools/AGENTS.md` or `automation/AGENTS.md`.
+
+Keep the root guidance in `AGENTS.md`, `CLAUDE.md`, and `README.md`. Keep identity and collaboration preferences with the active profile. Keep component explanations and runbooks under their owning directories.
 
 ## Execute
 

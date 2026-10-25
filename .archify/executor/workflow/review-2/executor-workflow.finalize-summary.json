@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+    "sha256": "cfa6dc260da39c520e651b9ad767171bd35a6089b451719ec49ee85e150f277d",
+    "bytes": 5266
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+    "sha256": "4ff38c26c561c5164f91aefb914e6a08230a41d5bb8f1fea7247002ccdc58c64",
+    "bytes": 828998
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/executor/workflow/review-2/executor-workflow.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-2/executor-workflow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-2/executor-workflow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4088,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "standard",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/secretary/sources/unified-secretary-20261025-130000/candidate2.json",
+    "sha256": "6a40a17551e899ec18e2118a108ab2c4f7b657de56ced4481d8d437134497fce",
+    "bytes": 13894
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+    "sha256": "7072a4386cae7aa677411aa225fce8d866431e2b9224844a863f8a59375ebc19",
+    "bytes": 869249
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/evidence-path-conflict",
+      "severity": "error",
+      "message": "browser-check will not replace the existing unowned evidence path \"/Users/tai/.agents/docs/profiles/secretary/unified-baseline.browser-check.json\".",
+      "subject": {
+        "artifact": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+        "evidencePath": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.browser-check.json"
+      },
+      "evidence": {
+        "reason": {
+          "code": "ownership-artifact-mismatch"
+        }
+      },
+      "supportedFixes": [
+        "move the conflicting file aside, or choose a separate --out-dir, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1284,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

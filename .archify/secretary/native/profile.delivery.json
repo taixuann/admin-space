@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "0cdebebe-bf9d-41ad-9576-38cd3a6bc134",
+  "status": "current",
+  "command": "deliver",
+  "type": "tree",
+  "input": "/Users/tai/.agents/.archify/tree-secretary-profile-20261025-101703/candidate.json",
+  "output": "/Users/tai/.agents/docs/profiles/secretary/profile.html",
+  "specification": {
+    "sha256": "8dd6b64cfcf1d5a4d1d81fd2e179251bdb68e297bcbba263ce38b08a6f4bda77",
+    "bytes": 3543
+  },
+  "artifact": {
+    "sha256": "aabcc997205296abdbbfac0ec4d32b46b3ba55d808bc2e828a363d34119bffa5",
+    "bytes": 823833
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": {
+    "title": "Secretary — role, memory, capabilities and permissions",
+    "locale": "en",
+    "output": "docs/profiles/secretary/profile.html",
+    "quality_profile": "showcase"
+  },
+  "layout": {"direction":"right"},
+  "nodes": [
+    {"id":"secretary","label":"Secretary","sublabel":"Tai leads; Secretary owns follow-through"},
+    {"id":"memory","parent":"secretary","label":"Memory","sublabel":"Hindsight: target bank admin"},
+    {"id":"capabilities","parent":"secretary","label":"Capabilities","sublabel":"Approved targets in capabilities.yaml"},
+    {"id":"skills","parent":"capabilities","label":"Skills","sublabel":"Brainstorm, plan, document, verify"},
+    {"id":"plugins","parent":"capabilities","label":"Plugins","sublabel":"Superpowers and Hindsight"},
+    {"id":"mcps","parent":"capabilities","label":"MCPs","sublabel":"No approved targets selected"},
+    {"id":"tools","parent":"capabilities","label":"External tools","sublabel":"OpenCode implements; ntn accesses Notion"},
+    {"id":"automation","parent":"capabilities","label":"Automation","sublabel":"On-demand inventory build; no scheduler"},
+    {"id":"work","parent":"secretary","label":"Work and execution","sublabel":"Plan, dispatch, observe, verify, report"},
+    {"id":"permissions","parent":"secretary","label":"Admin Space permissions","sublabel":"Scoped Admin edits; other Spaces read-only"},
+    {"id":"coordination","parent":"secretary","label":"Coordinator handoff","sublabel":"Cross-Space bot communication within scope"}
+  ],
+  "cards": [
+    {"dot":"cyan","title":"How Secretary uses the capabilities","items":["Superpowers supports brainstorming with Tai, planning, skill authoring when needed, and verification. Documentation and Archify explain the system; Hermes and Notion skills guide their own operations.","Secretary sends bounded briefs to the OpenCode controller, observes work and review, checks returned evidence, updates Admin records, and reports to Tai. The controller selects one execution lifecycle rather than stacking competing workflows."]},
+    {"dot":"amber","title":"Memory target versus observed state","items":["The desired Hindsight bank is admin. Recall previously failed because localhost:8888 was unreachable; this Hermes session identified bank hermes. Wiring and health are unresolved, not changed by this map.","Keep compact continuity and source pointers in recall. Current instructions and canonical evidence stay at their owner. Reusable procedures belong in skills, not copied into memory."]},
+    {"dot":"rose","title":"Authority and communication boundary","items":["Tai retains approval of commits, destructive operations, publication, external sharing, scientific acceptance, and Hermes configuration changes. Every worker inherits the same scope.","Secretary and OpenCode focus on Admin-local work. Coordinator communicates with other Spaces' bots when authorized; those Spaces retain their artifacts and domain authority. Session-specific exclusions still apply."]},
+    {"dot":"emerald","title":"How to read this profile map","items":["Branches decompose the agreed profile responsibilities; they are not runtime calls or proof of working connections. Capability targets come from docs/profiles/secretary/capabilities.yaml; role and access come from the profile README and Admin instructions.","The prior capabilities.html is an inventory view, not this profile map. No watcher, service, memory migration, or plugin change is activated here."]}
+  ]
+}

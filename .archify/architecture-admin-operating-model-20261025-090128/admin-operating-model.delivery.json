@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "385a641f-ef2f-4576-8ca9-07c592d53e6b",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/tai/.agents/.archify/architecture-admin-operating-model-20261025-090128/candidate.json",
+  "output": "/Users/tai/.agents/.archify/architecture-admin-operating-model-20261025-090128/admin-operating-model.html",
+  "specification": {
+    "sha256": "5e1ffab1af455ad18bbb92de5a54739c7b042819dc6e6a8333f6a8be4fbd418d",
+    "bytes": 3643
+  },
+  "artifact": {
+    "sha256": "7ee072e7d8731fd11d0480273ad060a08ec73ff571f39d8de1884e1806edf7fb",
+    "bytes": 819005
+  }
+}

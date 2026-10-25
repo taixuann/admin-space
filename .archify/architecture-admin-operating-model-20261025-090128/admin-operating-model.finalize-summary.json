@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/architecture-admin-operating-model-20261025-090128/candidate.json",
+    "sha256": "05ca368cd9e8af3686e7ea162de68350acdc7fea983385d3463c56154a8168fe",
+    "bytes": 3172
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/architecture-admin-operating-model-20261025-090128/admin-operating-model.html",
+    "sha256": "8c9aa9dbc8bb2fc9c91050f1c3c5e6eacbd3b1c93b1cf57068b2dece6b559729",
+    "bytes": 818513
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/architecture-admin-operating-model-20261025-090128/admin-operating-model.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/architecture-admin-operating-model-20261025-090128/admin-operating-model.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/architecture-admin-operating-model-20261025-090128/admin-operating-model.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 9110,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {"title": "Two Spaces: profiles, execution and authority", "locale": "en", "output": "docs/profiles/ecosystem.html", "quality_profile": "showcase"},
+  "components": [
+    {"id":"tai","type":"external","icon":"person","label":"Tai","sublabel":"Direction and final authority","pos":[40,40],"size":[220,64]},
+    {"id":"secretary","type":"backend","label":"Secretary","sublabel":"Admin ideas, plans, verification","pos":[40,230],"size":[220,68]},
+    {"id":"coordinator","type":"messagebus","label":"Coordinator","sublabel":"Scoped cross-Space communication","pos":[390,230],"size":[240,68]},
+    {"id":"forge","type":"backend","label":"Forge","sublabel":"Tool ideas, plans and supervision","pos":[820,230],"size":[240,68]},
+    {"id":"adminworkers","type":"backend","label":"Admin execution team","sublabel":"OpenCode controller / workers / review","pos":[40,430],"size":[260,68]},
+    {"id":"devworkers","type":"backend","label":"Development execution team","sublabel":"Controller / workers / reviewers","pos":[820,430],"size":[240,68]},
+    {"id":"adminrecords","type":"database","label":"Admin-owned records","sublabel":"Rules, profiles, plans and evidence","pos":[40,630],"size":[260,68]},
+    {"id":"toolrepos","type":"database","label":"Independent tool repositories","sublabel":"Canonical code, tests and tool jobs","pos":[820,630],"size":[260,68]}
+  ],
+  "boundaries":[
+    {"kind":"region","label":"Admin Space · ~/.agents · other Spaces read-only by default","wraps":["secretary","coordinator","adminworkers","adminrecords"],"pad":24},
+    {"kind":"region","label":"Development Space · ~/development-space","wraps":["forge","devworkers","toolrepos"],"pad":24}
+  ],
+  "connections":[
+    {"id":"direct","from":"tai","to":"secretary","label":"direct / approve","variant":"security"},
+    {"id":"handoff","from":"secretary","to":"coordinator","label":"authorized handoff"},
+    {"id":"communicate","from":"coordinator","to":"forge","label":"request / evidence pointers"},
+    {"id":"adminscope","from":"secretary","to":"adminworkers","label":"scoped Admin brief"},
+    {"id":"devscope","from":"forge","to":"devworkers","label":"approved engineering plan"},
+    {"id":"adminresults","from":"adminworkers","to":"adminrecords","label":"verified changes"},
+    {"id":"devresults","from":"devworkers","to":"toolrepos","label":"implement / test"}
+  ],
+  "cards":[
+    {"dot":"cyan","title":"Role agreement, not deployment evidence","items":["Secretary owns Admin follow-through and reports verified outcomes to Tai.","Coordinator returns responses; communication transfers neither ownership nor write authority.","Forge supervises internal-tool development. Each repository retains source ownership.","Executors implement and review bounded jobs; they do not inherit broader planning or publication authority."]},
+    {"dot":"emerald","title":"Canonical Secretary identity: linked","items":["Maintained source: docs/profiles/secretary/SOUL.md.","~/.hermes/SOUL.md is a symlink to that source. Resolution and identical bytes verified on 2026-10-25.","HERMES_HOME remains ~/.hermes. Configuration, credentials, sessions and native memory stay there.","Project AGENTS.md remains separate from profile identity. Fresh-session identity loading is not yet verified."]},
+    {"dot":"violet","title":"Information ownership","items":["Space instructions own operating rules and boundaries; profile SOUL owns role and conduct.","capabilities.yaml records selected targets, not proof of installation or operation.","Skills own reusable methods. Memory holds compact continuity and pointers, not policy copies.","Hindsight recall is unavailable at localhost:8888; hermes versus admin bank mapping remains unresolved."]},
+    {"dot":"rose","title":"Authority and current limits","items":["Tai retains approval of commits, publication, external sharing, destructive actions, scientific acceptance and Hermes configuration changes.","Admin profiles treat other Spaces as read-only except explicitly approved bounded profile/runtime maintenance.","No Coordinator or Forge runtime identity was changed or deployed by this diagram task.","Sources: Tai's two-Space role direction; docs/admin-space.md; docs/profiles/*/README.md; Development Space AGENTS.md. Arrows show responsibility flow, not measured runtime calls."]}
+  ]
+}

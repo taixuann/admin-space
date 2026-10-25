@@ -1,0 +1,864 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Secretary unified profile: workflow, capabilities, identity, memory, environment, and authority",
+    "subtitle": "One connected model; targets and authority, not runtime proof. Conditional branches are not mandatory.",
+    "visual_preset": "classic",
+    "quality_profile": "standard",
+    "output": "docs/profiles/secretary/unified-baseline.html"
+  },
+  "components": [
+    {
+      "id": "tai",
+      "type": "external",
+      "label": "Tai",
+      "sublabel": "final authority",
+      "pos": [
+        60,
+        60
+      ],
+      "size": [
+        110,
+        56
+      ]
+    },
+    {
+      "id": "secretary",
+      "type": "backend",
+      "label": "Secretary profile",
+      "sublabel": "docs/profiles/secretary",
+      "pos": [
+        260,
+        60
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "approval",
+      "type": "security",
+      "label": "Approval gates",
+      "sublabel": "commits, destructive, publish",
+      "pos": [
+        260,
+        180
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "identity",
+      "type": "security",
+      "label": "Identity",
+      "sublabel": "SOUL + shared rules",
+      "pos": [
+        460,
+        60
+      ],
+      "size": [
+        130,
+        56
+      ]
+    },
+    {
+      "id": "soul_active",
+      "type": "security",
+      "label": "Active SOUL.md",
+      "sublabel": "~/.hermes/SOUL.md symlink",
+      "pos": [
+        460,
+        180
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "soul_canonical",
+      "type": "database",
+      "label": "Canonical SOUL source",
+      "sublabel": "docs/profiles/secretary/SOUL.md",
+      "pos": [
+        660,
+        60
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "shared_rules",
+      "type": "database",
+      "label": "Shared rules",
+      "sublabel": "SOUL.md / USER.md",
+      "pos": [
+        660,
+        180
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "hermes",
+      "type": "cloud",
+      "label": "Hermes runtime",
+      "sublabel": "~/.hermes",
+      "pos": [
+        860,
+        60
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "memory",
+      "type": "database",
+      "label": "Hindsight",
+      "sublabel": "desired admin; observed hermes",
+      "pos": [
+        860,
+        180
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "agents",
+      "type": "backend",
+      "label": "~/.agents",
+      "sublabel": "read-write scoped tasks",
+      "pos": [
+        1060,
+        60
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "other_spaces",
+      "type": "external",
+      "label": "Other Spaces",
+      "sublabel": "read-only",
+      "pos": [
+        1060,
+        180
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "coordinator",
+      "type": "messagebus",
+      "label": "Coordinator",
+      "sublabel": "cross-Space comms",
+      "pos": [
+        1260,
+        180
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "permissions",
+      "type": "security",
+      "label": "Permissions",
+      "sublabel": "read/write, gates",
+      "pos": [
+        460,
+        300
+      ],
+      "size": [
+        130,
+        56
+      ]
+    },
+    {
+      "id": "request",
+      "type": "external",
+      "label": "Request",
+      "sublabel": "Tai asks",
+      "pos": [
+        60,
+        420
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "inspect",
+      "type": "backend",
+      "label": "Inspect context",
+      "sublabel": "docs, YAML, runtime",
+      "pos": [
+        240,
+        420
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "memory_context",
+      "type": "backend",
+      "label": "Memory context",
+      "sublabel": "Hindsight desired",
+      "pos": [
+        240,
+        520
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "brainstorm",
+      "type": "backend",
+      "label": "Brainstorm if needed",
+      "sublabel": "superpowers:brainstorming",
+      "pos": [
+        420,
+        380
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "plan",
+      "type": "backend",
+      "label": "Plan if needed",
+      "sublabel": "superpowers:writing-plans",
+      "pos": [
+        420,
+        460
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "perform_direct",
+      "type": "backend",
+      "label": "Perform directly",
+      "sublabel": "small scoped work",
+      "pos": [
+        420,
+        540
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "delegate",
+      "type": "backend",
+      "label": "Delegate via opencode",
+      "sublabel": "implementation path",
+      "pos": [
+        600,
+        460
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "skill_work",
+      "type": "backend",
+      "label": "Create or revise skills",
+      "sublabel": "writing-skills",
+      "pos": [
+        600,
+        380
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "verify",
+      "type": "backend",
+      "label": "Verify",
+      "sublabel": "verification-before-completion",
+      "pos": [
+        780,
+        460
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "record_report",
+      "type": "backend",
+      "label": "Record and report",
+      "sublabel": "docs, tickets",
+      "pos": [
+        960,
+        460
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "render_map",
+      "type": "backend",
+      "label": "Render profile map",
+      "sublabel": "on-demand renderer",
+      "pos": [
+        960,
+        540
+      ],
+      "size": [
+        150,
+        56
+      ],
+      "tag": "workflow stage"
+    },
+    {
+      "id": "cap_superpowers_brainstorming",
+      "type": "backend",
+      "label": "superpowers:brainstorming",
+      "sublabel": "skills",
+      "pos": [
+        60,
+        680
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_superpowers_writing_plans",
+      "type": "backend",
+      "label": "superpowers:writing-plans",
+      "sublabel": "skills",
+      "pos": [
+        270,
+        680
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_superpowers_writing_skills",
+      "type": "backend",
+      "label": "superpowers:writing-skills",
+      "sublabel": "skills",
+      "pos": [
+        480,
+        680
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_superpowers_verification_before_completion",
+      "type": "backend",
+      "label": "superpowers:verification-before-completion",
+      "sublabel": "skills",
+      "pos": [
+        690,
+        680
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_documentation_writer",
+      "type": "backend",
+      "label": "documentation-writer",
+      "sublabel": "skills",
+      "pos": [
+        900,
+        680
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_writing_for_agents",
+      "type": "backend",
+      "label": "writing-for-agents",
+      "sublabel": "skills",
+      "pos": [
+        1110,
+        680
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_archify",
+      "type": "backend",
+      "label": "archify",
+      "sublabel": "skills",
+      "pos": [
+        60,
+        760
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_opencode",
+      "type": "backend",
+      "label": "opencode",
+      "sublabel": "skills",
+      "pos": [
+        270,
+        760
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_hermes_agent",
+      "type": "backend",
+      "label": "hermes-agent",
+      "sublabel": "skills",
+      "pos": [
+        480,
+        760
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_notion_cli",
+      "type": "backend",
+      "label": "notion-cli",
+      "sublabel": "skills",
+      "pos": [
+        690,
+        760
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "skills"
+    },
+    {
+      "id": "cap_superpowers",
+      "type": "backend",
+      "label": "superpowers",
+      "sublabel": "plugins",
+      "pos": [
+        900,
+        760
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "plugins"
+    },
+    {
+      "id": "cap_hindsight",
+      "type": "backend",
+      "label": "hindsight",
+      "sublabel": "target bank admin; desired only, not applied or he",
+      "pos": [
+        1110,
+        760
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "plugins"
+    },
+    {
+      "id": "cap_local_documentation_renderer_watcher_automation_profile_capabilities_on_demand_only_not_launchd",
+      "type": "backend",
+      "label": "local documentation renderer/watcher (automation/profile-capabilities); on-demand only; not launchd",
+      "sublabel": "automation",
+      "pos": [
+        60,
+        840
+      ],
+      "size": [
+        200,
+        56
+      ],
+      "tag": "automation"
+    }
+  ],
+  "boundaries": [],
+  "connections": [
+    {
+      "id": "tai-secretary",
+      "from": "tai",
+      "to": "secretary",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-approval",
+      "from": "secretary",
+      "to": "approval",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-identity",
+      "from": "secretary",
+      "to": "identity",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "identity-inspect",
+      "from": "identity",
+      "to": "inspect",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "identity-soul_active",
+      "from": "identity",
+      "to": "soul_active",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-soul_active",
+      "from": "secretary",
+      "to": "soul_active",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-soul_canonical",
+      "from": "secretary",
+      "to": "soul_canonical",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-shared_rules",
+      "from": "secretary",
+      "to": "shared_rules",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-agents",
+      "from": "secretary",
+      "to": "agents",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-hermes",
+      "from": "secretary",
+      "to": "hermes",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-other_spaces",
+      "from": "secretary",
+      "to": "other_spaces",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-coordinator",
+      "from": "secretary",
+      "to": "coordinator",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "coordinator-other_spaces",
+      "from": "coordinator",
+      "to": "other_spaces",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-memory",
+      "from": "secretary",
+      "to": "memory",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "secretary-permissions",
+      "from": "secretary",
+      "to": "permissions",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "permissions-delegate",
+      "from": "permissions",
+      "to": "delegate",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "request-inspect",
+      "from": "request",
+      "to": "inspect",
+      "variant": "emphasis",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "inspect-memory_context",
+      "from": "inspect",
+      "to": "memory_context",
+      "label": "memory-assisted",
+      "variant": "dashed",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "inspect-brainstorm",
+      "from": "inspect",
+      "to": "brainstorm",
+      "label": "if unclear",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "inspect-plan",
+      "from": "inspect",
+      "to": "plan",
+      "label": "if multi-step",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "inspect-perform_direct",
+      "from": "inspect",
+      "to": "perform_direct",
+      "label": "small work",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "brainstorm-plan",
+      "from": "brainstorm",
+      "to": "plan",
+      "label": "then",
+      "variant": "dashed",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "plan-delegate",
+      "from": "plan",
+      "to": "delegate",
+      "label": "implementation",
+      "variant": "emphasis",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "perform_direct-verify",
+      "from": "perform_direct",
+      "to": "verify",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "delegate-verify",
+      "from": "delegate",
+      "to": "verify",
+      "variant": "emphasis",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "verify-record_report",
+      "from": "verify",
+      "to": "record_report",
+      "variant": "emphasis",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_documentation_writer-inspect",
+      "from": "cap_documentation_writer",
+      "to": "inspect",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_hermes_agent-inspect",
+      "from": "cap_hermes_agent",
+      "to": "inspect",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_hindsight-memory_context",
+      "from": "cap_hindsight",
+      "to": "memory_context",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers_brainstorming-brainstorm",
+      "from": "cap_superpowers_brainstorming",
+      "to": "brainstorm",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers-brainstorm",
+      "from": "cap_superpowers",
+      "to": "brainstorm",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers_writing_plans-plan",
+      "from": "cap_superpowers_writing_plans",
+      "to": "plan",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers-plan",
+      "from": "cap_superpowers",
+      "to": "plan",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_opencode-delegate",
+      "from": "cap_opencode",
+      "to": "delegate",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers_writing_skills-skill_work",
+      "from": "cap_superpowers_writing_skills",
+      "to": "skill_work",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers-skill_work",
+      "from": "cap_superpowers",
+      "to": "skill_work",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers_verification_before_completion-verify",
+      "from": "cap_superpowers_verification_before_completion",
+      "to": "verify",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_superpowers-verify",
+      "from": "cap_superpowers",
+      "to": "verify",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_documentation_writer-record_report",
+      "from": "cap_documentation_writer",
+      "to": "record_report",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_writing_for_agents-record_report",
+      "from": "cap_writing_for_agents",
+      "to": "record_report",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_archify-record_report",
+      "from": "cap_archify",
+      "to": "record_report",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_notion_cli-record_report",
+      "from": "cap_notion_cli",
+      "to": "record_report",
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cap_local_documentation_renderer_watcher_automation_profile_capabilities_on_demand_only_not_launchd-render_map",
+      "from": "cap_local_documentation_renderer_watcher_automation_profile_capabilities_on_demand_only_not_launchd",
+      "to": "render_map",
+      "route": "orthogonal-h"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Conditional",
+      "items": [
+        "Brainstorm and plan are branches, not mandatory steps",
+        "Direct work and delegated implementation are alternate paths",
+        "Each request uses only needed capabilities"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Targets",
+      "items": [
+        "Approved capability targets are not runtime health",
+        "Disabling a capability affects authored stages only"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Authority",
+      "items": [
+        "Tai approves commits, destructive ops, publication",
+        "Other Spaces keep domain authority"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Runtime truth",
+      "items": [
+        "Hindsight target admin, observed bank hermes",
+        "localhost:8888 failure unresolved",
+        "SOUL.md is canonical source via symlink"
+      ]
+    }
+  ]
+}

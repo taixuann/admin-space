@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "3985d55a-5f9e-4248-9659-03ca5db96bde",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/tai/.agents/.archify/secretary/sources/unified-secretary-20261025-130000/candidate2.json",
+  "output": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+  "specification": {
+    "sha256": "4d6b44a98cbddc4caed83b213f5cd33c412bd0aca8cbb5b1713621e82569c577",
+    "bytes": 13345
+  },
+  "artifact": {
+    "sha256": "22c38c674680c98e29f7612336a293c7b0ba33d33e0b948f001d3784d74b3974",
+    "bytes": 861981
+  }
+}

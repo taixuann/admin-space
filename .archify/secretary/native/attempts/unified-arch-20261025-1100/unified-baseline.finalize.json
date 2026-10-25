@@ -1,0 +1,1789 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-10-25T04:46:08.005Z",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/secretary/sources/unified-secretary-20261025-120000/candidate.json",
+    "sha256": "c50397bd372d1688fd523cd9d4893ae9035396290a1cee5a35c34cf02f066812",
+    "bytes": 10976
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+    "sha256": "873de7d39b86cf15ce29a6eeefbea65f784ca7be48d2dc16ab2c3e22a82d28ed",
+    "bytes": 861720
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/tai/.agents/.archify/secretary/sources/unified-secretary-20261025-120000/candidate.json",
+        "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "c50397bd372d1688fd523cd9d4893ae9035396290a1cee5a35c34cf02f066812",
+          "bytes": 10976
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 538,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/tai/.agents/.archify/secretary/sources/unified-secretary-20261025-120000/candidate.json",
+        "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "9daf6b14-1fe9-4631-8ac9-d259691e1b82",
+        "ok": true,
+        "command": "deliver",
+        "type": "architecture",
+        "input": "/Users/tai/.agents/.archify/secretary/sources/unified-secretary-20261025-120000/candidate.json",
+        "output": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+        "specification": {
+          "sha256": "c50397bd372d1688fd523cd9d4893ae9035396290a1cee5a35c34cf02f066812",
+          "bytes": 10976
+        },
+        "artifact": {
+          "sha256": "873de7d39b86cf15ce29a6eeefbea65f784ca7be48d2dc16ab2c3e22a82d28ed",
+          "bytes": 861720
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 221,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+        "artifact": {
+          "sha256": "873de7d39b86cf15ce29a6eeefbea65f784ca7be48d2dc16ab2c3e22a82d28ed",
+          "bytes": 861720
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 30,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": null,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 7.5,
+            "maxBends": 5,
+            "routesOverSuggestedBends": 7,
+            "maxStretch": 1.226,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 12,
+            "minInteriorSegmentPx": 28,
+            "shortSegmentCount": 4,
+            "shortEndpointSegmentCount": 4,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [
+              {
+                "left": {
+                  "id": "secretary-soul-active",
+                  "from": "secretary",
+                  "to": "soul_active",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "id": "secretary-hermes",
+                  "from": "secretary",
+                  "to": "hermes",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "point": [
+                  377,
+                  148
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-active",
+                  "from": "secretary",
+                  "to": "soul_active",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "point": [
+                  391,
+                  148
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-active",
+                  "from": "secretary",
+                  "to": "soul_active",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "id": "secretary-cap-mcps",
+                  "from": "secretary",
+                  "to": "cap_mcps",
+                  "label": "",
+                  "collectionIndex": 25,
+                  "artifactIndex": 26
+                },
+                "point": [
+                  468,
+                  148
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-active",
+                  "from": "secretary",
+                  "to": "soul_active",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "right": {
+                  "id": "secretary-cap-automation",
+                  "from": "secretary",
+                  "to": "cap_automation",
+                  "label": "",
+                  "collectionIndex": 27,
+                  "artifactIndex": 28
+                },
+                "point": [
+                  460.00000000000006,
+                  148
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-snapshot",
+                  "from": "secretary",
+                  "to": "soul_snapshot",
+                  "label": "",
+                  "collectionIndex": 3,
+                  "artifactIndex": 4
+                },
+                "right": {
+                  "id": "secretary-hermes",
+                  "from": "secretary",
+                  "to": "hermes",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "point": [
+                  377,
+                  152
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-snapshot",
+                  "from": "secretary",
+                  "to": "soul_snapshot",
+                  "label": "",
+                  "collectionIndex": 3,
+                  "artifactIndex": 4
+                },
+                "right": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "point": [
+                  391,
+                  152
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-snapshot",
+                  "from": "secretary",
+                  "to": "soul_snapshot",
+                  "label": "",
+                  "collectionIndex": 3,
+                  "artifactIndex": 4
+                },
+                "right": {
+                  "id": "secretary-memory",
+                  "from": "secretary",
+                  "to": "memory",
+                  "label": "",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "point": [
+                  349.72727272727275,
+                  152
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-snapshot",
+                  "from": "secretary",
+                  "to": "soul_snapshot",
+                  "label": "",
+                  "collectionIndex": 3,
+                  "artifactIndex": 4
+                },
+                "right": {
+                  "id": "secretary-cap-mcps",
+                  "from": "secretary",
+                  "to": "cap_mcps",
+                  "label": "",
+                  "collectionIndex": 25,
+                  "artifactIndex": 26
+                },
+                "point": [
+                  468,
+                  152
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-soul-snapshot",
+                  "from": "secretary",
+                  "to": "soul_snapshot",
+                  "label": "",
+                  "collectionIndex": 3,
+                  "artifactIndex": 4
+                },
+                "right": {
+                  "id": "secretary-cap-automation",
+                  "from": "secretary",
+                  "to": "cap_automation",
+                  "label": "",
+                  "collectionIndex": 27,
+                  "artifactIndex": 28
+                },
+                "point": [
+                  460.00000000000006,
+                  152
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-shared",
+                  "from": "secretary",
+                  "to": "shared_rules",
+                  "label": "",
+                  "collectionIndex": 4,
+                  "artifactIndex": 5
+                },
+                "right": {
+                  "id": "secretary-coordinator",
+                  "from": "secretary",
+                  "to": "coordinator",
+                  "label": "",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "point": [
+                  249,
+                  332
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-shared",
+                  "from": "secretary",
+                  "to": "shared_rules",
+                  "label": "",
+                  "collectionIndex": 4,
+                  "artifactIndex": 5
+                },
+                "right": {
+                  "id": "secretary-cap-automation",
+                  "from": "secretary",
+                  "to": "cap_automation",
+                  "label": "",
+                  "collectionIndex": 27,
+                  "artifactIndex": 28
+                },
+                "point": [
+                  460.00000000000006,
+                  332
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-agents",
+                  "from": "secretary",
+                  "to": "agents",
+                  "label": "",
+                  "collectionIndex": 5,
+                  "artifactIndex": 6
+                },
+                "right": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "point": [
+                  653,
+                  297
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-agents",
+                  "from": "secretary",
+                  "to": "agents",
+                  "label": "",
+                  "collectionIndex": 5,
+                  "artifactIndex": 6
+                },
+                "right": {
+                  "id": "secretary-coordinator",
+                  "from": "secretary",
+                  "to": "coordinator",
+                  "label": "",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "point": [
+                  279,
+                  148
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-agents",
+                  "from": "secretary",
+                  "to": "agents",
+                  "label": "",
+                  "collectionIndex": 5,
+                  "artifactIndex": 6
+                },
+                "right": {
+                  "id": "secretary-cap-automation",
+                  "from": "secretary",
+                  "to": "cap_automation",
+                  "label": "",
+                  "collectionIndex": 27,
+                  "artifactIndex": 28
+                },
+                "point": [
+                  460.00000000000006,
+                  297
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-hermes",
+                  "from": "secretary",
+                  "to": "hermes",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "point": [
+                  652.6153846153846,
+                  169
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-hermes",
+                  "from": "secretary",
+                  "to": "hermes",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "secretary-memory",
+                  "from": "secretary",
+                  "to": "memory",
+                  "label": "",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "point": [
+                  377,
+                  156
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-hermes",
+                  "from": "secretary",
+                  "to": "hermes",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "secretary-cap-mcps",
+                  "from": "secretary",
+                  "to": "cap_mcps",
+                  "label": "",
+                  "collectionIndex": 25,
+                  "artifactIndex": 26
+                },
+                "point": [
+                  468,
+                  169
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-hermes",
+                  "from": "secretary",
+                  "to": "hermes",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "secretary-cap-automation",
+                  "from": "secretary",
+                  "to": "cap_automation",
+                  "label": "",
+                  "collectionIndex": 27,
+                  "artifactIndex": 28
+                },
+                "point": [
+                  460,
+                  168.99999999999997
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "right": {
+                  "id": "secretary-coordinator",
+                  "from": "secretary",
+                  "to": "coordinator",
+                  "label": "",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "point": [
+                  653,
+                  417
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "right": {
+                  "id": "secretary-cap-mcps",
+                  "from": "secretary",
+                  "to": "cap_mcps",
+                  "label": "",
+                  "collectionIndex": 25,
+                  "artifactIndex": 26
+                },
+                "point": [
+                  468,
+                  164
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "right": {
+                  "id": "secretary-cap-automation",
+                  "from": "secretary",
+                  "to": "cap_automation",
+                  "label": "",
+                  "collectionIndex": 27,
+                  "artifactIndex": 28
+                },
+                "point": [
+                  460.00000000000006,
+                  164
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-memory",
+                  "from": "secretary",
+                  "to": "memory",
+                  "label": "",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "right": {
+                  "id": "secretary-cap-mcps",
+                  "from": "secretary",
+                  "to": "cap_mcps",
+                  "label": "",
+                  "collectionIndex": 25,
+                  "artifactIndex": 26
+                },
+                "point": [
+                  468,
+                  156
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-memory",
+                  "from": "secretary",
+                  "to": "memory",
+                  "label": "",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "right": {
+                  "id": "secretary-cap-automation",
+                  "from": "secretary",
+                  "to": "cap_automation",
+                  "label": "",
+                  "collectionIndex": 27,
+                  "artifactIndex": 28
+                },
+                "point": [
+                  460,
+                  156
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "identity-inspect",
+                  "from": "identity",
+                  "to": "inspect",
+                  "label": "",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "right": {
+                  "id": "permissions-delegate",
+                  "from": "permissions",
+                  "to": "delegate",
+                  "label": "",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "point": [
+                  393,
+                  517
+                ]
+              },
+              {
+                "left": {
+                  "id": "identity-inspect",
+                  "from": "identity",
+                  "to": "inspect",
+                  "label": "",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "right": {
+                  "id": "inspect-brainstorm",
+                  "from": "inspect",
+                  "to": "brainstorm",
+                  "label": "",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "point": [
+                  393,
+                  548
+                ],
+                "sharedNode": "inspect"
+              },
+              {
+                "left": {
+                  "id": "permissions-delegate",
+                  "from": "permissions",
+                  "to": "delegate",
+                  "label": "",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "right": {
+                  "id": "plan-delegate",
+                  "from": "plan",
+                  "to": "delegate",
+                  "label": "",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "point": [
+                  597,
+                  636.05
+                ],
+                "sharedNode": "delegate"
+              },
+              {
+                "left": {
+                  "id": "permissions-delegate",
+                  "from": "permissions",
+                  "to": "delegate",
+                  "label": "",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "right": {
+                  "id": "inspect-direct",
+                  "from": "inspect",
+                  "to": "direct",
+                  "label": "",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "point": [
+                  597,
+                  592
+                ]
+              },
+              {
+                "left": {
+                  "id": "brainstorm-plan",
+                  "from": "brainstorm",
+                  "to": "plan",
+                  "label": "",
+                  "collectionIndex": 17,
+                  "artifactIndex": 18
+                },
+                "right": {
+                  "id": "inspect-direct",
+                  "from": "inspect",
+                  "to": "direct",
+                  "label": "",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "point": [
+                  475,
+                  592
+                ]
+              },
+              {
+                "left": {
+                  "id": "secretary-cap-skills",
+                  "from": "secretary",
+                  "to": "cap_skills",
+                  "label": "",
+                  "collectionIndex": 23,
+                  "artifactIndex": 24
+                },
+                "right": {
+                  "id": "secretary-cap-external",
+                  "from": "secretary",
+                  "to": "cap_external",
+                  "label": "",
+                  "collectionIndex": 26,
+                  "artifactIndex": 27
+                },
+                "point": [
+                  1145,
+                  36
+                ],
+                "sharedNode": "secretary"
+              },
+              {
+                "left": {
+                  "id": "secretary-cap-mcps",
+                  "from": "secretary",
+                  "to": "cap_mcps",
+                  "label": "",
+                  "collectionIndex": 25,
+                  "artifactIndex": 26
+                },
+                "right": {
+                  "id": "secretary-cap-external",
+                  "from": "secretary",
+                  "to": "cap_external",
+                  "label": "",
+                  "collectionIndex": 26,
+                  "artifactIndex": 27
+                },
+                "point": [
+                  1145,
+                  248
+                ],
+                "sharedNode": "secretary"
+              }
+            ],
+            "crowdedSides": [
+              {
+                "node": "secretary",
+                "label": "Secretary profile",
+                "side": "right",
+                "relationships": 13,
+                "sidePx": 64,
+                "neededPx": 200
+              },
+              {
+                "node": "inspect",
+                "label": "Inspect context",
+                "side": "right",
+                "relationships": 4,
+                "sidePx": 56,
+                "neededPx": 74
+              }
+            ],
+            "detours": [
+              {
+                "relationship": {
+                  "id": "secretary-agents",
+                  "from": "secretary",
+                  "to": "agents",
+                  "label": "",
+                  "collectionIndex": 5,
+                  "artifactIndex": 6
+                },
+                "bends": 5,
+                "stretch": 1.107
+              },
+              {
+                "relationship": {
+                  "id": "secretary-hermes",
+                  "from": "secretary",
+                  "to": "hermes",
+                  "label": "",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "bends": 3,
+                "stretch": 1.217,
+                "directCorridorBlockers": [
+                  {
+                    "id": "soul_active",
+                    "label": "Active SOUL.md",
+                    "box": [
+                      500,
+                      60,
+                      150,
+                      64
+                    ]
+                  }
+                ]
+              },
+              {
+                "relationship": {
+                  "id": "secretary-other",
+                  "from": "secretary",
+                  "to": "other_spaces",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "bends": 3,
+                "stretch": 1
+              },
+              {
+                "relationship": {
+                  "id": "secretary-coordinator",
+                  "from": "secretary",
+                  "to": "coordinator",
+                  "label": "",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "bends": 5,
+                "stretch": 1.058
+              },
+              {
+                "relationship": {
+                  "id": "permissions-delegate",
+                  "from": "permissions",
+                  "to": "delegate",
+                  "label": "",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "bends": 4,
+                "stretch": 1.091
+              },
+              {
+                "relationship": {
+                  "id": "secretary-cap-plugins",
+                  "from": "secretary",
+                  "to": "cap_plugins",
+                  "label": "",
+                  "collectionIndex": 24,
+                  "artifactIndex": 25
+                },
+                "bends": 3,
+                "stretch": 1.067
+              },
+              {
+                "relationship": {
+                  "id": "secretary-cap-external",
+                  "from": "secretary",
+                  "to": "cap_external",
+                  "label": "",
+                  "collectionIndex": 26,
+                  "artifactIndex": 27
+                },
+                "bends": 3,
+                "stretch": 1.07
+              }
+            ]
+          },
+          "leadingSpace": {
+            "measured": true,
+            "emptyTopPx": 20,
+            "emptyTopRatio": 0.026,
+            "occupiedTop": 20,
+            "viewBoxTop": 0,
+            "canvasHeight": 784,
+            "typicalNodeHeight": 56,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "recognized-declared-wide",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 1268.5185185185185,
+            "actualBudgetPx": 1268.5185185185185,
+            "actualReaderWidth": 1298.5185185185185,
+            "desiredReaderWidth": 1298.5185185185185,
+            "viewportCap": 1376,
+            "limit": "source-size",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": true,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "approval"
+            },
+            "minimumSourceTextPx": 8.1,
+            "minimumProjectedTextPx": 7.5,
+            "semanticTextCount": 54
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "9daf6b14-1fe9-4631-8ac9-d259691e1b82"
+      }
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 2411,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+        "--json",
+        "--require-provenance"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "9daf6b14-1fe9-4631-8ac9-d259691e1b82",
+        "artifact": {
+          "path": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+          "sha256": "873de7d39b86cf15ce29a6eeefbea65f784ca7be48d2dc16ab2c3e22a82d28ed",
+          "bytes": 861720
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 910,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1299,
+              "diagramWidth": 1269,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 94,
+                "diagramChromePx": 78,
+                "svgPx": 726,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 7.502846715328467,
+              "minimumProjectedNonEdgeTextPx": 7.502846715328467,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1320,
+              "diagramWidth": 1290,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 102,
+                "diagramChromePx": 84,
+                "svgPx": 738,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 7.627007299270073,
+              "minimumProjectedNonEdgeTextPx": 7.627007299270073,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1488,
+              "diagramWidth": 1458,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 834,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 8.1,
+              "minimumProjectedNonEdgeTextPx": 8.1,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1896,
+              "diagramWidth": 1846,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 94,
+                "diagramChromePx": 94,
+                "svgPx": 1056,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 8.1,
+              "minimumProjectedNonEdgeTextPx": 8.1,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 910,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1299,
+              "diagramWidth": 1269,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 94,
+                "diagramChromePx": 78,
+                "svgPx": 726,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 7.502846715328467,
+              "minimumProjectedNonEdgeTextPx": 7.502846715328467,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1320,
+              "diagramWidth": 1290,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 102,
+                "diagramChromePx": 84,
+                "svgPx": 738,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 7.627007299270073,
+              "minimumProjectedNonEdgeTextPx": 7.627007299270073,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1488,
+              "diagramWidth": 1458,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 834,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 8.1,
+              "minimumProjectedNonEdgeTextPx": 8.1,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1896,
+              "diagramWidth": 1846,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 94,
+                "diagramChromePx": 94,
+                "svgPx": 1056,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 8.1,
+              "minimumProjectedNonEdgeTextPx": 8.1,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 910,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1299,
+              "diagramWidth": 1269,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 94,
+                "diagramChromePx": 78,
+                "svgPx": 726,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 7.502846715328467,
+              "minimumProjectedNonEdgeTextPx": 7.502846715328467,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1320,
+              "diagramWidth": 1290,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 102,
+                "diagramChromePx": 84,
+                "svgPx": 738,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 7.627007299270073,
+              "minimumProjectedNonEdgeTextPx": 7.627007299270073,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1488,
+              "diagramWidth": 1458,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 834,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 8.1,
+              "minimumProjectedNonEdgeTextPx": 8.1,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1896,
+              "diagramWidth": 1846,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 94,
+                "diagramChromePx": 94,
+                "svgPx": 1056,
+                "cardsPx": 0,
+                "viewBoxHeight": 784
+              },
+              "viewBoxWidth": 1370,
+              "minimumProjectedNodeTextPx": 8.1,
+              "minimumProjectedNonEdgeTextPx": 8.1,
+              "minimumProjectedEdgeTextPx": null,
+              "minimumProjectedNodeText": "commits, destructive, publish",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "approval"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "receipt": "unified-baseline.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-25T04:46:11.321Z",
+  "durationMs": 3315,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

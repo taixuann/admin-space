@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "explainer",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/profile-capabilities-coordinator/candidate.archify.md",
+    "sha256": "c5f163516cef9cf0b0c9565020bb327a4f424181301781eae88b49424ef0ec80",
+    "bytes": 1157
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/coordinator/capabilities.html",
+    "sha256": "10dce84166c742c02be099e3f54afa8f49b8e9b8bed4604d14e4a6a0f02192d1",
+    "bytes": 125223
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "not-run"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/profile-capabilities-coordinator/capabilities.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/profile-capabilities-coordinator/capabilities.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 636,
+  "browserCheck": {
+    "requested": false,
+    "ran": false
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "explainer",
+  "quality": "showcase",
+  "startedAt": "2026-10-25T03:08:44.922Z",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/profile-capabilities-secretary/candidate.archify.md",
+    "sha256": "899afb8b8753839ab280a62f00684ba04aba555c270c883da9581b1fc682acce",
+    "bytes": 1765
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/secretary/capabilities.html",
+    "sha256": "9e731a3ee718ed595f16a4c46231fbb99762c42493efe7b6353586a9b04f2517",
+    "bytes": 134073
+  },
+  "stages": {
+    "browser-check": {
+      "status": "not-run",
+      "execution": "not-requested"
+    },
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "explainer",
+        "/Users/tai/.agents/.archify/profile-capabilities-secretary/candidate.archify.md",
+        "/Users/tai/.agents/docs/profiles/secretary/capabilities.html",
+        "--quality",
+        "showcase",
+        "--writing",
+        "warn",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "899afb8b8753839ab280a62f00684ba04aba555c270c883da9581b1fc682acce",
+          "bytes": 1765
+        },
+        "validation": {
+          "checksPassed": 4,
+          "checkCount": 4,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 381,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "explainer",
+        "/Users/tai/.agents/.archify/profile-capabilities-secretary/candidate.archify.md",
+        "/Users/tai/.agents/docs/profiles/secretary/capabilities.html",
+        "--quality",
+        "showcase",
+        "--writing",
+        "warn",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "062cd325-2590-4647-88e8-28fad0504ea9",
+        "ok": true,
+        "command": "deliver",
+        "type": "explainer",
+        "input": "/Users/tai/.agents/.archify/profile-capabilities-secretary/candidate.archify.md",
+        "output": "/Users/tai/.agents/docs/profiles/secretary/capabilities.html",
+        "explainer": {
+          "preparedSha256": "91752e139d01f1d2e524a7dfaf932fd5e0a857607b090ad9beafc3d00fd47c32",
+          "dependencies": []
+        },
+        "specification": {
+          "sha256": "899afb8b8753839ab280a62f00684ba04aba555c270c883da9581b1fc682acce",
+          "bytes": 1765
+        },
+        "artifact": {
+          "sha256": "9e731a3ee718ed595f16a4c46231fbb99762c42493efe7b6353586a9b04f2517",
+          "bytes": 134073
+        },
+        "validation": {
+          "checksPassed": 4,
+          "checkCount": 4,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 182,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/tai/.agents/docs/profiles/secretary/capabilities.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/tai/.agents/docs/profiles/secretary/capabilities.html",
+        "family": "explainer",
+        "artifact": {
+          "sha256": "9e731a3ee718ed595f16a4c46231fbb99762c42493efe7b6353586a9b04f2517",
+          "bytes": 134073
+        },
+        "checks": [
+          {
+            "name": "explainer_structure",
+            "ok": true,
+            "details": [
+              "37 unique DOM IDs"
+            ]
+          },
+          {
+            "name": "explainer_payload_identity",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "explainer_dependencies",
+            "ok": true,
+            "details": [
+              "0 frozen dependencies"
+            ]
+          },
+          {
+            "name": "explainer_native_diagrams",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "issues": [],
+          "nativeDiagrams": []
+        },
+        "diagnostics": [],
+        "provenance": "current",
+        "deliveryReceiptId": "062cd325-2590-4647-88e8-28fad0504ea9"
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": false,
+    "ran": false
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/profile-capabilities-secretary/capabilities.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/profile-capabilities-secretary/capabilities.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-25T03:08:45.592Z",
+  "durationMs": 670,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

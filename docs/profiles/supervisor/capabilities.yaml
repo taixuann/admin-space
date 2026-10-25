@@ -1,0 +1,45 @@
+profile: supervisor
+status: draft targets; runtime loading recorded separately
+space: ~/academic-space/research-space
+notes: "Model is runtime-managed (preference only). Memory is default built-in. Execution goes to executor."
+skills:
+  - name: hyperresearch
+    detail: literature interrogation (Level 0/1) and vault retrieval
+    status: available
+  - name: openscience
+    detail: research contract and /plan state machine
+    status: available
+  - name: compose-research
+    detail: materialize findings and evidence ledger
+    status: proposed
+  - name: ro-crate-research
+    detail: RO-Crate 1.3 archival packaging
+    status: proposed
+  - name: acceptance-checks
+    detail: verify run artifacts
+    status: proposed
+  - name: audit-brainstorming
+    detail: ideation support
+    status: proposed
+  - name: writing-for-agents
+    detail: draft plans and specs
+    status: available
+  - name: simple-english
+    detail: plain-language scientific writing
+    status: available
+  - name: academic-pptx
+    detail: slide decks when Supervisor authors presentations
+    status: available
+plugins:
+  - name: research-companion
+    detail: source of compose-research, ro-crate-research, acceptance-checks
+    status: proposed
+mcps: []
+external_tools:
+  - name: openscience CLI
+    detail: research contract and plan state machine
+    status: available
+  - name: hyperresearch CLI
+    detail: literature vault and scholar search
+    status: available
+automation: []

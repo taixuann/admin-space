@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "tree",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/tree-secretary-profile-20261025-101703/candidate.json",
+    "sha256": "8dd6b64cfcf1d5a4d1d81fd2e179251bdb68e297bcbba263ce38b08a6f4bda77",
+    "bytes": 3543
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/secretary/profile.html",
+    "sha256": "aabcc997205296abdbbfac0ec4d32b46b3ba55d808bc2e828a363d34119bffa5",
+    "bytes": 823833
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/tree-secretary-profile-20261025-101703/profile.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/tree-secretary-profile-20261025-101703/profile.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/tree-secretary-profile-20261025-101703/profile.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 5214,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

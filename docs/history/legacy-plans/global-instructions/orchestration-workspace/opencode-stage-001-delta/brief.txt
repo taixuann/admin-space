@@ -1,6 +1,0 @@
-Correct two review findings in the current candidate and re-run the two candidate skill validators plus relevant markdown link checks. Continue the exact existing session; change only these candidate files:
-
-1. `skills/improve/references/plan-template.md`: it currently has two adjacent level-2 Batch headings (`## Batch (optional...)` and `## Batch <NNN-batch-K>`). Keep one `## Batch` section and represent the ID as a field in the template (for example `**Batch ID**: <NNN-batch-K>`). Preserve the explanation and all requested fields.
-2. `skills/opencode-delegate/references/multi-task-queues.md`: the phrases that say the next batch “waits for its own authorization” / “is a new authorization” could force the user to repeat an authorization already present in the current user request or governing task contract. Change them to say a checkpoint ends the current batch and requires a new dispatch; proceed only if the next batch is already covered by recorded user/task authorization, otherwise wait for authorization. Do not solicit authorization again when it is already on record.
-
-Do not alter any other file or broaden the batch. Report the exact lines/files changed and verification results; do not commit.

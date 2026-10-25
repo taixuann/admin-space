@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+    "sha256": "efc513988c2ea05b217372149cb1fb55b89af83fa0fa3de078f950bb8f098f52",
+    "bytes": 5494
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+    "sha256": "b4b7650e766afcc9fcba93e2a40fadb367c87b7b6bc7d070fd288cbea6696c90",
+    "bytes": 829294
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/executor/workflow/review-1/executor-workflow.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-1/executor-workflow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-1/executor-workflow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2957,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "verifying-debugging",
+            "from": "verifying",
+            "to": "debugging",
+            "label": "fail",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "review-executing",
+            "from": "review",
+            "to": "executing",
+            "label": "changes",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "point": [
+            752,
+            126
+          ]
+        }
+      ],
+      "detours": [],
+      "truncated": false
+    },
+    "repair": "Advisory only: this mode places or routes these relationships itself. Report them; do not remove relationships or meaning to reduce crossings."
+  }
+}

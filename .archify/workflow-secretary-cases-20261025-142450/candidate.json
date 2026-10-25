@@ -1,0 +1,522 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Secretary workflows - proposed operating model",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/workflow-secretary-cases-20261025-142450/secretary-workflows.html"
+  },
+  "lanes": [
+    {
+      "id": "intake",
+      "label": "Common intake"
+    },
+    {
+      "id": "profile",
+      "label": "Profile management"
+    },
+    {
+      "id": "idea",
+      "label": "Idea / plan"
+    },
+    {
+      "id": "execution",
+      "label": "Admin execution"
+    },
+    {
+      "id": "crossspace",
+      "label": "Cross-Space"
+    },
+    {
+      "id": "skill",
+      "label": "Skill improvement"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "tai-request",
+      "lane": "intake",
+      "col": 0,
+      "type": "external",
+      "label": "Tai request",
+      "sublabel": "directs Secretary",
+      "icon": "person",
+      "yOffset": -90
+    },
+    {
+      "id": "inspect-scope",
+      "lane": "intake",
+      "col": 0,
+      "type": "backend",
+      "label": "Inspect scope",
+      "sublabel": "triage request",
+      "icon": "active",
+      "yOffset": 0
+    },
+    {
+      "id": "choose-case",
+      "lane": "intake",
+      "col": 0,
+      "type": "backend",
+      "label": "Choose case",
+      "sublabel": "one of four",
+      "icon": "decision",
+      "yOffset": 90
+    },
+    {
+      "id": "fleet-admin",
+      "lane": "profile",
+      "col": 1,
+      "type": "backend",
+      "label": "Fleet admin",
+      "sublabel": "hermes-fleet-admin",
+      "icon": "briefcase"
+    },
+    {
+      "id": "runtime-approval",
+      "lane": "profile",
+      "col": 2,
+      "type": "security",
+      "label": "Approve + backup",
+      "sublabel": "before runtime writes",
+      "icon": "security"
+    },
+    {
+      "id": "selected-action",
+      "lane": "profile",
+      "col": 3,
+      "type": "backend",
+      "label": "Selected action",
+      "sublabel": "one profile action",
+      "icon": "active"
+    },
+    {
+      "id": "evidence-check",
+      "lane": "profile",
+      "col": 4,
+      "type": "security",
+      "label": "Evidence check",
+      "sublabel": "readback + relevant test",
+      "icon": "success"
+    },
+    {
+      "id": "tai-decision",
+      "lane": "profile",
+      "col": 5,
+      "type": "external",
+      "label": "Report to Tai",
+      "sublabel": "stop; Tai decides",
+      "icon": "decision"
+    },
+    {
+      "id": "clarify-need",
+      "lane": "idea",
+      "col": 1,
+      "type": "backend",
+      "label": "Clarify need",
+      "sublabel": "brainstorm if unsettled",
+      "icon": "neutral"
+    },
+    {
+      "id": "plan-if-needed",
+      "lane": "idea",
+      "col": 2,
+      "type": "backend",
+      "label": "Plan if needed",
+      "sublabel": "writing-plans",
+      "icon": "active"
+    },
+    {
+      "id": "tai-reviews",
+      "lane": "idea",
+      "col": 4,
+      "type": "external",
+      "label": "Tai reviews",
+      "sublabel": "approval gate",
+      "icon": "decision"
+    },
+    {
+      "id": "record-stop",
+      "lane": "idea",
+      "col": 5,
+      "type": "backend",
+      "label": "Record / stop",
+      "sublabel": "plan not deploy",
+      "icon": "stop"
+    },
+    {
+      "id": "approved-brief",
+      "lane": "execution",
+      "col": 1,
+      "type": "backend",
+      "label": "Approved brief",
+      "sublabel": "scoped input",
+      "icon": "active"
+    },
+    {
+      "id": "route-work",
+      "lane": "execution",
+      "col": 2,
+      "type": "backend",
+      "label": "Route work",
+      "sublabel": "local or cross-Space",
+      "icon": "decision"
+    },
+    {
+      "id": "scope-isolation",
+      "lane": "execution",
+      "col": 3,
+      "type": "security",
+      "label": "Scope + isolation",
+      "sublabel": "sandbox required",
+      "icon": "security"
+    },
+    {
+      "id": "executor-draft",
+      "lane": "execution",
+      "col": 4,
+      "type": "backend",
+      "label": "Executor draft",
+      "sublabel": "patch/artifact only",
+      "icon": "active"
+    },
+    {
+      "id": "review-evidence",
+      "lane": "execution",
+      "col": 5,
+      "type": "backend",
+      "label": "Review / report",
+      "sublabel": "Secretary; Tai decides",
+      "icon": "success"
+    },
+    {
+      "id": "coordinator",
+      "lane": "crossspace",
+      "col": 3,
+      "type": "messagebus",
+      "label": "Coordinator",
+      "sublabel": "approved communication",
+      "icon": "active"
+    },
+    {
+      "id": "space-owner",
+      "lane": "crossspace",
+      "col": 4,
+      "type": "external",
+      "label": "Space owner",
+      "sublabel": "owns execution/results",
+      "icon": "person"
+    },
+    {
+      "id": "reproduce-gap",
+      "lane": "skill",
+      "col": 1,
+      "type": "backend",
+      "label": "Reproduce gap",
+      "sublabel": "repeated/safety gap",
+      "icon": "active"
+    },
+    {
+      "id": "baseline",
+      "lane": "skill",
+      "col": 2,
+      "type": "backend",
+      "label": "Baseline",
+      "sublabel": "current behavior",
+      "icon": "neutral"
+    },
+    {
+      "id": "minimal-revision",
+      "lane": "skill",
+      "col": 3,
+      "type": "backend",
+      "label": "Minimal revision",
+      "sublabel": "writing-skills",
+      "icon": "active"
+    },
+    {
+      "id": "retest",
+      "lane": "skill",
+      "col": 4,
+      "type": "backend",
+      "label": "Retest",
+      "sublabel": "same case",
+      "icon": "success"
+    },
+    {
+      "id": "review-report",
+      "lane": "skill",
+      "col": 5,
+      "type": "backend",
+      "label": "Review / report",
+      "sublabel": "stop; Tai decides",
+      "icon": "decision"
+    }
+  ],
+  "edges": [
+    {
+      "from": "tai-request",
+      "to": "inspect-scope",
+      "label": "request",
+      "role": "main"
+    },
+    {
+      "from": "inspect-scope",
+      "to": "choose-case",
+      "label": "triage",
+      "role": "main"
+    },
+    {
+      "from": "choose-case",
+      "to": "fleet-admin",
+      "label": "profile",
+      "role": "branch"
+    },
+    {
+      "from": "choose-case",
+      "to": "clarify-need",
+      "label": "idea/plan",
+      "role": "branch"
+    },
+    {
+      "from": "choose-case",
+      "to": "approved-brief",
+      "label": "execution",
+      "role": "branch"
+    },
+    {
+      "from": "choose-case",
+      "to": "reproduce-gap",
+      "label": "skill",
+      "role": "branch"
+    },
+    {
+      "from": "fleet-admin",
+      "to": "runtime-approval",
+      "label": "runtime delta",
+      "role": "branch",
+      "variant": "security"
+    },
+    {
+      "from": "runtime-approval",
+      "to": "selected-action",
+      "label": "approved + backed up",
+      "role": "main",
+      "variant": "security"
+    },
+    {
+      "from": "fleet-admin",
+      "to": "selected-action",
+      "label": "read-only / doc",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "from": "selected-action",
+      "to": "evidence-check",
+      "label": "execute one",
+      "role": "main"
+    },
+    {
+      "from": "evidence-check",
+      "to": "tai-decision",
+      "label": "evidence",
+      "role": "main"
+    },
+    {
+      "from": "clarify-need",
+      "to": "plan-if-needed",
+      "label": "if needed",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "from": "plan-if-needed",
+      "to": "tai-reviews",
+      "label": "plan",
+      "role": "branch"
+    },
+    {
+      "from": "tai-reviews",
+      "to": "record-stop",
+      "label": "decision",
+      "role": "branch"
+    },
+    {
+      "from": "approved-brief",
+      "to": "route-work",
+      "label": "approved",
+      "role": "branch"
+    },
+    {
+      "from": "route-work",
+      "to": "scope-isolation",
+      "label": "local",
+      "role": "branch"
+    },
+    {
+      "from": "route-work",
+      "to": "coordinator",
+      "label": "cross-Space",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "from": "scope-isolation",
+      "to": "executor-draft",
+      "label": "sandbox ok",
+      "role": "branch"
+    },
+    {
+      "from": "executor-draft",
+      "to": "review-evidence",
+      "label": "patch/evidence",
+      "role": "branch"
+    },
+    {
+      "from": "coordinator",
+      "to": "space-owner",
+      "label": "handoff",
+      "role": "branch"
+    },
+    {
+      "from": "space-owner",
+      "to": "review-evidence",
+      "label": "evidence",
+      "role": "return"
+    },
+    {
+      "from": "review-evidence",
+      "to": "route-work",
+      "label": "scoped repair",
+      "variant": "dashed",
+      "role": "return"
+    },
+    {
+      "from": "reproduce-gap",
+      "to": "baseline",
+      "label": "gap",
+      "role": "branch"
+    },
+    {
+      "from": "baseline",
+      "to": "minimal-revision",
+      "label": "baseline",
+      "role": "branch"
+    },
+    {
+      "from": "minimal-revision",
+      "to": "retest",
+      "label": "revision",
+      "role": "branch"
+    },
+    {
+      "from": "retest",
+      "to": "review-report",
+      "label": "result",
+      "role": "branch"
+    },
+    {
+      "from": "review-report",
+      "to": "minimal-revision",
+      "label": "revise",
+      "variant": "dashed",
+      "role": "return"
+    },
+    {
+      "from": "clarify-need",
+      "to": "tai-reviews",
+      "label": "no plan needed",
+      "role": "branch"
+    },
+    {
+      "from": "scope-isolation",
+      "to": "review-evidence",
+      "label": "not ready: block",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "mainPath": [
+    "fleet-admin",
+    "runtime-approval",
+    "selected-action",
+    "evidence-check",
+    "tai-decision"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "tai-request"
+    ],
+    "allowedTerminals": [
+      "tai-decision",
+      "record-stop",
+      "review-report"
+    ],
+    "requiredEdges": [
+      {
+        "from": "scope-isolation",
+        "to": "executor-draft"
+      },
+      {
+        "from": "route-work",
+        "to": "coordinator"
+      },
+      {
+        "from": "coordinator",
+        "to": "space-owner"
+      },
+      {
+        "from": "space-owner",
+        "to": "review-evidence"
+      },
+      {
+        "from": "runtime-approval",
+        "to": "selected-action"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Phase choices",
+      "items": [
+        "Choose one: Inspect, Define, Review, Configure, Verify, Reconcile.",
+        "These are selectable actions, not a mandatory six-step pipeline.",
+        "Inspect / Review / Verify: read-only. Define / Reconcile: authorized docs only.",
+        "hermes-agent, documentation-writer and Archify support the selected phase."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Permission and verification boundaries",
+      "items": [
+        "Runtime delta requires an approved delta.",
+        "Before runtime writes: approval, recoverable backup and rollback. After: saved readback and minimal live check.",
+        "Failed checks are reported blocked, not accepted.",
+        "Executor returns patch/evidence; Coordinator is communication, not execution."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Proposed status",
+      "items": [
+        "Design preview only; no runtime setup.",
+        "Model and provider are selected per task/runtime.",
+        "Executor is draft and not deployed.",
+        "Current OpenCode remains the execution tool until separately changed."
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Skills role",
+      "items": [
+        "Skills guide work; Secretary retains supervision.",
+        "Use brainstorming only when the need is unsettled.",
+        "Use writing-plans only when a plan is needed.",
+        "Use writing-skills for repeated or safety-relevant gaps."
+      ]
+    }
+  ]
+}

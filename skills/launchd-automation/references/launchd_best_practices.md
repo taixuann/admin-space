@@ -1,7 +1,7 @@
 # launchd lifecycle reference
 
 Read this when a job misbehaves at load, at run, or after a change. Placement and
-report-root rules live in `docs/automation.md`. The workflow lives in `SKILL.md`.
+report-root rules live in `automation/README.md`. The workflow lives in `SKILL.md`.
 
 ## Domains
 

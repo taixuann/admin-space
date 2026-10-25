@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Secretary environment and source boundaries",
+    "subtitle": "Documentation targets and authority, not runtime proof.",
+    "visual_preset": "classic",
+    "quality_profile": "showcase",
+    "output": "docs/profiles/secretary/environment.html"
+  },
+  "components": [
+    { "id": "tai", "type": "external", "label": "Tai", "sublabel": "final authority", "pos": [60, 260], "size": [110, 56] },
+    { "id": "secretary", "type": "backend", "label": "Secretary profile", "sublabel": "docs/profiles/secretary", "pos": [250, 260], "size": [150, 64], "tag": "documentation" },
+    { "id": "soul_active", "type": "security", "label": "Active SOUL.md", "sublabel": "~/.hermes/SOUL.md", "pos": [500, 80], "size": [150, 64], "tag": "identity source" },
+    { "id": "soul_snapshot", "type": "database", "label": "SOUL snapshot", "sublabel": "docs/.../SOUL.md", "pos": [500, 200], "size": [150, 64], "tag": "exact copy" },
+    { "id": "shared_rules", "type": "database", "label": "Shared rules", "sublabel": "SOUL.md / USER.md", "pos": [500, 320], "size": [150, 64], "tag": "Admin conduct" },
+    { "id": "agents", "type": "backend", "label": "~/.agents", "sublabel": "read-write scoped tasks", "pos": [760, 260], "size": [150, 64], "tag": "Admin Space" },
+    { "id": "hermes", "type": "cloud", "label": "Hermes runtime", "sublabel": "~/.hermes", "pos": [760, 80], "size": [150, 64], "tag": "runtime state" },
+    { "id": "other_spaces", "type": "external", "label": "Other Spaces", "sublabel": "read-only", "pos": [760, 420], "size": [150, 64], "tag": "domain authority" },
+    { "id": "coordinator", "type": "messagebus", "label": "Coordinator", "sublabel": "cross-Space comms", "pos": [1000, 420], "size": [150, 64] },
+    { "id": "memory", "type": "database", "label": "Hindsight", "sublabel": "desired admin; observed hermes", "pos": [1000, 80], "size": [160, 64], "tag": "target not health" },
+    { "id": "approval", "type": "security", "label": "Approval gates", "sublabel": "commits, destructive, publish", "pos": [250, 80], "size": [150, 64], "tag": "Tai retains" }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Admin Space scope", "wraps": ["secretary", "agents", "shared_rules"] },
+    { "kind": "security-group", "label": "Hermes runtime boundary", "wraps": ["hermes", "soul_active", "memory"] },
+    { "kind": "region", "label": "Read-only boundary", "wraps": ["other_spaces", "coordinator"] }
+  ],
+  "connections": [
+    { "id": "tai-secretary", "from": "tai", "to": "secretary", "label": "direction" },
+    { "id": "secretary-soul-active", "from": "secretary", "to": "soul_active", "label": "identity controls", "variant": "security" },
+    { "id": "secretary-soul-snapshot", "from": "secretary", "to": "soul_snapshot", "label": "exact copy" },
+    { "id": "secretary-shared", "from": "secretary", "to": "shared_rules", "label": "pointers" },
+    { "id": "secretary-agents", "from": "secretary", "to": "agents", "label": "scoped writes" },
+    { "id": "secretary-hermes", "from": "secretary", "to": "hermes", "label": "bounded maintenance", "variant": "dashed" },
+    { "id": "secretary-other", "from": "secretary", "to": "other_spaces", "label": "read-only", "variant": "dashed" },
+    { "id": "secretary-coordinator", "from": "secretary", "to": "coordinator", "label": "scoped handoff" },
+    { "id": "coordinator-other", "from": "coordinator", "to": "other_spaces", "label": "communication" },
+    { "id": "secretary-memory", "from": "secretary", "to": "memory", "label": "desired bank admin", "variant": "dashed" },
+    { "id": "secretary-approval", "from": "secretary", "to": "approval", "label": "gates" }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Authority",
+      "items": [
+        "Tai approves commits, destructive ops, publication",
+        "Other Spaces keep domain authority"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Runtime truth",
+      "items": [
+        "Hindsight target admin, observed bank hermes",
+        "localhost:8888 failure unresolved"
+      ]
+    }
+  ]
+}

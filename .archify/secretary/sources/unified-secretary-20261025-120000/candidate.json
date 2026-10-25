@@ -1,0 +1,593 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Secretary unified profile: workflow, capabilities, identity, memory, environment, and authority",
+    "subtitle": "One connected model; targets and authority, not runtime proof.",
+    "visual_preset": "classic",
+    "quality_profile": "showcase",
+    "output": "docs/profiles/secretary/unified-baseline.html"
+  },
+  "components": [
+    {
+      "id": "tai",
+      "type": "external",
+      "label": "Tai",
+      "sublabel": "final authority",
+      "pos": [
+        60,
+        60
+      ],
+      "size": [
+        110,
+        56
+      ]
+    },
+    {
+      "id": "secretary",
+      "type": "backend",
+      "label": "Secretary profile",
+      "sublabel": "docs/profiles/secretary",
+      "pos": [
+        260,
+        60
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "documentation"
+    },
+    {
+      "id": "approval",
+      "type": "security",
+      "label": "Approval gates",
+      "sublabel": "commits, destructive, publish",
+      "pos": [
+        260,
+        180
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "Tai retains"
+    },
+    {
+      "id": "soul_active",
+      "type": "security",
+      "label": "Active SOUL.md",
+      "sublabel": "~/.hermes/SOUL.md",
+      "pos": [
+        500,
+        60
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "identity source"
+    },
+    {
+      "id": "soul_snapshot",
+      "type": "database",
+      "label": "SOUL snapshot",
+      "sublabel": "docs/.../SOUL.md",
+      "pos": [
+        500,
+        180
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "exact copy"
+    },
+    {
+      "id": "shared_rules",
+      "type": "database",
+      "label": "Shared rules",
+      "sublabel": "SOUL.md / USER.md",
+      "pos": [
+        500,
+        300
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "Admin conduct"
+    },
+    {
+      "id": "hermes",
+      "type": "cloud",
+      "label": "Hermes runtime",
+      "sublabel": "~/.hermes",
+      "pos": [
+        760,
+        60
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "runtime state"
+    },
+    {
+      "id": "memory",
+      "type": "database",
+      "label": "Hindsight",
+      "sublabel": "desired admin; observed hermes",
+      "pos": [
+        760,
+        180
+      ],
+      "size": [
+        160,
+        64
+      ],
+      "tag": "target not health"
+    },
+    {
+      "id": "agents",
+      "type": "backend",
+      "label": "~/.agents",
+      "sublabel": "read-write scoped tasks",
+      "pos": [
+        760,
+        300
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "Admin Space"
+    },
+    {
+      "id": "other_spaces",
+      "type": "external",
+      "label": "Other Spaces",
+      "sublabel": "read-only",
+      "pos": [
+        760,
+        420
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "domain authority"
+    },
+    {
+      "id": "coordinator",
+      "type": "messagebus",
+      "label": "Coordinator",
+      "sublabel": "cross-Space comms",
+      "pos": [
+        1000,
+        420
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "request",
+      "type": "external",
+      "label": "Request",
+      "sublabel": "Tai asks",
+      "pos": [
+        60,
+        560
+      ],
+      "size": [
+        110,
+        56
+      ]
+    },
+    {
+      "id": "inspect",
+      "type": "backend",
+      "label": "Inspect context",
+      "sublabel": "docs, YAML, runtime",
+      "pos": [
+        220,
+        560
+      ],
+      "size": [
+        132,
+        56
+      ],
+      "tag": "targets vs observed"
+    },
+    {
+      "id": "memory_context",
+      "type": "database",
+      "label": "Memory context",
+      "sublabel": "Hindsight desired",
+      "pos": [
+        220,
+        660
+      ],
+      "size": [
+        132,
+        56
+      ]
+    },
+    {
+      "id": "brainstorm",
+      "type": "backend",
+      "label": "Brainstorm if needed",
+      "sublabel": "superpowers:brainstorming",
+      "pos": [
+        400,
+        520
+      ],
+      "size": [
+        150,
+        56
+      ]
+    },
+    {
+      "id": "plan",
+      "type": "backend",
+      "label": "Plan if needed",
+      "sublabel": "superpowers:writing-plans",
+      "pos": [
+        400,
+        600
+      ],
+      "size": [
+        150,
+        56
+      ]
+    },
+    {
+      "id": "delegate",
+      "type": "messagebus",
+      "label": "Delegate via opencode",
+      "sublabel": "implementation path",
+      "pos": [
+        600,
+        600
+      ],
+      "size": [
+        150,
+        56
+      ]
+    },
+    {
+      "id": "direct",
+      "type": "backend",
+      "label": "Perform directly",
+      "sublabel": "small scoped work",
+      "pos": [
+        600,
+        520
+      ],
+      "size": [
+        132,
+        56
+      ]
+    },
+    {
+      "id": "verify",
+      "type": "security",
+      "label": "Verify",
+      "sublabel": "verification-before-completion",
+      "pos": [
+        780,
+        560
+      ],
+      "size": [
+        200,
+        56
+      ]
+    },
+    {
+      "id": "record_report",
+      "type": "backend",
+      "label": "Record and report",
+      "sublabel": "docs, tickets",
+      "pos": [
+        1020,
+        560
+      ],
+      "size": [
+        132,
+        56
+      ]
+    },
+    {
+      "id": "identity",
+      "type": "security",
+      "label": "Identity",
+      "sublabel": "SOUL + shared rules",
+      "pos": [
+        500,
+        420
+      ],
+      "size": [
+        130,
+        56
+      ]
+    },
+    {
+      "id": "permissions",
+      "type": "security",
+      "label": "Permissions",
+      "sublabel": "read/write, gates",
+      "pos": [
+        260,
+        420
+      ],
+      "size": [
+        130,
+        56
+      ]
+    },
+    {
+      "id": "cap_skills",
+      "type": "backend",
+      "label": "Skills",
+      "sublabel": "14 approved targets",
+      "pos": [
+        1200,
+        60
+      ],
+      "size": [
+        130,
+        56
+      ],
+      "tag": "capabilities"
+    },
+    {
+      "id": "cap_plugins",
+      "type": "backend",
+      "label": "Plugins",
+      "sublabel": "superpowers, hindsight",
+      "pos": [
+        1200,
+        140
+      ],
+      "size": [
+        130,
+        56
+      ],
+      "tag": "capabilities"
+    },
+    {
+      "id": "cap_mcps",
+      "type": "external",
+      "label": "MCPs",
+      "sublabel": "none selected",
+      "pos": [
+        1200,
+        220
+      ],
+      "size": [
+        130,
+        56
+      ],
+      "tag": "capabilities"
+    },
+    {
+      "id": "cap_external",
+      "type": "external",
+      "label": "External tools",
+      "sublabel": "none",
+      "pos": [
+        1200,
+        300
+      ],
+      "size": [
+        130,
+        56
+      ],
+      "tag": "capabilities"
+    },
+    {
+      "id": "cap_automation",
+      "type": "backend",
+      "label": "Automation",
+      "sublabel": "on-demand renderer",
+      "pos": [
+        1200,
+        380
+      ],
+      "size": [
+        130,
+        56
+      ],
+      "tag": "capabilities"
+    }
+  ],
+  "boundaries": [],
+  "connections": [
+    {
+      "id": "tai-secretary",
+      "from": "tai",
+      "to": "secretary"
+    },
+    {
+      "id": "secretary-approval",
+      "from": "secretary",
+      "to": "approval"
+    },
+    {
+      "id": "secretary-soul-active",
+      "from": "secretary",
+      "to": "soul_active",
+      "variant": "security"
+    },
+    {
+      "id": "secretary-soul-snapshot",
+      "from": "secretary",
+      "to": "soul_snapshot"
+    },
+    {
+      "id": "secretary-shared",
+      "from": "secretary",
+      "to": "shared_rules"
+    },
+    {
+      "id": "secretary-agents",
+      "from": "secretary",
+      "to": "agents"
+    },
+    {
+      "id": "secretary-hermes",
+      "from": "secretary",
+      "to": "hermes",
+      "variant": "dashed"
+    },
+    {
+      "id": "secretary-other",
+      "from": "secretary",
+      "to": "other_spaces",
+      "variant": "dashed"
+    },
+    {
+      "id": "secretary-coordinator",
+      "from": "secretary",
+      "to": "coordinator"
+    },
+    {
+      "id": "coordinator-other",
+      "from": "coordinator",
+      "to": "other_spaces"
+    },
+    {
+      "id": "secretary-memory",
+      "from": "secretary",
+      "to": "memory",
+      "variant": "dashed"
+    },
+    {
+      "id": "identity-inspect",
+      "from": "identity",
+      "to": "inspect"
+    },
+    {
+      "id": "permissions-delegate",
+      "from": "permissions",
+      "to": "delegate"
+    },
+    {
+      "id": "inspect-memory_context",
+      "from": "inspect",
+      "to": "memory_context",
+      "variant": "dashed"
+    },
+    {
+      "id": "request-inspect",
+      "from": "request",
+      "to": "inspect",
+      "variant": "emphasis"
+    },
+    {
+      "id": "inspect-brainstorm",
+      "from": "inspect",
+      "to": "brainstorm"
+    },
+    {
+      "id": "inspect-plan",
+      "from": "inspect",
+      "to": "plan"
+    },
+    {
+      "id": "brainstorm-plan",
+      "from": "brainstorm",
+      "to": "plan",
+      "variant": "dashed"
+    },
+    {
+      "id": "plan-delegate",
+      "from": "plan",
+      "to": "delegate",
+      "variant": "emphasis"
+    },
+    {
+      "id": "inspect-direct",
+      "from": "inspect",
+      "to": "direct"
+    },
+    {
+      "id": "direct-verify",
+      "from": "direct",
+      "to": "verify"
+    },
+    {
+      "id": "delegate-verify",
+      "from": "delegate",
+      "to": "verify",
+      "variant": "emphasis"
+    },
+    {
+      "id": "verify-record",
+      "from": "verify",
+      "to": "record_report",
+      "variant": "emphasis"
+    },
+    {
+      "id": "secretary-cap-skills",
+      "from": "secretary",
+      "to": "cap_skills"
+    },
+    {
+      "id": "secretary-cap-plugins",
+      "from": "secretary",
+      "to": "cap_plugins"
+    },
+    {
+      "id": "secretary-cap-mcps",
+      "from": "secretary",
+      "to": "cap_mcps"
+    },
+    {
+      "id": "secretary-cap-external",
+      "from": "secretary",
+      "to": "cap_external"
+    },
+    {
+      "id": "secretary-cap-automation",
+      "from": "secretary",
+      "to": "cap_automation"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Conditional",
+      "items": [
+        "Brainstorm and plan are branches, not mandatory steps",
+        "Each request uses only needed capabilities"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Targets",
+      "items": [
+        "Approved capability targets are not runtime health",
+        "Disabling a capability affects authored stages only"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Authority",
+      "items": [
+        "Tai approves commits, destructive ops, publication",
+        "Other Spaces keep domain authority"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Runtime truth",
+      "items": [
+        "Hindsight target admin, observed bank hermes",
+        "localhost:8888 failure unresolved"
+      ]
+    }
+  ]
+}

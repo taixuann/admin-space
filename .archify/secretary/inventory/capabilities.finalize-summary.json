@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "explainer",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/profile-capabilities-secretary/candidate.archify.md",
+    "sha256": "899afb8b8753839ab280a62f00684ba04aba555c270c883da9581b1fc682acce",
+    "bytes": 1765
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/secretary/capabilities.html",
+    "sha256": "9e731a3ee718ed595f16a4c46231fbb99762c42493efe7b6353586a9b04f2517",
+    "bytes": 134073
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "not-run"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/profile-capabilities-secretary/capabilities.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/profile-capabilities-secretary/capabilities.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 670,
+  "browserCheck": {
+    "requested": false,
+    "ran": false
+  }
+}

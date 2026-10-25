@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "094cde51-eac6-43fe-b7c3-8372a3c54e8f",
+  "status": "current",
+  "command": "deliver",
+  "type": "lifecycle",
+  "input": "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+  "output": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+  "specification": {
+    "sha256": "2d2f3db57746e01d403254c65d21d70ff47f313be01a2dec2ccd3b8f350b64a7",
+    "bytes": 4792
+  },
+  "artifact": {
+    "sha256": "52409c204ed90e1fad5ae8c767c79eb5139c89623de5e54584b0ff40b0a91933",
+    "bytes": 826543
+  }
+}

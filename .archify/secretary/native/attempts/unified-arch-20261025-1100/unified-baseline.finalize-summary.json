@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/secretary/sources/unified-secretary-20261025-120000/candidate.json",
+    "sha256": "c50397bd372d1688fd523cd9d4893ae9035396290a1cee5a35c34cf02f066812",
+    "bytes": 10976
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.html",
+    "sha256": "873de7d39b86cf15ce29a6eeefbea65f784ca7be48d2dc16ab2c3e22a82d28ed",
+    "bytes": 861720
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/docs/profiles/secretary/unified-baseline.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T15:27:13.769Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3315,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 30,
+      "routesOverSuggestedBends": 7
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "secretary-soul-active",
+            "from": "secretary",
+            "to": "soul_active",
+            "label": "",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "right": {
+            "id": "secretary-hermes",
+            "from": "secretary",
+            "to": "hermes",
+            "label": "",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "point": [
+            377,
+            148
+          ],
+          "sharedNode": "secretary"
+        },
+        {
+          "left": {
+            "id": "secretary-soul-active",
+            "from": "secretary",
+            "to": "soul_active",
+            "label": "",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "right": {
+            "id": "secretary-other",
+            "from": "secretary",
+            "to": "other_spaces",
+            "label": "",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "point": [
+            391,
+            148
+          ],
+          "sharedNode": "secretary"
+        },
+        {
+          "left": {
+            "id": "secretary-soul-active",
+            "from": "secretary",
+            "to": "soul_active",
+            "label": "",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "right": {
+            "id": "secretary-cap-mcps",
+            "from": "secretary",
+            "to": "cap_mcps",
+            "label": "",
+            "collectionIndex": 25,
+            "artifactIndex": 26
+          },
+          "point": [
+            468,
+            148
+          ],
+          "sharedNode": "secretary"
+        },
+        {
+          "left": {
+            "id": "secretary-soul-active",
+            "from": "secretary",
+            "to": "soul_active",
+            "label": "",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "right": {
+            "id": "secretary-cap-automation",
+            "from": "secretary",
+            "to": "cap_automation",
+            "label": "",
+            "collectionIndex": 27,
+            "artifactIndex": 28
+          },
+          "point": [
+            460.00000000000006,
+            148
+          ],
+          "sharedNode": "secretary"
+        },
+        {
+          "left": {
+            "id": "secretary-soul-snapshot",
+            "from": "secretary",
+            "to": "soul_snapshot",
+            "label": "",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "secretary-hermes",
+            "from": "secretary",
+            "to": "hermes",
+            "label": "",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "point": [
+            377,
+            152
+          ],
+          "sharedNode": "secretary"
+        },
+        {
+          "left": {
+            "id": "secretary-soul-snapshot",
+            "from": "secretary",
+            "to": "soul_snapshot",
+            "label": "",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "secretary-other",
+            "from": "secretary",
+            "to": "other_spaces",
+            "label": "",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "point": [
+            391,
+            152
+          ],
+          "sharedNode": "secretary"
+        },
+        {
+          "left": {
+            "id": "secretary-soul-snapshot",
+            "from": "secretary",
+            "to": "soul_snapshot",
+            "label": "",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "secretary-memory",
+            "from": "secretary",
+            "to": "memory",
+            "label": "",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            349.72727272727275,
+            152
+          ],
+          "sharedNode": "secretary"
+        },
+        {
+          "left": {
+            "id": "secretary-soul-snapshot",
+            "from": "secretary",
+            "to": "soul_snapshot",
+            "label": "",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "secretary-cap-mcps",
+            "from": "secretary",
+            "to": "cap_mcps",
+            "label": "",
+            "collectionIndex": 25,
+            "artifactIndex": 26
+          },
+          "point": [
+            468,
+            152
+          ],
+          "sharedNode": "secretary"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "secretary-agents",
+            "from": "secretary",
+            "to": "agents",
+            "label": "",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "bends": 5,
+          "stretch": 1.107
+        },
+        {
+          "relationship": {
+            "id": "secretary-hermes",
+            "from": "secretary",
+            "to": "hermes",
+            "label": "",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "bends": 3,
+          "stretch": 1.217,
+          "directCorridorBlockers": [
+            {
+              "id": "soul_active",
+              "label": "Active SOUL.md",
+              "box": [
+                500,
+                60,
+                150,
+                64
+              ]
+            }
+          ]
+        },
+        {
+          "relationship": {
+            "id": "secretary-other",
+            "from": "secretary",
+            "to": "other_spaces",
+            "label": "",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "bends": 3,
+          "stretch": 1
+        },
+        {
+          "relationship": {
+            "id": "secretary-coordinator",
+            "from": "secretary",
+            "to": "coordinator",
+            "label": "",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "bends": 5,
+          "stretch": 1.058
+        },
+        {
+          "relationship": {
+            "id": "permissions-delegate",
+            "from": "permissions",
+            "to": "delegate",
+            "label": "",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "bends": 4,
+          "stretch": 1.091
+        },
+        {
+          "relationship": {
+            "id": "secretary-cap-plugins",
+            "from": "secretary",
+            "to": "cap_plugins",
+            "label": "",
+            "collectionIndex": 24,
+            "artifactIndex": 25
+          },
+          "bends": 3,
+          "stretch": 1.067
+        },
+        {
+          "relationship": {
+            "id": "secretary-cap-external",
+            "from": "secretary",
+            "to": "cap_external",
+            "label": "",
+            "collectionIndex": 26,
+            "artifactIndex": 27
+          },
+          "bends": 3,
+          "stretch": 1.07
+        }
+      ],
+      "truncated": true
+    },
+    "hints": [
+      "secretary has 13 relationships facing its right side, which fits 3 ports: make that side at least 200px, or move some of those neighbours so they face another side of secretary.",
+      "inspect has 4 relationships facing its right side, which fits 2 ports: make that side at least 74px, or move some of those neighbours so they face another side of inspect.",
+      "secretary → soul_active and secretary → hermes cross next to secretary: move node soul_active or hermes so the two reach secretary from different sides (for example one level with it, one directly above or below it).",
+      "secretary → soul_active and secretary → other_spaces cross next to secretary: move node soul_active or other_spaces so the two reach secretary from different sides (for example one level with it, one directly above or below it).",
+      "secretary → soul_active and secretary → cap_mcps cross next to secretary: move node soul_active or cap_mcps so the two reach secretary from different sides (for example one level with it, one directly above or below it).",
+      "secretary → soul_active and secretary → cap_automation cross next to secretary: move node soul_active or cap_automation so the two reach secretary from different sides (for example one level with it, one directly above or below it).",
+      "secretary → soul_snapshot and secretary → hermes cross next to secretary: move node soul_snapshot or hermes so the two reach secretary from different sides (for example one level with it, one directly above or below it).",
+      "secretary → soul_snapshot and secretary → other_spaces cross next to secretary: move node soul_snapshot or other_spaces so the two reach secretary from different sides (for example one level with it, one directly above or below it)."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}
