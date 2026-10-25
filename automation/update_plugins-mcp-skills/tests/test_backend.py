@@ -89,6 +89,32 @@ Updating skill-foo…
         target_found = any("missing-skill" in f["target"] or "https://github.com" in f["target"] for f in failures)
         self.assertTrue(target_found)
 
+    def test_reconcile_skill_lock_prunes_deleted(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            skills_dir = os.path.join(tmpdir, "skills")
+            os.makedirs(os.path.join(skills_dir, "existing-skill"), exist_ok=True)
+
+            lock_file = os.path.join(tmpdir, ".skill-lock.json")
+            initial_lock = {
+                "version": 3,
+                "skills": {
+                    "existing-skill": {"source": "foo/existing"},
+                    "deleted-skill": {"source": "foo/deleted"},
+                },
+            }
+            with open(lock_file, "w", encoding="utf-8") as f:
+                json.dump(initial_lock, f)
+
+            res = reconcile_skill_lock(agents_dir=tmpdir, lock_file=lock_file)
+            self.assertIn("deleted-skill", res["removed"])
+            self.assertNotIn("existing-skill", res["removed"])
+
+            with open(lock_file, "r", encoding="utf-8") as f:
+                updated_lock = json.load(f)
+
+            self.assertNotIn("deleted-skill", updated_lock["skills"])
+            self.assertIn("existing-skill", updated_lock["skills"])
+
 
 if __name__ == "__main__":
     unittest.main()

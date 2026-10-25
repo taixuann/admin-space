@@ -174,7 +174,7 @@ def run_maintenance(
         log("Phase 3: Reconciling lockfile and updating global skills...")
         skills_res = update_global_skills()
         if skills_res["success"]:
-            log(f"Phase 3: Global skills update OK (exit {skills_res['exit_code']}, reconciled={skills_res.get('reconciled_skills')})")
+            log(f"Phase 3: Global skills update OK (exit {skills_res['exit_code']}, reconciled={skills_res.get('reconciled_skills')}, removed={skills_res.get('removed_skills')})")
         else:
             log_err(f"Phase 3: Global skills update failed: {skills_res['output']}")
 

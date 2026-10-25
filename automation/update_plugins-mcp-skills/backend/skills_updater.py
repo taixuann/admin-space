@@ -22,6 +22,7 @@ class SkillsUpdateResult(TypedDict):
     exit_code: int
     output: str
     reconciled_skills: List[str]
+    removed_skills: List[str]
     skipped_custom_skills: List[str]
     failures: List[Dict[str, str]]
 
@@ -45,12 +46,15 @@ def reconcile_skill_lock(
     lock_file: str = SKILL_LOCK_PATH,
 ) -> Dict[str, Any]:
     """Scans ~/.agents/skills/ and reconciles newly discovered external skills into .skill-lock.json.
+    Also cleans up skills that were deleted from disk.
 
     Local custom skills (source is None) are preserved and passed without adding.
     """
     env = get_environment()
     reconciled: List[str] = []
+    removed: List[str] = []
     skipped_custom: List[str] = []
+    skills_dir = os.path.join(agents_dir, "skills")
 
     # Read existing lockfile
     lock_data: Dict[str, Any] = {"version": 3, "skills": {}}
@@ -62,6 +66,15 @@ def reconcile_skill_lock(
             pass
 
     existing_locked_skills = lock_data.get("skills", {})
+
+    # Prune locked skills that no longer exist on disk
+    to_delete = [
+        name for name in existing_locked_skills
+        if not os.path.exists(os.path.join(skills_dir, name))
+    ]
+    for name in to_delete:
+        del existing_locked_skills[name]
+        removed.append(name)
 
     # Query skills CLI for current global skills
     try:
@@ -83,7 +96,7 @@ def reconcile_skill_lock(
                 source_url = item.get("sourceUrl")
 
                 # Only consider skills located inside ~/.agents/skills/
-                if not name or not item_path.startswith(SKILLS_DIR):
+                if not name or not item_path.startswith(skills_dir):
                     continue
 
                 if source is None or source_url is None:
@@ -104,15 +117,23 @@ def reconcile_skill_lock(
                         }
                         reconciled.append(name)
 
-            if reconciled:
-                lock_data["skills"] = existing_locked_skills
+        if reconciled or removed:
+            lock_data["skills"] = existing_locked_skills
+            with open(lock_file, "w", encoding="utf-8") as f:
+                json.dump(lock_data, f, indent=2)
+    except Exception:
+        # If skills CLI failed but we still pruned deleted skills, persist the prune
+        if removed:
+            lock_data["skills"] = existing_locked_skills
+            try:
                 with open(lock_file, "w", encoding="utf-8") as f:
                     json.dump(lock_data, f, indent=2)
-    except Exception:
-        pass
+            except Exception:
+                pass
 
     return {
         "reconciled": reconciled,
+        "removed": removed,
         "skipped_custom": skipped_custom,
     }
 
@@ -183,6 +204,7 @@ def update_global_skills(timeout: int = 180) -> SkillsUpdateResult:
             "exit_code": proc.returncode,
             "output": combined,
             "reconciled_skills": reconcile_res.get("reconciled", []),
+            "removed_skills": reconcile_res.get("removed", []),
             "skipped_custom_skills": reconcile_res.get("skipped_custom", []),
             "failures": failures,
         }

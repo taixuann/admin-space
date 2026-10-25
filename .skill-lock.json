@@ -1,15 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "opencode-delegate": {
-      "source": "amElnagdy/delegate-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/amElnagdy/delegate-skills.git",
-      "skillPath": "skills/opencode-delegate/SKILL.md",
-      "skillFolderHash": "a67105e9e3091b25183496501970885faa96e334",
-      "installedAt": "2026-10-01T11:49:13.022Z",
-      "updatedAt": "2026-10-24T15:20:11.427Z"
-    },
     "simple-english": {
       "source": "AminBlg/SimpleEnglish",
       "sourceType": "github",
@@ -65,15 +56,6 @@
       "skillFolderHash": "993aa21d57e18ebc82801d20c22c0efb4183369e",
       "installedAt": "2026-10-04T07:53:15.067Z",
       "updatedAt": "2026-10-24T15:20:26.369Z"
-    },
-    "terminal-title": {
-      "source": "bluzername/claude-code-terminal-title",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/bluzername/claude-code-terminal-title.git",
-      "skillPath": "skill/terminal-title/SKILL.md",
-      "skillFolderHash": "13c17971cae121da83b27c7dbde53266882d3fe5",
-      "installedAt": "2026-10-02T13:45:55Z",
-      "updatedAt": "2026-10-24T15:20:29.219Z"
     },
     "skill-creator": {
       "source": "anthropics/skills",
