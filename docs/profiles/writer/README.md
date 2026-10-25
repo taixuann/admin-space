@@ -44,7 +44,7 @@ Default Hermes built-in profile memory. No shared bank. Run IDs, provenance comm
 
 ## 2. Capabilities
 
-[Capability targets](capabilities.yaml) lists the draft target set. Synthesis uses `humanizer`, `simple-english`, `academic-pptx`, and `writing-for-agents`. Citation work uses `hyperresearch` and verified DOIs; no fabricated references. Compilation uses `pdflatex`, `typst`, and `pandoc`. `miyo-parse` and `pretty-mermaid` support source reading and diagrams.
+The draft capability set: Synthesis uses `humanizer`, `simple-english`, `academic-pptx`, and `writing-for-agents`. Citation work uses `hyperresearch` and verified DOIs; no fabricated references. Compilation uses `pdflatex`, `typst`, and `pandoc`. `miyo-parse` and `pretty-mermaid` support source reading and diagrams.
 
 ## 3. Workflow
 

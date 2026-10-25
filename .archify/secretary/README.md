@@ -26,7 +26,7 @@ For each changed candidate, choose a fresh `--out-dir` revision so prior browser
 
 The current workflow shows the intended self/other-profile management process. It does not install Executor or configure models, integrations or memory. The earlier draft at `../workflow-secretary-shared-20261025-144403/` remains historical; it is not the maintained workflow source.
 
-The current diagram is a native Lifecycle state machine inside the same public workflow HTML. It shows required definition and plan artifacts before Executor handoff, actual capability loading/health checks, approval/readiness waits and rework/resume events. Current passing evidence is under `workflow/state-review-1/`. Earlier root-level finalize receipts belong to the previous role/lane diagram. Automatic routing reports two branch crossovers; automated checks passed, but visual polish has not been accepted.
+The current diagram is a native Lifecycle state machine inside the same public workflow HTML. It shows required definition and plan artifacts before Executor handoff, actual capability loading/health checks, approval/readiness waits and rework/resume events. Current passing evidence is under `workflow/state-review-2/`. Earlier root-level finalize receipts belong to the previous role/lane diagram. Automatic routing reports two branch crossovers; automated checks passed, but visual polish has not been accepted.
 
 ## Legacy support and rollback
 

@@ -29,7 +29,7 @@
       "type": "active",
       "label": "Defined",
       "sublabel": "Secretary",
-      "tag": "README / SOUL / YAML",
+      "tag": "README / SOUL",
       "step": "02"
     },
     {
@@ -207,7 +207,7 @@
       "title": "Definition Artifacts + Ownership",
       "items": [
         "Maintained path: docs/profiles/<id>/",
-        "Contents: README, SOUL, capabilities.yaml, workflow HTML when needed",
+        "Contents: README, SOUL, workflow HTML when needed",
         "Owner: Secretary with hermes-fleet-admin and documentation-writer",
         "Exact model/effort and skill/plugin/MCP/automation manifest are approved targets, not assumptions",
         "Target: Secretary itself or another profile. Operation: create / update / maintain / delete. Same workflow, not separate planning or skill-writing work types."

@@ -19,16 +19,16 @@
       "id": "received",
       "type": "start",
       "label": "Received",
-      "sublabel": "brief or plan header",
-      "tag": "any profile",
+      "sublabel": "kanban card",
+      "tag": "plan path",
       "step": "01"
     },
     {
       "id": "executing",
       "type": "active",
       "label": "Executing",
-      "sublabel": "executing-plans",
-      "tag": "in scope",
+      "sublabel": "opencode run",
+      "tag": "plan branch",
       "step": "02"
     },
     {
@@ -43,7 +43,7 @@
       "id": "reported",
       "type": "waiting",
       "label": "Reported",
-      "sublabel": "report sent",
+      "sublabel": "report + card",
       "tag": "Tai",
       "step": "04"
     },
@@ -51,16 +51,16 @@
       "id": "done",
       "type": "success",
       "label": "Done",
-      "sublabel": "Tai accepts",
-      "tag": "accepted",
+      "sublabel": "card done",
+      "tag": "merged",
       "step": "05"
     },
     {
       "id": "blocked",
       "type": "waiting",
       "label": "Blocked",
-      "sublabel": "header / authority",
-      "tag": "uncommitted"
+      "sublabel": "card blocked",
+      "tag": "reason set"
     },
     {
       "id": "subtasks",
@@ -162,18 +162,19 @@
   "cards": [
     {
       "dot": "cyan",
-      "title": "Brief or plan contract (input)",
+      "title": "Kanban card (input)",
       "items": [
-        "From any authorized profile; a task brief or a plan from the owning Space's docs/superpowers/plans/.",
-        "Header: requester, space, scope, checks, report. A missing field is a blocker.",
-        "Scope = the requester's own authority, never more."
+        "Assigned to executor by any authorized profile; it carries the plan path in the owning Space.",
+        "Plan header: requester, space, base, branch, scope, checks, engine, report. A missing field blocks the card.",
+        "Scope is the requester's own authority, never more."
       ]
     },
     {
       "dot": "amber",
       "title": "Methods",
       "items": [
-        "Executing: superpowers:executing-plans + test-driven-development.",
+        "Executing: superpowers:executing-plans, with the opencode skill run in the requester's Space when engine is opencode.",
+        "Engine self: small doc or config edits Executor makes directly.",
         "Subtasks: subagent-driven-development only for independent subtasks.",
         "Debugging: systematic-debugging. Verified: verification-before-completion before report.",
         "Review feedback: receiving-code-review."
@@ -181,12 +182,12 @@
     },
     {
       "dot": "violet",
-      "title": "Commit and approval rules",
+      "title": "Card states and commits",
       "items": [
-        "Work directly in the owning Space; no task branch.",
-        "Commits, push, publish, and destructive actions need Tai's approval.",
-        "Never overwrite someone else's uncommitted work.",
-        "Never commit credentials or raw research data."
+        "Executing works on the plan's task branch and commits there; the report and card carry the result.",
+        "Blocked: missing or ambiguous plan, missing header field, no authority, or dirty tree; the card states the reason.",
+        "Reported waits for Tai's review; Done means Tai accepted and the branch is merged.",
+        "Never overwrite someone else's uncommitted work."
       ]
     },
     {
@@ -194,9 +195,10 @@
       "title": "Limits",
       "items": [
         "Push, publish, external sharing: Tai approval only.",
+        "Merge to base: Tai approval only.",
         "Hermes runtime config: only with Tai's approval and a rollback step in the plan.",
         "Never writes credentials or raw research data.",
-        "Model is runtime-managed (OpenCode Go); memory is default profile memory."
+        "Model is set by Tai and managed by the runtime (claude-haiku-5-5 / anthropic), with no fallback."
       ]
     }
   ]

@@ -1,0 +1,215 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Forge ticket run - issue to merge",
+    "locale": "en",
+    "output": "docs/profiles/forge/forge-workflow.html",
+    "quality_profile": "showcase"
+  },
+  "mainPath": [
+    "ticket",
+    "planned",
+    "reviewed",
+    "building",
+    "checking",
+    "merged"
+  ],
+  "states": [
+    {
+      "id": "ticket",
+      "type": "start",
+      "label": "Ticket",
+      "sublabel": "GitHub issue",
+      "tag": "tool repo",
+      "step": "01"
+    },
+    {
+      "id": "planned",
+      "type": "active",
+      "label": "Planned",
+      "sublabel": "writing-plans",
+      "tag": "plan file",
+      "step": "02"
+    },
+    {
+      "id": "reviewed",
+      "type": "decision",
+      "label": "Plan Review",
+      "sublabel": "Forge",
+      "tag": "approve plan",
+      "step": "03"
+    },
+    {
+      "id": "building",
+      "type": "active",
+      "label": "Building",
+      "sublabel": "Executor",
+      "tag": "kanban card",
+      "step": "04"
+    },
+    {
+      "id": "checking",
+      "type": "decision",
+      "label": "Code Review",
+      "sublabel": "Forge",
+      "tag": "rerun checks",
+      "step": "05"
+    },
+    {
+      "id": "merged",
+      "type": "success",
+      "label": "Merged",
+      "sublabel": "Forge",
+      "tag": "push + close",
+      "step": "06"
+    },
+    {
+      "id": "blocked",
+      "type": "waiting",
+      "label": "Blocked",
+      "sublabel": "unclear ticket",
+      "tag": "ask Tai"
+    },
+    {
+      "id": "direct",
+      "type": "active",
+      "label": "Direct",
+      "sublabel": "opencode",
+      "tag": "small work"
+    },
+    {
+      "id": "rework",
+      "type": "active",
+      "label": "Rework",
+      "sublabel": "changes asked",
+      "tag": "same card"
+    },
+    {
+      "id": "closed",
+      "type": "neutral",
+      "label": "Closed",
+      "sublabel": "not accepted",
+      "tag": "terminal"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "ticket-planned",
+      "from": "ticket",
+      "to": "planned",
+      "label": "plan"
+    },
+    {
+      "id": "planned-reviewed",
+      "from": "planned",
+      "to": "reviewed",
+      "label": "draft"
+    },
+    {
+      "id": "reviewed-building",
+      "from": "reviewed",
+      "to": "building",
+      "label": "approved"
+    },
+    {
+      "id": "building-checking",
+      "from": "building",
+      "to": "checking",
+      "label": "done"
+    },
+    {
+      "id": "checking-merged",
+      "from": "checking",
+      "to": "merged",
+      "label": "pass"
+    },
+    {
+      "id": "ticket-blocked",
+      "from": "ticket",
+      "to": "blocked",
+      "label": "unclear",
+      "variant": "security"
+    },
+    {
+      "id": "blocked-ticket",
+      "from": "blocked",
+      "to": "ticket",
+      "label": "answered"
+    },
+    {
+      "id": "ticket-direct",
+      "from": "ticket",
+      "to": "direct",
+      "label": "no plan"
+    },
+    {
+      "id": "direct-checking",
+      "from": "direct",
+      "to": "checking",
+      "label": "done"
+    },
+    {
+      "id": "checking-rework",
+      "from": "checking",
+      "to": "rework",
+      "label": "fail"
+    },
+    {
+      "id": "rework-building",
+      "from": "rework",
+      "to": "building",
+      "label": "resent"
+    },
+    {
+      "id": "reviewed-planned",
+      "from": "reviewed",
+      "to": "planned",
+      "label": "revise"
+    },
+    {
+      "id": "reviewed-closed",
+      "from": "reviewed",
+      "to": "closed",
+      "label": "reject"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Input",
+      "items": [
+        "A ticket: an issue on a Development Space tool's GitHub repo, or a kanban card.",
+        "Forge reads the tool's AGENTS.md and README before planning.",
+        "An unclear ticket stops here and goes back to Tai or the requester; Forge does not guess."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Plan and review",
+      "items": [
+        "Design is open: superpowers:brainstorming. Multi-step work: superpowers:writing-plans into the tool repo's docs/superpowers/plans/.",
+        "Plan header: requester forge, space, base, branch, scope, checks, engine, report.",
+        "Forge reviews its own plan before dispatch; a rejected plan returns to Planned or closes."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Dispatch and build",
+      "items": [
+        "Kanban card: assignee executor, workspace the tool worktree named in ~/development-space/AGENTS.md, plan path and issue URL in the body.",
+        "Executor runs OpenCode on the task branch, runs the checks, commits, reports.",
+        "Small work with no plan: Forge runs /opencode itself in ~/development-space (Direct)."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Review and merge",
+      "items": [
+        "Forge reads the diff and reruns the plan's checks. Failure: request changes on the same card.",
+        "Pass: merge, push, close the issue with a link, remove the worktree. Tai delegates merge and push on Development Space tool repos to Forge.",
+        "Publication elsewhere and destructive actions still need Tai's approval."
+      ]
+    }
+  ]
+}

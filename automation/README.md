@@ -24,7 +24,6 @@ An Admin job's report folder is `<source-folder>-runtime`, so reports never land
 
 | Label | Owner | Schedule | Notes |
 | --- | --- | --- | --- |
-| `com.tai.model-control-sync` | Admin (`model-control/`) | Daily 00:00 | Active. A replacement job is implemented but not installed. |
 | `com.tai.linear-notion-sync` | Development Space (`automation/linear-notion-tracking/`) | Daily 00:00 | No tracked source plist. |
 | `com.tai.bridge.sync` | Admin (`bridge/`) | Per installed plist | |
 

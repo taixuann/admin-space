@@ -6,7 +6,6 @@ This folder is ignored by Admin Git except for this README and [AGENTS.md](AGENT
 
 | Tool | Purpose | Source | Issues |
 | --- | --- | --- | --- |
-| `opencode-model-router` | OpenCode model routing for registered consumers | Installed from GitHub with `uv tool`; source `~/development-space/tools/admin/opencode-model-router` (symlinked here for the dashboard). Admin registry: `~/.agents/config/opencode-model-router/register.yaml` | [GitHub](https://github.com/taixuann/opencode-model-router/issues) |
 | `hindsight` | Open the Hindsight memory explorer for bank `admin` | Local repo here; **not yet migrated** | No remote |
 | `automation-incidents` | Shared incident reporter for scheduled jobs | Local repo here; **not yet migrated** | No remote |
 

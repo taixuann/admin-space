@@ -8,10 +8,26 @@ Use one Superpowers lifecycle per deliverable:
 
 1. `superpowers:brainstorming` while the design is unsettled.
 2. `superpowers:writing-plans` once Tai accepts the design. Save the plan in `superpowers/plans/` and the spec in `superpowers/specs/`.
-3. Executor runs the plan (see [Executor](profiles/executor/README.md)). The plan header names requester, space, base, branch, scope, checks, and report.
+3. Executor runs the plan (see [Executor](profiles/executor/README.md)). The plan header names requester, space, base, branch, scope, checks, engine, and report.
 4. `superpowers:verification-before-completion` before any claim of completion.
 
 Keep an existing task on its chosen lifecycle. State a replacement before switching. Read a skill before using it. If a named skill is missing from the host catalog, report the gap.
+
+## Plan or direct
+
+Route work by whether a written plan exists.
+
+| Situation | Who runs it | Where | Tracking |
+| --- | --- | --- | --- |
+| Small, immediate, interactive, or exploratory work with no plan | The caller (Secretary, Forge) runs `/opencode` directly | The caller's own Space | The request itself; no card |
+| A plan written with `superpowers:writing-plans` | Executor, through a kanban card assigned to `executor` that carries the plan path | The requester's Space, on the plan's task branch | The kanban card: who assigned, plan path, status, result |
+| Executor unavailable (quota or outage) | The caller runs `/opencode` directly | The caller's own Space | The request, with the fallback noted |
+
+Executor validates the plan header: requester, space, base, branch, scope, checks, engine, and report. A missing or ambiguous plan, a missing header field, a requester without authority over the Space, or a dirty tree sets the card blocked with the reason. Executor commits on the task branch, reports, and waits for Tai's review; it merges only on Tai's approval. There is no separate tracking-only mode.
+
+To hand a plan to Executor, create a kanban card assigned to `executor`: the title names the task, the body holds the plan path, `workspace_kind` is `dir`, and `workspace_path` is the requester's own Space. The card's workspace is where Executor works; a requester never points it at another Space's directory. Forge calls Executor the same way for `~/development-space`.
+
+See [Executor](profiles/executor/README.md) for the model, plan contract, permissions, and workflow.
 
 ## Pick the owning method
 

@@ -44,7 +44,7 @@ Default Hermes built-in profile memory. No shared bank. Plans, results, and the 
 
 ## 2. Capabilities
 
-[Capability targets](capabilities.yaml) lists the draft target set. Literature work uses `hyperresearch` (Level 0/1) and OpenScience indexers. Planning uses the `openscience` skill and CLI. Evaluation and archival use `compose-research` and `ro-crate-research`, which are proposed and not yet installed in Hermes. `audit-brainstorming`, `writing-for-agents`, `simple-english`, and `academic-pptx` support ideation and drafting. Status values in the YAML separate available tools from proposed ones.
+The draft capability set: Literature work uses `hyperresearch` (Level 0/1) and OpenScience indexers. Planning uses the `openscience` skill and CLI. Evaluation and archival use `compose-research` and `ro-crate-research`, which are proposed and not yet installed in Hermes. `audit-brainstorming`, `writing-for-agents`, `simple-english`, and `academic-pptx` support ideation and drafting. Status values in the YAML separate available tools from proposed ones.
 
 ## 3. Workflow
 

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "fb98e257-a8bc-474d-a0fa-0d717143e8de",
+  "status": "current",
+  "command": "deliver",
+  "type": "lifecycle",
+  "input": "/Users/tai/.agents/.archify/forge/workflow/lifecycle-candidate.json",
+  "output": "/Users/tai/.agents/.archify/forge/workflow/forge-workflow.html",
+  "specification": {
+    "sha256": "2897ee8ac5bac7d548d7699ae157a809f12561de63a270222ae05c3762980310",
+    "bytes": 5140
+  },
+  "artifact": {
+    "sha256": "c44204894bfa3a56b5d0fc961dce383d1eda919215dc270b081f0850ff7f19c2",
+    "bytes": 829138
+  }
+}

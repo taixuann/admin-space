@@ -112,8 +112,3 @@ global_automations:
     schedule: "04:00 daily"
     source: "/Users/tai/.agents/automation/bridge"
     purpose: "Synchronizes cross-space bridge assets, GitHub, and Google Drive metadata."
-
-  model_control:
-    label: "com.tai.model-control-sync"
-    source: "/Users/tai/.agents/automation/model-control"
-    purpose: "Evaluates and aligns available AI models across agent platforms."

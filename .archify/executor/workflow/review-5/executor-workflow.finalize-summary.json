@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+    "sha256": "56a30de669319332f922518b57f0ae0efde3fcafdbef8ae266da6f00eff5db99",
+    "bytes": 5109
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+    "sha256": "126aed4fef15dd69ab2520d649d8779b61077b7d85c4a8aa8bb5bce1db5751a2",
+    "bytes": 826476
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/evidence-path-conflict",
+      "severity": "error",
+      "message": "browser-check will not replace the existing unowned evidence path \"/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json\".",
+      "subject": {
+        "artifact": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "evidencePath": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json"
+      },
+      "evidence": {
+        "reason": {
+          "code": "ownership-artifact-mismatch"
+        }
+      },
+      "supportedFixes": [
+        "move the conflicting file aside, or choose a separate --out-dir, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 756,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/forge/workflow/lifecycle-candidate.json",
+    "sha256": "2897ee8ac5bac7d548d7699ae157a809f12561de63a270222ae05c3762980310",
+    "bytes": 5140
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/forge/workflow/forge-workflow.html",
+    "sha256": "c44204894bfa3a56b5d0fc961dce383d1eda919215dc270b081f0850ff7f19c2",
+    "bytes": 829138
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/forge/workflow/review-1/forge-workflow.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/forge/workflow/review-1/forge-workflow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/forge/workflow/review-1/forge-workflow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4981,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 2
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "ticket-direct",
+            "from": "ticket",
+            "to": "direct",
+            "label": "no plan",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "reviewed-closed",
+            "from": "reviewed",
+            "to": "closed",
+            "label": "reject",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "point": [
+            502,
+            168
+          ]
+        },
+        {
+          "left": {
+            "id": "direct-checking",
+            "from": "direct",
+            "to": "checking",
+            "label": "done",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "rework-building",
+            "from": "rework",
+            "to": "building",
+            "label": "resent",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            824,
+            168
+          ]
+        }
+      ],
+      "detours": [],
+      "truncated": false
+    },
+    "repair": "Advisory only: this mode places or routes these relationships itself. Report them; do not remove relationships or meaning to reduce crossings."
+  }
+}

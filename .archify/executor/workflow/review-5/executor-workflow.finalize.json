@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "startedAt": "2026-10-25T15:02:28.314Z",
+  "specification": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+    "sha256": "56a30de669319332f922518b57f0ae0efde3fcafdbef8ae266da6f00eff5db99",
+    "bytes": 5109
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+    "sha256": "126aed4fef15dd69ab2520d649d8779b61077b7d85c4a8aa8bb5bce1db5751a2",
+    "bytes": 826476
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/Users/tai/.local/share/fnm/node-versions/v22.22.3/installation/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "lifecycle",
+        "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+        "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "56a30de669319332f922518b57f0ae0efde3fcafdbef8ae266da6f00eff5db99",
+          "bytes": 5109
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 371,
+      "command": [
+        "/Users/tai/.local/share/fnm/node-versions/v22.22.3/installation/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "lifecycle",
+        "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+        "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "7f31f30d-514a-47bc-8ab4-77c00b60c7a8",
+        "ok": true,
+        "command": "deliver",
+        "type": "lifecycle",
+        "input": "/Users/tai/.agents/.archify/executor/workflow/lifecycle-candidate.json",
+        "output": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "specification": {
+          "sha256": "56a30de669319332f922518b57f0ae0efde3fcafdbef8ae266da6f00eff5db99",
+          "bytes": 5109
+        },
+        "artifact": {
+          "sha256": "126aed4fef15dd69ab2520d649d8779b61077b7d85c4a8aa8bb5bce1db5751a2",
+          "bytes": 826476
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 182,
+      "command": [
+        "/Users/tai/.local/share/fnm/node-versions/v22.22.3/installation/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "artifact": {
+          "sha256": "126aed4fef15dd69ab2520d649d8779b61077b7d85c4a8aa8bb5bce1db5751a2",
+          "bytes": 826476
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 1,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 5,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 7.3744493392070485,
+            "maxBends": 2,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 16,
+            "minInteriorSegmentPx": 16,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [
+              {
+                "left": {
+                  "id": "verified-debugging",
+                  "from": "verified",
+                  "to": "debugging",
+                  "label": "fail",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "right": {
+                  "id": "feedback-executing",
+                  "from": "feedback",
+                  "to": "executing",
+                  "label": "changes",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "point": [
+                  523,
+                  126
+                ]
+              }
+            ],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": null,
+            "requestedTargetMet": null,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "received"
+            },
+            "minimumSourceTextPx": 9,
+            "minimumProjectedTextPx": 7.3744493392070485,
+            "semanticTextCount": 30
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "7f31f30d-514a-47bc-8ab4-77c00b60c7a8"
+      }
+    },
+    "browser-check": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 26,
+      "command": [
+        "/Users/tai/.local/share/fnm/node-versions/v22.22.3/installation/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "/Users/tai/.agents/.archify/executor/workflow/review-5"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "fail",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "7f31f30d-514a-47bc-8ab4-77c00b60c7a8",
+        "artifact": {
+          "path": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+          "sha256": "126aed4fef15dd69ab2520d649d8779b61077b7d85c4a8aa8bb5bce1db5751a2",
+          "bytes": 826476
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "not-checked",
+          "executable": null
+        },
+        "diagnostics": [
+          {
+            "code": "viewer/evidence-path-conflict",
+            "severity": "error",
+            "message": "browser-check will not replace the existing unowned evidence path \"/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json\".",
+            "subject": {
+              "artifact": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+              "evidencePath": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json"
+            },
+            "evidence": {
+              "reason": {
+                "code": "ownership-artifact-mismatch"
+              }
+            },
+            "supportedFixes": [
+              "move the conflicting file aside, or choose a separate --out-dir, then rerun browser-check"
+            ]
+          }
+        ],
+        "containment": {
+          "status": "fail",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": []
+        },
+        "themeStates": {
+          "status": "fail",
+          "viewports": []
+        },
+        "readability": {
+          "status": "fail",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": []
+        },
+        "viewerChrome": {
+          "status": "fail",
+          "viewports": []
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "/Users/tai/.agents/.archify/executor/workflow/review-5",
+          "receipt": "executor-workflow.browser-check.json",
+          "files": []
+        },
+        "error": "browser-check will not replace the existing unowned evidence path \"/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json\"."
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/evidence-path-conflict",
+      "severity": "error",
+      "message": "browser-check will not replace the existing unowned evidence path \"/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json\".",
+      "subject": {
+        "artifact": "/Users/tai/.agents/.archify/executor/workflow/executor-workflow.html",
+        "evidencePath": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json"
+      },
+      "evidence": {
+        "reason": {
+          "code": "ownership-artifact-mismatch"
+        }
+      },
+      "supportedFixes": [
+        "move the conflicting file aside, or choose a separate --out-dir, then rerun browser-check"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/.archify/executor/workflow/review-5/executor-workflow.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "browser-check",
+  "finishedAt": "2026-10-25T15:02:29.070Z",
+  "durationMs": 756,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

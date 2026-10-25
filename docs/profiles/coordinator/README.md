@@ -6,7 +6,7 @@ Last reviewed: 2026-10-25.
 
 ## Responsibility
 
-See [capabilities (YAML)](capabilities.yaml) and the generated [HTML view](capabilities.html) for role requirements and the unverified runtime inventory. Use the [profile index](../README.md) to compare roles.
+See the generated [HTML view](capabilities.html) for the earlier, now unmaintained runtime inventory. Use the [profile index](../README.md) to compare roles.
 
 The legacy renderer lives in `.archify/secretary/scripts/` and is not part of the current workflow.
 
@@ -26,7 +26,6 @@ A future documented SOUL source can live in this directory after the active sour
 
 - [[docs/README|Admin Space roles and full flow]]
 - [[docs/profiles/secretary/README|Secretary profile]]
-- [[docs/profiles/coordinator/capabilities.yaml|Coordinator capability targets]]
 - [[docs/profiles/coordinator/capabilities.html|Coordinator capabilities view]]
 - [[docs/AGENTS|Work procedures]]
 

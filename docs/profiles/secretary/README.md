@@ -55,11 +55,11 @@ Adapt from evidence: identify a reusable gap, reproduce it, propose or apply the
 
 ## 2. Capabilities
 
-[Secretary capability targets](capabilities.yaml) records the approved target set under `skills`, `plugins`, `mcps`, `external_tools`, and `automation`. It is not a copy of runtime configuration or proof that an integration works.
+Secretary's skills, plugins, MCPs, and automation are set in the runtime configuration. This README records intent and reasons, not proof that an integration works.
 
 `hermes-fleet-admin` coordinates profile management. `hermes-agent` supplies native guidance; documentation skills maintain definitions; Archify explains the workflow. Superpowers supports brainstorming, planning, skill authoring, and verification when needed. The `opencode` skill remains the current implementation method, not a second external-tool entry.
 
-The YAML records selected targets, not automatically discovered runtime state. A future refresh may collect observed installation, enablement, and health separately; it must not overwrite approved choices or enable capabilities silently. No refresh automation, watcher, or scheduler is configured by this update.
+The README records selected targets, not automatically discovered runtime state. A future refresh may collect observed installation, enablement, and health separately; it must not overwrite approved choices or enable capabilities silently. No refresh automation, watcher, or scheduler is configured by this update.
 
 Notion is an integration used within task scope. Admin Home page `4010a859ed1f81789613e07d67b7880e` was successfully read on 2026-10-25. That does not grant blanket write permission or prove access to every page. Notion and local documents are not automatically synchronized.
 
@@ -71,7 +71,7 @@ The HTML is the request state machine, not only a role diagram: **Draft → Defi
 
 Before handing write work to Executor, Secretary uses `superpowers:writing-plans` to create or update the owning plan under `docs/superpowers/plans/`. The plan names the profile definition and target runtime paths, exact change, required skills/tools, permissions, dependencies, tests, rollback and continuation checkpoint. Executor consumes both the approved definition and approved plan; failed verification returns to plan revision before another attempt.
 
-Capability selection in YAML is separate from activation. The workflow describes profile-specific skill discovery/loading, plugin installation/enabling and hook tests, MCP authorization and actual tool checks, and scoped automation and memory verification. The precise supported settings and entrypoints must be inspected during the authorized task; this diagram does not apply them.
+Capability selection is separate from activation. The workflow describes profile-specific skill discovery/loading, plugin installation/enabling and hook tests, MCP authorization and actual tool checks, and scoped automation and memory verification. The precise supported settings and entrypoints must be inspected during the authorized task; this diagram does not apply them.
 
 Executor itself must have a complete definition and verified runtime/readiness before receiving tasks. Its first bootstrap uses the currently approved execution method, not an unconfigured Executor configuring itself. The existing patch-only boundary remains until a separately approved application contract permits the exact live-configuration work.
 

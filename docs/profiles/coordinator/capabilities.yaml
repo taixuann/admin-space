@@ -1,9 +1,0 @@
-profile: coordinator
-status: approved role; no runtime inventory inspected or selected packages
-scope: role requirements only
-notes: Lists intentionally empty until runtime inventory is inspected.
-skills: []
-plugins: []
-mcps: []
-external_tools: []
-automation: []

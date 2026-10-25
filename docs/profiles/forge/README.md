@@ -6,18 +6,18 @@ Owner: Tai. Status: definition approved 2026-10-25. Hermes profile: `forge`.
 
 Forge owns Development Space (`~/development-space`). It turns issues on tool repositories into plans, hands each plan to [Executor](../executor/README.md) through kanban, reviews the result, and merges it. Forge plans and reviews; Executor writes the code.
 
-Identity lives in the runtime profile: `~/.hermes/profiles/forge/SOUL.md`. This folder holds the profile definition only. Development Space keeps only its own Space documents (`AGENTS.md`, `README.md`, `ARCHITECTURE.md`).
+Identity: [SOUL.md](SOUL.md) here is canonical; the runtime `~/.hermes/profiles/forge/SOUL.md` is a symlink to it. The workflow is drawn in [forge-workflow.html](forge-workflow.html). Development Space keeps only its own Space documents (`AGENTS.md`, `README.md`, `ARCHITECTURE.md`).
 
 | Source | Purpose |
 | --- | --- |
-| `~/.hermes/profiles/forge/SOUL.md` | Identity and conduct |
+| [SOUL.md](SOUL.md) | Identity and conduct |
 | `~/development-space/AGENTS.md` | Space rules: tool repos, worktrees, 3-tier delivery |
 | Each tool's `AGENTS.md` and `README.md` | Tool-specific rules |
 | Issues on the tool's GitHub repo | Incoming work |
 
 ### Model
 
-Runtime-managed. Forge is registered as a `coding` consumer of `opencode-model-router`.
+Set by Tai in the runtime profile; no router manages it. Forge does not choose or change its model.
 
 ### Working permissions
 
@@ -36,7 +36,16 @@ Default Hermes built-in memory. No shared bank. Plans, kanban cards, and issues 
 
 ## 2. Capabilities
 
-[capabilities.yaml](capabilities.yaml) lists the targets: Superpowers for method, `github` for issues and PRs, `launchd-automation` for tool automation, kanban for dispatch. Code is written by Executor, so Forge carries no coding-agent skills.
+The runtime configuration is the source of truth; this section records intent.
+
+| Kind | Selected | Why |
+| --- | --- | --- |
+| Skills | global set (`~/.agents/skills` and `~/development-space/.agents/skills`); `opencode` for direct small work | Method, GitHub, automation; `opencode` runs `opencode run --auto` in `~/development-space` |
+| Plugins | `superpowers`, `quota`, `ponytail` | Planning methods, quota view, lean coding style |
+| MCPs | `linear`, `xerj`, `open-design` | Tickets, Development Space search, frontend design work |
+| Tools | `hermes kanban` | Dispatch to Executor, review column |
+
+Code that has a plan is written by Executor.
 
 ## 3. Workflow
 
@@ -56,9 +65,12 @@ Verified 2026-10-25:
 | --- | --- |
 | Identity | Runtime SOUL rewritten; previous SOUL (Codex/OpenCode routing, Folo RSS) backed up in the profile's `backups/` |
 | Description | Updated with `hermes profile describe` |
-| Skills | `folo`, `codex`, `opencode` disabled; `github`, `launchd-automation`, Superpowers available |
+| Skills | `opencode` re-enabled 2026-10-25 (run-only skill synced); `folo`, `codex` stay disabled |
+| MCPs | `linear`, `xerj`, `open-design` enabled in config; connections not yet exercised |
+| Plugins | `superpowers`, `quota`, `ponytail` enabled |
+| SOUL | Runtime SOUL is a symlink to this folder's SOUL.md |
 | Memory | Built-in memory enabled; no external provider |
-| Model | Primary `deepseek-v4.1-flash#high` is rejected upstream while Go quota is exhausted. Fallback set to `beam-free` to match the router's coding manifest; the old fallback `deepseek-v4.1-flash-free` is unavailable |
+| Model | Set by Tai; recorded by `hermes -p forge config get model`, not here |
 | Fresh session | Reports Forge role, cwd `~/development-space`, the workflow, loads `writing-plans` and `github`, no codex/opencode |
 
 Not yet exercised: a real issue → kanban → review → merge run.
