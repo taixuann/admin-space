@@ -1,0 +1,160 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Harvey: delete a bot",
+    "output": "bot-management/harvey/.archify/workflow-delete-bot-20261026-184123/delete-bot.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "harvey",
+      "label": "Harvey"
+    },
+    {
+      "id": "tai",
+      "label": "Tai decides"
+    },
+    {
+      "id": "donna",
+      "label": "Donna applies"
+    }
+  ],
+  "mainPath": [
+    "h0",
+    "t0",
+    "d0",
+    "h2",
+    "h3",
+    "t1"
+  ],
+  "nodes": [
+    {
+      "id": "h0",
+      "lane": "harvey",
+      "col": 0,
+      "type": "backend",
+      "label": "Find dependencies",
+      "sublabel": "jobs, routes, workflows",
+      "width": 158
+    },
+    {
+      "id": "x0",
+      "lane": "harvey",
+      "col": 1,
+      "type": "cloud",
+      "label": "Dependency found",
+      "sublabel": "stop, report, keep profile",
+      "width": 158
+    },
+    {
+      "id": "t0",
+      "lane": "tai",
+      "col": 1,
+      "type": "security",
+      "label": "Tai confirms",
+      "sublabel": "silence is not yes",
+      "tag": "gate",
+      "width": 158
+    },
+    {
+      "id": "d0",
+      "lane": "donna",
+      "col": 2,
+      "type": "cloud",
+      "label": "Back up, remove",
+      "sublabel": "private backup first",
+      "width": 158
+    },
+    {
+      "id": "h2",
+      "lane": "harvey",
+      "col": 3,
+      "type": "backend",
+      "label": "Set enable: false",
+      "sublabel": "SOUL.md; keep the folder",
+      "width": 158
+    },
+    {
+      "id": "h3",
+      "lane": "harvey",
+      "col": 4,
+      "type": "backend",
+      "label": "Verify",
+      "sublabel": "profile gone, no references",
+      "width": 158
+    },
+    {
+      "id": "t1",
+      "lane": "tai",
+      "col": 5,
+      "type": "security",
+      "label": "Tai confirms folder",
+      "sublabel": "separate removal step",
+      "tag": "gate",
+      "width": 158
+    }
+  ],
+  "edges": [
+    {
+      "id": "h0-t0",
+      "from": "h0",
+      "to": "t0",
+      "label": "none found",
+      "variant": "emphasis"
+    },
+    {
+      "id": "h0-x0",
+      "from": "h0",
+      "to": "x0",
+      "label": "found",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "t0-d0",
+      "from": "t0",
+      "to": "d0",
+      "label": "yes",
+      "variant": "security"
+    },
+    {
+      "id": "d0-h2",
+      "from": "d0",
+      "to": "h2",
+      "variant": "emphasis"
+    },
+    {
+      "id": "h2-h3",
+      "from": "h2",
+      "to": "h3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "h3-t1",
+      "from": "h3",
+      "to": "t1",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Reversible until the end",
+      "items": [
+        "Profile removed only after a private backup",
+        "Folder kept as history with enable: false",
+        "Folder removal needs a separate yes"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Stops",
+      "items": [
+        "A dependency stops the run",
+        "A failed backup stops the run",
+        "A failed verify reports the remaining reference"
+      ]
+    }
+  ]
+}

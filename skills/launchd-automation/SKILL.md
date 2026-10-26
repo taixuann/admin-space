@@ -18,10 +18,9 @@ Own one job at a time: where its source lives, where it reports, and what proves
 > [!IMPORTANT]
 > **Production Isolation Invariant**: A production LaunchAgent (`~/Library/LaunchAgents/<label>.plist`) must NEVER execute against a `development-space` source path (`/Users/tai/development-space/...`). It must point strictly to the target consumer space runner (e.g. `/Users/tai/.agents/automation/<job-name>/run.sh`) or a globally installed CLI in `/Users/tai/.local/bin/`. Development space is an active workshop with isolated worktrees and uncommitted changes; background daemons must never depend on development trees.
 
-> [!IMPORTANT]
-> **Production Isolation Invariant**: A production LaunchAgent (`~/Library/LaunchAgents/<label>.plist`) must NEVER execute against a `development-space` source path (`/Users/tai/development-space/...`). It must point strictly to the target consumer space runner (e.g. `/Users/tai/.agents/automation/<job-name>/run.sh`) or a globally installed CLI in `/Users/tai/.local/bin/`. Development space is an active workshop with isolated worktrees and uncommitted changes; background daemons must never depend on development trees.
-
 Decide from the primary responsibility and the job's own lifecycle. A shared incident reporter or a shared helper does not move ownership. Ask when the owner is unclear; the layout decides the repository, and the repository decides who reviews the change.
+
+Prefer launchd for a deterministic script: a Hermes cron job starts an agent session and a model call on every run, and bare `crontab` does not replay runs missed during sleep. Before creating a new label for a small recurring chore (for example pruning merged git branches), check whether an existing Space job already has the lock, run records and incident reporting it needs; add the chore as a new phase of that job (README description updated, same schedule) instead of a second label.
 
 ## 2. Fix the report root first
 
@@ -60,6 +59,8 @@ Schedules: `"0 4 * * *"`, `"daily:04:00"`, or `"interval:3600"`. `RunAtLoad` is 
 - Write one terminal outcome per run: `latest-result.json` with `run_id`, label, source revision and dirty state, start and end time, `outcome`, exit code, and duration. Outcomes are `success`, `cached`, `failed`, and `skipped_locked`.
 - Treat a held lock as a recorded skip, not a failure, and leave the active run's record alone.
 - Keep the previous valid state when the tool fails.
+- The scheduled run executes whatever is in the stable checkout's working tree, including uncommitted edits and a checked-out task branch. A change goes live at the next fire without redeploy when the installed plist already points at the source path, so finish and verify code before leaving it in the checkout, and expect an unmerged worker branch to run if the tree sits on it.
+- Any job step that deletes or force-removes (branches, files) deletes only after a proof computed in the same run, skips whatever is checked out or in use, and has a dry-run mode that the tests and the pre-merge check exercise.
 - Set retention in the README and enforce it in the job: purge `runs/` snapshots and rotated logs older than 30 days. Keep `latest-result.json` outside rotation.
 - Fill the runbook: schedule and timezone, sleep and wake limits, absolute tool paths, report location, outcomes, delivery failure, replay, rollback, and the statement that a runner cannot report its own absence.
 
@@ -94,6 +95,8 @@ python3 ~/.agents/skills/launchd-automation/scripts/verify_automation.py \
 ```
 
 `--live` is the only mode that kickstarts, and only after the static checks pass. Dispatch is not completion: a kickstart exit code of 0 proves the request was accepted. The verifier then polls for a fresh terminal result file or a `terminal=` log line and fails when none appears, or when the outcome is `failed`.
+
+A plist in `~/Library/LaunchAgents` that matches the source byte for byte does not prove the job is loaded. Check `launchctl print gui/$(id -u)/<label>` (it reports "Could not find service" when dormant, for example after a migration or reboot) and compare the newest `latest-result.json` or log time with the schedule. Report a dormant job and ask before `bootstrap`, since loading it starts unattended runs; read the job's side effects first (a sync job may auto-commit and push every tracked repo).
 
 Report configuration checks, live checks, and skipped checks separately. State the authorization you relied on.
 

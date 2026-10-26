@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/candidate.json",
+    "sha256": "5864ccf47d228a402da7e08fde39138f455e260f4bc4ca34529072154eb659d0",
+    "bytes": 5994
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/create-bot.html"
+  },
+  "gates": {
+    "validate": "fail",
+    "deliver": "not-run",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "validate",
+  "diagnostics": [
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"role needed? else stop\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h0",
+        "path": "/nodes/0/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 109.56000000000002,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"SOUL.md + config.json\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h1",
+        "path": "/nodes/1/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 104.58,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"stop if an item is missing\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h2",
+        "path": "/nodes/2/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 129.48,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"7 items per job\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h3",
+        "path": "/nodes/3/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 74.7,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"bots folders + profiles\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h4",
+        "path": "/nodes/4/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 114.54,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"readback + real request\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h5",
+        "path": "/nodes/5/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 114.54,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"extend, skill, or new bot\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "q0",
+        "path": "/nodes/6/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 124.50000000000001,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"purpose, dirs, model alias\" needs a 8.3px minimum that stays readable on this 1284px canvas, above the supported 8px text row — compact the column spacing or node widths so the canvas is at most 1240px wide; preserve the sublabel's role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "q1",
+        "path": "/nodes/7/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 8.3,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1284,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 129.48,
+        "availableTextWidthPx": 162
+      },
+      "supportedFixes": [
+        "compact column spacing or node widths until the implicit canvas is at most 1240px wide, preserving every node and relationship"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 13,
+    "shown": 8,
+    "truncated": true,
+    "omittedByCode": {
+      "workflow/sublabel-readability": 5
+    }
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/review-3/create-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/review-3/create-bot.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 285,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "nextAction": {
+    "action": "edit-in-place",
+    "candidate": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/candidate.json",
+    "constraint": "Preserve unaffected semantics and geometry; apply each diagnostic's supportedFixes, or the fix its message names, and do not replace the whole candidate.",
+    "then": "finalize-once"
+  }
+}

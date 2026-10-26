@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/candidate.json",
+    "sha256": "7fed3f4fb4133dcc950a85da121bce4d600c3b7aae51e4ce15b44eccb7619f4c",
+    "bytes": 8162
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/create-bot.html"
+  },
+  "gates": {
+    "validate": "fail",
+    "deliver": "not-run",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "validate",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"superpowers:brainstorming\" (~170px) is wider than component \"u0\" (140px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      }
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[12] id \"u0-h0\" \"u0\" -> \"h0\" crosses edges[18] id \"h0-nobot\" \"h0\" -> \"nobot\" at [39, 414] (segments 1 and 2) — adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 12,
+        "id": "u0-h0",
+        "from": "u0",
+        "to": "h0"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 18,
+          "id": "h0-nobot",
+          "from": "h0",
+          "to": "nobot"
+        },
+        "point": [
+          39,
+          414
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 2
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[7] id \"q0-h0\" \"q0\" -> \"h0\" shares a 12px corridor with edges[12] id \"u0-h0\" \"u0\" -> \"h0\" at [36, 246] -> [48, 246] (segments 2 and 3; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 7,
+        "id": "q0-h0",
+        "from": "q0",
+        "to": "h0"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 12,
+          "id": "u0-h0",
+          "from": "u0",
+          "to": "h0"
+        },
+        "overlapLengthPx": 12,
+        "minimumPx": 8,
+        "from": [
+          36,
+          246
+        ],
+        "to": [
+          48,
+          246
+        ],
+        "segmentIndex": 2,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/arrowhead-collision",
+      "severity": "error",
+      "message": "[composition/arrowhead-collision] workflow arrows \"q0-h0\" and \"u0-h0\" overlap at their destination (clearance 0px; minimum 9.799999999999999px).",
+      "subject": {
+        "diagramType": "workflow",
+        "edge": "q0-h0",
+        "from": "q0",
+        "to": "h0"
+      },
+      "evidence": {
+        "otherEdge": "u0-h0",
+        "distancePx": 0,
+        "minimumPx": 9.799999999999999
+      },
+      "supportedFixes": [
+        "use separate destination sides or ports with clearance for both arrow markers"
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"plugins.yaml, mcp list\" (~150px) is wider than component \"u2\" (140px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      }
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"cron, script, notion MCP\" (~163px) is wider than component \"u3\" (140px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      }
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"fleet-admin, hermes-agent\" (~170px) is wider than component \"u5\" (140px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      }
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 7,
+    "shown": 7,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/create-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/create-bot.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 366,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "nextAction": {
+    "action": "edit-in-place",
+    "candidate": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-163513/candidate.json",
+    "constraint": "Preserve unaffected semantics and geometry; apply each diagnostic's supportedFixes, or the fix its message names, and do not replace the whole candidate.",
+    "then": "finalize-once"
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200813/candidate.json",
+    "sha256": "3dbae6d087a56af32d30c1a9ec1d415a45de5774ad7285b6ddfd9f9079e741ad",
+    "bytes": 6022
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200813/create-bot.html"
+  },
+  "gates": {
+    "validate": "fail",
+    "deliver": "not-run",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "validate",
+  "diagnostics": [
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"no job without approval; context list\" needs ~174px at the 7.8px minimum that stays readable on this 1200px canvas, but node \"h3\" provides 142px — shorten the sublabel while preserving its role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h3",
+        "path": "/nodes/7/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 7.8,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1200,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 173.15999999999997,
+        "availableTextWidthPx": 142
+      },
+      "supportedFixes": [
+        "shorten node \"h3\" sublabel while preserving its role or protocol; move supplementary facts into a card"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"exact delta; a question is not approval\" needs ~183px at the 7.8px minimum that stays readable on this 1200px canvas, but node \"q4\" provides 142px — shorten the sublabel while preserving its role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "q4",
+        "path": "/nodes/9/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 7.8,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1200,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 182.51999999999998,
+        "availableTextWidthPx": 142
+      },
+      "supportedFixes": [
+        "shorten node \"q4\" sublabel while preserving its role or protocol; move supplementary facts into a card"
+      ]
+    },
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"drift and untested rows go to Tai\" needs ~155px at the 7.8px minimum that stays readable on this 1200px canvas, but node \"q5\" provides 142px — shorten the sublabel while preserving its role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "q5",
+        "path": "/nodes/12/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 7.8,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1200,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 154.43999999999997,
+        "availableTextWidthPx": 142
+      },
+      "supportedFixes": [
+        "shorten node \"q5\" sublabel while preserving its role or protocol; move supplementary facts into a card"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 3,
+    "shown": 3,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200813/create-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200813/create-bot.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 330,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "nextAction": {
+    "action": "edit-in-place",
+    "candidate": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200813/candidate.json",
+    "constraint": "Preserve unaffected semantics and geometry; apply each diagnostic's supportedFixes, or the fix its message names, and do not replace the whole candidate.",
+    "then": "finalize-once"
+  }
+}

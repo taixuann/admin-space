@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-10-26T13:08:27.808Z",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/candidate.json",
+    "sha256": "34bef7f9d26f5a2af2b8f5f5d9dc9bffc1ec5e7d84d8f2657a40a5f5888d689e",
+    "bytes": 3638
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/maintain-bot.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/candidate.json",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/maintain-bot.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "fa57d74d-915a-451c-a908-30183ffe6730",
+        "stage": "render",
+        "type": "workflow",
+        "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/candidate.json",
+        "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/maintain-bot.html",
+        "error": "Workflow layout validation failed:\n- Label \"Tai asks, or verify drifts\" (~177px) is wider than component \"q0\" (150px) — shorten the label or increase node.width.\n- Label \"Tai approves the exact delta\" (~190px) is wider than component \"q4\" (150px) — shorten the label or increase node.width.",
+        "diagnostics": [
+          {
+            "code": "layout/constraint",
+            "severity": "error",
+            "message": "Label \"Tai asks, or verify drifts\" (~177px) is wider than component \"q0\" (150px) — shorten the label or increase node.width.",
+            "subject": {
+              "diagramType": "workflow"
+            },
+            "evidence": {},
+            "supportedFixes": []
+          },
+          {
+            "code": "layout/constraint",
+            "severity": "error",
+            "message": "Label \"Tai approves the exact delta\" (~190px) is wider than component \"q4\" (150px) — shorten the label or increase node.width.",
+            "subject": {
+              "diagramType": "workflow"
+            },
+            "evidence": {},
+            "supportedFixes": []
+          }
+        ],
+        "provenance": "absent",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Tai asks, or verify drifts\" (~177px) is wider than component \"q0\" (150px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Tai approves the exact delta\" (~190px) is wider than component \"q4\" (150px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/maintain-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/maintain-bot.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-26T13:08:28.136Z",
+  "durationMs": 328,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

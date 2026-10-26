@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-10-26T10:02:58.223Z",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/candidate.json",
+    "sha256": "ad36d4c3e7f7646b67bcc29038b765538132489668a1ca82284079313b7251ee",
+    "bytes": 4297
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/maintain-bot.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "/Users/tai/.hermes/tools/node-26.7.0-darwin-arm64/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/candidate.json",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/maintain-bot.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "7dedb6d9-b127-4afa-864f-e0f6b1706c66",
+        "stage": "render",
+        "type": "workflow",
+        "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/candidate.json",
+        "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/maintain-bot.html",
+        "error": "Workflow layout validation failed:\n- mainPath step \"h0\" -> \"h1\" has no matching edge — add the edge or remove the pair from mainPath.",
+        "diagnostics": [
+          {
+            "code": "layout/constraint",
+            "severity": "error",
+            "message": "mainPath step \"h0\" -> \"h1\" has no matching edge — add the edge or remove the pair from mainPath.",
+            "subject": {
+              "diagramType": "workflow"
+            },
+            "evidence": {},
+            "supportedFixes": []
+          }
+        ],
+        "provenance": "absent",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "mainPath step \"h0\" -> \"h1\" has no matching edge — add the edge or remove the pair from mainPath.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/maintain-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-170258/maintain-bot.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-26T10:02:58.544Z",
+  "durationMs": 320,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

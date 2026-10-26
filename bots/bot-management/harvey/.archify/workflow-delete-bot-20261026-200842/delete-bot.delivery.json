@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "5be76239-d4b7-4df0-b35a-8d1a2402420d",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200842/candidate.json",
+  "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200842/delete-bot.html",
+  "specification": {
+    "sha256": "96b1cb985494ca76270099e70e1b2bbc89a750863a3bc5a8eda0652cd78913b7",
+    "bytes": 3111
+  },
+  "artifact": {
+    "sha256": "fcc7ae2586388263cc32f57f205d3e85b1432771ffc33ec1fc5366c3ee9fd811",
+    "bytes": 837515
+  }
+}

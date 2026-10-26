@@ -88,6 +88,12 @@ You win twice: fewer tokens, and a sharper hook for the agent to hang its thinki
 5. Apply narrow edits against freshly read contents. If a tool reports a concurrent edit, re-read the affected file and preserve the other writer's changes before retrying. Retire discovery symlinks with their removed source so another host does not retain a broken entrypoint.
 6. Run a link check over every edited file: resolve each relative Markdown target and grep for the removed filenames, including wiki-style `[[path|label]]` links, which a Markdown-link regex misses. Verify the resulting file set, required imports, runtime symlink resolution, and references to removed targets. Report filesystem verification separately from fresh-session loading; an already-running session may still contain the retired instructions.
 
+## Edit a document the user names
+
+1. Read the whole named file before you draft. A pasted excerpt, or your memory of an earlier read, can be stale. When the user names a file as the source, build from that file. Do not write a new document beside it.
+2. When the user asks to see the change first, show the exact new content in chat and wait for approval before you write it.
+3. After writing, read the file back. Check every link target you changed, and grep for any names you removed.
+
 ## Pruning
 
 - Keep each meaning in a **single source of truth**: one authoritative place, so changing the behaviour is a one-place edit. **Duplication** (the same meaning in more than one place) costs maintenance and tokens, and inflates a meaning's prominence on the ladder past its real rank. (The accidental inverse of a leading word, which repeats a token on purpose, never the meaning.)

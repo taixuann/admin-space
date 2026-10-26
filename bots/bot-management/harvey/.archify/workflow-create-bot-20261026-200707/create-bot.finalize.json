@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-10-26T13:07:08.241Z",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/candidate.json",
+    "sha256": "a44bcf509dc73aaafb98bd42c369cde4d0bda870f77c06ee7975af7cf9e28299",
+    "bytes": 6791
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/create-bot.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/candidate.json",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/create-bot.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "3adabc4f-745d-47d3-9437-bb0dc5826ef8",
+        "stage": "render",
+        "type": "workflow",
+        "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/candidate.json",
+        "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/create-bot.html",
+        "error": "workflow schema validation failed:\n  /phases/6/fromCol (id/label: \"p6\") must be <= 5 {\"comparison\":\"<=\",\"limit\":5}\n  /phases/6/toCol (id/label: \"p6\") must be <= 5 {\"comparison\":\"<=\",\"limit\":5}\n  /phases/7/fromCol (id/label: \"p7\") must be <= 5 {\"comparison\":\"<=\",\"limit\":5}\n  /phases/7/toCol (id/label: \"p7\") must be <= 5 {\"comparison\":\"<=\",\"limit\":5}\n  /nodes/12/col (id/label: \"h6\") must be <= 5 {\"comparison\":\"<=\",\"limit\":5}\n  /nodes/13/col (id/label: \"h7\") must be <= 5 {\"comparison\":\"<=\",\"limit\":5}\n  /nodes/14/col (id/label: \"q7\") must be <= 5 {\"comparison\":\"<=\",\"limit\":5}",
+        "diagnostics": [
+          {
+            "code": "schema/maximum",
+            "severity": "error",
+            "message": "/phases/6/fromCol (id/label: \"p6\") must be <= 5",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/phases/6/fromCol",
+              "identity": "p6"
+            },
+            "evidence": {
+              "keyword": "maximum",
+              "comparison": "<=",
+              "limit": 5
+            },
+            "supportedFixes": [
+              "use a value <= 5"
+            ]
+          },
+          {
+            "code": "schema/maximum",
+            "severity": "error",
+            "message": "/phases/6/toCol (id/label: \"p6\") must be <= 5",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/phases/6/toCol",
+              "identity": "p6"
+            },
+            "evidence": {
+              "keyword": "maximum",
+              "comparison": "<=",
+              "limit": 5
+            },
+            "supportedFixes": [
+              "use a value <= 5"
+            ]
+          },
+          {
+            "code": "schema/maximum",
+            "severity": "error",
+            "message": "/phases/7/fromCol (id/label: \"p7\") must be <= 5",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/phases/7/fromCol",
+              "identity": "p7"
+            },
+            "evidence": {
+              "keyword": "maximum",
+              "comparison": "<=",
+              "limit": 5
+            },
+            "supportedFixes": [
+              "use a value <= 5"
+            ]
+          },
+          {
+            "code": "schema/maximum",
+            "severity": "error",
+            "message": "/phases/7/toCol (id/label: \"p7\") must be <= 5",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/phases/7/toCol",
+              "identity": "p7"
+            },
+            "evidence": {
+              "keyword": "maximum",
+              "comparison": "<=",
+              "limit": 5
+            },
+            "supportedFixes": [
+              "use a value <= 5"
+            ]
+          },
+          {
+            "code": "schema/maximum",
+            "severity": "error",
+            "message": "/nodes/12/col (id/label: \"h6\") must be <= 5",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/nodes/12/col",
+              "identity": "h6"
+            },
+            "evidence": {
+              "keyword": "maximum",
+              "comparison": "<=",
+              "limit": 5
+            },
+            "supportedFixes": [
+              "use a value <= 5"
+            ]
+          },
+          {
+            "code": "schema/maximum",
+            "severity": "error",
+            "message": "/nodes/13/col (id/label: \"h7\") must be <= 5",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/nodes/13/col",
+              "identity": "h7"
+            },
+            "evidence": {
+              "keyword": "maximum",
+              "comparison": "<=",
+              "limit": 5
+            },
+            "supportedFixes": [
+              "use a value <= 5"
+            ]
+          },
+          {
+            "code": "schema/maximum",
+            "severity": "error",
+            "message": "/nodes/14/col (id/label: \"q7\") must be <= 5",
+            "subject": {
+              "diagramType": "workflow",
+              "path": "/nodes/14/col",
+              "identity": "q7"
+            },
+            "evidence": {
+              "keyword": "maximum",
+              "comparison": "<=",
+              "limit": 5
+            },
+            "supportedFixes": [
+              "use a value <= 5"
+            ]
+          }
+        ],
+        "provenance": "absent",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "schema/maximum",
+      "severity": "error",
+      "message": "/phases/6/fromCol (id/label: \"p6\") must be <= 5",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/phases/6/fromCol",
+        "identity": "p6"
+      },
+      "evidence": {
+        "keyword": "maximum",
+        "comparison": "<=",
+        "limit": 5
+      },
+      "supportedFixes": [
+        "use a value <= 5"
+      ]
+    },
+    {
+      "code": "schema/maximum",
+      "severity": "error",
+      "message": "/phases/6/toCol (id/label: \"p6\") must be <= 5",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/phases/6/toCol",
+        "identity": "p6"
+      },
+      "evidence": {
+        "keyword": "maximum",
+        "comparison": "<=",
+        "limit": 5
+      },
+      "supportedFixes": [
+        "use a value <= 5"
+      ]
+    },
+    {
+      "code": "schema/maximum",
+      "severity": "error",
+      "message": "/phases/7/fromCol (id/label: \"p7\") must be <= 5",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/phases/7/fromCol",
+        "identity": "p7"
+      },
+      "evidence": {
+        "keyword": "maximum",
+        "comparison": "<=",
+        "limit": 5
+      },
+      "supportedFixes": [
+        "use a value <= 5"
+      ]
+    },
+    {
+      "code": "schema/maximum",
+      "severity": "error",
+      "message": "/phases/7/toCol (id/label: \"p7\") must be <= 5",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/phases/7/toCol",
+        "identity": "p7"
+      },
+      "evidence": {
+        "keyword": "maximum",
+        "comparison": "<=",
+        "limit": 5
+      },
+      "supportedFixes": [
+        "use a value <= 5"
+      ]
+    },
+    {
+      "code": "schema/maximum",
+      "severity": "error",
+      "message": "/nodes/12/col (id/label: \"h6\") must be <= 5",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/nodes/12/col",
+        "identity": "h6"
+      },
+      "evidence": {
+        "keyword": "maximum",
+        "comparison": "<=",
+        "limit": 5
+      },
+      "supportedFixes": [
+        "use a value <= 5"
+      ]
+    },
+    {
+      "code": "schema/maximum",
+      "severity": "error",
+      "message": "/nodes/13/col (id/label: \"h7\") must be <= 5",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/nodes/13/col",
+        "identity": "h7"
+      },
+      "evidence": {
+        "keyword": "maximum",
+        "comparison": "<=",
+        "limit": 5
+      },
+      "supportedFixes": [
+        "use a value <= 5"
+      ]
+    },
+    {
+      "code": "schema/maximum",
+      "severity": "error",
+      "message": "/nodes/14/col (id/label: \"q7\") must be <= 5",
+      "subject": {
+        "diagramType": "workflow",
+        "path": "/nodes/14/col",
+        "identity": "q7"
+      },
+      "evidence": {
+        "keyword": "maximum",
+        "comparison": "<=",
+        "limit": 5
+      },
+      "supportedFixes": [
+        "use a value <= 5"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/create-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261026-200707/create-bot.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-26T13:07:08.539Z",
+  "durationMs": 297,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

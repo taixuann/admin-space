@@ -1,0 +1,178 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Harvey: maintain a bot",
+    "output": "bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/maintain-bot.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "harvey",
+      "label": "Harvey drafts, applies, verifies"
+    },
+    {
+      "id": "tai",
+      "label": "Tai decides"
+    },
+    {
+      "id": "bot",
+      "label": "bot-ctl (script, no model)"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "q0",
+      "lane": "tai",
+      "col": 0,
+      "type": "external",
+      "label": "Tai asks, or verify drifts",
+      "sublabel": "reason in chat",
+      "width": 150
+    },
+    {
+      "id": "h1",
+      "lane": "harvey",
+      "col": 1,
+      "type": "backend",
+      "label": "Observe",
+      "sublabel": "bot-ctl verify, read-only",
+      "width": 150,
+      "tag": "bot-ctl"
+    },
+    {
+      "id": "h2",
+      "lane": "harvey",
+      "col": 2,
+      "type": "backend",
+      "label": "Draft the delta",
+      "sublabel": "changed fields: proposed",
+      "width": 150,
+      "tag": "fleet-admin"
+    },
+    {
+      "id": "h3",
+      "lane": "harvey",
+      "col": 3,
+      "type": "backend",
+      "label": "Update four together",
+      "sublabel": "config, skills, SOUL, workflows",
+      "width": 150,
+      "tag": "archify HTML"
+    },
+    {
+      "id": "q4",
+      "lane": "tai",
+      "col": 4,
+      "type": "security",
+      "label": "Tai approves the exact delta",
+      "sublabel": "exact delta only",
+      "width": 150,
+      "tag": "gate"
+    },
+    {
+      "id": "b5",
+      "lane": "bot",
+      "col": 5,
+      "type": "backend",
+      "label": "bot-ctl apply <bot>",
+      "sublabel": "backup first, then set",
+      "width": 150
+    },
+    {
+      "id": "h5",
+      "lane": "harvey",
+      "col": 5,
+      "type": "backend",
+      "label": "Verify",
+      "sublabel": "bot-ctl verify <bot>, exit 0 or rows",
+      "width": 150
+    },
+    {
+      "id": "q5",
+      "lane": "tai",
+      "col": 5,
+      "type": "external",
+      "label": "Tai reads the report",
+      "sublabel": "drift rows to Tai",
+      "width": 150
+    }
+  ],
+  "edges": [
+    {
+      "id": "q0-h1",
+      "from": "q0",
+      "to": "h1",
+      "label": "trigger"
+    },
+    {
+      "id": "h1-h2",
+      "from": "h1",
+      "to": "h2",
+      "label": "drift",
+      "variant": "emphasis"
+    },
+    {
+      "id": "h2-h3",
+      "from": "h2",
+      "to": "h3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "h3-q4",
+      "from": "h3",
+      "to": "q4",
+      "label": "summary"
+    },
+    {
+      "id": "q4-b5",
+      "from": "q4",
+      "to": "b5",
+      "label": "approved",
+      "variant": "security"
+    },
+    {
+      "id": "b5-h5",
+      "from": "b5",
+      "to": "h5",
+      "label": "exit 0",
+      "variant": "emphasis"
+    },
+    {
+      "id": "h5-q5",
+      "from": "h5",
+      "to": "q5",
+      "label": "report"
+    }
+  ],
+  "mainPath": [
+    "q0",
+    "h1",
+    "h2",
+    "h3",
+    "q4",
+    "b5",
+    "h5",
+    "q5"
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Who does what",
+      "items": [
+        "Harvey observes, drafts, applies only the approved delta, verifies",
+        "Tai picks which side wins on a mismatch and approves the delta",
+        "No scheduled check exists; a job needs Tai's approval"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Stops",
+      "items": [
+        "Observe error: report, change nothing",
+        "Apply exits non-zero: report and wait, no retry",
+        "Plugin or MCP drift: Tai decides, Harvey does not fix it"
+      ]
+    }
+  ]
+}

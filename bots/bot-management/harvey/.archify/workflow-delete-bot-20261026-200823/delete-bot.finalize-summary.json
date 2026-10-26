@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200823/candidate.json",
+    "sha256": "c301ca04ddef72d06aab4f116fc6b04de320418aacbb7e6bd4b86788f47c407f",
+    "bytes": 3147
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200823/delete-bot.html"
+  },
+  "gates": {
+    "validate": "fail",
+    "deliver": "not-run",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "validate",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Back up, then remove profile\" (~190px) is wider than component \"h4\" (150px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      }
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Set enable: false, verify\" (~170px) is wider than component \"h5\" (150px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      }
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Tai confirms folder removal\" (~184px) is wider than component \"q5\" (150px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      }
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 3,
+    "shown": 3,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200823/delete-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200823/delete-bot.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 349,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "nextAction": {
+    "action": "edit-in-place",
+    "candidate": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200823/candidate.json",
+    "constraint": "Preserve unaffected semantics and geometry; apply each diagnostic's supportedFixes, or the fix its message names, and do not replace the whole candidate.",
+    "then": "finalize-once"
+  }
+}

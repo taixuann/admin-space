@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "command": "deliver",
+  "status": "pending",
+  "receiptId": "e683bded-b343-40cc-a73d-689f24eb1527",
+  "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200823/candidate.json",
+  "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200823/delete-bot.html"
+}

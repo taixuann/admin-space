@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-10-26T13:08:42.158Z",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/candidate.json",
+    "sha256": "d2c72d77d4ce1940fb5337ab14642f150cf84fb038c333f69949e4855230a106",
+    "bytes": 3606
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.html"
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "/Users/tai/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "workflow",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/candidate.json",
+        "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "d40643d4-9c84-4516-b6bb-9407bd900025",
+        "stage": "render",
+        "type": "workflow",
+        "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/candidate.json",
+        "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.html",
+        "error": "Workflow layout validation failed",
+        "diagnostics": [
+          {
+            "code": "workflow/sublabel-readability",
+            "severity": "error",
+            "message": "Sublabel \"bot-ctl verify <bot>, exit 0 or rows\" needs ~147px at the 6.8px minimum that stays readable on this 1047px canvas, but node \"h5\" provides 142px — shorten the sublabel while preserving its role or protocol.",
+            "subject": {
+              "diagramType": "workflow",
+              "node": "h5",
+              "path": "/nodes/6/sublabel"
+            },
+            "evidence": {
+              "requiredFontPx": 6.8,
+              "maximumSlotFontPx": 8,
+              "canvasWidthPx": 1047,
+              "maximumCanvasWidthPx": 1240,
+              "requiredTextWidthPx": 146.88,
+              "availableTextWidthPx": 142
+            },
+            "supportedFixes": [
+              "shorten node \"h5\" sublabel while preserving its role or protocol; move supplementary facts into a card"
+            ]
+          }
+        ],
+        "provenance": "absent",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"bot-ctl verify <bot>, exit 0 or rows\" needs ~147px at the 6.8px minimum that stays readable on this 1047px canvas, but node \"h5\" provides 142px — shorten the sublabel while preserving its role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h5",
+        "path": "/nodes/6/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 6.8,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1047,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 146.88,
+        "availableTextWidthPx": 142
+      },
+      "supportedFixes": [
+        "shorten node \"h5\" sublabel while preserving its role or protocol; move supplementary facts into a card"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-26T13:08:42.502Z",
+  "durationMs": 344,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

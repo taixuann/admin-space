@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/candidate.json",
+    "sha256": "d2c72d77d4ce1940fb5337ab14642f150cf84fb038c333f69949e4855230a106",
+    "bytes": 3606
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.html"
+  },
+  "gates": {
+    "validate": "fail",
+    "deliver": "not-run",
+    "check": "not-run",
+    "browser-check": "not-run"
+  },
+  "failedStage": "validate",
+  "diagnostics": [
+    {
+      "code": "workflow/sublabel-readability",
+      "severity": "error",
+      "message": "Sublabel \"bot-ctl verify <bot>, exit 0 or rows\" needs ~147px at the 6.8px minimum that stays readable on this 1047px canvas, but node \"h5\" provides 142px — shorten the sublabel while preserving its role or protocol.",
+      "subject": {
+        "diagramType": "workflow",
+        "node": "h5",
+        "path": "/nodes/6/sublabel"
+      },
+      "evidence": {
+        "requiredFontPx": 6.8,
+        "maximumSlotFontPx": 8,
+        "canvasWidthPx": 1047,
+        "maximumCanvasWidthPx": 1240,
+        "requiredTextWidthPx": 146.88,
+        "availableTextWidthPx": 142
+      },
+      "supportedFixes": [
+        "shorten node \"h5\" sublabel while preserving its role or protocol; move supplementary facts into a card"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/maintain-bot.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 344,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "nextAction": {
+    "action": "edit-in-place",
+    "candidate": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200842/candidate.json",
+    "constraint": "Preserve unaffected semantics and geometry; apply each diagnostic's supportedFixes, or the fix its message names, and do not replace the whole candidate.",
+    "then": "finalize-once"
+  }
+}

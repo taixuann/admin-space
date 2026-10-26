@@ -1,0 +1,47 @@
+# Skill ownership map. Owner: Donna. Rules: see AGENTS.md in this folder.
+# Status: partial. Only Harley and Donna were read this session. Other bots still need read_agent before their entries are added.
+# Fields: owner (bot that installs and maintains it), used_by (bots whose workflows use it), note.
+
+skills:
+  - name: hermes-fleet-admin
+    owner: donna
+    used_by: [donna, harley]
+    note: Written for Hermes. Adapt before use in OpenBot.
+  - name: brainstorming
+    owner: unassigned
+    used_by: [harley]
+  - name: diagnosing-superpowers
+    owner: unassigned
+    used_by: [harley]
+  - name: dispatching-parallel-agents
+    owner: unassigned
+    used_by: [harley]
+  - name: opencode
+    owner: unassigned
+    used_by: [harley]
+    note: Installed revision 2; update available (revision 3 in library).
+  - name: requesting-code-review
+    owner: unassigned
+    used_by: [harley]
+  - name: simple-english
+    owner: unassigned
+    used_by: [harley]
+  - name: subagent-driven-development
+    owner: unassigned
+    used_by: [harley]
+  - name: using-superpowers
+    owner: unassigned
+    used_by: [harley]
+  - name: verification-before-completion
+    owner: unassigned
+    used_by: [harley]
+  - name: writing-plans
+    owner: unassigned
+    used_by: [harley]
+  - name: writing-skills
+    owner: unassigned
+    used_by: [harley]
+
+# Open decisions for Tai:
+# 1. Owner for each "unassigned" skill. Proposed: Harley owns bot-management skills (writing-skills, writing-plans) and automation-control skills; Skills and MCP owns writing-skills; Workflows owns writing-plans.
+# 2. Remove hermes-fleet-admin from OpenBot bots, or keep it with an adapted copy.

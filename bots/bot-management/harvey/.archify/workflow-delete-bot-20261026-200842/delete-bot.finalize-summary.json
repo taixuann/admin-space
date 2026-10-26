@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200842/candidate.json",
+    "sha256": "96b1cb985494ca76270099e70e1b2bbc89a750863a3bc5a8eda0652cd78913b7",
+    "bytes": 3111
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200842/delete-bot.html",
+    "sha256": "fcc7ae2586388263cc32f57f205d3e85b1432771ffc33ec1fc5366c3ee9fd811",
+    "bytes": 837515
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200842/delete-bot.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200842/delete-bot.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-delete-bot-20261026-200842/delete-bot.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-25T13:32:16.823Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2888,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "command": "deliver",
+  "status": "pending",
+  "receiptId": "fa57d74d-915a-451c-a908-30183ffe6730",
+  "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/candidate.json",
+  "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261026-200823/maintain-bot.html"
+}

@@ -62,12 +62,36 @@ for DST in "${TARGETS[@]}"; do
     fi
   done
 
-  # Drop links whose source skill is gone.
+  # Drop broken links, unlinked research domains, and links whose source skill is gone.
   for link in "$DST"/*; do
     [ -L "$link" ] || continue
-    case "$(readlink "$link")" in
+    target=$(readlink "$link")
+    name=$(basename "$link")
+
+    # 1. Broken symlink
+    if [ ! -e "$link" ]; then
+      echo "  remove  $name (broken link -> $target)"
+      [ "$CHECK" = 0 ] && rm "$link"
+      continue
+    fi
+
+    # 2. Managed mirror link pointing to $REL, but source is no longer in $SRC
+    case "$target" in
       "$REL"/*)
-        [ -e "$link" ] || { echo "  remove  $(basename "$link") (source gone)"; [ "$CHECK" = 0 ] && rm "$link"; }
+        if [ ! -d "$SRC/$name" ]; then
+          echo "  remove  $name (source gone from $SRC)"
+          [ "$CHECK" = 0 ] && rm "$link"
+        fi
+        continue
+        ;;
+    esac
+
+    # 3. Stale research domain symlinks (unlinked from ~/.agents/skills on 2026-10-23)
+    case "$target" in
+      *oleafly*)
+        echo "  remove  $name (stale oleafly link -> $target)"
+        [ "$CHECK" = 0 ] && rm "$link"
+        continue
         ;;
     esac
   done

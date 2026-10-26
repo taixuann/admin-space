@@ -72,6 +72,12 @@ ntn pages create --parent page:abc123 --content '## Heading\n\nSome *formatted* 
 The `markdown` field supports inline formatting (bold, italic, code, links, etc.).
 Only fall back to `rich_text` if you need features that Markdown cannot express (e.g. mentions, custom emoji, or colors).
 
+## Reading pages and search results
+
+- A page URL ends in a 32-character ID after the slug. Strip any query string. `ntn pages get <id>` accepts that bare ID and prints Markdown with a YAML `title:` line at the top.
+- Search with a JSON body, sorted newest first: `ntn api v1/search -d '{"query":"...","page_size":30,"sort":{"direction":"descending","timestamp":"last_edited_time"}}'`.
+- Results mix object types. A page's title is under `properties`, in the entry whose type is `title`. A data source's title is in its `title` array. Read both, or the list prints blank titles.
+
 ## `ntn files`
 
 Convenience wrapper around the File Uploads API.
