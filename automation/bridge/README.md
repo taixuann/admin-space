@@ -44,7 +44,7 @@ automation/bridge/
 | `research-space` | `~/academic-space/research-space` | `taixuann/research-space` | `main` | Yes | Research Space (scientific research) |
 | `admin-space` | `~/.agents` | `taixuann/admin-space` | `master` | Yes | Admin Space (agent instructions, skills, automation) |
 | `development-space` | `~/development-space` | `taixuann/development-space` | `master` | Yes | Development Space (engineering workshop; hosts linked worktrees only) |
-| `raw-viewer` | `~/development-space/tools/research/raw-viewer` | `taixuann/raw-viewer` | `master` | Yes | Scientific data viewer tool (reached from research-space through a symlink; tracked once at its real path) |
+| `raw-viewer` | `~/development-space/tools/research/raw-viewer` | `taixuann/raw-viewer` | `master` | Yes | Scientific data viewer tool (Development Space repo, tracked at its real path) |
 | `personal-space` | `~/personal-space` | `taixuann/non-research-projects` | `main` | No | Personal LifeOS (local Git only) |
 | `knowledge-space` | `~/academic-space/knowledge-space` | `taixuann/wiki` | `main` | No | Digital garden knowledge base (pull-only) |
 | `academic-portfolio` | `~/personal-space/professional/portfolio/site` | `taixuann/academic-portfolio` | `main` | Yes | Academic and personal portfolio website |
