@@ -109,5 +109,74 @@ class TestPruneMergedBranches(PruneTestCase):
         self.assertEqual(res["deleted"], ["a/merged"])
 
 
+class TestSquashMergedBranches(PruneTestCase):
+    def make_squash_branch(self, name, files):
+        """Branch with several commits, squashed into master as one commit."""
+        git(self.repo, "checkout", "-q", "-b", name)
+        for f in files:
+            commit(self.repo, f)
+        git(self.repo, "checkout", "-q", "master")
+        git(self.repo, "merge", "-q", "--squash", name)
+        git(self.repo, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "squash " + name)
+
+    def test_deletes_squash_merged_multi_commit_branch(self):
+        self.make_squash_branch("s/squash", ["one.txt", "two.txt"])
+        self.assertIn("s/squash", branches(self.repo))
+
+        res = prune_merged_branches(repo_dir=self.repo, base="master")
+
+        self.assertTrue(res["success"])
+        self.assertEqual(res["deleted"], ["s/squash"])
+        self.assertEqual(branches(self.repo), {"master"})
+
+    def test_keeps_unmerged_work_next_to_squash_branch(self):
+        self.make_squash_branch("s/squash", ["one.txt"])
+        self.make_unmerged_branch("s/unmerged")
+
+        res = prune_merged_branches(repo_dir=self.repo, base="master")
+
+        self.assertEqual(res["deleted"], ["s/squash"])
+        self.assertEqual(branches(self.repo), {"master", "s/unmerged"})
+
+    def test_keeps_squash_branch_when_master_changed_same_file_later(self):
+        git(self.repo, "checkout", "-q", "-b", "s/later")
+        with open(os.path.join(self.repo, "shared.txt"), "w") as f:
+            f.write("branch")
+        git(self.repo, "add", "shared.txt")
+        git(self.repo, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "b")
+        git(self.repo, "checkout", "-q", "master")
+        git(self.repo, "merge", "-q", "--squash", "s/later")
+        git(self.repo, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "squash")
+        with open(os.path.join(self.repo, "shared.txt"), "w") as f:
+            f.write("master again")
+        git(self.repo, "add", "shared.txt")
+        git(self.repo, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "later")
+
+        res = prune_merged_branches(repo_dir=self.repo, base="master")
+
+        self.assertTrue(res["success"])
+        self.assertEqual(res["deleted"], [])
+        self.assertIn("s/later", branches(self.repo))
+
+    def test_dry_run_lists_squash_merged_without_deleting(self):
+        self.make_squash_branch("s/squash", ["one.txt"])
+
+        res = prune_merged_branches(repo_dir=self.repo, base="master", dry_run=True)
+
+        self.assertEqual(res["deleted"], ["s/squash"])
+        self.assertIn("s/squash", branches(self.repo))
+
+    def test_squash_branch_checked_out_in_worktree_is_skipped(self):
+        self.make_squash_branch("s/wt", ["one.txt"])
+        wt = self.repo + "-wt"
+        self.addCleanup(lambda: __import__("shutil").rmtree(wt, ignore_errors=True))
+        git(self.repo, "worktree", "add", "-q", wt, "s/wt")
+
+        res = prune_merged_branches(repo_dir=self.repo, base="master")
+
+        self.assertEqual(res["skipped"]["s/wt"], "worktree")
+        self.assertIn("s/wt", branches(self.repo))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -5,7 +5,7 @@ Daily 03:00 maintenance for global plugins (superpowers, caveman), skills across
 ## Phases
 
 1. Superpowers plugin update. 2. Caveman hooks. 3. Global skills update. 4. Skill mirror sync.
-5. Merged-branch prune: deletes local branches of `~/.agents` already merged into `master` with `git branch -d`. It never merges, never touches remotes, and never deletes `master`/`main`, the checked-out branch, or any branch checked out in a worktree (those are reported as skipped). Squash-merged or rebased branches are not detected and are kept. Recovery for a deleted branch: `git reflog`, then `git branch <name> <sha>`.
+5. Merged-branch prune: deletes local branches of `~/.agents` already merged into `master` with `git branch -d`. It never merges, never touches remotes, and never deletes `master`/`main`, the checked-out branch, or any branch checked out in a worktree (those are reported as skipped). Squash-merged branches are also deleted: a branch not listed by `git branch --merged` is removed when merging it into `master` leaves the tree unchanged (`git merge-tree --write-tree`, tree equal to `master^{tree}`). Those use `git branch -D`, since `-d` refuses them; the tree check is the proof. Rebased branches, branches whose files `master` changed later, and branches with conflicts or unmerged work are kept (git < 2.38 keeps every unmerged branch). Recovery for a deleted branch: `git reflog`, then `git branch <name> <sha>`.
 
 | Field | Value |
 | --- | --- |
