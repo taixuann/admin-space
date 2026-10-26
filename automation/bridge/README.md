@@ -5,7 +5,7 @@ Bridge manages multi-repository Git synchronization and Google Drive 1:1 cloud b
 ## Directory Layout
 
 ```
-assets/bridge/
+automation/bridge/
 ├── bin/
 │   ├── bridge                    # Executable CLI entrypoint
 │   └── auto-sync.sh              # Unattended runner for scheduled automation
@@ -41,65 +41,70 @@ assets/bridge/
 
 | Workspace ID | Local Path | Remote Repository | Default Branch | Tracked | Role |
 | :--- | :--- | :--- | :--- | :---: | :--- |
-| `research-projects` | `~/research-projects` | `taixuann/research-projects` | `main` | Yes | Scientific research projects |
-| `agent-skills` | `~/.agents` | `taixuann/agent-skills` | `master` | Yes | Agent skills library |
-| `agent-development` | `~/development-space` | `taixuann/agent-development` | `master` | Yes | Engineering workshop; hosts linked worktrees only |
-| `raw-viewer` | `~/research-projects/tools/raw-viewer` | `taixuann/raw-viewer` | `master` | Yes | Scientific data viewer tool |
-| `academic-portfolio` | `~/personal-hub/professional/portfolio/site` | `taixuann/academic-portfolio` | `main` | Yes | Academic and personal portfolio website |
-| `personal-hub` | `~/personal-hub` | `taixuann/non-research-projects` | `main` | No | No | Personal LifeOS (local Git only) |
-| `learn-wiki` | `~/learn` | `taixuann/wiki` | `main` | No | Yes | Digital garden knowledge base (pull-only) |
+| `research-space` | `~/academic-space/research-space` | `taixuann/research-space` | `main` | Yes | Research Space (scientific research) |
+| `admin-space` | `~/.agents` | `taixuann/admin-space` | `master` | Yes | Admin Space (agent instructions, skills, automation) |
+| `development-space` | `~/development-space` | `taixuann/development-space` | `master` | Yes | Development Space (engineering workshop; hosts linked worktrees only) |
+| `raw-viewer` | `~/development-space/tools/research/raw-viewer` | `taixuann/raw-viewer` | `master` | Yes | Scientific data viewer tool (reached from research-space through a symlink; tracked once at its real path) |
+| `personal-space` | `~/personal-space` | `taixuann/non-research-projects` | `main` | No | Personal LifeOS (local Git only) |
+| `knowledge-space` | `~/academic-space/knowledge-space` | `taixuann/wiki` | `main` | No | Digital garden knowledge base (pull-only) |
+| `academic-portfolio` | `~/personal-space/professional/portfolio/site` | `taixuann/academic-portfolio` | `main` | Yes | Academic and personal portfolio website |
 
 ### 2. Google Drive Cloud Profiles (`config/drive-track.yaml`)
 
 | Profile ID | Source Directory | Remote Target | Auto-Commit | Excluded Patterns |
 | :--- | :--- | :--- | :---: | :--- |
-| `personal-hub-sync` | `~/personal-hub` | `gdrive:personal-hub/` | Yes | `.git`, `.venv`, `.pytest_cache`, `.DS_Store`, `node_modules`, `.obsidian/workspace*` |
-| `research-projects-sync` | `~/research-projects` | `gdrive:research/projects/` | Yes | `.git`, `.venv`, `venv`, `.build`, `.pytest_cache`, `.ruff_cache`, `.DS_Store`, `__pycache__`, `node_modules`, `worktree`, `worktrees` |
-| `learn-sync` | `~/learn` | `gdrive:learn/` | Yes | `.git`, `.venv`, `.pytest_cache`, `.DS_Store`, `node_modules`, `.obsidian/workspace*` |
-| `knowledge-base-sync` | `~/knowledge-base` | `gdrive:knowledge-base/` | No | `.git`, `.venv`, `.pytest_cache`, `.DS_Store`, `node_modules`, `.obsidian/workspace*` |
+| `personal-space-sync` | `~/personal-space` | `gdrive:personal-space/` | Yes | `.git`, `.venv`, `.pytest_cache`, `.DS_Store`, `node_modules`, `.obsidian/workspace*` |
+| `research-space-sync` (disabled) | `~/academic-space/research-space` | `gdrive:research/projects/` | Yes | `.git`, `.venv`, `venv`, `.build`, `.pytest_cache`, `.ruff_cache`, `.DS_Store`, `__pycache__`, `node_modules`, `worktree`, `worktrees` |
+| `learn-sync` (disabled) | `~/academic-space/knowledge-space` | `gdrive:learn/` | Yes | `.git`, `.venv`, `.pytest_cache`, `.DS_Store`, `node_modules`, `.obsidian/workspace*` |
 
 ## Operational Rules
 
 1. Only commit and push repositories where `tracked: true` in `config/github-track.yaml`.
-2. Do not push un-tracked repositories (`personal-hub`, `learn-wiki`) to remote GitHub origins.
+2. Do not push un-tracked repositories (`personal-space`, `knowledge-space`) to remote GitHub origins.
 3. Use the exact commit message format for automated commits:
    `automation: YYYY-MM-DD commit automatically`
 4. If a local repository has uncommitted changes before Google Drive synchronization, commit changes locally before running `rclone sync`.
 5. Execute Google Drive synchronization as a 1:1 mirror using `rclone sync`. Files removed locally must be removed on remote targets.
 6. Share links generated for Google Drive targets must remain public read-only (`reader` role).
 
+## Known Limits
+
+- Only `personal-space-sync` is enabled for Google Drive. `research-space-sync` and `learn-sync` stay disabled in config (re-enable with `bridge track drive <id> --enable`).
+- The daily job auto-commits and pushes every `tracked: true` repository. Review pending changes in those repositories before the run.
+- The installed LaunchAgent must be loaded for any scheduled run; a manual run does not replace it.
+
 ## CLI Reference
 
 Run the executable CLI wrapper:
 
 ```bash
-./assets/bridge/bin/bridge <command> [options]
+./automation/bridge/bin/bridge <command> [options]
 ```
 
 ### Inspect Status
 
 ```bash
 # Human-readable table
-./assets/bridge/bin/bridge status
+./automation/bridge/bin/bridge status
 
 # Machine-readable JSON output for agents
-./assets/bridge/bin/bridge status --json
+./automation/bridge/bin/bridge status --json
 ```
 
 ### Synchronize GitHub Repositories
 
 ```bash
 # Preview changes without modifying repositories
-./assets/bridge/bin/bridge sync github --dry-run
+./automation/bridge/bin/bridge sync github --dry-run
 
 # Execute commit and push for all tracked repositories
-./assets/bridge/bin/bridge sync github
+./automation/bridge/bin/bridge sync github
 
 # Synchronize one specific repository
-./assets/bridge/bin/bridge sync github --repo agent-skills
+./automation/bridge/bin/bridge sync github --repo admin-space
 
 # Output execution result as JSON
-./assets/bridge/bin/bridge sync github --json
+./automation/bridge/bin/bridge sync github --json
 ```
 
 ### Safe Fast-Forward Pull (`--ff-only`)
@@ -108,16 +113,16 @@ Safely pull updates from remote GitHub repositories without creating merge commi
 
 ```bash
 # Preview what would be pulled across pull-enabled and tracked repositories
-./assets/bridge/bin/bridge sync github --pull --dry-run
+./automation/bridge/bin/bridge sync github --pull --dry-run
 
 # Safe fast-forward pull for all eligible repositories
-./assets/bridge/bin/bridge sync github --pull
+./automation/bridge/bin/bridge sync github --pull
 
-# Safe pull for one specific repository (e.g. learn-wiki)
-./assets/bridge/bin/bridge sync github --pull --repo learn-wiki
+# Safe pull for one specific repository (e.g. knowledge-space)
+./automation/bridge/bin/bridge sync github --pull --repo knowledge-space
 
 # Direct command alias
-./assets/bridge/bin/bridge pull --repo learn-wiki
+./automation/bridge/bin/bridge pull --repo knowledge-space
 ```
 
 Safety rules applied during pull:
@@ -130,37 +135,37 @@ Safety rules applied during pull:
 
 ```bash
 # Preview changes without modifying remote targets
-./assets/bridge/bin/bridge sync drive --dry-run
+./automation/bridge/bin/bridge sync drive --dry-run
 
 # Execute local auto-commit and 1:1 mirror sync
-./assets/bridge/bin/bridge sync drive
+./automation/bridge/bin/bridge sync drive
 
 # Synchronize one specific profile
-./assets/bridge/bin/bridge sync drive --profile personal-hub-sync
+./automation/bridge/bin/bridge sync drive --profile personal-space-sync
 
 # Check file differences without uploading or deleting
-./assets/bridge/bin/bridge sync drive --diff
+./automation/bridge/bin/bridge sync drive --diff
 
 # Output execution result as JSON
-./assets/bridge/bin/bridge sync drive --json
+./automation/bridge/bin/bridge sync drive --json
 ```
 
 ### Manage Tracking
 
 ```bash
 # Enable or disable tracking for a GitHub workspace
-./assets/bridge/bin/bridge track github <workspace-id> --enable
-./assets/bridge/bin/bridge track github <workspace-id> --disable
+./automation/bridge/bin/bridge track github <workspace-id> --enable
+./automation/bridge/bin/bridge track github <workspace-id> --disable
 
 # Enable or disable a Google Drive sync profile
-./assets/bridge/bin/bridge track drive <profile-id> --enable
-./assets/bridge/bin/bridge track drive <profile-id> --disable
+./automation/bridge/bin/bridge track drive <profile-id> --enable
+./automation/bridge/bin/bridge track drive <profile-id> --disable
 ```
 
 ### Retrieve Public Read-Only Share Link
 
 ```bash
-./assets/bridge/bin/bridge share drive <profile-id>
+./automation/bridge/bin/bridge share drive <profile-id>
 ```
 
 ## Scheduled Automation (macOS LaunchAgent)
@@ -186,7 +191,7 @@ launchctl unload ~/Library/LaunchAgents/com.tai.bridge.sync.plist
 launchctl load ~/Library/LaunchAgents/com.tai.bridge.sync.plist
 
 # Execute runner script manually
-./assets/bridge/bin/auto-sync.sh
+./automation/bridge/bin/auto-sync.sh
 ```
 
 ## Web Dashboard
@@ -194,7 +199,7 @@ launchctl load ~/Library/LaunchAgents/com.tai.bridge.sync.plist
 Start the loopback server:
 
 ```bash
-python3 assets/bridge/backend/server.py 8768
+python3 automation/bridge/backend/server.py 8768
 ```
 
 Open `http://127.0.0.1:8768/` in the browser.
@@ -210,7 +215,7 @@ Features:
 Run the test suite before submitting changes:
 
 ```bash
-python3 -m unittest discover -s assets/bridge/tests
+cd automation/bridge && PYTHONPATH=bin:backend python3 -m unittest discover -s tests
 ```
 
-All 20 test cases must exit with code 0 (`OK`).
+All 23 test cases must exit with code 0 (`OK`).

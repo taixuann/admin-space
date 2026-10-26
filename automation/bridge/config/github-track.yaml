@@ -4,11 +4,11 @@ settings:
   github_owner: taixuann
 
 workspaces:
-  - id: research-projects
+  - id: research-space
     name: Research Space
     category: Scientific Research
     path: /Users/tai/academic-space/research-space
-    remote_repo: taixuann/research-projects
+    remote_repo: taixuann/research-space
     default_branch: main
     tracked: true
 
@@ -20,32 +20,32 @@ workspaces:
     default_branch: master
     tracked: true
 
-  - id: agent-development
+  - id: development-space
     name: Development Space
     category: Agent Infrastructure
     path: /Users/tai/development-space
-    remote_repo: taixuann/agent-development
+    remote_repo: taixuann/development-space
     default_branch: master
     tracked: true
 
   - id: raw-viewer
     name: Raw Viewer
     category: Scientific Tools
-    path: /Users/tai/academic-space/research-space/tools/raw-viewer
+    path: /Users/tai/development-space/tools/research/raw-viewer
     remote_repo: taixuann/raw-viewer
     default_branch: master
     tracked: true
 
-  - id: personal-hub
-    name: Personal Hub
+  - id: personal-space
+    name: Personal Space
     category: Personal & LifeOS
     path: /Users/tai/personal-space
     remote_repo: taixuann/non-research-projects
     default_branch: main
     tracked: false
 
-  - id: learn-wiki
-    name: Learn / Wiki
+  - id: knowledge-space
+    name: Knowledge Space / Wiki
     category: Digital Garden
     path: /Users/tai/academic-space/knowledge-space
     remote_repo: taixuann/wiki
