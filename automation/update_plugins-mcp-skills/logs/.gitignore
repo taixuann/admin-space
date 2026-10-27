@@ -1,5 +1,0 @@
-# Ignore runtime report files in space-contained layout
-*.log
-latest-result.json
-runs/
-.lock
