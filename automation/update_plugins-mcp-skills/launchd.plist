@@ -10,9 +10,9 @@
     <key>ProgramArguments</key>
     <array>
         <string>/opt/miniconda3/envs/core/bin/python3</string>
-        <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/backend/main.py</string>
+        <string>/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/backend/main.py</string>
         <string>--report-root</string>
-        <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/logs</string>
+        <string>/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs</string>
     </array>
 
     <!-- The job declares the environment it needs. It loads no other file. -->
@@ -28,10 +28,10 @@
 
     <!-- Runtime reports live in space-contained logs folder. -->
     <key>StandardOutPath</key>
-    <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stdout.log</string>
+    <string>/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs/stdout.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stderr.log</string>
+    <string>/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs/stderr.log</string>
 
     <key>ProcessType</key>
     <string>Background</string>

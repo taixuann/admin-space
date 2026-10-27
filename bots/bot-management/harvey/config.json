@@ -12,25 +12,18 @@
     "~/.hermes/profiles/": "read/write"
   },
   "skills": {
-    "enable": [
-      "hermes-agent",
-      "hermes-fleet-admin"
-    ],
-    "link": {
-      "~/.agents/skills": [
-        "archify",
-        "writing-for-agents",
-        "ticket-submit",
-        "notion-cli"
-      ]
-    }
+    "external_dirs": [
+      "~/.agents/skills"
+    ]
   },
   "plugins": {
     "enable": [
       "bot-forge",
+      "caveman_native",
+      "caveman_shrink",
+      "mnemosyne",
       "quota",
-      "superpowers",
-      "mnemosyne"
+      "superpowers"
     ]
   },
   "mcps": {

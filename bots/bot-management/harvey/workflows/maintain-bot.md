@@ -12,7 +12,7 @@ Parent: [Harvey](../SOUL.md) · Shared rules: [bot folders](../../../AGENTS.md) 
 | Decide | `hermes-fleet-admin`, `superpowers:brainstorming` | ok | Harvey drafts the delta and asks Tai. |
 | Apply | `bot-ctl apply <bot>` | ok | Applies only the approved delta. |
 | Skill change | `superpowers:writing-skills` | ok | Test before editing a skill. |
-| Report | Notion MCP, `ticket-submit` (skill), `notion-cli` (`ntn`, second path) | MCP needs Tai's login | Harvey files an error and its fix into the Notion Agent Tickets database. |
+| Report | Chat: explain to Tai. Automation only: `ntn` through `ticket-submit`, for an error that needs a fix | ok: `ntn api v1/users/me` works | Harvey does not file a ticket for a chat report. |
 | Diagram | `archify` | ok | Regenerate the workflow HTML. |
 
 Model category: `operation.standard` for observe, verify and apply. `reasoning.standard` for deciding what a change should be (known gap).
@@ -27,7 +27,7 @@ Model category: `operation.standard` for observe, verify and apply. `reasoning.s
    Completion: the draft and the dry run are shown to Tai.
 4. **Update together.** Before apply, Harvey updates and checks all four:
    - `config.json`: model, dirs, skills, plugins, mcps, memory.
-   - Skills: enabled list matches what is installed.
+   - Skills: `skills.external_dirs` matches the config and every folder in it exists. Which skills are enabled is Tai's live choice; Harvey does not check it.
    - `SOUL.md`: identity and `## Context` still true.
    - Workflows: `.md` updated, `Uses` table correct, HTML regenerated into `.archify/` and linked, then browser check passes.
    Completion: each of the four is `match` or listed as a gap.

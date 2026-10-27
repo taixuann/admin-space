@@ -4,10 +4,10 @@ Read `README.md` first. It owns the schedule, outcomes, and recovery.
 
 ## Ownership
 
-- Source repository: `/Users/tai/.agents`. Layout: Space-owned (Admin `automation/<job-name>`).
+- Source repository: `/Users/tai/.agents`. Layout: Harvey-owned (`bots/bot-management/harvey/cron/<job-name>`).
 - Branch convention: `automation/update_plugins-mcp-skills`.
-- Source folder: `/Users/tai/.agents/automation/update_plugins-mcp-skills`. It owns `launchd.plist`, the runbook, and any runner.
-- Report root: `/Users/tai/.agents/automation/update_plugins-mcp-skills/logs`. Space-contained layout; keep it git-ignored.
+- Source folder: `/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills`. It owns `launchd.plist`, the runbook, and any runner.
+- Report root: `/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs`. Space-contained layout; keep it git-ignored.
 
 ## Boundaries
 
@@ -19,7 +19,7 @@ Read `README.md` first. It owns the schedule, outcomes, and recovery.
 ## Checks before reporting work complete
 
 1. `plutil -lint launchd.plist` returns OK.
-2. `verify_automation.py "/Users/tai/.agents/automation/update_plugins-mcp-skills" --static --report-root "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs"` exits 0.
-3. A live check, only when authorized, shows a fresh terminal outcome in `/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/latest-result.json`.
+2. `verify_automation.py "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills" --static --report-root "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs"` exits 0.
+3. A live check, only when authorized, shows a fresh terminal outcome in `/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs/latest-result.json`.
 
 State which checks ran, which were skipped, and why.

@@ -10,10 +10,10 @@ Daily 03:00 maintenance for global plugins (superpowers, caveman), skills across
 | Field | Value |
 | --- | --- |
 | Label | `com.tai.update-plugins-mcp-skills` |
-| Source owner | Space-owned (Admin `automation/<job-name>`), repository /Users/tai/.agents |
+| Source owner | Harvey-owned (`bots/bot-management/harvey/cron/<job-name>`), repository /Users/tai/.agents |
 | Branch | `automation/update_plugins-mcp-skills` |
-| Source folder | `/Users/tai/.agents/automation/update_plugins-mcp-skills` |
-| Report root | `/Users/tai/.agents/automation/update_plugins-mcp-skills/logs` (Space-contained layout) |
+| Source folder | `/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills` |
+| Report root | `/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs` (Space-contained layout) |
 | Installed plist | `~/Library/LaunchAgents/com.tai.update-plugins-mcp-skills.plist` |
 
 ## Schedule and time
@@ -30,7 +30,7 @@ The plist calls the program directly. It has no wrapper.
 
 ## Reports and retention
 
-Reports go to `/Users/tai/.agents/automation/update_plugins-mcp-skills/logs` (Space-contained layout):
+Reports go to `/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs` (Space-contained layout):
 
 | File | Purpose |
 | --- | --- |
@@ -70,8 +70,8 @@ A runner cannot report its own absence. A run that never starts leaves no local 
 
 ```bash
 # Static check. Never starts the job.
-python3 ~/.agents/skills/launchd-automation/scripts/verify_automation.py "/Users/tai/.agents/automation/update_plugins-mcp-skills" --static --report-root "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs"
+python3 ~/.agents/skills/launchd-automation/scripts/verify_automation.py "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills" --static --report-root "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs"
 
 # Manual run, when authorized.
-/opt/miniconda3/envs/core/bin/python3 /Users/tai/.agents/automation/update_plugins-mcp-skills/backend/main.py --report-root /Users/tai/.agents/automation/update_plugins-mcp-skills/logs
+/opt/miniconda3/envs/core/bin/python3 /Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/backend/main.py --report-root /Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs
 ```

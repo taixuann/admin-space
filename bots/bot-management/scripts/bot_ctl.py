@@ -96,6 +96,13 @@ def cfg_get(bot, key, hermes_fn):
     return vals[-1].strip() if vals else ""
 
 
+def _skills_config(cfg, cfg_path):
+    skills = cfg.get("skills")
+    if not isinstance(skills, dict) or not isinstance(skills.get("external_dirs"), list):
+        raise ValueError(f"{cfg_path}: 'skills' must be {{\"external_dirs\": [...]}}")
+    return skills
+
+
 def resolve_bot_config(bot_dir, models_path):
     bot_dir = Path(bot_dir)
     soul_path = bot_dir / "SOUL.md"
@@ -131,11 +138,20 @@ def resolve_bot_config(bot_dir, models_path):
             "effort": effort,
             "fallback": cfg.get("model", {}).get("fallback", [])
         },
-        "skills": cfg.get("skills", {}),
+        "skills": _skills_config(cfg, cfg_path),
         "plugins": cfg.get("plugins", {}),
         "mcps": cfg.get("mcps", {}),
         "memory": cfg.get("memory", {})
     }
+
+
+def _observe_skills(cfg, hermes_fn, add):
+    code, out = hermes_fn("config", "get", "skills.external_dirs")
+    live = sorted(str(Path(l.strip()[2:].strip()).expanduser()) for l in out.splitlines() if l.strip().startswith("- "))
+    want = sorted(_ext_dirs(cfg))
+    add("skills", "skills.external_dirs", "match" if live == want else "drift", f"want={want} got={live}")
+    missing = [d for d in want if not Path(d).is_dir()]
+    add("skills", "skills folders exist", "match" if not missing else "missing", f"missing={missing}")
 
 
 def observe_bot(bot_dir, models_path, profile_dir, hermes_fn, category=None):
@@ -189,21 +205,7 @@ def observe_bot(bot_dir, models_path, profile_dir, hermes_fn, category=None):
         add("models", f"fallback {fb}", "match" if aliases.get(fb) else "missing", "format of fallback_providers untested")
 
     # Skills
-    sk = cfg.get("skills", {})
-    link_map = sk.get("link", {})
-    want_sk = set(sk.get("enable", [])) | {x for v in link_map.values() for x in v}
-    code, out = hermes_fn("skills", "list", "--enabled-only")
-    live_sk = {c[0] for c in table_rows(out)} - {"Name"}
-    extra, absent = sorted(live_sk - want_sk), sorted(want_sk - live_sk)
-    add("skills", "skills enabled", "match" if not extra and not absent else "drift", f"extra={extra} missing={absent}")
-
-    for src, names in link_map.items():
-        for nme in names:
-            p = profile_dir / "skills" / nme
-            add("skills", f"skill link {nme}", "match" if p.is_symlink() and p.resolve().exists() else "drift", str(p))
-
-    ext = cfg_get(bot, "skills.external_dirs", hermes_fn)
-    add("skills", "skills.external_dirs empty", "match" if ext in ("[]", "", None) else "drift", str(ext))
+    _observe_skills(cfg, hermes_fn, add)
 
     # Plugins
     code, out = hermes_fn("plugins", "list")
@@ -283,7 +285,30 @@ def backup_profile(profile_dir, backup_root=None):
     return dest
 
 
-def apply_bot(bot_dir, models_path, profile_dir, hermes_fn, dry_run=False, skip_smoke=False):
+APPLY_STEPS = ("soul", "model", "skills", "memory")
+
+
+def _ext_dirs(cfg):
+    return [str(Path(d).expanduser()) for d in cfg["skills"]["external_dirs"]]
+
+
+def _check_skill_dirs(cfg):
+    # Pre-flight, before any write: a missing folder would make Hermes load nothing without saying so.
+    missing = [d for d in _ext_dirs(cfg) if not Path(d).is_dir()]
+    if missing:
+        raise ValueError(f"skills.external_dirs not found: {missing}")
+
+
+def _apply_skills(cfg, hermes_fn):
+    # Skills are not listed per bot. Hermes reads every skill in these folders; Tai toggles each skill live.
+    hermes_fn("config", "set", "skills.external_dirs", json.dumps(_ext_dirs(cfg)))
+
+
+def apply_bot(bot_dir, models_path, profile_dir, hermes_fn, dry_run=False, skip_smoke=False, only=None):
+    steps = set(only) if only else set(APPLY_STEPS)
+    if not steps <= set(APPLY_STEPS):
+        raise ValueError(f"Unknown apply step(s): {sorted(steps - set(APPLY_STEPS))}")
+
     bot_dir = Path(bot_dir)
     profile_dir = Path(profile_dir)
     cfg = resolve_bot_config(bot_dir, models_path)
@@ -297,53 +322,29 @@ def apply_bot(bot_dir, models_path, profile_dir, hermes_fn, dry_run=False, skip_
             "config": cfg
         }
 
+    if "skills" in steps:
+        _check_skill_dirs(cfg)
+
     # 1. Backup
     backup_dir = backup_profile(profile_dir)
 
     # 2. SOUL symlink
-    reconcile_soul_symlink(bot_dir / "SOUL.md", profile_dir)
+    if "soul" in steps:
+        reconcile_soul_symlink(bot_dir / "SOUL.md", profile_dir)
 
     # 3. Model
-    hermes_fn("config", "set", "model.default", cfg["model"]["default"])
-    hermes_fn("config", "set", "model.provider", cfg["model"]["provider"])
-    if cfg["model"]["effort"]:
-        hermes_fn("config", "set", "model.effort", cfg["model"]["effort"])
+    if "model" in steps:
+        hermes_fn("config", "set", "model.default", cfg["model"]["default"])
+        hermes_fn("config", "set", "model.provider", cfg["model"]["provider"])
+        if cfg["model"]["effort"]:
+            hermes_fn("config", "set", "model.effort", cfg["model"]["effort"])
 
     # 4. Skills
-    skills_dir = profile_dir / "skills"
-    skills_dir.mkdir(parents=True, exist_ok=True)
-    hermes_fn("config", "set", "skills.external_dirs", "[]")
-
-    approved_skills = set(cfg["skills"].get("enable", []))
-    for src_dir_str, names in cfg["skills"].get("link", {}).items():
-        src_dir = Path(src_dir_str).expanduser()
-        for name in names:
-            approved_skills.add(name)
-            src_skill = src_dir / name
-            dest_skill = skills_dir / name
-            if dest_skill.is_symlink() or dest_skill.exists():
-                if dest_skill.is_symlink() and dest_skill.resolve() == src_skill.resolve():
-                    continue
-                if dest_skill.is_symlink() or dest_skill.is_file():
-                    dest_skill.unlink()
-                elif dest_skill.is_dir():
-                    shutil.rmtree(dest_skill)
-            if src_skill.exists():
-                dest_skill.symlink_to(src_skill.resolve())
-
-    code, out = hermes_fn("skills", "list")
-    if code == 0:
-        for row in table_rows(out):
-            name, status = row[0], row[1]
-            if name == "Name":
-                continue
-            if name not in approved_skills and status == "enabled":
-                hermes_fn("skills", "disable", name)
-            elif name in approved_skills and status != "enabled":
-                hermes_fn("skills", "enable", name)
+    if "skills" in steps:
+        _apply_skills(cfg, hermes_fn)
 
     # 5. Memory
-    if "provider" in cfg["memory"]:
+    if "memory" in steps and "provider" in cfg["memory"]:
         hermes_fn("config", "set", "memory.provider", cfg["memory"]["provider"])
 
     # 6. Smoke test
@@ -460,6 +461,7 @@ def main_cli(argv=None):
     p_app.add_argument("bot", nargs="?", help="Bot name to apply")
     p_app.add_argument("--dry-run", action="store_true", help="Print actions without modifying files or profile")
     p_app.add_argument("--no-smoke", action="store_true", help="Skip running the live smoke test")
+    p_app.add_argument("--only", help="Comma-separated steps to apply: soul,model,skills,memory (default: all)")
 
     # verify
     p_ver = subparsers.add_parser("verify", help="Strict verification of bot state against config.")
@@ -516,7 +518,8 @@ def main_cli(argv=None):
             runner = make_hermes_runner(bd.name)
             p_dir = PROFILES / bd.name
             print(f"Applying bot '{bd.name}'...")
-            res = apply_bot(bd, models_path, p_dir, runner, dry_run=args.dry_run, skip_smoke=args.no_smoke)
+            only = args.only.split(",") if args.only else None
+            res = apply_bot(bd, models_path, p_dir, runner, dry_run=args.dry_run, skip_smoke=args.no_smoke, only=only)
             if not res["success"]:
                 sys.exit(f"Apply failed for {bd.name}: {res.get('error')}")
             if args.dry_run:
@@ -527,13 +530,16 @@ def main_cli(argv=None):
                     print(f"[{bd.name}] Smoke test: {res['smoke'][:60]}...")
         if not args.dry_run:
             print("\nRunning post-apply verification...")
+            step_category = {"soul": "soul", "model": "models", "skills": "skills", "memory": "memory"}
+            categories = [step_category[s] for s in args.only.split(",")] if args.only else [None]
             for bd in bot_dirs:
                 runner = make_hermes_runner(bd.name)
                 p_dir = PROFILES / bd.name
-                code, rows = verify_bot(bd, models_path, p_dir, runner)
-                print(format_table(rows))
-                if code != 0:
-                    sys.exit(1)
+                for category in categories:
+                    code, rows = verify_bot(bd, models_path, p_dir, runner, category=category)
+                    print(format_table(rows))
+                    if code != 0:
+                        sys.exit(1)
         sys.exit(0)
 
     elif args.command == "pull":

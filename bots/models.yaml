@@ -24,7 +24,7 @@ aliases:
     standard: { model: claude-sonnet-5-5, effort: high }
     free:     { model: beam-free }
   coding:
-    high:     { model: claude-opus-5-5,   effort: medium }
+    high:     { model: claude-haiku-5-5,  effort: xhigh }
     standard: { model: claude-sonnet-5-5, effort: medium }
     free:     { model: beam-free }
   operation:

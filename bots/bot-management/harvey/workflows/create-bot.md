@@ -54,7 +54,7 @@ Completion: each workflow file exists, and every skill, plugin and MCP it names 
 2. Check `<group>/<bot>/workflows/` and other bots' workflows for a match. Extend a match instead of duplicating it.
 3. Count the actions. Map each to a skill, script, plugin, MCP or agent. Use a script for fixed steps. Use an agent only where judgment is needed.
 4. Consult [plugins.yaml](../../../plugins.yaml) and `hermes plugins list`. Propose plugins and a memory provider. Ask Tai before enabling any.
-5. Run `hermes -p harvey mcp list`. Ask Tai, for each server: does this bot use it? Record yes or no. Enable nothing without a yes.
+5. Plugins and MCP servers come from `default` when the profile is created (see Create the profile, step 3). For each one this bot needs, ask Tai. Enable nothing without a yes.
 6. Write `workflows/<name>.md` with phases, explicit handoffs between bots or people, error recovery per step, which steps run in parallel or in sequence, a `Uses` table in the form above, and a link to `../SOUL.md`.
 7. Validate every named skill, plugin and MCP against the lists. If one is missing, do not write the file. Report the gap to Tai.
 
@@ -76,6 +76,17 @@ Completion: Tai confirms the context list and the memory choice.
 3. Each bot uses its own native Hermes memory unless Tai picks an external provider from `plugins.yaml`. Create a shared memory bank only when Tai asks.
 4. Check that `## Context` lists every file the bot needs. Store no credentials, raw data or full run logs in any bot file.
 
+## Create the profile: clone from default
+
+Completion: the profile exists, and Tai has approved what the clone copies.
+
+1. Tai confirms in chat what every clone copies from `default`: its `.env` (every API key, `SUDO_PASSWORD` and `DISCORD_BOT_TOKEN` included), its `config.yaml` (plugins and MCP servers), its SOUL, and its memory files `memories/MEMORY.md` and `memories/USER.md`. A question is not approval.
+2. Create the profile: `hermes profile create <bot> --clone-from default --no-skills`. Skills are not copied: a bot reads them through `skills.external_dirs`.
+   Completion: `hermes profile list` shows `<bot>`.
+3. The clone inherits every plugin and MCP server of `default`. For each one, Tai decides on or off for this bot. Turn off, in the live profile, each one the bot does not need. Record the on list in `config.json` as `plugins.enable` and `mcps.enable`.
+   Completion: `hermes -p <bot> plugins list` and `hermes -p <bot> mcp list` show only the items Tai chose on.
+4. Keys never go into a bot's folder or `config.json`. `bot-ctl` never writes a key.
+
 ## Review, apply and verify
 
 Completion: Harvey sent Tai a verify report with the result of each check.
@@ -83,7 +94,7 @@ Completion: Harvey sent Tai a verify report with the result of each check.
 1. Run the pre-send check in [AGENTS.md](../AGENTS.md). Any failure or suspicious item stops here and goes to Tai.
 2. Summarize the draft: the soul, workflows, permissions, plugins, MCPs, jobs, and every field still `proposed`. Run `python3 ~/.agents/bots/bot-management/scripts/bot-ctl apply <bot> --dry-run` and show Tai its output.
 3. Wait for explicit approval of that exact delta. A question about the draft is not approval. Any change after approval needs a new approval.
-4. Apply: `python3 ~/.agents/bots/bot-management/scripts/bot-ctl apply <bot>`. Always pass the bot's name. The tool backs up the profile to `~/.hermes/profiles/<bot>/backups/<timestamp>/` first, leaving out `.env`, then sets the SOUL symlink, model, skills and memory, then runs a smoke test ("say hi").
+4. Apply: `python3 ~/.agents/bots/bot-management/scripts/bot-ctl apply <bot>`. Always pass the bot's name. The tool backs up the profile to `~/.hermes/profiles/<bot>/backups/<timestamp>/` first, leaving out `.env`, then sets the SOUL symlink, model, skills.external_dirs and memory, then runs a smoke test ("say hi").
    Completion: exit 0 and the backup path is in the output. Exit non-zero: stop, report the output to Tai, and do not retry with a different change.
 5. Sync: check `config.json`, skills, `SOUL.md` and workflows together. Regenerate each workflow's HTML with `archify` into `.archify/`, link it, and pass the browser check.
 6. Verify: `python3 ~/.agents/bots/bot-management/scripts/bot-ctl verify <bot>`. Exit 0 means every check matches. Exit 1 lists each drift or missing row: report them to Tai. A plugin or MCP drift is not fixed by Harvey; Tai decides.

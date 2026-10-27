@@ -71,12 +71,7 @@ Harvey context
                 "primary": "operation.high",
                 "fallback": []
             },
-            "skills": {
-                "enable": ["hermes-agent"],
-                "link": {
-                    str(self.tmp / "skills"): ["archify"]
-                }
-            },
+            "skills": {"external_dirs": [str(self.tmp / "skills")]},
             "plugins": {
                 "enable": ["superpowers"]
             },
@@ -155,8 +150,10 @@ Harvey context
         # Model set
         self.assertIn(("config", "set", "model.default", "claude-haiku-5-5"), calls)
         self.assertIn(("config", "set", "model.provider", "anthropic"), calls)
-        # Skills reconciled: old-skill disabled
-        self.assertIn(("skills", "disable", "old-skill"), calls)
+        # Skills: only the external dirs are written; the live disabled list is Tai's and is never touched
+        self.assertIn(("config", "set", "skills.external_dirs", json.dumps([str(self.tmp / "skills")])), calls)
+        self.assertFalse(any(c[:3] == ("config", "set", "skills.disabled") for c in calls))
+        self.assertFalse(any(c[:2] == ("skills", "disable") or c[:2] == ("skills", "enable") for c in calls))
         # Smoke test called
         self.assertIn(("chat", "-q", "say hi"), calls)
 
@@ -166,24 +163,65 @@ Harvey context
                 if args[2] == "model.default": return 0, "claude-haiku-5-5"
                 if args[2] == "model.provider": return 0, "anthropic"
                 if args[2] == "memory.provider": return 0, "mnemosyne"
-                if args[2] == "skills.external_dirs": return 0, "[]"
+                if args[2] == "skills.external_dirs": return 0, f"  - {self.tmp / 'skills'}"
             if args[0] == "skills" and args[1] == "list":
-                return 0, "│ Name         │ Status   │\n│ hermes-agent │ enabled  │\n│ archify      │ enabled  │"
+                return 0, "│ Name         │ Status   │\n│ hermes-agent │ enabled  │"
             if args[0] == "plugins" and args[1] == "list":
                 return 0, "│ Name        │ Status   │\n│ superpowers │ enabled  │"
             if args[0] == "mcp" and args[1] == "list":
                 return 0, "  notion   ✓ enabled"
             return 0, ""
 
-        # Make SOUL symlink
         (self.profile_dir / "SOUL.md").symlink_to(self.bot_dir / "SOUL.md")
-        # Make skill symlink
-        (self.profile_dir / "skills").mkdir(parents=True, exist_ok=True)
-        (self.profile_dir / "skills" / "archify").symlink_to(self.skills_dir / "archify")
-
         exit_code, rows = verify_bot(self.bot_dir, self.models_yaml, self.profile_dir, mock_hermes)
         self.assertEqual(exit_code, 0)
         self.assertTrue(all(r["status"] == "match" for r in rows if r["status"] != "untested"))
+
+    def test_apply_writes_external_dirs_and_never_the_disabled_list(self):
+        calls = []
+        def mock_hermes(*args):
+            calls.append(args)
+            if args[0] == "skills" and args[1] == "list":
+                return 0, "│ Name       │ Status   │\n│ live-skill │ enabled  │"
+            return 0, ""
+
+        res = apply_bot(self.bot_dir, self.models_yaml, self.profile_dir, mock_hermes, skip_smoke=True)
+        self.assertTrue(res["success"])
+        self.assertIn(("config", "set", "skills.external_dirs", json.dumps([str(self.tmp / "skills")])), calls)
+        self.assertFalse(any(c[:3] == ("config", "set", "skills.disabled") for c in calls))
+
+    def test_apply_only_soul_and_memory_leaves_skills_and_model(self):
+        calls = []
+        def mock_hermes(*args):
+            calls.append(args)
+            if args[0] == "skills" and args[1] == "list":
+                return 0, "│ Name      │ Status   │\n│ old-skill │ enabled  │"
+            return 0, ""
+
+        res = apply_bot(self.bot_dir, self.models_yaml, self.profile_dir, mock_hermes, skip_smoke=True, only=["soul", "memory"])
+        self.assertTrue(res["success"])
+        self.assertTrue((self.profile_dir / "SOUL.md").is_symlink())
+        self.assertTrue(any(c[:3] == ("config", "set", "memory.provider") for c in calls))
+        self.assertFalse(any(c[:3] == ("config", "set", "model.default") for c in calls))
+        self.assertFalse(any(c[:3] == ("config", "set", "skills.disabled") for c in calls))
+        self.assertFalse(any(c[:3] == ("config", "set", "skills.external_dirs") for c in calls))
+
+    def test_apply_rejects_unknown_step(self):
+        with self.assertRaises(ValueError):
+            apply_bot(self.bot_dir, self.models_yaml, self.profile_dir, lambda *a: (0, ""), skip_smoke=True, only=["bogus"])
+
+    def test_missing_skill_dir_refuses_before_any_write(self):
+        cfg = json.loads((self.bot_dir / "config.json").read_text())
+        cfg["skills"]["external_dirs"] = [str(self.tmp / "no-such-folder")]
+        (self.bot_dir / "config.json").write_text(json.dumps(cfg))
+        calls = []
+        def mock_hermes(*args):
+            calls.append(args)
+            return 0, ""
+
+        with self.assertRaises(ValueError):
+            apply_bot(self.bot_dir, self.models_yaml, self.profile_dir, mock_hermes, skip_smoke=True)
+        self.assertEqual(calls, [])
 
     def test_pull_plugins(self):
         def mock_hermes(*args):
