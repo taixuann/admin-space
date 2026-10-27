@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "16803ebc-6ced-43bc-bffe-b7d9ecc27f5c",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261027-162606/candidate.json",
+  "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-maintain-bot-20261027-162606/maintain-bot.html",
+  "specification": {
+    "sha256": "ce9d00b25289a4f1e68b61ad52b2c08d0716824c82aee02eacd97e8bd301fc21",
+    "bytes": 3597
+  },
+  "artifact": {
+    "sha256": "3aa0eb525225d54fa690455590bab5f35ee6ecde03cabf8fc867260e608791ea",
+    "bytes": 839444
+  }
+}

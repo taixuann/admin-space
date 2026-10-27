@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/tai/.agents/bots/dev-team/.archify/workflow-issue-flow-20261027-165543/candidate.json",
+    "sha256": "2f55ea9ff51849eedb6598e1fe1c64d30eac4184339a9893447ede329cb63bf0",
+    "bytes": 9636
+  },
+  "artifact": {
+    "path": "/Users/tai/.agents/bots/dev-team/.archify/workflow-issue-flow-20261027-165543/issue-flow.html",
+    "sha256": "9f2cb7274e490ea593f1684c0df73b9a897056d7f262e3ad8a4e407fd41a0595",
+    "bytes": 862884
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/tai/.agents/bots/dev-team/.archify/workflow-issue-flow-20261027-165543/issue-flow.finalize.json",
+    "summaryReceipt": "/Users/tai/.agents/bots/dev-team/.archify/workflow-issue-flow-20261027-165543/issue-flow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/tai/.agents/bots/dev-team/.archify/workflow-issue-flow-20261027-165543/issue-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-26T14:43:49.759Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3462,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

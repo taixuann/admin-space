@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "f8f0f597-a4bc-4537-919b-c7642d621123",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261027-163406/candidate.json",
+  "output": "/Users/tai/.agents/bots/bot-management/harvey/.archify/workflow-create-bot-20261027-163406/create-bot.html",
+  "specification": {
+    "sha256": "07ccf82da9ade8bffef875f2474bd0ca0a13e94938aa0cbf7c2660502bf2b5ab",
+    "bytes": 6364
+  },
+  "artifact": {
+    "sha256": "ac6e97e4f24597d04673829b90aaa0372d5ac50d11ad4858b050540409f2643a",
+    "bytes": 853465
+  }
+}

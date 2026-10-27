@@ -1,0 +1,402 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Issue Flow: GitHub Issue to Release",
+    "subtitle": "One kanban card per issue. Athena reviews the plan and the work before the PR. Notion holds the two gates. Status: approved 2026-10-27.",
+    "animation": "trace",
+    "visual_preset": "signal-flow",
+    "quality_profile": "showcase",
+    "output": "dev-team/.archify/workflow-issue-flow-20261027-165543/issue-flow.html"
+  },
+  "lanes": [
+    {
+      "id": "tai",
+      "label": "Tai (human gate)"
+    },
+    {
+      "id": "board",
+      "label": "Kanban card (state)"
+    },
+    {
+      "id": "forge",
+      "label": "Forge (worker)"
+    },
+    {
+      "id": "athena",
+      "label": "Athena (review)"
+    },
+    {
+      "id": "outside",
+      "label": "GitHub and Notion"
+    }
+  ],
+  "phases": [
+    {
+      "id": "intake",
+      "label": "Intake",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "verdict",
+      "label": "Check + gate 1",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "plan",
+      "label": "Plan review",
+      "fromCol": 4,
+      "toCol": 4
+    },
+    {
+      "id": "ship",
+      "label": "Gate before PR + release",
+      "fromCol": 5,
+      "toCol": 5,
+      "variant": "emphasis"
+    }
+  ],
+  "mainPath": [
+    "o_gh",
+    "f_cron",
+    "b_ready1",
+    "f_check",
+    "b_blocked",
+    "t_ok",
+    "b_ready2",
+    "f_plan",
+    "a_plan",
+    "f_build",
+    "a_gate"
+  ],
+  "nodes": [
+    {
+      "id": "t_ok",
+      "lane": "tai",
+      "col": 4,
+      "type": "external",
+      "label": "Tai sets Approved",
+      "sublabel": "Gate 1, in Notion",
+      "width": 132
+    },
+    {
+      "id": "b_ready1",
+      "lane": "board",
+      "col": 1,
+      "type": "messagebus",
+      "label": "Card ready",
+      "sublabel": "assignee: forge",
+      "width": 132
+    },
+    {
+      "id": "b_blocked",
+      "lane": "board",
+      "col": 3,
+      "type": "security",
+      "label": "Card blocked",
+      "sublabel": "needs_input",
+      "width": 132,
+      "tag": "gate 1"
+    },
+    {
+      "id": "b_ready2",
+      "lane": "board",
+      "col": 4,
+      "type": "messagebus",
+      "label": "Card ready",
+      "sublabel": "approved, assignee: forge",
+      "width": 132
+    },
+    {
+      "id": "f_cron",
+      "lane": "forge",
+      "col": 0,
+      "type": "backend",
+      "label": "Cron: poll and match",
+      "sublabel": "kanban + gh + Notion by URL",
+      "width": 190
+    },
+    {
+      "id": "f_check",
+      "lane": "forge",
+      "col": 2,
+      "type": "backend",
+      "label": "Check issue",
+      "sublabel": "scan repo, audit code",
+      "width": 132,
+      "tag": "close duplicates"
+    },
+    {
+      "id": "f_plan",
+      "lane": "forge",
+      "col": 4,
+      "type": "backend",
+      "label": "Write plan",
+      "sublabel": "writing-plans",
+      "width": 132
+    },
+    {
+      "id": "f_build",
+      "lane": "forge",
+      "col": 5,
+      "type": "backend",
+      "label": "Build (opencode)",
+      "sublabel": "no review in between",
+      "width": 132
+    },
+    {
+      "id": "a_plan",
+      "lane": "athena",
+      "col": 4,
+      "type": "security",
+      "label": "Review plan",
+      "sublabel": "audit + opencode pass",
+      "width": 132,
+      "tag": "round 1 or 2"
+    },
+    {
+      "id": "a_gate",
+      "lane": "athena",
+      "col": 5,
+      "type": "security",
+      "label": "Completion review",
+      "sublabel": "checklist, decision-engine",
+      "width": 170,
+      "tag": "attempt 1 or 2"
+    },
+    {
+      "id": "o_gh",
+      "lane": "outside",
+      "col": 0,
+      "type": "external",
+      "label": "GitHub issue",
+      "sublabel": "label in tools/*/*",
+      "width": 132
+    },
+    {
+      "id": "o_dup",
+      "lane": "outside",
+      "col": 1,
+      "type": "cloud",
+      "label": "Duplicates closed",
+      "sublabel": "link to kept issue",
+      "width": 132
+    },
+    {
+      "id": "o_canceled",
+      "lane": "outside",
+      "col": 2,
+      "type": "cloud",
+      "label": "Issue + PR closed",
+      "sublabel": "canceled in Notion",
+      "width": 132
+    },
+    {
+      "id": "o_mirror",
+      "lane": "outside",
+      "col": 3,
+      "type": "external",
+      "label": "Notion ticket",
+      "sublabel": "link only",
+      "width": 132
+    },
+    {
+      "id": "o_pr",
+      "lane": "outside",
+      "col": 4,
+      "type": "cloud",
+      "label": "PR opened",
+      "sublabel": "Closes #N",
+      "width": 132
+    },
+    {
+      "id": "o_release",
+      "lane": "outside",
+      "col": 5,
+      "type": "cloud",
+      "label": "Merge + release",
+      "sublabel": "after Notion Done",
+      "width": 132
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_seen",
+      "from": "o_gh",
+      "to": "f_cron",
+      "label": "issue seen",
+      "variant": "dashed"
+    },
+    {
+      "id": "e_card",
+      "from": "f_cron",
+      "to": "b_ready1",
+      "label": "create card",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_dispatch1",
+      "from": "b_ready1",
+      "to": "f_check",
+      "label": "dispatch",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_dup",
+      "from": "f_check",
+      "to": "o_dup",
+      "label": "duplicate",
+      "variant": "default",
+      "role": "return"
+    },
+    {
+      "id": "e_verdict",
+      "from": "f_check",
+      "to": "b_blocked",
+      "label": "verdict",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_mirror",
+      "from": "b_blocked",
+      "to": "o_mirror",
+      "label": "ticket with link",
+      "variant": "default"
+    },
+    {
+      "id": "e_read",
+      "from": "b_blocked",
+      "to": "t_ok",
+      "label": "Tai reads",
+      "variant": "security",
+      "role": "main"
+    },
+    {
+      "id": "e_unblock",
+      "from": "t_ok",
+      "to": "b_ready2",
+      "label": "cron unblocks",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_dispatch2",
+      "from": "b_ready2",
+      "to": "f_plan",
+      "label": "dispatch",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_review_plan",
+      "from": "f_plan",
+      "to": "a_plan",
+      "label": "request-review",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_plan_ok",
+      "from": "a_plan",
+      "to": "f_build",
+      "label": "approved",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_review_gate",
+      "from": "f_build",
+      "to": "a_gate",
+      "label": "request-review",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_gate_ok",
+      "from": "a_gate",
+      "to": "o_pr",
+      "label": "approved",
+      "variant": "emphasis",
+      "role": "return"
+    },
+    {
+      "id": "e_merge",
+      "from": "o_pr",
+      "to": "o_release",
+      "label": "Tai sets Done",
+      "variant": "security",
+      "role": "main"
+    },
+    {
+      "id": "e_cancel",
+      "from": "o_mirror",
+      "to": "o_canceled",
+      "label": "Canceled",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Check issue (Forge)",
+      "items": [
+        "1. Read the issue with gh: body, comments, labels, linked PRs. An open linked PR means skip",
+        "2. Read all other open issues in the repo. Duplicate of a fixed one: close with a link. Two open duplicates: keep one, close the other, link them",
+        "3. Brainstorm and audit the code: solved, not solved, or unclear, with evidence",
+        "4. Comment the verdict on GitHub. Notion ticket (Human review) holds only the link. Block the card as needs_input"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Gate 1: Approved in Notion",
+      "items": [
+        "Tai opens the link, reads the verdict on GitHub, and sets the ticket to Approved",
+        "The cron unblocks the card. Solved: Forge comments and closes the issue. Not solved: planning starts"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Plan review (Athena)",
+      "items": [
+        "Forge writes the plan and requests review on the same card",
+        "Athena runs audit-writing-plans; opencode is her second pass",
+        "Changes return the card to Forge. Two rounds, then blocked"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Build, then the gate before PR",
+      "items": [
+        "Forge runs opencode in a worktree on the approved plan; no review in between",
+        "Athena runs the checklist, then decision-engine; Forge reviews with requesting-code-review first",
+        "Approve: Forge opens the PR with Closes #N. Request changes: back to build. Two attempts, then blocked and a Notion ticket for Tai"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Gate 2 and release",
+      "items": [
+        "Tai reviews the PR and sets the ticket to Done",
+        "The cron sees Done. Forge runs the repo's release gate, then CI and merge state, merges, runs github-repo-care to tag and release",
+        "Canceled in Notion: the cron comments on the issue, closes the issue and its PR"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Writes outside the machine",
+      "items": [
+        "Issue comments, duplicate closes, Notion links, the PR, the merge and the release all leave the machine",
+        "Forge merges only after Notion Done",
+        "AGENTS.md, CLAUDE.md or SOUL.md edits can hit an approval prompt; the run then stops",
+        "decision-engine sends the completed change to an external service (completion only)"
+      ]
+    }
+  ]
+}

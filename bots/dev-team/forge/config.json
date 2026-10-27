@@ -1,0 +1,35 @@
+{
+  "model": {
+    "primary": "coding.high",
+    "fallback": [
+      "coding.standard"
+    ]
+  },
+  "dirs": {
+    "~/development-space/": "read/write",
+    "~/.agents/bots/dev-team/": "read"
+  },
+  "skills": {
+    "external_dirs": [
+      "~/development-space/.agents/skills",
+      "~/.agents/skills",
+      "~/.hermes/profiles/harvey/skills"
+    ]
+  },
+  "plugins": {
+    "enable": [
+      "caveman_native",
+      "caveman_shrink",
+      "ponytail",
+      "superpowers"
+    ]
+  },
+  "mcps": {
+    "enable": [
+      "xerj"
+    ]
+  },
+  "memory": {
+    "provider": "built-in"
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Athena review: plan or finished work",
+    "subtitle": "Forge requests a review on the card. Athena returns one verdict. Two failed rounds go to Tai.",
+    "animation": "trace",
+    "visual_preset": "signal-flow",
+    "quality_profile": "showcase",
+    "output": "dev-team/athena/.archify/workflow-review-20261027-20261027-163921/review.html"
+  },
+  "lanes": [
+    {
+      "id": "forge",
+      "label": "Forge (worker)"
+    },
+    {
+      "id": "board",
+      "label": "Kanban card (state)"
+    },
+    {
+      "id": "athena",
+      "label": "Athena (review)"
+    },
+    {
+      "id": "outside",
+      "label": "Repo, CI and decision-engine"
+    },
+    {
+      "id": "tai",
+      "label": "Tai (human gate)"
+    }
+  ],
+  "mainPath": [
+    "f_req",
+    "b_card",
+    "a_kind",
+    "a_plan",
+    "a_verdict",
+    "b_done"
+  ],
+  "nodes": [
+    {
+      "id": "f_req",
+      "lane": "forge",
+      "col": 0,
+      "type": "backend",
+      "label": "Request review",
+      "sublabel": "request-review on the card",
+      "width": 150
+    },
+    {
+      "id": "b_card",
+      "lane": "board",
+      "col": 1,
+      "type": "messagebus",
+      "label": "Card in review",
+      "sublabel": "reviewer: athena",
+      "width": 150
+    },
+    {
+      "id": "a_kind",
+      "lane": "athena",
+      "col": 2,
+      "type": "backend",
+      "label": "Which review?",
+      "sublabel": "plan or finished work",
+      "width": 150
+    },
+    {
+      "id": "a_plan",
+      "lane": "athena",
+      "col": 3,
+      "type": "backend",
+      "label": "Plan review",
+      "sublabel": "audit + opencode pass",
+      "width": 150
+    },
+    {
+      "id": "a_check",
+      "lane": "outside",
+      "col": 3,
+      "type": "backend",
+      "label": "Completion checklist",
+      "sublabel": "scope, repo, CI, docs",
+      "width": 170
+    },
+    {
+      "id": "o_de",
+      "lane": "outside",
+      "col": 4,
+      "type": "external",
+      "label": "decision-engine",
+      "sublabel": "whole change, external service",
+      "width": 170
+    },
+    {
+      "id": "a_verdict",
+      "lane": "athena",
+      "col": 5,
+      "type": "security",
+      "label": "One verdict",
+      "sublabel": "complete or request-changes",
+      "width": 170
+    },
+    {
+      "id": "b_done",
+      "lane": "board",
+      "col": 5,
+      "type": "messagebus",
+      "label": "Card done",
+      "sublabel": "kanban_complete",
+      "width": 150
+    },
+    {
+      "id": "f_rework",
+      "lane": "forge",
+      "col": 5,
+      "type": "backend",
+      "label": "Forge reworks",
+      "sublabel": "round n of 2",
+      "width": 150
+    },
+    {
+      "id": "t_block",
+      "lane": "tai",
+      "col": 5,
+      "type": "security",
+      "label": "Blocked: Tai reviews",
+      "sublabel": "after 2 failed rounds",
+      "width": 170
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_req",
+      "from": "f_req",
+      "to": "b_card",
+      "label": "request-review",
+      "variant": "default",
+      "role": "main"
+    },
+    {
+      "id": "e_dispatch",
+      "from": "b_card",
+      "to": "a_kind",
+      "label": "dispatch",
+      "variant": "default",
+      "role": "main"
+    },
+    {
+      "id": "e_plan",
+      "from": "a_kind",
+      "to": "a_plan",
+      "label": "plan",
+      "variant": "emphasis",
+      "role": "branch"
+    },
+    {
+      "id": "e_comp",
+      "from": "a_kind",
+      "to": "a_check",
+      "label": "completion",
+      "variant": "emphasis",
+      "role": "branch"
+    },
+    {
+      "id": "e_plan_verdict",
+      "from": "a_plan",
+      "to": "a_verdict",
+      "label": "plan verdict",
+      "variant": "default",
+      "role": "main"
+    },
+    {
+      "id": "e_check",
+      "from": "a_check",
+      "to": "o_de",
+      "label": "checks pass",
+      "variant": "default",
+      "role": "main"
+    },
+    {
+      "id": "e_de",
+      "from": "o_de",
+      "to": "a_verdict",
+      "label": "result",
+      "variant": "default",
+      "role": "main"
+    },
+    {
+      "id": "e_pass",
+      "from": "a_verdict",
+      "to": "b_done",
+      "label": "pass",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "e_changes",
+      "from": "a_verdict",
+      "to": "f_rework",
+      "label": "request-changes",
+      "variant": "security",
+      "role": "branch"
+    },
+    {
+      "id": "e_block",
+      "from": "f_rework",
+      "to": "t_block",
+      "label": "2nd failure",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Plan review",
+      "items": [
+        "Forge writes the plan and requests review on the same card",
+        "Athena runs audit-writing-plans, then an opencode pass",
+        "Pass: complete. Changes: back to Forge, round n of 2"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Completion review",
+      "items": [
+        "Forge sends SHAs and summary (requesting-code-review)",
+        "Reviewer template, checklist, then decision-engine on the whole change",
+        "Pass: complete. Changes: back to Forge, round n of 2"
+      ]
+    }
+  ]
+}
