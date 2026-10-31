@@ -83,8 +83,8 @@ spaces:
 # 2. INTERNAL TOOLING & PACKAGING CONTRACT
 # ------------------------------------------------------------------------------
 tooling_contract:
-  canonical_root: "/Users/tai/development-space/tools"
-  worktree_root: "/Users/tai/development-space/worktrees"
+  canonical_root: "/Users/tai/development-space/repos"
+  worktree_root: "/Users/tai/development-space/repos"
   binary_distribution_dir: "/Users/tai/.local/bin"
   driving_triad:
     superpowers:
@@ -102,8 +102,8 @@ global_automations:
   update_plugins_mcp_skills:
     label: "com.tai.update-plugins-mcp-skills"
     schedule: "03:00 daily"
-    source: "/Users/tai/.agents/automation/update_plugins-mcp-skills"
-    report_root: "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs"
+    source: "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills"
+    report_root: "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs"
     plist: "~/Library/LaunchAgents/com.tai.update-plugins-mcp-skills.plist"
     purpose: "Maintains global Superpowers, Caveman hooks, npx skills, and mirrors."
 

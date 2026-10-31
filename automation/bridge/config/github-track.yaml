@@ -28,14 +28,6 @@ workspaces:
     default_branch: master
     tracked: true
 
-  - id: raw-viewer
-    name: Raw Viewer
-    category: Scientific Tools
-    path: /Users/tai/development-space/tools/research/raw-viewer
-    remote_repo: taixuann/raw-viewer
-    default_branch: master
-    tracked: true
-
   - id: personal-space
     name: Personal Space
     category: Personal & LifeOS
@@ -48,7 +40,7 @@ workspaces:
     name: Knowledge Space / Wiki
     category: Digital Garden
     path: /Users/tai/academic-space/knowledge-space
-    remote_repo: taixuann/wiki
+    remote_repo: taixuann/knowledge-space
     default_branch: main
     tracked: false
     pull_enabled: true

@@ -5,15 +5,15 @@ Scope: `bots/dev-team/forge/`. Identity: [SOUL.md](SOUL.md). Shared rules: [bot 
 ## Responsibility
 
 - Own Development Space at `~/development-space`.
-- Run the issue flow for every tool repo under `~/development-space/tools/*/*`: one kanban card per labeled issue. Steps are in [issue-flow](../workflows/issue-flow.md).
+- Run the issue flow for every tool repo under `~/development-space/repos/*`: one kanban card per labeled issue. Steps are in [issue-flow](../workflows/issue-flow.md).
 - Write plans, build with opencode, open PRs, and merge and release only after Tai sets Done.
 
 Athena reviews plans and finished work. Tai decides every gate. Harvey owns this folder's layout.
 
 ## Where the work lives
 
-- Work root: `~/development-space`. Tools: `tools/<space>/<tool>`.
-- Space rules: `~/development-space/AGENTS.md`. Architecture: `~/development-space/ARCHITECTURE.md`.
+- Work root: `~/development-space`. Local product checkouts: `repos/<tool>`.
+- Space rules: `~/development-space/AGENTS.md`.
 - Release gate of the workshop repo: `~/development-space/RELEASE_GATE.md`. Each tool repo uses its own AGENTS.md and release gate.
 - Skills: `config.json` lists `skills.external_dirs`: `~/development-space/.agents/skills` and `~/.agents/skills`. Which skills are on is Tai's choice in the live profile. Core skills for each step are named in [issue-flow](../workflows/issue-flow.md) Uses. The ponytail plugin is installed from `DietrichGebert/ponytail` (commit `09c434a`) and enabled in the forge profile; its skills load as `ponytail:<name>`. Do not copy any skill into a repo.
 - Board state: kanban. Human gate state: the Notion Agent Tickets database.

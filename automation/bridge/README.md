@@ -43,10 +43,9 @@ automation/bridge/
 | :--- | :--- | :--- | :--- | :---: | :--- |
 | `research-space` | `~/academic-space/research-space` | `taixuann/research-space` | `main` | Yes | Research Space (scientific research) |
 | `admin-space` | `~/.agents` | `taixuann/admin-space` | `master` | Yes | Admin Space (agent instructions, skills, automation) |
-| `development-space` | `~/development-space` | `taixuann/development-space` | `master` | Yes | Development Space (engineering workshop; hosts linked worktrees only) |
-| `raw-viewer` | `~/development-space/tools/research/raw-viewer` | `taixuann/raw-viewer` | `master` | Yes | Scientific data viewer tool (Development Space repo, tracked at its real path) |
+| `development-space` | `~/development-space` | `taixuann/development-space` | `master` | Yes | Development Space (thin workshop; local checkouts under `repos/`) |
 | `personal-space` | `~/personal-space` | `taixuann/non-research-projects` | `main` | No | Personal LifeOS (local Git only) |
-| `knowledge-space` | `~/academic-space/knowledge-space` | `taixuann/wiki` | `main` | No | Digital garden knowledge base (pull-only) |
+| `knowledge-space` | `~/academic-space/knowledge-space` | `taixuann/knowledge-space` | `main` | No | Knowledge Space Vault repository |
 | `academic-portfolio` | `~/personal-space/professional/portfolio/site` | `taixuann/academic-portfolio` | `main` | Yes | Academic and personal portfolio website |
 
 ### 2. Google Drive Cloud Profiles (`config/drive-track.yaml`)

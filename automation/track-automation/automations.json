@@ -345,7 +345,7 @@
         "size": 1505,
         "size_formatted": "1.5 KB",
         "modified": "2026-10-25 09:48:48",
-        "snippet": "This computer's Reason connection restarted on the new version.\nUpdated managed Reason worker 0.2.595 → 0.2.596; future commands use it automatically.\nThis computer's Reason connection restarted on the new version.\nUpdated managed Reason worker 0.2.596 → 0.2.598; future commands use it automatically.\nThis computer's Reason connection restarted on the new version."
+        "snippet": "This computer's Reason connection restarted on the new version.\nUpdated managed Reason worker 0.2.595 \u2192 0.2.596; future commands use it automatically.\nThis computer's Reason connection restarted on the new version.\nUpdated managed Reason worker 0.2.596 \u2192 0.2.598; future commands use it automatically.\nThis computer's Reason connection restarted on the new version."
       },
       "stderr_log": {
         "path": "/Users/tai/Library/Logs/Reason/updater-error.log",
@@ -445,48 +445,6 @@
       "run_at_load": false
     },
     {
-      "id": "com.tai.development-space.update",
-      "label": "com.tai.development-space.update",
-      "name": "Development-Space Update",
-      "category": "custom",
-      "type": "LaunchAgent",
-      "status": "Loaded (Idle)",
-      "status_code": "idle",
-      "schedule": "Daily at 03:00",
-      "schedule_type": "calendar",
-      "program": "/opt/miniconda3/envs/core/bin/python3",
-      "arguments": [
-        "/opt/miniconda3/envs/core/bin/python3",
-        "/Users/tai/development-space/automation/plugin-mcp-skills-update/backend/main.py",
-        "--report-root",
-        "/Users/tai/development-space/automation/plugin-mcp-skills-update/logs"
-      ],
-      "working_dir": null,
-      "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.development-space.update.plist",
-      "stdout_log": {
-        "path": "/Users/tai/development-space/automation/plugin-mcp-skills-update/logs/stdout.log",
-        "exists": true,
-        "size": 3606,
-        "size_formatted": "3.5 KB",
-        "modified": "2026-10-25 03:00:04",
-        "snippet": "[2026-10-24T20:00:04.382382+00:00] Phase 2: Superpowers check OK (HEAD: 2ce8aa15d05b)\n[2026-10-24T20:00:04.382781+00:00] Phase 3: Checking MCP Xerj and config sync...\n[2026-10-24T20:00:04.444793+00:00] Phase 3: MCP sync OK (xerj ver: xerj v1.0.0-rc.98)\n[2026-10-24T20:00:04.445986+00:00] === Maintenance completed with outcome=success (exit_code=0, duration=2.68s) ===\nterminal={\"outcome\": \"success\", \"exit_code\": 0}"
-      },
-      "stderr_log": {
-        "path": "/Users/tai/development-space/automation/plugin-mcp-skills-update/logs/stderr.log",
-        "exists": true,
-        "size": 0,
-        "size_formatted": "0 B",
-        "modified": "2026-10-24 22:25:38",
-        "snippet": ""
-      },
-      "last_exit_code": 0,
-      "pid": null,
-      "is_active": true,
-      "description": "Automated background task running python3.",
-      "keep_alive": false,
-      "run_at_load": false
-    },
-    {
       "id": "com.tai.learn.notion-export",
       "label": "com.tai.learn.notion-export",
       "name": "Learn Notion-Export",
@@ -527,46 +485,6 @@
       "run_at_load": false
     },
     {
-      "id": "com.tai.linear-notion-sync",
-      "label": "com.tai.linear-notion-sync",
-      "name": "Linear-Notion-Sync",
-      "category": "sync",
-      "type": "LaunchAgent",
-      "status": "Loaded (Idle)",
-      "status_code": "idle",
-      "schedule": "Daily at 00:00",
-      "schedule_type": "calendar",
-      "program": "/bin/bash",
-      "arguments": [
-        "/bin/bash",
-        "/Users/tai/development-space/automation/linear-notion-tracking/run-sync.sh"
-      ],
-      "working_dir": null,
-      "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.linear-notion-sync.plist",
-      "stdout_log": {
-        "path": "/Users/tai/development-space/automation/linear-notion-tracking/logs/launchd.stdout.log",
-        "exists": true,
-        "size": 3868,
-        "size_formatted": "3.8 KB",
-        "modified": "2026-10-25 00:00:07",
-        "snippet": "2026-10-25 00:00:07,045 [INFO] [TAI-81] No property changes detected. Skipping.\n2026-10-25 00:00:07,045 [INFO] [TAI-80] No property changes detected. Skipping.\n2026-10-25 00:00:07,045 [INFO] [TAI-79] No property changes detected. Skipping.\n2026-10-25 00:00:07,046 [INFO] [TAI-78] No property changes detected. Skipping.\n2026-10-25 00:00:07,046 [INFO] Sync complete. Stats: {'created': 0, 'updated': 0, 'skipped': 5, 'dry-run': 0}"
-      },
-      "stderr_log": {
-        "path": "/Users/tai/development-space/automation/linear-notion-tracking/logs/launchd.stderr.log",
-        "exists": true,
-        "size": 0,
-        "size_formatted": "0 B",
-        "modified": "2026-10-22 00:00:01",
-        "snippet": ""
-      },
-      "last_exit_code": 0,
-      "pid": null,
-      "is_active": true,
-      "description": "Automated background task running bash.",
-      "keep_alive": false,
-      "run_at_load": false
-    },
-    {
       "id": "com.tai.model-control-sync",
       "label": "com.tai.model-control-sync",
       "name": "Model-Control-Sync",
@@ -589,7 +507,7 @@
         "size": 4658,
         "size_formatted": "4.5 KB",
         "modified": "2026-10-25 00:01:14",
-        "snippet": "=== [2026-10-24 00:00:39] Automated sync finished successfully ===\n=== [2026-10-25 00:00:02] Starting automated model-control sync ===\n{\"dateUpdated\": \"2026-10-25T00:00:51.862993+07:00\", \"selected\": \"opencode-go/beam-free\", \"freshToday\": true}\n📚 All PDFs in knowledge-base are up to date with index.\n=== [2026-10-25 00:01:14] Automated sync finished successfully ==="
+        "snippet": "=== [2026-10-24 00:00:39] Automated sync finished successfully ===\n=== [2026-10-25 00:00:02] Starting automated model-control sync ===\n{\"dateUpdated\": \"2026-10-25T00:00:51.862993+07:00\", \"selected\": \"opencode-go/beam-free\", \"freshToday\": true}\n\ud83d\udcda All PDFs in knowledge-base are up to date with index.\n=== [2026-10-25 00:01:14] Automated sync finished successfully ==="
       },
       "stderr_log": {
         "path": "/Users/tai/.agents/automation/model-control/logs/launchd.stderr.log",
@@ -619,14 +537,14 @@
       "program": "/opt/miniconda3/envs/core/bin/python3",
       "arguments": [
         "/opt/miniconda3/envs/core/bin/python3",
-        "/Users/tai/.agents/automation/update_plugins-mcp-skills/backend/main.py",
+        "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/backend/main.py",
         "--report-root",
-        "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs"
+        "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs"
       ],
       "working_dir": null,
       "plist_path": "/Users/tai/Library/LaunchAgents/com.tai.update-plugins-mcp-skills.plist",
       "stdout_log": {
-        "path": "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stdout.log",
+        "path": "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs/stdout.log",
         "exists": true,
         "size": 3800,
         "size_formatted": "3.7 KB",
@@ -634,7 +552,7 @@
         "snippet": "[2026-10-24T20:00:17.378054+00:00] Phase 3: Global skills update OK (exit 0, reconciled=[])\n[2026-10-24T20:00:17.378530+00:00] Phase 4: Syncing skill mirrors...\n[2026-10-24T20:00:19.439518+00:00] Phase 4: Skill mirrors synchronized OK\n[2026-10-24T20:00:19.443441+00:00] === Maintenance completed with outcome=success (exit_code=0, duration=17.53s) ===\nterminal={\"outcome\": \"success\", \"exit_code\": 0}"
       },
       "stderr_log": {
-        "path": "/Users/tai/.agents/automation/update_plugins-mcp-skills/logs/stderr.log",
+        "path": "/Users/tai/.agents/bots/bot-management/harvey/cron/update_plugins-mcp-skills/logs/stderr.log",
         "exists": true,
         "size": 0,
         "size_formatted": "0 B",
