@@ -28,12 +28,11 @@ When another Space is involved, Secretary hands the request to Coordinator. That
 | Path | Holds |
 | --- | --- |
 | [`AGENTS.md`](AGENTS.md) | How agents work in this Space |
-| [`profiles/`](profiles/README.md) | Each profile's definition, capabilities, and workflow diagram; [ecosystem map](profiles/ecosystem.html) |
-| [`superpowers/`](superpowers/plans/README.md) | Specs (`specs/`) and plans (`plans/`); Executor reads plans from here |
+| [`superpowers/`](superpowers/plans/README.md) | Specs (`specs/`) and plans (`plans/`); historical plans and evidence |
 | [`../automation/`](../automation/README.md) | Admin-owned scheduled jobs |
-| [`../tools/`](../tools/README.md) | Launch points for tools owned by Development Space |
-| `../skills/`, `../plugins/` | Reusable agent methods and maintained plugin sources |
-| `~/.hermes/` | Hermes runtime: configuration, sessions, installed capabilities, native memory |
+| [`../skills/`](../skills/) | Admin-maintained skill sources |
+| `~/development-space/repos/` | Internal tool source (Development Space) |
+| `~/.hermes/` | Hermes runtime: profiles, sessions, installed capabilities, native memory |
 
 A path tells you where to look. It does not grant permission to change it.
 

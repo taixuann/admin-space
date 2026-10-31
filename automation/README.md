@@ -14,7 +14,7 @@ Calling a shared helper (such as the incident reporter) does not change the owne
 | Artifact | Location |
 | --- | --- |
 | Runner, plist source, runbook, `AGENTS.md`, diagram | The owning source folder |
-| Run reports, rotated logs, latest result | `~/.agents/automation/<stable-job-name>/logs/` (ignored by Git) |
+| Run reports, rotated logs, latest result | `~/.agents/automation/<stable-job-name>/logs/` or `<job>-runtime/logs/` (ignored by Git) |
 | Durable incident events | The incident tool's private store |
 | Installed plist | `~/Library/LaunchAgents/<label>.plist` |
 
@@ -24,7 +24,6 @@ An Admin job's report folder is `<source-folder>-runtime`, so reports never land
 
 | Label | Owner | Schedule | Notes |
 | --- | --- | --- | --- |
-| `com.tai.linear-notion-sync` | Development Space (`automation/linear-notion-tracking/`) | Daily 00:00 | No tracked source plist. |
-| `com.tai.bridge.sync` | Admin (`bridge/`) | Per installed plist | |
+| `com.tai.brain.nightly` | Admin (`brain-nightly/`) | 02:00 local (see source plist) | Brain vault lint, curate, morning summary |
 
 An installed schedule is state, not intent. Compare it with the source plist before saying what runs. Rules for changing jobs are in [AGENTS.md](AGENTS.md).

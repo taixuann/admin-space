@@ -1,3 +1,0 @@
-Treat this as a discussion inside the weekly review. First identify the Project and review period, then compare the overlapping notes and references by purpose, ownership, lifecycle, dependencies, and what they need to preserve. Recommend merging only where they serve the same purpose; keep distinct work separate and link shared information where useful. Present exact proposed changes for discussion, including any links or history that must survive. Make no edits until asked to save or apply the proposal.
-
-Uncertainty: No Project or specific notes and references were provided, so the overlap and best arrangement are not yet verified.

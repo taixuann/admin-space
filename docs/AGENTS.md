@@ -1,6 +1,6 @@
 # Admin docs instructions
 
-Scope: `docs/` and its subfolders. Read the root [AGENTS.md](../AGENTS.md) first. For profile work, also read [profiles/AGENTS.md](profiles/AGENTS.md).
+Scope: `docs/` and its subfolders. Read the root [AGENTS.md](../AGENTS.md) first. Profile definitions live under `~/.hermes/profiles/`.
 
 ## Choose the lifecycle
 
@@ -37,7 +37,7 @@ See [Executor](profiles/executor/README.md) for the model, plan contract, permis
 | `AGENTS.md` or `CLAUDE.md` change | `writing-for-agents`; check loading paths and references |
 | Profile create, update, maintain, delete | `hermes-fleet-admin`; rules in [profiles/AGENTS.md](profiles/AGENTS.md) |
 | Scheduled job | `launchd-automation`; rules in [automation/AGENTS.md](../automation/AGENTS.md) |
-| Tool use or tool problem | [tools/AGENTS.md](../tools/AGENTS.md) |
+| Tool use or tool problem | The tool's repo under `~/development-space/repos/` and that Space's `AGENTS.md` |
 | Process or architecture diagram | `archify` |
 
 ## Keep records

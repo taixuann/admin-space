@@ -1,6 +1,0 @@
-{
-  "observations": [
-    "Iteration 1 scored 83.3% for the candidate versus 100% for the old skill because the candidate stated the identity gap but did not ask the focused question. After making that instruction explicit, the candidate and baseline both scored 100% in the targeted retest.",
-    "The single-field dry run does not test a real Linear or GitHub mutation; tool telemetry is unavailable."
-  ]
-}

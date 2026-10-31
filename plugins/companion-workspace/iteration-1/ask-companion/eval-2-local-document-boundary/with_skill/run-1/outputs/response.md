@@ -1,5 +1,0 @@
-I’ll leave Downloads untouched. Organizing local folders belongs to Personal Hub’s document workflow (Document Companion); Ask Companion does not inspect or manage local folders. No files have been moved.
-
-Whether to reprioritize the PhD application this week is a short-term focus decision for Plan Companion. From this prompt alone, I don’t know its deadline, your current agreed focus, competing commitments, or capacity, so I can’t responsibly recommend changing the priority. Provisionally, move it up only if a concrete deadline or blocking dependency makes it the highest-value feasible work this week. What is the nearest PhD deadline, and what would this displace?
-
-Uncertainty: No current project records, deadline, focus, competing work, or capacity were inspected; advice is conditional.

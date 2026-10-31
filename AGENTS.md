@@ -8,7 +8,7 @@ Use the active profile's identity and collaboration preferences. Admin Space pro
 1. Identify the requested outcome and the component that owns it.
 2. Read that component's instructions and inspect the relevant current state.
 3. For roles, flow, and component placement, read [docs/README.md](docs/README.md).
-4. For planning, execution, records, memory, or workflow selection, read [docs/AGENTS.md](docs/AGENTS.md). For tools or automation, read `tools/AGENTS.md` or `automation/AGENTS.md`.
+4. For planning, execution, records, memory, or workflow selection, read [docs/AGENTS.md](docs/AGENTS.md). For scheduled jobs, read [automation/AGENTS.md](automation/AGENTS.md).
 
 Keep the root guidance in `AGENTS.md`, `CLAUDE.md`, and `README.md`. Keep identity and collaboration preferences with the active profile. Keep component explanations and runbooks under their owning directories.
 
@@ -23,7 +23,7 @@ Preserve unrelated edits, running jobs, existing links, and raw evidence.
 Use the owning project's Git workflow when repository changes require it.
 Keep credentials and runtime stores outside tracked source files.
 
-For skills and plugins, distinguish maintained source, installed copy, and runtime behavior.
+For skills, distinguish maintained source, installed copy, and runtime behavior. Tool source lives in Development Space (`~/development-space/repos/`).
 For automation, inspect its trigger, runner, configuration, side effects, and recovery path before changing it.
 Use existing tool entrypoints before adding wrappers or moving source.
 

@@ -1,6 +1,0 @@
-{
-  "observations": [
-    "Both candidate and old-skill outputs passed all assertions (100%). These cases test useful boundaries, but they do not show a measured pass-rate advantage for the new skill.",
-    "The Personal Hub routing answer names the local workflow; no real local folder was inspected or changed."
-  ]
-}

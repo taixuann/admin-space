@@ -1,3 +1,0 @@
-Prompt:\nHelp me decide whether to schedule two or three manuscript sessions next week. Fixture: project priority is Core, figure task is ready, data task is blocked, and saved Rhythm mapping shows two research blocks. I want a recommendation, not event changes.\n\nConfiguration: with_skill\n\nResponse:\nI recommend **two manuscript sessions** next week. That matches the two research blocks in the saved Rhythm mapping, and the ready figure task gives them a concrete focus. Keep the blocked data task out of the commitment unless its blocker clears.
-
-Uncertainty: This uses only the fixture. It does not include deadlines, session lengths, or details about the blocker.

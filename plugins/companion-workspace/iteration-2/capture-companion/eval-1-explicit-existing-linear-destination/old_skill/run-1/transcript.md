@@ -1,3 +1,0 @@
-Prompt:\nCapture this update on Linear issue L-22: the figure draft is ready for coauthor review; I finished it today. Fixture: L-22 is the matching issue, its update section exists, and no identical note is present. Use a synthetic dry run only; do not call a live connector.\n\nConfiguration: old_skill\n\nResponse:\nOld-skill baseline: the fixture says L-22 is the existing update section. Proposed entry under the 2026-10-19 day toggle: “Owner-reported: the figure draft is ready for coauthor review; finished today (2026-10-19). Source: Linear issue L-22.”
-
-Uncertainty: This is synthetic and relies on the fixture; no live issue, owning Project, canonical log, URL, or duplicate state was inspected.

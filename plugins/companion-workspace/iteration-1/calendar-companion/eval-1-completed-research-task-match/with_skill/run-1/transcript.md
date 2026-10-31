@@ -1,3 +1,0 @@
-Prompt:\nAudit this Research event before a possible title cleanup. Fixture: event E is on the Research calendar and links to Task T; T is Complete. The event text says 'send final paper to advisor'. Do not write. Use the currently approved Calendar rules.\n\nConfiguration: with_skill\n\nResponse:\nEvent E is linked to Task T, which is Complete. Keep the task closed. The event text “send final paper to advisor” is meaningful; changing it would go beyond the approved Calendar title corrections. No write made.
-
-Uncertainty: I used the operational Calendar rules in the supplied references; I did not retrieve the linked Notion control specification because the fixture is complete and external systems are out of scope.

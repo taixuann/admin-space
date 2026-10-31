@@ -1,6 +1,0 @@
-{
-  "observations": [
-    "Candidate and no-skill baseline both scored 100%. The prompts explicitly prohibit writes and provide complete fixtures, so they do not discriminate skill value or verify live Calendar/Rhythm access.",
-    "The candidate correctly kept a completed Task closed and used the two supplied Rhythm blocks as a capacity ceiling. The named attachment with connector recipes remains unavailable."
-  ]
-}

@@ -4,12 +4,6 @@ __pycache__/
 .DS_Store
 .aqg/
 
-# Independent tool repositories. Each tool owns its source and history.
-# Tools are owned by Development Space; see tools/README.md.
-/tools/*
-!/tools/README.md
-!/tools/AGENTS.md
-
 # Obsidian local workspace
 .obsidian/
 
