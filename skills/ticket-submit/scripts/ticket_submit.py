@@ -106,12 +106,15 @@ def create_ticket(
     target_space: str = "Development",
     system_component: str = "Automations & Runtime",
     request_type: str = "Fix",
-    status: str = "Blocked",
+    status: str = "Captured",
     current_step: Optional[str] = None,
+    step: Optional[str] = None,
     body: Optional[str] = None,
     database_id: str = DEFAULT_DATABASE_ID,
 ) -> Optional[str]:
     """Create a new ticket page in the database."""
+    if current_step is None:
+        current_step = step
     spaces = [s.strip() for s in target_space.split(",") if s.strip()]
     components = [c.strip() for c in system_component.split(",") if c.strip()]
 
@@ -133,12 +136,17 @@ def create_ticket(
         },
     }
 
-    if current_step:
-        properties["Current Step"] = {
-            "rich_text": [{"text": {"content": current_step[:2000]}}]
-        }
-
     children: List[Dict[str, Any]] = []
+    if current_step:
+        # Step text becomes the first paragraph of the page body.
+        trimmed_step = current_step[:2000]
+        children.append({
+            "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [{"type": "text", "text": {"content": trimmed_step}}]
+            },
+        })
     if body:
         # Bounded body block
         trimmed = body[:2000]
@@ -175,14 +183,17 @@ def submit_or_update_ticket(
     target_space: str = "Development",
     system_component: str = "Automations & Runtime",
     request_type: str = "Fix",
-    status: str = "Blocked",
+    status: str = "Captured",
     current_step: Optional[str] = None,
+    step: Optional[str] = None,
     body: Optional[str] = None,
     signature: Optional[str] = None,
     database_id: str = DEFAULT_DATABASE_ID,
     data_source_id: str = DEFAULT_DATASOURCE_ID,
 ) -> Dict[str, Any]:
     """Submit a ticket or update an existing open ticket with deduping."""
+    if current_step is None:
+        current_step = step
     sig = signature or title
     now_iso = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
@@ -204,7 +215,7 @@ def submit_or_update_ticket(
                 system_component=system_component,
                 request_type=request_type,
                 status=status,
-                current_step=current_step or f"Automated escalation at {now_iso}",
+                current_step=current_step,
                 body=body,
                 database_id=database_id,
             )
@@ -227,7 +238,7 @@ def main() -> None:
     parser.add_argument("--space", default="Development", help="Target Space (e.g. Development, Admin, Research)")
     parser.add_argument("--component", default="Automations & Runtime", help="System Component")
     parser.add_argument("--type", default="Fix", help="Request Type (Fix, Build, Improve, Evaluate, Operate)")
-    parser.add_argument("--status", default="Blocked", help="Ticket Status (Captured, Blocked, Human review, etc.)")
+    parser.add_argument("--status", default="Captured", help="Ticket Status (Captured, Human review, Done, Canceled)")
     parser.add_argument("--step", default=None, help="Current step description")
     parser.add_argument("--body", default=None, help="Details or log snippet for ticket body/comment")
     parser.add_argument("--signature", default=None, help="Signature to search for existing open tickets (defaults to title)")

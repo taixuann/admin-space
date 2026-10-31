@@ -3,7 +3,7 @@ name: answer-me-with-html
 argument-hint: "[config [key value] | clean | update]"
 description: >-
   Turns an answer into a one-page visual HTML explainer: the model writes a short Markdown draft and
-  the bundled CLI builds one page. Use it proactively and liberally, without being asked, whenever a
+  the bundled CLI builds one page. Use it proactively and liberally in replies to the user, without being asked, whenever a
   page would help the reader more than plain text, even if plain text would also work: any explanation
   of how something works or how parts relate (flow, request path, architecture, code or folder
   structure, state machine, lifecycle, history); any comparison, trade-off or decision with pros and
@@ -37,6 +37,13 @@ Produce a page if any of these is true:
 
 Otherwise answer in plain text. When unsure: the more the question "needs a picture to understand", the more it calls for a page.
 
+Automatic pages are for replies to the user. An internal report returned to another agent is not one:
+
+- If a parent agent or a coordinator delegated research, implementation, a review or a progress report, return the text or structure it asked for, with the findings and the evidence. Render no page.
+- The parent consolidates the reports. Its reply to the user follows the normal rules of this section.
+- If the delegated task explicitly asks for a page, render it, and return the page path together with the verification details the parent asked for. A video needs an explicit video request; delegation alone never authorizes one.
+- Judge this by who receives the reply and what was asked for, not by the host or agent name.
+
 ### Always-on mode
 
 If the context contains the `[answer-me-with-html always-on]` reminder (the user added the always-on rule to a rules file such as `CLAUDE.md` or `AGENTS.md`), the bar is lower:
@@ -46,6 +53,7 @@ If the context contains the `[answer-me-with-html always-on]` reminder (the user
 - For everyday conclusions use a small page with 2–4 panels: one callout with the conclusion, plus one table or one diagram. Do not add panels just to fill space.
 - Render with `--no-open`, so no browser window interrupts the user. The user opens the page by clicking the path at the end of the reply.
 - Order: render the page first, then write the text reply. The reply is the last thing in the turn, with the page link on its last line (see step 5). Do not write the reply and then call `am render`. The one call that may come after the reply is the choice tool that puts the page's asks to the user, when your host can ask questions: write the reply first, so the user holds the link before answering (see step 5).
+- The internal-report rule of step 1 applies here too: a delegated report that inherits the always-on rule renders no page, unless the delegated task explicitly asks for one.
 - Produce no page for small talk, one or two sentences with no conclusion, pure command output, or when the user asks for plain text.
 
 ## 2. Workflow (one Bash call)
@@ -85,7 +93,7 @@ AM_EOF
    - `STE n warnings`: rewrite the flagged lines as suggested, then render again. Retry at most 2 rounds; if warnings remain, keep the last page and say so.
    - When rendering again after a `✓`, add `--replace <path from the last ✓ line>` for a page in the data directory's `pages/` or the temporary folder's `pages/`; the CLI deletes that page once the new one is written. For a page written with `-o`, reuse the same quoted `-o` HTML file path to overwrite it in place.
    - `! Cleanup hint: …` or `! Update hint: …`: pass it on to the user in one sentence at the end of the reply, and ask whether to clean up / update. **Do not run am clean or the update command yourself**; wait until the user agrees. The CLI throttles these: the cleanup hint appears at most once every 7 days, the update hint at most once every 3 days.
-5. Reply in the terminal with only 2–3 lines: one core conclusion + the page link. Do not paste the draft or the HTML back into the terminal. Write this reply after the render, as the last step of the turn: render the page first, then reply. No tool call comes after the reply, except the choice tool that puts the page's asks to the user: when the page has asks and your host can ask questions (Claude Code's AskUserQuestion), write this reply first — the page link on its last line — and call that tool right after it, so the user opens the page before answering. Asking first leaves the user answering questions about a page they have not seen.
+5. Reply in the terminal with only 2–3 lines: one core conclusion + the page link. The 2–3 line limit is for replies to the user. If a parent agent asked for the page, also return the verification details it asked for (step 1), in full. Do not paste the draft or the HTML back into the terminal. Write this reply after the render, as the last step of the turn: render the page first, then reply. No tool call comes after the reply, except the choice tool that puts the page's asks to the user: when the page has asks and your host can ask questions (Claude Code's AskUserQuestion), write this reply first — the page link on its last line — and call that tool right after it, so the user opens the page before answering. Asking first leaves the user answering questions about a page they have not seen.
    If the render output has a `link:` line, the user runs `am serve`: use that URL as the page link instead, with the URL as the label too, and skip the local-file links below. Never start `am serve` yourself; only the user starts it.
    Otherwise, in DeepSeek Harness, write a Markdown link directly to the absolute path from the `✓` line, with the path as the label too: `[C:/Users/Name/My Pages/page.html](<C:/Users/Name/My Pages/page.html>)` on Windows or `[/abs/path.html](</abs/path.html>)` on macOS/Linux. Use forward slashes on Windows and angle brackets around the destination so spaces work. These path links open the Document Preview panel.
    In other hosts, write the page link as a Markdown link to a `file://` URL, with the URL as the label too: `[file:///abs/path.html](file:///abs/path.html)`. Take the absolute path from the `✓` line and add `file://` in front; do not percent-encode it. GUI hosts (Codex, Antigravity) render this as a clickable link, and a terminal still shows the full URL.
@@ -107,7 +115,7 @@ AM_EOF
 
 ```markdown
 ---
-template: sheet     # sheet board (default, one-screen overview) | doc linear explanation (read step by step)
+template: sheet     # sheet board (default, one-screen overview) | doc linear explanation (read step by step; with 3+ sections it gets an outline rail, `outline: left | right`, default right)
 theme: auto         # auto (default): paper for doc or text-only drafts, blueprint with diagrams | blueprint | shadcn | paper | a theme the user made (am list shows it)
 title: Title
 subtitle: One-line summary     # optional
@@ -129,6 +137,8 @@ Table status words: ok / no / warn (may carry text: "ok approved") → ✓ / ✗
 - Full reference: `am help format`; component syntax: `am help <component>`; component list: `am list`.
 
 ## 4. Choose components by the shape of the information
+
+Write a component as a fenced code block (```` ```flow ```` … ```` ``` ````); a `:::flow` … `:::` block is accepted too.
 
 | Shape of the information | Component | Minimal syntax |
 |---|---|---|

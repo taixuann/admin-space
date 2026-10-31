@@ -53,9 +53,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/QingYunA/answer-me-with-html.git",
       "skillPath": "skills/answer-me-with-html/SKILL.md",
-      "skillFolderHash": "db1d8d2ca026eba8836b20cc037609238e4d661d",
+      "skillFolderHash": "2d01203e988587fe19b598c050540320bb1ab2f8",
       "installedAt": "2026-10-04T07:53:15.067Z",
-      "updatedAt": "2026-10-25T20:00:25.370Z"
+      "updatedAt": "2026-10-26T20:00:31.974Z"
     },
     "skill-creator": {
       "source": "anthropics/skills",
